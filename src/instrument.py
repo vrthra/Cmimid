@@ -52,13 +52,13 @@ def create_cb_name():
     return "__fn%s" % counter
 
 INSIDE_IF_CONDITION = False
-IS_ELSE_IF_STMT = False
 
 class IfStmt(AstNode):
-    def __repr__(self):
-        global IS_ELSE_IF_STMT
-        global INSIDE_IF_CONDITION
+    def __init__(self, node, with_cb=True):
+        super().__init__(node)
+        self.with_cb = with_cb
 
+    def __repr__(self):
         def cond_body_with_cb(c):
             stmts = (repr(to_ast(c))[2:-2]
                      if c.kind == CursorKind.COMPOUND_STMT
@@ -68,9 +68,9 @@ class IfStmt(AstNode):
                                                 stmts,
                                                 create_cb_name())
 
-        if not IS_ELSE_IF_STMT:
-           entry_cb = create_cb_name()
-           exit_cb = create_cb_name()
+        if self.with_cb:
+            entry_cb = create_cb_name()
+            exit_cb = create_cb_name()
 
         cond =  ""
         if_body = ""
@@ -78,6 +78,7 @@ class IfStmt(AstNode):
 
         for i, c in enumerate(self.node.get_children()):
             if i == 0:
+                global INSIDE_IF_CONDITION
                 INSIDE_IF_CONDITION = True
                 cond = "%s" % repr(to_ast(c))
                 INSIDE_IF_CONDITION = False
@@ -85,21 +86,18 @@ class IfStmt(AstNode):
                 if_body = cond_body_with_cb(c)
             elif i == 2:
                 if c.kind == CursorKind.IF_STMT:
-                    IS_ELSE_IF_STMT = True
-                    else_body = "%s" % repr(to_ast(c))
-                    IS_ELSE_IF_STMT = False
+                    else_body = "%s" % repr(IfStmt(c, with_cb=False))
                 else:
                     else_body = cond_body_with_cb(c)
 
-        rep = "if ( %s ) %s" % (cond, if_body)
+        block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
-            rep += " else %s" % else_body
+            block += " else %s" % else_body
 
-        if not IS_ELSE_IF_STMT:
-            return "%s() ;\n%s\n%s() ;" % (entry_cb, rep, exit_cb)
+        if self.with_cb:
+            return "%s() ;\n%s\n%s() ;" % (entry_cb, block, exit_cb)
 
-        return rep
-
+        return block
 
 class CompoundStmt(AstNode):
     def __repr__(self):
