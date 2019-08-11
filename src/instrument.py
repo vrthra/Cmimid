@@ -1,6 +1,8 @@
 import sys
 from clang.cindex import Index, Config, CursorKind
-Config.set_library_file('/usr/lib/llvm-8/lib/libclang-8.0.0.so')
+
+LIBCLANG_PATH = sys.argv[2]
+Config.set_library_file(LIBCLANG_PATH)
 
 class MyAst:
     def __init__(self, node):
