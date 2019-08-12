@@ -11,13 +11,18 @@ def create_cb_name():
     return "__fn%s" % counter
 
 def compound_body_with_cb(node):
-    stmts = (repr(to_ast(node))[2:-2]
-             if node.kind == CursorKind.COMPOUND_STMT
-             else repr(to_ast(node)))
+    rep = ""
+    if node.kind == CursorKind.COMPOUND_STMT:
+        rep = repr(to_ast(node))[2:-2]
+    else:
+        rep = repr(to_ast(node))
+        if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
+            rep += " ;"
 
     return "{\n%s() ;\n%s\n%s() ;\n}" % (create_cb_name(),
-                                        stmts,
+                                        rep,
                                         create_cb_name())
+
 
 class AstNode:
     def __init__(self, node):
@@ -26,10 +31,12 @@ class AstNode:
     def __repr__(self):
         return " ".join([t.spelling for t in self.node.get_tokens()])
 
+
 class IntegerLiteral(AstNode):
     def __repr__(self):
         return super().__repr__()
         #return "%s %s" % (self.node.type.spelling, self.node.spelling)
+
 
 class ParmDecl(AstNode):
     def __repr__(self):
@@ -37,21 +44,39 @@ class ParmDecl(AstNode):
         assert not list(self.node.get_children())
         #return "%s %s" % (self.node.type.spelling, self.node.spelling)
 
+
 class VarDecl(AstNode):
     def __repr__(self):
         return super().__repr__()
-        #children = "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
-        #return "%s %s" % (self.node.type.spelling, children)
+
 
 class DeclStmt(AstNode):
     def __repr__(self):
         return super().__repr__()
         #return "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
 
+
 class ReturnStmt(AstNode):
     def __repr__(self):
         return "%s ;" % super().__repr__()
         #return "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
+
+
+class ForStmt(AstNode):
+    def __repr__(self):
+        before_cb = create_cb_name()
+        after_cb = create_cb_name()
+
+        children = list(self.node.get_children())
+        body_token_len = len(list(children[-1].get_tokens()))
+        tokens_wo_body = list(self.node.get_tokens())[:-body_token_len]
+
+        for_part = " ".join([t.spelling for t in tokens_wo_body])
+        body = compound_body_with_cb(children[-1])
+
+        return "%s() ;\n%s %s\n%s() ;" % (
+                before_cb, for_part, body, after_cb)
+
 
 class WhileStmt(AstNode):
     def __repr__(self):
@@ -62,11 +87,10 @@ class WhileStmt(AstNode):
         assert(len(children) == 2)
 
         cond = repr(to_ast(children[0]))
-        body = compound_body_with_cb(children[1]) 
+        body = compound_body_with_cb(children[1])
 
         return "%s();\nwhile ( %s ) %s\n%s();" % (
                 before_cb, cond, body, after_cb)
-
 
 
 class IfStmt(AstNode):
@@ -84,11 +108,11 @@ class IfStmt(AstNode):
         else_body = ""
 
         for i, c in enumerate(self.node.get_children()):
-            if i == 0:
+            if i == 0:   # if condition
                 cond = "%s" % repr(to_ast(c))
-            elif i == 1:
+            elif i == 1: # if body
                 if_body = compound_body_with_cb(c)
-            elif i == 2:
+            elif i == 2: # else body (exists if there is an else)
                 if c.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
                     else_body = "%s" % repr(IfStmt(c, with_cb=False))
@@ -103,6 +127,7 @@ class IfStmt(AstNode):
             return "%s() ;\n%s\n%s() ;" % (before_cb, block, after_cb)
 
         return block
+
 
 class CompoundStmt(AstNode):
     def __repr__(self):
@@ -148,6 +173,8 @@ def to_ast(node):
         return DeclStmt(node)
     elif node.kind == CursorKind.IF_STMT:
         return IfStmt(node)
+    elif node.kind == CursorKind.FOR_STMT:
+        return ForStmt(node)
     elif node.kind == CursorKind.WHILE_STMT:
         return WhileStmt(node)
     elif node.kind == CursorKind.RETURN_STMT:
