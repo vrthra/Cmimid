@@ -42,7 +42,9 @@ class WhileStmt(AstNode):
     def __repr__(self):
         children = list(self.node.get_children())
         assert(len(children) == 2)
-        return "while(%s) {\n%s\n}" % (repr(to_ast(children[0])), repr(to_ast(children[1])))
+        return "while(%s) {\n%s\n}" % (
+                repr(to_ast(children[0])),
+                repr(to_ast(children[1])))
         #return "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
 
 counter = 0;
@@ -51,7 +53,6 @@ def create_cb_name():
     counter += 1
     return "__fn%s" % counter
 
-INSIDE_IF_CONDITION = False
 
 class IfStmt(AstNode):
     def __init__(self, node, with_cb=True):
@@ -78,10 +79,7 @@ class IfStmt(AstNode):
 
         for i, c in enumerate(self.node.get_children()):
             if i == 0:
-                global INSIDE_IF_CONDITION
-                INSIDE_IF_CONDITION = True
                 cond = "%s" % repr(to_ast(c))
-                INSIDE_IF_CONDITION = False
             elif i == 1:
                 if_body = cond_body_with_cb(c)
             elif i == 2:
@@ -101,31 +99,25 @@ class IfStmt(AstNode):
 
 class CompoundStmt(AstNode):
     def __repr__(self):
-        body = "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
+        stmts = [];
+        for c in self.node.get_children():
+            rep = repr(to_ast(c))
+            if rep[-1] != "}" and rep[-1] != ";":
+                rep += " ;"
+            stmts.append(rep)
+        body = "\n".join(stmts)
         return "{\n%s\n}" % body
 
 
 class FunctionDecl(AstNode):
     def __repr__(self):
-        #body = '\n'.join([repr(to_ast(c)) for c in self.node.get_children()])
         children = list(self.node.get_children())
-
         return_type = self.node.result_type.spelling
         function_name = self.node.spelling
         params = ", ".join([repr(to_ast(c)) for c in children[:-1]])
         body = repr(to_ast(children[-1]))
-
         return "%s %s(%s) %s" % (return_type, function_name, params, body)
 
-class BinaryOp(AstNode):
-    def __repr__(self):
-        return ("%s" if INSIDE_IF_CONDITION
-                else "%s ;") % super().__repr__()
-
-class CompoundAssignmentOp(AstNode):
-    def __repr__(self):
-        return ("%s" if INSIDE_IF_CONDITION
-                else "%s ;") % super().__repr__()
 
 def to_ast(node):
     #print(node.kind, repr(AstNode(node)))
@@ -141,12 +133,6 @@ def to_ast(node):
     # literals
     elif node.kind == CursorKind.INTEGER_LITERAL:
         return IntegerLiteral(node)
-
-    # operators
-    elif node.kind == CursorKind.COMPOUND_ASSIGNMENT_OPERATOR:
-        return CompoundAssignmentOp(node)
-    elif node.kind == CursorKind.BINARY_OPERATOR:
-        return BinaryOp(node)
 
     # statements
     elif node.kind == CursorKind.COMPOUND_STMT:

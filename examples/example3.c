@@ -8,6 +8,9 @@ int main(int argc, char** argv) {
         i = 1;
     }
     else {
+        if ( i == 2)  {
+            i = 3;
+        }
         i = 2;
     }
     return 0;
