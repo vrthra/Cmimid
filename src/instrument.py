@@ -4,6 +4,21 @@ from clang.cindex import Index, Config, CursorKind
 LIBCLANG_PATH = sys.argv[2]
 Config.set_library_file(LIBCLANG_PATH)
 
+counter = 0;
+def create_cb_name():
+    global counter
+    counter += 1
+    return "__fn%s" % counter
+
+def compound_body_with_cb(node):
+    stmts = (repr(to_ast(node))[2:-2]
+             if node.kind == CursorKind.COMPOUND_STMT
+             else repr(to_ast(node)))
+
+    return "{\n%s() ;\n%s\n%s() ;\n}" % (create_cb_name(),
+                                        stmts,
+                                        create_cb_name())
+
 class AstNode:
     def __init__(self, node):
         self.node = node
@@ -40,18 +55,18 @@ class ReturnStmt(AstNode):
 
 class WhileStmt(AstNode):
     def __repr__(self):
+        before_cb = create_cb_name()
+        after_cb = create_cb_name()
+
         children = list(self.node.get_children())
         assert(len(children) == 2)
-        return "while(%s) {\n%s\n}" % (
-                repr(to_ast(children[0])),
-                repr(to_ast(children[1])))
-        #return "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
 
-counter = 0;
-def create_cb_name():
-    global counter
-    counter += 1
-    return "__fn%s" % counter
+        cond = repr(to_ast(children[0]))
+        body = compound_body_with_cb(children[1]) 
+
+        return "%s();\nwhile ( %s ) %s\n%s();" % (
+                before_cb, cond, body, after_cb)
+
 
 
 class IfStmt(AstNode):
@@ -60,18 +75,9 @@ class IfStmt(AstNode):
         self.with_cb = with_cb
 
     def __repr__(self):
-        def cond_body_with_cb(c):
-            stmts = (repr(to_ast(c))[2:-2]
-                     if c.kind == CursorKind.COMPOUND_STMT
-                     else repr(to_ast(c)))
-
-            return "{\n%s() ;\n%s\n%s() ;\n}" % (create_cb_name(),
-                                                stmts,
-                                                create_cb_name())
-
         if self.with_cb:
-            entry_cb = create_cb_name()
-            exit_cb = create_cb_name()
+            before_cb = create_cb_name()
+            after_cb = create_cb_name()
 
         cond =  ""
         if_body = ""
@@ -81,19 +87,20 @@ class IfStmt(AstNode):
             if i == 0:
                 cond = "%s" % repr(to_ast(c))
             elif i == 1:
-                if_body = cond_body_with_cb(c)
+                if_body = compound_body_with_cb(c)
             elif i == 2:
                 if c.kind == CursorKind.IF_STMT:
+                    # else if -> no before/after if callbacks
                     else_body = "%s" % repr(IfStmt(c, with_cb=False))
                 else:
-                    else_body = cond_body_with_cb(c)
+                    else_body = compound_body_with_cb(c)
 
         block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
             block += " else %s" % else_body
 
         if self.with_cb:
-            return "%s() ;\n%s\n%s() ;" % (entry_cb, block, exit_cb)
+            return "%s() ;\n%s\n%s() ;" % (before_cb, block, after_cb)
 
         return block
 
@@ -102,7 +109,7 @@ class CompoundStmt(AstNode):
         stmts = [];
         for c in self.node.get_children():
             rep = repr(to_ast(c))
-            if rep[-1] != "}" and rep[-1] != ";":
+            if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
                 rep += " ;"
             stmts.append(rep)
         body = "\n".join(stmts)
