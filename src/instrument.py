@@ -23,6 +23,24 @@ def compound_body_with_cb(node):
                                         rep,
                                         create_cb_name())
 
+def check_cases_have_break(compound_stmt):
+    node = compound_stmt.node
+    case_indexes = [i for i, c in enumerate(node.get_children())
+                    if c.kind == CursorKind.CASE_STMT or
+                       c.kind == CursorKind.DEFAULT_STMT]
+    break_indexes = [i for i, c in enumerate(node.get_children())
+                     if c.kind == CursorKind.BREAK_STMT]
+
+    if len(break_indexes) < len(case_indexes):
+        raise Exception("case or default stmt does not have break")
+
+    for i, ci in enumerate(case_indexes):
+        ci_next = (break_indexes[-1] + 1 if i == len(case_indexes) - 1
+                   else case_indexes[i+1])
+        has_break = any(bi > ci and bi < ci_next for bi in break_indexes)
+        if not has_break:
+            raise Exception("case or default stmt does not have break")
+
 
 class AstNode:
     def __init__(self, node):
@@ -69,11 +87,11 @@ class ForStmt(AstNode):
 
         children = list(self.node.get_children())
         body_token_len = len(list(children[-1].get_tokens()))
-        tokens_wo_body = list(self.node.get_tokens())[:-body_token_len]
 
-        for_part = " ".join([t.spelling for t in tokens_wo_body])
+        for_part_tokens = list(self.node.get_tokens())[:-body_token_len]
+        for_part = " ".join([t.spelling for t in for_part_tokens])
+
         body = compound_body_with_cb(children[-1])
-
         return "%s() ;\n%s %s\n%s() ;" % (
                 before_cb, for_part, body, after_cb)
 
@@ -129,14 +147,75 @@ class IfStmt(AstNode):
         return block
 
 
+class SwitchStmt(AstNode):
+    def __repr__(self):
+        before_cb = create_cb_name()
+        after_cb = create_cb_name()
+
+        children = list(self.node.get_children())
+        assert(len(children) == 2)
+
+        body_tokens_len = len(list(children[1].get_tokens()))
+
+        switch_part_tokens = list(self.node.get_tokens())[:-body_tokens_len]
+        switch_part = " ".join([t.spelling for t in switch_part_tokens])
+
+        assert(children[1].kind == CursorKind.COMPOUND_STMT)
+        body_compound_stmt = CompoundStmt(children[1])
+        check_cases_have_break(body_compound_stmt)
+        body = repr(body_compound_stmt)
+
+        return "%s() ;\n%s %s\n%s();" % (
+                before_cb, switch_part, body, after_cb)
+
+class CaseStmt(AstNode):
+    def __repr__(self):
+        return super().__repr__()
+
+
+class DefaultStmt(AstNode):
+    def __repr__(self):
+        return super().__repr__()
+
+
 class CompoundStmt(AstNode):
     def __repr__(self):
+        case_seen = False
+        case_entry_cb = None
+        case_exit_cb = None
+
         stmts = [];
         for c in self.node.get_children():
+            is_case_stmt = (c.kind == CursorKind.CASE_STMT
+                            or c.kind == CursorKind.DEFAULT_STMT)
+            is_break_stmt = c.kind == CursorKind.BREAK_STMT
+
+            if is_case_stmt:
+                # create cb names beforehand for number ordering
+                assert(case_seen == False)
+                case_seen = True
+                case_entry_cb = create_cb_name() + "() ;\n"
+                case_exit_cb = create_cb_name() + "() ;\n"
+
             rep = repr(to_ast(c))
+
+            # handle missing semicolons
             if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
                 rep += " ;"
+
+            if is_case_stmt:
+                words = rep.split(":")
+                case_part = words[0]
+                others = ":".join(words[1:])
+                others = others[1:] if others[0] == " " else others
+                case_part += ":\n" + case_entry_cb
+                rep = case_part + others
+            elif is_break_stmt and case_seen:
+                case_seen = False
+                rep = case_exit_cb + rep
+
             stmts.append(rep)
+
         body = "\n".join(stmts)
         return "{\n%s\n}" % body
 
@@ -173,6 +252,12 @@ def to_ast(node):
         return DeclStmt(node)
     elif node.kind == CursorKind.IF_STMT:
         return IfStmt(node)
+    elif node.kind == CursorKind.SWITCH_STMT:
+        return SwitchStmt(node)
+    elif node.kind == CursorKind.CASE_STMT:
+        return CaseStmt(node)
+    elif node.kind == CursorKind.DEFAULT_STMT:
+        return DefaultStmt(node)
     elif node.kind == CursorKind.FOR_STMT:
         return ForStmt(node)
     elif node.kind == CursorKind.WHILE_STMT:
