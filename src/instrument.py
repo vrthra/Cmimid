@@ -1,7 +1,8 @@
 import sys
 from clang.cindex import Index, Config, CursorKind
+import os
 
-LIBCLANG_PATH = sys.argv[2]
+LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
 
 counter = 0;
@@ -268,12 +269,13 @@ def to_ast(node):
     else:
         return AstNode(node)
 
-def parse(arg):
-    idx = Index.create()
-    translation_unit = idx.parse(arg)
-    for i in translation_unit.cursor.get_children():
-        if i.location.file.name == sys.argv[1]:
-            print(repr(to_ast(i)))
+def parse(arg, fn):
+    with open(fn, 'w+') as f:
+        idx = Index.create()
+        translation_unit = idx.parse(arg)
+        for i in translation_unit.cursor.get_children():
+            if i.location.file.name == sys.argv[1]:
+                print(repr(to_ast(i)), file=f)
 
 
-parse(sys.argv[1])
+parse(sys.argv[1], sys.argv[2])
