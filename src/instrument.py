@@ -11,7 +11,13 @@ def create_cb_name():
     counter += 1
     return "__fn%s()" % counter
 
-def compound_body_with_cb(node):
+def get_id():
+    global counter
+    counter += 1
+    return str(counter)
+
+def compound_body_with_cb(node, c):
+    c1 = get_id()
     rep = ""
     if node.kind == CursorKind.COMPOUND_STMT:
         rep = repr(to_ast(node))[2:-2]
@@ -22,10 +28,10 @@ def compound_body_with_cb(node):
 
     return '''\
 {
-%s;
+scope__enter(%s);
 %s
-%s;
-}''' % (create_cb_name(), rep, create_cb_name())
+scope__exit();
+}''' % (c1, rep)
 
 def check_cases_have_break(compound_stmt):
     node = compound_stmt.node
@@ -83,40 +89,44 @@ class ReturnStmt(AstNode):
         return "%s ;" % super().__repr__()
         #return "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
 
+class BreakStmt(AstNode):
+    def __repr__(self):
+        return "%s ;" % super().__repr__()
+
+class ContStmt(AstNode):
+    def __repr__(self):
+        return "%s ;" % super().__repr__()
+
 
 class ForStmt(AstNode):
     def __repr__(self):
-        before_cb = create_cb_name()
-        after_cb = create_cb_name()
-
         children = list(self.node.get_children())
         body_token_len = len(list(children[-1].get_tokens()))
 
         for_part_tokens = list(self.node.get_tokens())[:-body_token_len]
         for_part = " ".join([t.spelling for t in for_part_tokens])
 
-        body = compound_body_with_cb(children[-1])
+        c = get_id()
+        body = compound_body_with_cb(children[-1], c)
         return '''\
-%s;
+stack__enter("for", %s);
 %s %s
-%s;''' % (before_cb, for_part, body, after_cb)
+stack__exit();''' % (c, for_part, body)
 
 
 class WhileStmt(AstNode):
     def __repr__(self):
-        before_cb = create_cb_name()
-        after_cb = create_cb_name()
-
         children = list(self.node.get_children())
         assert(len(children) == 2)
 
         cond = repr(to_ast(children[0]))
-        body = compound_body_with_cb(children[1])
+        c = get_id()
+        body = compound_body_with_cb(children[1], c)
 
         return '''\
-%s;
+stack__enter("while", %s);
 while (%s) %s
-%s;''' % (before_cb, cond, body, after_cb)
+stack__exit();''' % (c, cond, body)
 
 
 class IfStmt(AstNode):
@@ -125,25 +135,22 @@ class IfStmt(AstNode):
         self.with_cb = with_cb
 
     def __repr__(self):
-        if self.with_cb:
-            before_cb = create_cb_name()
-            after_cb = create_cb_name()
-
+        c = get_id()
         cond =  ""
         if_body = ""
         else_body = ""
 
-        for i, c in enumerate(self.node.get_children()):
+        for i, cmp in enumerate(self.node.get_children()):
             if i == 0:   # if condition
-                cond = "%s" % repr(to_ast(c))
+                cond = "%s" % repr(to_ast(cmp))
             elif i == 1: # if body
-                if_body = compound_body_with_cb(c)
+                if_body = compound_body_with_cb(cmp, c)
             elif i == 2: # else body (exists if there is an else)
-                if c.kind == CursorKind.IF_STMT:
+                if cmp.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
-                    else_body = "%s" % repr(IfStmt(c, with_cb=False))
+                    else_body = "%s" % repr(IfStmt(cmp, with_cb=False))
                 else:
-                    else_body = compound_body_with_cb(c)
+                    else_body = compound_body_with_cb(cmp, c)
 
         block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
@@ -151,18 +158,16 @@ class IfStmt(AstNode):
 
         if self.with_cb:
             return '''\
-%s;
+stack__enter("if", %s);
 %s
-%s;''' % (before_cb, block, after_cb)
+stack__exit();''' % (c, block)
 
         return block
 
 
 class SwitchStmt(AstNode):
     def __repr__(self):
-        before_cb = create_cb_name()
-        after_cb = create_cb_name()
-
+        c = get_id()
         children = list(self.node.get_children())
         assert(len(children) == 2)
 
@@ -177,9 +182,9 @@ class SwitchStmt(AstNode):
         body = repr(body_compound_stmt)
 
         return '''\
-%s;
+stack__enter("switch", %s);
 %s %s
-%s''' % (before_cb, switch_part, body, after_cb)
+stack__exit()''' % (c, switch_part, body)
 
 class CaseStmt(AstNode):
     def __repr__(self):
@@ -194,8 +199,9 @@ class DefaultStmt(AstNode):
 class CompoundStmt(AstNode):
     def __repr__(self):
         case_seen = False
-        case_entry_cb = None
-        case_exit_cb = None
+        #case_entry_cb = None
+        #case_exit_cb = None
+        c = get_id()
 
         stmts = [];
         for c in self.node.get_children():
@@ -207,8 +213,8 @@ class CompoundStmt(AstNode):
                 # create cb names beforehand for number ordering
                 assert(case_seen == False)
                 case_seen = True
-                case_entry_cb = create_cb_name() + "() ;\n"
-                case_exit_cb = create_cb_name() + "() ;\n"
+                #case_entry_cb = create_cb_name() + "() ;\n"
+                #case_exit_cb = create_cb_name() + "() ;\n"
 
             rep = repr(to_ast(c))
 
@@ -221,26 +227,37 @@ class CompoundStmt(AstNode):
                 case_part = words[0]
                 others = ":".join(words[1:])
                 others = others[1:] if others[0] == " " else others
-                case_part += ":\n" + case_entry_cb
+                case_part += ":\n" #+ case_entry_cb
                 rep = case_part + others
             elif is_break_stmt and case_seen:
                 case_seen = False
-                rep = case_exit_cb + rep
+                #rep = case_exit_cb + rep
 
             stmts.append(rep)
 
         body = "\n".join(stmts)
-        return "{\n%s\n}" % body
+        return '''\
+{
+%s
+}''' % body
 
 
 class FunctionDecl(AstNode):
+    # method context wrapper
     def __repr__(self):
         children = list(self.node.get_children())
         return_type = self.node.result_type.spelling
         function_name = self.node.spelling
+        c = get_id()
         params = ", ".join([repr(to_ast(c)) for c in children[:-1]])
         body = repr(to_ast(children[-1]))
-        return "%s %s(%s) %s" % (return_type, function_name, params, body)
+        return  '''\
+%s
+%s(%s) {
+method__enter(%s);
+%s
+method__exit();
+}''' % (return_type, function_name, params, c, body)
 
 
 def to_ast(node):
@@ -277,7 +294,10 @@ def to_ast(node):
         return WhileStmt(node)
     elif node.kind == CursorKind.RETURN_STMT:
         return ReturnStmt(node) # need the ;
-
+    elif node.kind == CursorKind.BREAK_STMT:
+        return BreakStmt(node)
+    elif node.kind == CursorKind.CONTINUE_STMT:
+        return ContStmt(node)
     else:
         return AstNode(node)
 
