@@ -9,7 +9,7 @@ counter = 0;
 def create_cb_name():
     global counter
     counter += 1
-    return "__fn%s" % counter
+    return "__fn%s()" % counter
 
 def compound_body_with_cb(node):
     rep = ""
@@ -20,9 +20,12 @@ def compound_body_with_cb(node):
         if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
             rep += " ;"
 
-    return "{\n%s() ;\n%s\n%s() ;\n}" % (create_cb_name(),
-                                        rep,
-                                        create_cb_name())
+    return '''\
+{
+%s;
+%s
+%s;
+}''' % (create_cb_name(), rep, create_cb_name())
 
 def check_cases_have_break(compound_stmt):
     node = compound_stmt.node
@@ -93,8 +96,10 @@ class ForStmt(AstNode):
         for_part = " ".join([t.spelling for t in for_part_tokens])
 
         body = compound_body_with_cb(children[-1])
-        return "%s() ;\n%s %s\n%s() ;" % (
-                before_cb, for_part, body, after_cb)
+        return '''\
+%s;
+%s %s
+%s;''' % (before_cb, for_part, body, after_cb)
 
 
 class WhileStmt(AstNode):
@@ -108,8 +113,10 @@ class WhileStmt(AstNode):
         cond = repr(to_ast(children[0]))
         body = compound_body_with_cb(children[1])
 
-        return "%s();\nwhile ( %s ) %s\n%s();" % (
-                before_cb, cond, body, after_cb)
+        return '''\
+%s;
+while (%s) %s
+%s;''' % (before_cb, cond, body, after_cb)
 
 
 class IfStmt(AstNode):
@@ -143,7 +150,10 @@ class IfStmt(AstNode):
             block += " else %s" % else_body
 
         if self.with_cb:
-            return "%s() ;\n%s\n%s() ;" % (before_cb, block, after_cb)
+            return '''\
+%s;
+%s
+%s;''' % (before_cb, block, after_cb)
 
         return block
 
@@ -166,8 +176,10 @@ class SwitchStmt(AstNode):
         check_cases_have_break(body_compound_stmt)
         body = repr(body_compound_stmt)
 
-        return "%s() ;\n%s %s\n%s();" % (
-                before_cb, switch_part, body, after_cb)
+        return '''\
+%s;
+%s %s
+%s''' % (before_cb, switch_part, body, after_cb)
 
 class CaseStmt(AstNode):
     def __repr__(self):
@@ -269,13 +281,12 @@ def to_ast(node):
     else:
         return AstNode(node)
 
-def parse(arg, fn):
-    with open(fn, 'w+') as f:
-        idx = Index.create()
-        translation_unit = idx.parse(arg)
-        for i in translation_unit.cursor.get_children():
-            if i.location.file.name == sys.argv[1]:
-                print(repr(to_ast(i)), file=f)
+def parse(arg):
+    idx = Index.create()
+    translation_unit = idx.parse(arg)
+    for i in translation_unit.cursor.get_children():
+        if i.location.file.name == sys.argv[1]:
+            print(repr(to_ast(i)), file=sys.stdout)
 
 
-parse(sys.argv[1], sys.argv[2])
+parse(sys.argv[1])
