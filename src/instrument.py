@@ -30,7 +30,7 @@ def compound_body_with_cb(node, c):
 {
 scope__enter(%s);
 %s
-scope__exit();
+scope__exit("exit");
 }''' % (c1, rep)
 
 def check_cases_have_break(compound_stmt):
@@ -91,11 +91,16 @@ class ReturnStmt(AstNode):
 
 class BreakStmt(AstNode):
     def __repr__(self):
-        return "%s ;" % super().__repr__()
+        return '''\
+scope__exit("break");
+stack__exit("break");
+%s ;''' % super().__repr__()
 
-class ContStmt(AstNode):
+class ContinueStmt(AstNode):
     def __repr__(self):
-        return "%s ;" % super().__repr__()
+        return '''\
+scope__exit("continue");
+%s ;''' % super().__repr__()
 
 
 class ForStmt(AstNode):
@@ -111,7 +116,7 @@ class ForStmt(AstNode):
         return '''\
 stack__enter("for", %s);
 %s %s
-stack__exit();''' % (c, for_part, body)
+stack__exit("exit");''' % (c, for_part, body)
 
 
 class WhileStmt(AstNode):
@@ -126,7 +131,7 @@ class WhileStmt(AstNode):
         return '''\
 stack__enter("while", %s);
 while (%s) %s
-stack__exit();''' % (c, cond, body)
+stack__exit("exit");''' % (c, cond, body)
 
 
 class IfStmt(AstNode):
@@ -160,7 +165,7 @@ class IfStmt(AstNode):
             return '''\
 stack__enter("if", %s);
 %s
-stack__exit();''' % (c, block)
+stack__exit("exit");''' % (c, block)
 
         return block
 
@@ -184,7 +189,7 @@ class SwitchStmt(AstNode):
         return '''\
 stack__enter("switch", %s);
 %s %s
-stack__exit()''' % (c, switch_part, body)
+stack__exit("exit")''' % (c, switch_part, body)
 
 class CaseStmt(AstNode):
     def __repr__(self):
@@ -297,7 +302,7 @@ def to_ast(node):
     elif node.kind == CursorKind.BREAK_STMT:
         return BreakStmt(node)
     elif node.kind == CursorKind.CONTINUE_STMT:
-        return ContStmt(node)
+        return ConinuetStmt(node)
     else:
         return AstNode(node)
 
