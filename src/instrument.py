@@ -144,18 +144,21 @@ class IfStmt(AstNode):
         cond =  ""
         if_body = ""
         else_body = ""
+        ccond, *my_children = list(self.node.get_children())
+        cond = repr(to_ast(ccond))
 
-        for i, cmp in enumerate(self.node.get_children()):
-            if i == 0:   # if condition
-                cond = "%s" % repr(to_ast(cmp))
-            elif i == 1: # if body
-                if_body = compound_body_with_cb(cmp, c)
-            elif i == 2: # else body (exists if there is an else)
-                if cmp.kind == CursorKind.IF_STMT:
+        for i, child in enumerate(my_children):
+            if i == 0: # if body
+                assert child.kind == CursorKind.COMPOUND_STMT
+                if_body = compound_body_with_cb(child, c)
+            elif i == 1: # else body (exists if there is an else)
+                if child.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
-                    else_body = "%s" % repr(IfStmt(cmp, with_cb=False))
+                    else_body = repr(IfStmt(child, with_cb=False))
                 else:
-                    else_body = compound_body_with_cb(cmp, c)
+                    else_body = compound_body_with_cb(child, c)
+            else:
+                assert False
 
         block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
@@ -266,6 +269,11 @@ class CallExpr(AstNode):
 
 class ParenExpr(AstNode):
     pass
+    #def __repr__(self):
+    #    children = list(self.node.get_children())
+    #    #print([i.kind for i in children])
+    #    assert len(children) == 1
+    #    return "(%s)" % repr(to_ast(children[0]))
 
 class CompoundAssignmentOperator(AstNode):
     pass
@@ -279,7 +287,42 @@ class UnaryOperator(AstNode):
 
 class BinaryOperator(AstNode):
     pass
+    #def _get_operator(self, cursor):
+    #    """
+    #    Returns the operator token of a binary operator cursor.
+    #    :param cursor: A cursor of kind BINARY_OPERATOR.
+    #    :return:       The token object containing the actual operator or None.
+    #    """
+    #    children = list(cursor.get_children())
+    #    operator_min_begin = (children[0].location.line,
+    #                          children[0].location.column)
+    #    operator_max_end = (children[1].location.line,
+    #                        children[1].location.column)
 
+    #    for token in cursor.get_tokens():
+    #        if (operator_min_begin < (token.extent.start.line,
+    #                                  token.extent.start.column) and
+    #            operator_max_end >= (token.extent.end.line,
+    #                                 token.extent.end.column)):
+    #            return token
+
+    #    return None  # pragma: no cover
+
+    #def __repr__(self):
+    #    children = list(self.node.get_children())
+    #    operator = self._get_operator(self.node)
+    #    assert len(children) == 2
+    #    lhs = repr(to_ast(children[0]))
+    #    rhs = repr(to_ast(children[1]))
+    #    #print([i.kind for i in children])
+    #    return "%s %s %s" % (lhs, operator, rhs)
+
+class UnexposedExpr(AstNode):
+    pass
+    #def __repr__(self):
+    #    children = list(self.node.get_children())
+    #    #print([i.kind for i in children])
+    #    return " ".join([repr(to_ast(c)) for c in children])
 
 
 class FunctionDecl(AstNode):
@@ -304,10 +347,8 @@ method__enter(%s);
 method__exit();
 }''' % (return_type, function_name, params, c, body)
 
-
 def to_ast(node):
-    #print(node.kind, repr(AstNode(node)))
-
+    #print(node.kind, repr(AstNode(node)), file=sys.stderr)
     # declarations
     if node.kind == CursorKind.FUNCTION_DECL:
         return FunctionDecl(node)
@@ -363,6 +404,8 @@ def to_ast(node):
         return ParenExpr(node)
     elif node.kind == CursorKind.COMPOUND_ASSIGNMENT_OPERATOR:
         return CompoundAssignmentOperator(node)
+    elif node.kind == CursorKind.UNEXPOSED_EXPR:
+        return UnexposedExpr(node)
     else:
         print(node.kind, file=sys.stderr)
         return AstNode(node)

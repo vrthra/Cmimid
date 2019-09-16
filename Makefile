@@ -1,3 +1,5 @@
+.SECONDARY: instrumented/calc_parse.c
+
 PYTHON := python3
 
 EXAMPLE_C_SOURCE := example3.c
@@ -12,6 +14,9 @@ instrumented: ; mkdir -p $@
 
 instrumented/%.c: examples/%.c src/instrument.py | instrumented
 	LIBCLANG_PATH=${LIBCLANG_PATH} $(PYTHON) ./src/instrument.py $< | clang-format-8 > $@
+
+instrumented/%.x: instrumented/%.c
+	gcc -o $@ $< -I ./examples
 
 
 view:
