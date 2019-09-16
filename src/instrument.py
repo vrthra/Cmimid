@@ -247,6 +247,10 @@ class CompoundStmt(AstNode):
 }''' % body
 
 
+class StructDecl(AstNode):
+    def __repr__(self):
+        return ''
+
 class FunctionDecl(AstNode):
     # method context wrapper
     def __repr__(self):
@@ -303,8 +307,12 @@ def to_ast(node):
         return BreakStmt(node)
     elif node.kind == CursorKind.CONTINUE_STMT:
         return ConinuetStmt(node)
+    elif node.kind == CursorKind.STRUCT_DECL:
+        return StructDecl(node)
     else:
         return AstNode(node)
+
+skipped = []
 
 def parse(arg):
     idx = Index.create()
@@ -312,6 +320,10 @@ def parse(arg):
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
             print(repr(to_ast(i)), file=sys.stdout)
+        else:
+           skipped.append(i.location.file.name)
 
 
 parse(sys.argv[1])
+#for i in sorted(set(skipped)):
+#    print(i.strip(), file=sys.stderr)
