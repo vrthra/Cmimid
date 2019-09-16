@@ -249,7 +249,37 @@ class CompoundStmt(AstNode):
 
 class StructDecl(AstNode):
     def __repr__(self):
-        return ''
+        return '/*StructDecl (%s) */' % super().__repr__()
+
+class EnumDecl(AstNode):
+    pass
+
+class TypeDecl(AstNode):
+    pass
+
+class UnionDecl(AstNode):
+    pass
+
+class CallExpr(AstNode):
+    pass
+
+class ParenExpr(AstNode):
+    pass
+
+class CompoundAssignmentOperator(AstNode):
+    pass
+
+
+class TypeRef(AstNode):
+    pass
+
+class UnaryOperator(AstNode):
+    pass
+
+class BinaryOperator(AstNode):
+    pass
+
+
 
 class FunctionDecl(AstNode):
     # method context wrapper
@@ -259,7 +289,10 @@ class FunctionDecl(AstNode):
         function_name = self.node.spelling
         c = get_id()
         params = ", ".join([repr(to_ast(c)) for c in children[:-1]])
-        body = repr(to_ast(children[-1]))
+        if children:
+            body = repr(to_ast(children[-1]))
+        else:
+            body = ''
         return  '''\
 %s
 %s(%s) {
@@ -309,7 +342,26 @@ def to_ast(node):
         return ConinuetStmt(node)
     elif node.kind == CursorKind.STRUCT_DECL:
         return StructDecl(node)
+    elif node.kind == CursorKind.TYPEDEF_DECL:
+        return TypeDecl(node)
+    elif node.kind == CursorKind.ENUM_DECL:
+        return EnumDecl(node)
+    elif node.kind == CursorKind.UNION_DECL:
+        return UnionDecl(node)
+    elif node.kind == CursorKind.CALL_EXPR:
+        return CallExpr(node)
+    elif node.kind == CursorKind.BINARY_OPERATOR:
+        return BinaryOperator(node)
+    elif node.kind == CursorKind.UNARY_OPERATOR:
+        return UnaryOperator(node)
+    elif node.kind == CursorKind.TYPE_REF:
+        return TypeRef(node)
+    elif node.kind == CursorKind.PAREN_EXPR:
+        return ParenExpr(node)
+    elif node.kind == CursorKind.COMPOUND_ASSIGNMENT_OPERATOR:
+        return CompoundAssignmentOperator(node)
     else:
+        print(node.kind, file=sys.stderr)
         return AstNode(node)
 
 skipped = []
@@ -317,13 +369,14 @@ skipped = []
 def parse(arg):
     idx = Index.create()
     translation_unit = idx.parse(arg)
+    #assert translation_unit.cursor.displayname == 'calc_parse.c'
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
+            print(i.location.line,  i.extent.end.line, file=sys.stderr)
             print(repr(to_ast(i)), file=sys.stdout)
         else:
-           skipped.append(i.location.file.name)
-
+           skipped.append(to_ast(i))
 
 parse(sys.argv[1])
-#for i in sorted(set(skipped)):
-#    print(i.strip(), file=sys.stderr)
+#for i in skipped:
+#    print(repr(i), file=sys.stderr)
