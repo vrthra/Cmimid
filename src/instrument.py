@@ -248,8 +248,9 @@ class CompoundStmt(AstNode):
 
 
 class StructDecl(AstNode):
-    def __repr__(self):
-        return '/*StructDecl (%s) */' % super().__repr__()
+    pass
+    #def __repr__(self):
+    #    return '/*StructDecl (%s) */' % super().__repr__()
 
 class EnumDecl(AstNode):
     pass
@@ -288,7 +289,9 @@ class FunctionDecl(AstNode):
         return_type = self.node.result_type.spelling
         function_name = self.node.spelling
         c = get_id()
-        params = ", ".join([repr(to_ast(c)) for c in children[:-1]])
+        params = ", ".join([repr(to_ast(c)) for c in children[:-1] if c.kind is CursorKind.PARM_DECL])
+        # c.kind is TYPE_REF is return
+        # c.semantic_parent is not None])
         if children:
             body = repr(to_ast(children[-1]))
         else:
@@ -365,18 +368,34 @@ def to_ast(node):
         return AstNode(node)
 
 skipped = []
+parsed_extent = []
+
+stored = []
+
+def store(arg):
+    with open(arg) as f: stored.extend(f.readlines())
+
+displayed_till = 0
+def display_till(last):
+    for i in range(displayed_till, last):
+        print(stored[i], end='')
+
 
 def parse(arg):
+    global displayed_till
     idx = Index.create()
     translation_unit = idx.parse(arg)
     #assert translation_unit.cursor.displayname == 'calc_parse.c'
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
-            print(i.location.line,  i.extent.end.line, file=sys.stderr)
+            display_till(i.location.line-1)
             print(repr(to_ast(i)), file=sys.stdout)
+            displayed_till = i.extent.end.line
         else:
            skipped.append(to_ast(i))
+    display_till(len(stored))
 
+store(sys.argv[1])
 parse(sys.argv[1])
 #for i in skipped:
 #    print(repr(i), file=sys.stderr)
