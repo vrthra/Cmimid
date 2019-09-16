@@ -30,7 +30,7 @@ def compound_body_with_cb(node, c):
 {
 scope__enter(%s);
 %s
-scope__exit("exit");
+scope__exit(CMIMID_EXIT);
 }''' % (c1, rep)
 
 def check_cases_have_break(compound_stmt):
@@ -92,14 +92,14 @@ class ReturnStmt(AstNode):
 class BreakStmt(AstNode):
     def __repr__(self):
         return '''\
-scope__exit("break");
-stack__exit("break");
+scope__exit(CMIMID_BREAK);
+stack__exit(CMIMID_BREAK);
 %s ;''' % super().__repr__()
 
 class ContinueStmt(AstNode):
     def __repr__(self):
         return '''\
-scope__exit("continue");
+scope__exit(CMIMID_CONTINUE);
 %s ;''' % super().__repr__()
 
 
@@ -114,9 +114,9 @@ class ForStmt(AstNode):
         c = get_id()
         body = compound_body_with_cb(children[-1], c)
         return '''\
-stack__enter("for", %s);
+stack__enter(CMIMID_FOR, %s);
 %s %s
-stack__exit("exit");''' % (c, for_part, body)
+stack__exit(CMIMID_EXIT);''' % (c, for_part, body)
 
 
 class WhileStmt(AstNode):
@@ -129,9 +129,9 @@ class WhileStmt(AstNode):
         body = compound_body_with_cb(children[1], c)
 
         return '''\
-stack__enter("while", %s);
+stack__enter(CMIMID_WHILE, %s);
 while (%s) %s
-stack__exit("exit");''' % (c, cond, body)
+stack__exit(CMIMID_EXIT);''' % (c, cond, body)
 
 
 class IfStmt(AstNode):
@@ -163,9 +163,9 @@ class IfStmt(AstNode):
 
         if self.with_cb:
             return '''\
-stack__enter("if", %s);
+stack__enter(CMIMID_IF, %s);
 %s
-stack__exit("exit");''' % (c, block)
+stack__exit(CMIMID_EXIT);''' % (c, block)
 
         return block
 
@@ -187,9 +187,9 @@ class SwitchStmt(AstNode):
         body = repr(body_compound_stmt)
 
         return '''\
-stack__enter("switch", %s);
+stack__enter(CMIMID_SWITCH, %s);
 %s %s
-stack__exit("exit")''' % (c, switch_part, body)
+stack__exit(CMIMID_EXIT)''' % (c, switch_part, body)
 
 class CaseStmt(AstNode):
     def __repr__(self):
@@ -386,6 +386,21 @@ def parse(arg):
     idx = Index.create()
     translation_unit = idx.parse(arg)
     #assert translation_unit.cursor.displayname == 'calc_parse.c'
+    print('''\
+#define CMIMID_EXIT 0
+#define CMIMID_BREAK 1
+#define CMIMID_CONTINUE 2
+#define CMIMID_FOR 3
+#define CMIMID_WHILE 4
+#define CMIMID_IF 5
+#define CMIMID_SWITCH 6
+void method__enter(int i) {}
+void method__exit() {}
+void stack__enter(int i, int j) {}
+void stack__exit(int i) {}
+void scope__enter(int i) {}
+void scope__exit(int i) {}
+''')
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
             display_till(i.location.line-1)
