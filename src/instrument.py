@@ -35,21 +35,35 @@ scope__exit(CMIMID_EXIT);
 
 def check_cases_have_break(compound_stmt):
     node = compound_stmt.node
-    case_indexes = [i for i, c in enumerate(node.get_children())
-                    if c.kind == CursorKind.CASE_STMT or
-                       c.kind == CursorKind.DEFAULT_STMT]
-    break_indexes = [i for i, c in enumerate(node.get_children())
-                     if c.kind == CursorKind.BREAK_STMT]
 
-    if len(break_indexes) < len(case_indexes):
-        raise Exception("case or default stmt does not have break")
+    looking_for_break = False
+    for _,child in enumerate(node.get_children()):
+        if child.kind == CursorKind.CASE_STMT and not looking_for_break:
+            looking_for_break = True
+        elif (child.kind == CursorKind.BREAK_STMT or child.kind == CursorKind.RETURN_STMT) and looking_for_break:
+            looking_for_break = False
+        elif (child.kind == CursorKind.CASE_STMT or child.kind == CursorKind.DEFAULT_STMT) and looking_for_break:
+            raise Exception("case or default does not have break")
+    if looking_for_break:
+        raise Exception("case or default does not have break")
 
-    for i, ci in enumerate(case_indexes):
-        ci_next = (break_indexes[-1] + 1 if i == len(case_indexes) - 1
-                   else case_indexes[i+1])
-        has_break = any(bi > ci and bi < ci_next for bi in break_indexes)
-        if not has_break:
-            raise Exception("case or default stmt does not have break")
+    # case_indexes = [i for i, c in enumerate(node.get_children())
+    #                 if c.kind == CursorKind.CASE_STMT or
+    #                    c.kind == CursorKind.DEFAULT_STMT]
+    # break_indexes = [i for i, c in enumerate(node.get_children())
+    #                  if c.kind == CursorKind.BREAK_STMT or
+    #                     c.kind == CursorKind.GOTO_STMT]
+    #
+    #
+    # if len(break_indexes) < len(case_indexes):
+    #     raise Exception("case or default stmt does not have break")
+    #
+    # for i, ci in enumerate(case_indexes):
+    #     ci_next = (break_indexes[-1] + 1 if i == len(case_indexes) - 1
+    #                else case_indexes[i+1])
+    #     has_break = any(bi > ci and bi < ci_next for bi in break_indexes)
+    #     if not has_break:
+    #         raise Exception("case or default stmt does not have break")
 
 
 class AstNode:
@@ -69,13 +83,35 @@ class IntegerLiteral(AstNode):
 class ParmDecl(AstNode):
     def __repr__(self):
         return super().__repr__()
-        assert not list(self.node.get_children())
+        # assert not list(self.node.get_children())
         #return "%s %s" % (self.node.type.spelling, self.node.spelling)
 
 
 class VarDecl(AstNode):
+    last_loc = None
     def __repr__(self):
-        return super().__repr__()
+        # make sure that the same source location is not instrumented twice (happens for declarations like "int a, b = 0;")
+        # if VarDecl.last_loc is None or VarDecl.last_loc != self.node.get_tokens().__next__().location:
+        # print(f"{self.last_loc} {VarDecl.last_loc == self.node.get_tokens().__next__().location if VarDecl.last_loc is not None else True}", file=sys.stderr)
+        # print(f"{'  '.join([str((t.spelling, t.location)) for t in self.node.get_tokens()])}, {self.node.kind}", file=sys.stderr)
+        # print(traceback.print_stack(), file=sys.stderr)
+        VarDecl.last_loc = self.node.get_tokens().__next__().location
+        return "%s;" % super().__repr__()
+        # else:
+        #     VarDecl.last_loc = self.node.get_tokens().__next__().location
+        #     return ""
+
+class EnumDecl(AstNode):
+    def __repr__(self):
+        return "%s;" % super().__repr__()
+
+class TypedefDecl(AstNode):
+    def __repr__(self):
+        return "%s;" % super().__repr__()
+
+class StructDecl(AstNode):
+    def __repr__(self):
+        return "%s;" % super().__repr__()
 
 
 class DeclStmt(AstNode):
@@ -144,21 +180,18 @@ class IfStmt(AstNode):
         cond =  ""
         if_body = ""
         else_body = ""
-        ccond, *my_children = list(self.node.get_children())
-        cond = repr(to_ast(ccond))
 
-        for i, child in enumerate(my_children):
-            if i == 0: # if body
-                assert child.kind == CursorKind.COMPOUND_STMT
-                if_body = compound_body_with_cb(child, c)
-            elif i == 1: # else body (exists if there is an else)
-                if child.kind == CursorKind.IF_STMT:
+        for i, cmp in enumerate(self.node.get_children()):
+            if i == 0:   # if condition
+                cond = "%s" % repr(to_ast(cmp))
+            elif i == 1: # if body
+                if_body = compound_body_with_cb(cmp, c)
+            elif i == 2: # else body (exists if there is an else)
+                if cmp.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
-                    else_body = repr(IfStmt(child, with_cb=False))
+                    else_body = "%s" % repr(IfStmt(cmp, with_cb=False))
                 else:
-                    else_body = compound_body_with_cb(child, c)
-            else:
-                assert False
+                    else_body = compound_body_with_cb(cmp, c)
 
         block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
@@ -186,8 +219,8 @@ class SwitchStmt(AstNode):
 
         assert(children[1].kind == CursorKind.COMPOUND_STMT)
         body_compound_stmt = CompoundStmt(children[1])
-        check_cases_have_break(body_compound_stmt)
-        body = repr(body_compound_stmt)
+        # check_cases_have_break(body_compound_stmt)
+        body = repr(to_ast(children[1]))
 
         return '''\
 stack__enter(CMIMID_SWITCH, %s);
@@ -211,7 +244,7 @@ class CompoundStmt(AstNode):
         #case_exit_cb = None
         c = get_id()
 
-        stmts = [];
+        stmts = []
         for c in self.node.get_children():
             is_case_stmt = (c.kind == CursorKind.CASE_STMT
                             or c.kind == CursorKind.DEFAULT_STMT)
@@ -220,7 +253,7 @@ class CompoundStmt(AstNode):
             if is_case_stmt:
                 # create cb names beforehand for number ordering
                 assert(case_seen == False)
-                case_seen = True
+                # case_seen = True
                 #case_entry_cb = create_cb_name() + "() ;\n"
                 #case_exit_cb = create_cb_name() + "() ;\n"
 
@@ -332,23 +365,30 @@ class FunctionDecl(AstNode):
         return_type = self.node.result_type.spelling
         function_name = self.node.spelling
         c = get_id()
-        params = ", ".join([repr(to_ast(c)) for c in children[:-1] if c.kind is CursorKind.PARM_DECL])
-        # c.kind is TYPE_REF is return
-        # c.semantic_parent is not None])
-        if children:
-            body = repr(to_ast(children[-1]))
+        if return_type == "void" or function_name == "main": #for main the return type is not parsed
+            # for void functions the first value is the first parameter, for non-void functions it's the return type
+            params = ", ".join([repr(to_ast(c)) for c in children[0:-1]])
         else:
-            body = ''
-        return  '''\
+            params = ", ".join([repr(to_ast(c)) for c in children[1:-1]])
+        # print(f"{' '.join([t.spelling for t in self.node.get_tokens()])} {function_name} {self.node.result_type.spelling}, {children[-1].kind}", file=sys.stderr)
+        if children[-1].kind == CursorKind.COMPOUND_STMT:
+            body = repr(to_ast(children[-1]))
+            return '''\
 %s
 %s(%s) {
 method__enter(%s);
 %s
-method__exit();
-}''' % (return_type, function_name, params, c, body)
+method__exit();''' % (return_type, function_name, params, c, body)
+        else:
+            # in this case self is a function declaration and not definition, so we append a ';'
+            return '''\
+%s
+%s(%s);''' % (return_type, function_name, params)
+
 
 def to_ast(node):
-    #print(node.kind, repr(AstNode(node)), file=sys.stderr)
+    #print(node.kind, repr(AstNode(node)))
+
     # declarations
     if node.kind == CursorKind.FUNCTION_DECL:
         return FunctionDecl(node)
@@ -356,6 +396,8 @@ def to_ast(node):
         return ParmDecl(node)
     elif node.kind == CursorKind.VAR_DECL:
         return VarDecl(node)
+    elif node.kind == CursorKind.TYPEDEF_DECL:
+        return TypedefDecl(node)
 
     # literals
     elif node.kind == CursorKind.INTEGER_LITERAL:
