@@ -15,9 +15,12 @@ instrumented: ; mkdir -p $@
 instrumented/%.c: examples/%.c src/instrument.py | instrumented
 	LIBCLANG_PATH=${LIBCLANG_PATH} $(PYTHON) ./src/instrument.py $< | clang-format > $@
 
+
 instrumented/%.x: instrumented/%.c
 	gcc -o $@ $< -I ./examples
 
+instrumented/%.d: examples/%.c src/instrument.py | instrumented
+	LIBCLANG_PATH=${LIBCLANG_PATH} $(PYTHON) ./src/instrument.py $<
 
 view:
 	${PYTHON} ./bin/pyclasvi.py -l ${LIBCLANG_PATH}

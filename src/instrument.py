@@ -6,11 +6,6 @@ LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
 
 counter = 0;
-def create_cb_name():
-    global counter
-    counter += 1
-    return "__fn%s()" % counter
-
 def get_id():
     global counter
     counter += 1
@@ -42,6 +37,15 @@ class AstNode:
     def __init__(self, node):
         self.node = node
 
+
+    def check_children_not_macro(self):
+        for c in self.node.get_children():
+            if c.extent.start.line != c.extent.end.line:
+                continue
+            if c.extent.start.column != c.extent.end.column:
+                continue
+            raise Exception("We do not know how to handle macros in code")
+
     def to_src(self):
         src = ''.join(SRC[self.node.extent.begin_int_data-2:self.node.extent.end_int_data-2])
         if self.node.extent.start.line == self.node.extent.end.line:
@@ -53,7 +57,6 @@ class AstNode:
 
     def __repr__(self):
         return " ".join([t.spelling for t in self.node.get_tokens()])
-
 
 class SpellingNode(AstNode):
     def __repr__(self): return self.node.spelling
@@ -87,6 +90,9 @@ class CompoundAssignmentOperator(AstNode): pass
 class TypeRef(AstNode): pass
 class UnaryOperator(AstNode): pass
 class BinaryOperator(AstNode): pass
+class CaseStmt(AstNode): pass
+class DefaultStmt(AstNode): pass
+
 class UnexposedExpr(AstNode):
     def __repr__(self):
         src = self.to_src()
@@ -118,7 +124,7 @@ class ForStmt(AstNode):
         tokens = [t for t in self.node.get_tokens()]
         children = list(self.node.get_children()) # this is OK because of assert
         # now, ensure that all children are within the range.
-        assert all(extent(c)[0] in outer_range for c in children)
+        self.check_children_not_macro()
 
         body_child = children[-1]
         #assert body_child.kind is CursorKind.COMPOUND_STMT
@@ -139,7 +145,7 @@ class WhileStmt(AstNode):
     def __repr__(self):
         outer_range = extent(self.node)
         children = list(self.node.get_children())
-        assert all(extent(c)[0] in outer_range for c in children)
+        self.check_children_not_macro()
         assert(len(children) == 2)
 
         cond = to_src(children[0])
@@ -208,55 +214,26 @@ stack__enter(CMIMID_SWITCH, %s);
 %s %s
 stack__exit(CMIMID_EXIT)''' % (c, switch_part, body)
 
-class CaseStmt(AstNode):
-    def __repr__(self):
-        return super().__repr__()
-
-
-class DefaultStmt(AstNode):
-    def __repr__(self):
-        return super().__repr__()
-
 
 class CompoundStmt(AstNode):
     def __repr__(self):
-        case_seen = False
-        #case_entry_cb = None
-        #case_exit_cb = None
-        c = get_id()
-
+        outer_range = extent(self.node)
         stmts = []
-        for c in self.node.get_children():
-            is_case_stmt = (c.kind == CursorKind.CASE_STMT
-                            or c.kind == CursorKind.DEFAULT_STMT)
-            is_break_stmt = c.kind == CursorKind.BREAK_STMT
-
-            if is_case_stmt:
-                # create cb names beforehand for number ordering
-                assert(case_seen == False)
-                # case_seen = True
-                #case_entry_cb = create_cb_name() + "() ;\n"
-                #case_exit_cb = create_cb_name() + "() ;\n"
-
+        children = self.node.get_children()
+        self.check_children_not_macro()
+        for c in children:
             rep = to_src(c)
             if not rep:
                 print(c.kind, c.extent, file=sys.stderr)
                 continue
 
             # handle missing semicolons
-            if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
-                rep += " ;"
+            if rep.strip()[-1] not in {'}', ';'}:
+                rep += ";"
 
-            if is_case_stmt:
-                words = rep.split(":")
-                case_part = words[0]
-                others = ":".join(words[1:])
-                others = others[1:] if others[0] == " " else others
-                case_part += ":\n" #+ case_entry_cb
-                rep = case_part + others
-            elif is_break_stmt and case_seen:
-                case_seen = False
-                #rep = case_exit_cb + rep
+            if c.kind in {CursorKind.CASE_STMT, CursorKind.DEFAULT_STMT}:
+                idx = rep.index(':')
+                rep = rep[0:idx+1] + '\n' + rep[idx+1:]
 
             stmts.append(rep)
 
@@ -265,8 +242,6 @@ class CompoundStmt(AstNode):
 {
 %s
 }''' % body
-
-
 
 import pudb
 bp = pudb.set_trace
@@ -291,7 +266,7 @@ method__enter(%s);
 method__exit();
 }''' % (return_type, function_name, params, c, body)
         else:
-            # in this case self is a function declaration and not definition, so we append a ';'
+            # function declaration.
             return '''\
 %s
 %s(%s);''' % (return_type, function_name, params)
