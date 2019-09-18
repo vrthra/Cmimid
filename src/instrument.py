@@ -61,15 +61,15 @@ class AstNode:
 class SpellingNode(AstNode):
     def __repr__(self): return self.node.spelling
 
-class StmtNode(AstNode):
-    def __repr__(self):
-        return "%s;" % super().__repr__()
-
 class SrcNode(AstNode):
     def __repr__(self):
         s = self.to_src()
         if not s: bp()
         return s
+
+class StmtNode(AstNode):
+    def __repr__(self): return "%s;" % super().__repr__()
+
 
 
 class EnumDecl(StmtNode): pass
@@ -83,10 +83,11 @@ class TypeDecl(StmtNode): pass
 
 class CallExpr(SrcNode): pass
 class ParenExpr(SrcNode): pass
+class UnexposedExpr(SrcNode): pass
+class DeclRefExpr(SrcNode): pass
 
 class ParmDecl(AstNode): pass
 class DeclStmt(AstNode): pass
-class DeclRefExpr(SpellingNode): pass
 class CompoundAssignmentOperator(AstNode): pass
 class TypeRef(AstNode): pass
 class UnaryOperator(AstNode): pass
@@ -94,14 +95,6 @@ class BinaryOperator(AstNode): pass
 class CaseStmt(AstNode): pass
 class DefaultStmt(AstNode): pass
 
-class UnexposedExpr(AstNode):
-    def __repr__(self):
-        src = self.to_src()
-        children = list(self.node.get_children())
-        res = "".join([to_src(c) for c in children])
-        if res != src:
-            if src: return src
-        return res
 
 class BreakStmt(AstNode):
     def __repr__(self):
@@ -232,10 +225,6 @@ class CompoundStmt(AstNode):
             if rep.strip()[-1] not in {'}', ';'}:
                 rep += ";"
 
-            if c.kind in {CursorKind.CASE_STMT, CursorKind.DEFAULT_STMT}:
-                idx = rep.index(':')
-                rep = rep[0:idx+1] + '\n' + rep[idx+1:]
-
             stmts.append(rep)
 
         body = "\n".join(stmts)
@@ -243,9 +232,6 @@ class CompoundStmt(AstNode):
 {
 %s
 }''' % body
-
-import pudb
-bp = pudb.set_trace
 
 
 class FunctionDecl(AstNode):
@@ -271,6 +257,9 @@ method__exit();
             return '''\
 %s
 %s(%s);''' % (return_type, function_name, params)
+
+import pudb
+bp = pudb.set_trace
 
 FN_HASH = {
         CursorKind.FUNCTION_DECL: FunctionDecl,
