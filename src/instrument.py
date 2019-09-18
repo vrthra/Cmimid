@@ -121,7 +121,7 @@ class ForStmt(AstNode):
         assert all(extent(c)[0] in outer_range for c in children)
 
         body_child = children[-1]
-        assert body_child.kind is CursorKind.COMPOUND_STMT
+        #assert body_child.kind is CursorKind.COMPOUND_STMT
 
         for_part_tokens = [t for t in tokens if
                 t.extent.end_int_data <= body_child.extent.begin_int_data]
