@@ -1,4 +1,4 @@
-.SECONDARY: instrumented/calc_parse.c
+.SECONDARY:
 
 PYTHON := python3
 

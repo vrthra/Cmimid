@@ -17,16 +17,16 @@ def get_id():
     return str(counter)
 
 def compound_body_with_cb(node, c):
-    assert node.extent.start.line != node.extent.end.line
+    #assert node.extent.start.line != node.extent.end.line
     c1 = get_id()
     rep = ""
     if node.kind == CursorKind.COMPOUND_STMT:
-        src = repr(to_ast(node))
+        src = to_src(node)
         assert (src[0], src[-1]) == ('{', '}')
         assert (src[1], src[-2]) == ('\n', '\n')
         rep = src[2:-2]
     else:
-        rep = repr(to_ast(node))
+        rep = to_src(node)
         if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
             rep += " ;"
 
@@ -91,7 +91,7 @@ class UnexposedExpr(AstNode):
     def __repr__(self):
         src = self.to_src()
         children = list(self.node.get_children())
-        res = "".join([repr(to_ast(c)) for c in children])
+        res = "".join([to_src(c) for c in children])
         if res != src:
             if src: return src
         return res
@@ -142,7 +142,7 @@ class WhileStmt(AstNode):
         assert all(extent(c)[0] in outer_range for c in children)
         assert(len(children) == 2)
 
-        cond = repr(to_ast(children[0]))
+        cond = to_src(children[0])
         c = get_id()
         body = compound_body_with_cb(children[1], c)
 
@@ -165,7 +165,7 @@ class IfStmt(AstNode):
 
         for i, cmp in enumerate(self.node.get_children()):
             if i == 0:   # if condition
-                cond = "%s" % repr(to_ast(cmp))
+                cond = "%s" % to_src(cmp)
             elif i == 1: # if body
                 if_body = compound_body_with_cb(cmp, c)
             elif i == 2: # else body (exists if there is an else)
@@ -201,7 +201,7 @@ class SwitchStmt(AstNode):
 
         assert(children[1].kind == CursorKind.COMPOUND_STMT)
         body_compound_stmt = CompoundStmt(children[1])
-        body = repr(to_ast(children[1]))
+        body = to_src(children[1])
 
         return '''\
 stack__enter(CMIMID_SWITCH, %s);
@@ -238,7 +238,7 @@ class CompoundStmt(AstNode):
                 #case_entry_cb = create_cb_name() + "() ;\n"
                 #case_exit_cb = create_cb_name() + "() ;\n"
 
-            rep = repr(to_ast(c))
+            rep = to_src(c)
             if not rep:
                 print(c.kind, c.extent, file=sys.stderr)
                 continue
@@ -298,12 +298,12 @@ class FunctionDecl(AstNode):
         c = get_id()
         if return_type == "void" or function_name == "main": #for main the return type is not parsed
             # for void functions the first value is the first parameter, for non-void functions it's the return type
-            params = ", ".join([repr(to_ast(c)) for c in children[0:-1]])
+            params = ", ".join([to_src(c) for c in children[0:-1]])
         else:
-            params = ", ".join([repr(to_ast(c)) for c in children[1:-1]])
+            params = ", ".join([to_src(c) for c in children[1:-1]])
         # print(f"{' '.join([t.spelling for t in self.node.get_tokens()])} {function_name} {self.node.result_type.spelling}, {children[-1].kind}", file=sys.stderr)
         if children[-1].kind == CursorKind.COMPOUND_STMT:
-            body = repr(to_ast(children[-1]))
+            body = to_src(children[-1])
             return '''\
 %s
 %s(%s) {
@@ -350,13 +350,15 @@ FN_HASH = {
 
 
 def to_ast(node):
-    #print(node.kind, repr(AstNode(node)))
     if node.kind in FN_HASH:
         return FN_HASH[node.kind](node)
     else:
         print(node.kind, file=sys.stderr)
         return AstNode(node)
 
+def to_src(node):
+    v = to_ast(node)
+    return repr(v)
 
 # DEBUG
 def traverse(node, level):
@@ -373,25 +375,21 @@ def traverse(node, level):
 
 skipped = []
 parsed_extent = []
-
-stored = []
+SRC = []
 
 def store(arg):
-    with open(arg) as f: stored.extend(f.readlines())
+    with open(arg) as f:
+        SRC.extend(f.readlines())
 
 displayed_till = 0
 def display_till(last):
     for i in range(displayed_till, last):
-        print(stored[i], end='')
+        print(SRC[i], end='')
 
-SRC = []
 def parse(arg):
     global displayed_till
     idx = Index.create()
-    with open(arg) as f:
-        SRC.extend(f.readlines())
     translation_unit = idx.parse(arg)
-    #assert translation_unit.cursor.displayname == 'calc_parse.c'
     print('''\
 #define CMIMID_EXIT 0
 #define CMIMID_BREAK 1
@@ -410,11 +408,12 @@ void scope__exit(int i) {}
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
             display_till(i.location.line-1)
-            print(repr(to_ast(i)), file=sys.stdout)
+            print(to_src(i), file=sys.stdout)
             displayed_till = i.extent.end.line
         else:
-           skipped.append(to_ast(i))
-    display_till(len(stored))
+            pass
+           #skipped.append(to_src(i))
+    display_till(len(SRC))
 
 store(sys.argv[1])
 parse(sys.argv[1])
