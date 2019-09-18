@@ -4,10 +4,11 @@ PYTHON := python3
 
 EXAMPLE_C_SOURCE := example3.c
 
-LIBCLANG_PATH=/usr/local/Cellar/llvm/8.0.1/lib/libclang.dylib
 LIBCLANG_PATH=/usr/lib/llvm-8/lib/libclang.so
+LIBCLANG_PATH=/usr/local/Cellar/llvm/8.0.1/lib/libclang.dylib
 
 CLANG_FORMAT=/usr/lib/llvm-8/bin/clang-format
+CLANG_FORMAT=/usr/local/Cellar/llvm/8.0.1/bin/clang-format
 
 instrument: | instrumented
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py examples/$(EXAMPLE_C_SOURCE) | $(CLANG_FORMAT) > instrumented/$(EXAMPLE_C_SOURCE)
