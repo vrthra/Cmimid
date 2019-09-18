@@ -77,6 +77,7 @@ class ReturnStmt(StmtNode): pass
 class VarDecl(StmtNode): pass
 class UnionDecl(StmtNode): pass
 class TypeDecl(StmtNode): pass
+class CallExpr(SrcNode): pass
 
 class ParmDecl(AstNode): pass
 class DeclStmt(AstNode): pass
@@ -269,23 +270,6 @@ class CompoundStmt(AstNode):
 
 import pudb
 bp = pudb.set_trace
-class CallExpr(SrcNode):
-    pass
-    #def __repr__(self):
-    #    src = self.to_src()
-    #    if src: return src
-    #    bp()
-
-    #    tokens = [i.spelling for i in self.node.get_tokens()]
-    #    children = [i for i in self.node.get_children()]
-    #    clst = [repr(to_ast(c)) if not isinstance(c.kind, TokenKind) else c.spelling for c in children]
-    #    cval = "%s(%s)" %(clst[0], ','.join(clst[1:]))
-    #    tval = ''.join(tokens)
-    #    if not cval == tval:
-    #        if tval: return tval
-    #        else: return cval
-    #    return cval
-
 
 
 class FunctionDecl(AstNode):
