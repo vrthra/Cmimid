@@ -80,12 +80,13 @@ class ReturnStmt(StmtNode): pass
 class VarDecl(StmtNode): pass
 class UnionDecl(StmtNode): pass
 class TypeDecl(StmtNode): pass
+
 class CallExpr(SrcNode): pass
+class ParenExpr(SrcNode): pass
 
 class ParmDecl(AstNode): pass
 class DeclStmt(AstNode): pass
 class DeclRefExpr(SpellingNode): pass
-class ParenExpr(AstNode): pass
 class CompoundAssignmentOperator(AstNode): pass
 class TypeRef(AstNode): pass
 class UnaryOperator(AstNode): pass
