@@ -295,12 +295,8 @@ class FunctionDecl(AstNode):
         return_type = self.node.result_type.spelling
         function_name = self.node.spelling
         c = get_id()
-        if return_type == "void" or function_name == "main": #for main the return type is not parsed
-            # for void functions the first value is the first parameter, for non-void functions it's the return type
-            params = ", ".join([to_src(c) for c in children[0:-1]])
-        else:
-            params = ", ".join([to_src(c) for c in children[1:-1]])
-        # print(f"{' '.join([t.spelling for t in self.node.get_tokens()])} {function_name} {self.node.result_type.spelling}, {children[-1].kind}", file=sys.stderr)
+        cparams = [p for p in children if p.kind == CursorKind.PARM_DECL]
+        params = ", ".join([to_src(c) for c in cparams])
         if children[-1].kind == CursorKind.COMPOUND_STMT:
             body = to_src(children[-1])
             return '''\
