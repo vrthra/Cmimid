@@ -1,5 +1,5 @@
 import sys
-from clang.cindex import Index, Config, CursorKind
+from clang.cindex import Index, Config, CursorKind, TokenKind
 import os
 
 LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
@@ -17,10 +17,14 @@ def get_id():
     return str(counter)
 
 def compound_body_with_cb(node, c):
+    assert node.extent.start.line != node.extent.end.line
     c1 = get_id()
     rep = ""
     if node.kind == CursorKind.COMPOUND_STMT:
-        rep = repr(to_ast(node))[2:-2]
+        src = repr(to_ast(node))
+        assert (src[0], src[-1]) == ('{', '}')
+        assert (src[1], src[-2]) == ('\n', '\n')
+        rep = src[2:-2]
     else:
         rep = repr(to_ast(node))
         if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
@@ -33,97 +37,64 @@ scope__enter(%s);
 scope__exit(CMIMID_EXIT);
 }''' % (c1, rep)
 
-def check_cases_have_break(compound_stmt):
-    node = compound_stmt.node
-
-    looking_for_break = False
-    for _,child in enumerate(node.get_children()):
-        if child.kind == CursorKind.CASE_STMT and not looking_for_break:
-            looking_for_break = True
-        elif (child.kind == CursorKind.BREAK_STMT or child.kind == CursorKind.RETURN_STMT) and looking_for_break:
-            looking_for_break = False
-        elif (child.kind == CursorKind.CASE_STMT or child.kind == CursorKind.DEFAULT_STMT) and looking_for_break:
-            raise Exception("case or default does not have break")
-    if looking_for_break:
-        raise Exception("case or default does not have break")
-
-    # case_indexes = [i for i, c in enumerate(node.get_children())
-    #                 if c.kind == CursorKind.CASE_STMT or
-    #                    c.kind == CursorKind.DEFAULT_STMT]
-    # break_indexes = [i for i, c in enumerate(node.get_children())
-    #                  if c.kind == CursorKind.BREAK_STMT or
-    #                     c.kind == CursorKind.GOTO_STMT]
-    #
-    #
-    # if len(break_indexes) < len(case_indexes):
-    #     raise Exception("case or default stmt does not have break")
-    #
-    # for i, ci in enumerate(case_indexes):
-    #     ci_next = (break_indexes[-1] + 1 if i == len(case_indexes) - 1
-    #                else case_indexes[i+1])
-    #     has_break = any(bi > ci and bi < ci_next for bi in break_indexes)
-    #     if not has_break:
-    #         raise Exception("case or default stmt does not have break")
-
 
 class AstNode:
     def __init__(self, node):
         self.node = node
 
+    def to_src(self):
+        src = ''.join(SRC[self.node.extent.begin_int_data-2:self.node.extent.end_int_data-2])
+        if self.node.extent.start.line == self.node.extent.end.line:
+            lines = [SRC[self.node.extent.start.line-1]]
+        else:
+            lines = SRC[self.node.extent.start.line-1: self.node.extent.end.line-1]
+        lines[0] = lines[0][self.node.extent.start.column-1:self.node.extent.end.column-1]
+        return ''.join(lines)
+
     def __repr__(self):
         return " ".join([t.spelling for t in self.node.get_tokens()])
 
 
-class IntegerLiteral(AstNode):
-    def __repr__(self):
-        return super().__repr__()
-        #return "%s %s" % (self.node.type.spelling, self.node.spelling)
+class SpellingNode(AstNode):
+    def __repr__(self): return self.node.spelling
 
-
-class ParmDecl(AstNode):
-    def __repr__(self):
-        return super().__repr__()
-        # assert not list(self.node.get_children())
-        #return "%s %s" % (self.node.type.spelling, self.node.spelling)
-
-
-class VarDecl(AstNode):
-    last_loc = None
-    def __repr__(self):
-        # make sure that the same source location is not instrumented twice (happens for declarations like "int a, b = 0;")
-        # if VarDecl.last_loc is None or VarDecl.last_loc != self.node.get_tokens().__next__().location:
-        # print(f"{self.last_loc} {VarDecl.last_loc == self.node.get_tokens().__next__().location if VarDecl.last_loc is not None else True}", file=sys.stderr)
-        # print(f"{'  '.join([str((t.spelling, t.location)) for t in self.node.get_tokens()])}, {self.node.kind}", file=sys.stderr)
-        # print(traceback.print_stack(), file=sys.stderr)
-        VarDecl.last_loc = self.node.get_tokens().__next__().location
-        return "%s;" % super().__repr__()
-        # else:
-        #     VarDecl.last_loc = self.node.get_tokens().__next__().location
-        #     return ""
-
-class EnumDecl(AstNode):
+class StmtNode(AstNode):
     def __repr__(self):
         return "%s;" % super().__repr__()
 
-class TypedefDecl(AstNode):
+class SrcNode(AstNode):
     def __repr__(self):
-        return "%s;" % super().__repr__()
+        s = self.to_src()
+        if not s: bp()
+        return s
 
-class StructDecl(AstNode):
+
+class EnumDecl(StmtNode): pass
+class TypedefDecl(StmtNode): pass
+class IntegerLiteral(AstNode): pass
+class ParmDecl(AstNode): pass
+class StructDecl(StmtNode): pass
+class DeclStmt(AstNode): pass
+class DeclRefExpr(SpellingNode): pass
+class ReturnStmt(StmtNode): pass
+class StructDecl(AstNode): pass
+class EnumDecl(AstNode): pass
+class TypeDecl(AstNode): pass
+class UnionDecl(AstNode): pass
+class ParenExpr(AstNode): pass
+class CompoundAssignmentOperator(AstNode): pass
+class TypeRef(AstNode): pass
+class UnaryOperator(AstNode): pass
+class BinaryOperator(AstNode): pass
+class VarDecl(StmtNode): pass
+class UnexposedExpr(AstNode):
     def __repr__(self):
-        return "%s;" % super().__repr__()
-
-
-class DeclStmt(AstNode):
-    def __repr__(self):
-        return super().__repr__()
-        #return "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
-
-
-class ReturnStmt(AstNode):
-    def __repr__(self):
-        return "%s ;" % super().__repr__()
-        #return "\n".join([repr(to_ast(c)) for c in self.node.get_children()])
+        src = self.to_src()
+        children = list(self.node.get_children())
+        res = "".join([repr(to_ast(c)) for c in children])
+        if res != src:
+            if src: return src
+        return res
 
 class BreakStmt(AstNode):
     def __repr__(self):
@@ -138,14 +109,23 @@ class ContinueStmt(AstNode):
 scope__exit(CMIMID_CONTINUE);
 %s ;''' % super().__repr__()
 
+def extent(node):
+    return range(node.extent.start.line,node.extent.end.line+1)
 
 class ForStmt(AstNode):
     def __repr__(self):
-        children = list(self.node.get_children())
-        body_token_len = len(list(children[-1].get_tokens()))
+        outer_range = extent(self.node)
+        tokens = [t for t in self.node.get_tokens()]
+        children = list(self.node.get_children()) # this is OK because of assert
+        # now, ensure that all children are within the range.
+        assert all(extent(c)[0] in outer_range for c in children)
 
-        for_part_tokens = list(self.node.get_tokens())[:-body_token_len]
-        for_part = " ".join([t.spelling for t in for_part_tokens])
+        body_child = children[-1]
+        assert body_child.kind is CursorKind.COMPOUND_STMT
+
+        for_part_tokens = [t for t in tokens if
+                t.extent.end_int_data <= body_child.extent.begin_int_data]
+        for_part = ' '.join([t.spelling for t in for_part_tokens])
 
         c = get_id()
         body = compound_body_with_cb(children[-1], c)
@@ -157,7 +137,9 @@ stack__exit(CMIMID_EXIT);''' % (c, for_part, body)
 
 class WhileStmt(AstNode):
     def __repr__(self):
+        outer_range = extent(self.node)
         children = list(self.node.get_children())
+        assert all(extent(c)[0] in outer_range for c in children)
         assert(len(children) == 2)
 
         cond = repr(to_ast(children[0]))
@@ -219,7 +201,6 @@ class SwitchStmt(AstNode):
 
         assert(children[1].kind == CursorKind.COMPOUND_STMT)
         body_compound_stmt = CompoundStmt(children[1])
-        # check_cases_have_break(body_compound_stmt)
         body = repr(to_ast(children[1]))
 
         return '''\
@@ -258,6 +239,9 @@ class CompoundStmt(AstNode):
                 #case_exit_cb = create_cb_name() + "() ;\n"
 
             rep = repr(to_ast(c))
+            if not rep:
+                print(c.kind, c.extent, file=sys.stderr)
+                continue
 
             # handle missing semicolons
             if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
@@ -283,79 +267,26 @@ class CompoundStmt(AstNode):
 }''' % body
 
 
-class StructDecl(AstNode):
+
+import pudb
+bp = pudb.set_trace
+class CallExpr(SrcNode):
     pass
     #def __repr__(self):
-    #    return '/*StructDecl (%s) */' % super().__repr__()
+    #    src = self.to_src()
+    #    if src: return src
+    #    bp()
 
-class EnumDecl(AstNode):
-    pass
+    #    tokens = [i.spelling for i in self.node.get_tokens()]
+    #    children = [i for i in self.node.get_children()]
+    #    clst = [repr(to_ast(c)) if not isinstance(c.kind, TokenKind) else c.spelling for c in children]
+    #    cval = "%s(%s)" %(clst[0], ','.join(clst[1:]))
+    #    tval = ''.join(tokens)
+    #    if not cval == tval:
+    #        if tval: return tval
+    #        else: return cval
+    #    return cval
 
-class TypeDecl(AstNode):
-    pass
-
-class UnionDecl(AstNode):
-    pass
-
-class CallExpr(AstNode):
-    pass
-
-class ParenExpr(AstNode):
-    pass
-    #def __repr__(self):
-    #    children = list(self.node.get_children())
-    #    #print([i.kind for i in children])
-    #    assert len(children) == 1
-    #    return "(%s)" % repr(to_ast(children[0]))
-
-class CompoundAssignmentOperator(AstNode):
-    pass
-
-
-class TypeRef(AstNode):
-    pass
-
-class UnaryOperator(AstNode):
-    pass
-
-class BinaryOperator(AstNode):
-    pass
-    #def _get_operator(self, cursor):
-    #    """
-    #    Returns the operator token of a binary operator cursor.
-    #    :param cursor: A cursor of kind BINARY_OPERATOR.
-    #    :return:       The token object containing the actual operator or None.
-    #    """
-    #    children = list(cursor.get_children())
-    #    operator_min_begin = (children[0].location.line,
-    #                          children[0].location.column)
-    #    operator_max_end = (children[1].location.line,
-    #                        children[1].location.column)
-
-    #    for token in cursor.get_tokens():
-    #        if (operator_min_begin < (token.extent.start.line,
-    #                                  token.extent.start.column) and
-    #            operator_max_end >= (token.extent.end.line,
-    #                                 token.extent.end.column)):
-    #            return token
-
-    #    return None  # pragma: no cover
-
-    #def __repr__(self):
-    #    children = list(self.node.get_children())
-    #    operator = self._get_operator(self.node)
-    #    assert len(children) == 2
-    #    lhs = repr(to_ast(children[0]))
-    #    rhs = repr(to_ast(children[1]))
-    #    #print([i.kind for i in children])
-    #    return "%s %s %s" % (lhs, operator, rhs)
-
-class UnexposedExpr(AstNode):
-    pass
-    #def __repr__(self):
-    #    children = list(self.node.get_children())
-    #    #print([i.kind for i in children])
-    #    return " ".join([repr(to_ast(c)) for c in children])
 
 
 class FunctionDecl(AstNode):
@@ -378,76 +309,50 @@ class FunctionDecl(AstNode):
 %s(%s) {
 method__enter(%s);
 %s
-method__exit();''' % (return_type, function_name, params, c, body)
+method__exit();
+}''' % (return_type, function_name, params, c, body)
         else:
             # in this case self is a function declaration and not definition, so we append a ';'
             return '''\
 %s
 %s(%s);''' % (return_type, function_name, params)
 
+FN_HASH = {
+        CursorKind.FUNCTION_DECL: FunctionDecl,
+        CursorKind.PARM_DECL: ParmDecl,
+        CursorKind.VAR_DECL: VarDecl,
+        CursorKind.TYPEDEF_DECL: TypedefDecl,
+        CursorKind.INTEGER_LITERAL: IntegerLiteral,
+        CursorKind.COMPOUND_STMT: CompoundStmt,
+        CursorKind.DECL_STMT: DeclStmt,
+        CursorKind.DECL_REF_EXPR: DeclRefExpr,
+        CursorKind.IF_STMT: IfStmt,
+        CursorKind.SWITCH_STMT: SwitchStmt,
+        CursorKind.CASE_STMT: CaseStmt,
+        CursorKind.DEFAULT_STMT: DefaultStmt,
+        CursorKind.FOR_STMT: ForStmt,
+        CursorKind.WHILE_STMT: WhileStmt,
+        CursorKind.RETURN_STMT: ReturnStmt,
+        CursorKind.BREAK_STMT: BreakStmt,
+        CursorKind.CONTINUE_STMT: ContinueStmt,
+        CursorKind.STRUCT_DECL: StructDecl,
+        CursorKind.TYPEDEF_DECL: TypeDecl,
+        CursorKind.ENUM_DECL: EnumDecl,
+        CursorKind.UNION_DECL: UnionDecl,
+        CursorKind.CALL_EXPR: CallExpr,
+        CursorKind.BINARY_OPERATOR: BinaryOperator,
+        CursorKind.UNARY_OPERATOR: UnaryOperator,
+        CursorKind.TYPE_REF: TypeRef,
+        CursorKind.PAREN_EXPR: ParenExpr,
+        CursorKind.COMPOUND_ASSIGNMENT_OPERATOR: CompoundAssignmentOperator,
+        CursorKind.UNEXPOSED_EXPR: UnexposedExpr,
+        }
+
 
 def to_ast(node):
     #print(node.kind, repr(AstNode(node)))
-
-    # declarations
-    if node.kind == CursorKind.FUNCTION_DECL:
-        return FunctionDecl(node)
-    elif node.kind == CursorKind.PARM_DECL:
-        return ParmDecl(node)
-    elif node.kind == CursorKind.VAR_DECL:
-        return VarDecl(node)
-    elif node.kind == CursorKind.TYPEDEF_DECL:
-        return TypedefDecl(node)
-
-    # literals
-    elif node.kind == CursorKind.INTEGER_LITERAL:
-        return IntegerLiteral(node)
-
-    # statements
-    elif node.kind == CursorKind.COMPOUND_STMT:
-        return CompoundStmt(node)
-    elif node.kind == CursorKind.DECL_STMT:
-        return DeclStmt(node)
-    elif node.kind == CursorKind.IF_STMT:
-        return IfStmt(node)
-    elif node.kind == CursorKind.SWITCH_STMT:
-        return SwitchStmt(node)
-    elif node.kind == CursorKind.CASE_STMT:
-        return CaseStmt(node)
-    elif node.kind == CursorKind.DEFAULT_STMT:
-        return DefaultStmt(node)
-    elif node.kind == CursorKind.FOR_STMT:
-        return ForStmt(node)
-    elif node.kind == CursorKind.WHILE_STMT:
-        return WhileStmt(node)
-    elif node.kind == CursorKind.RETURN_STMT:
-        return ReturnStmt(node) # need the ;
-    elif node.kind == CursorKind.BREAK_STMT:
-        return BreakStmt(node)
-    elif node.kind == CursorKind.CONTINUE_STMT:
-        return ConinuetStmt(node)
-    elif node.kind == CursorKind.STRUCT_DECL:
-        return StructDecl(node)
-    elif node.kind == CursorKind.TYPEDEF_DECL:
-        return TypeDecl(node)
-    elif node.kind == CursorKind.ENUM_DECL:
-        return EnumDecl(node)
-    elif node.kind == CursorKind.UNION_DECL:
-        return UnionDecl(node)
-    elif node.kind == CursorKind.CALL_EXPR:
-        return CallExpr(node)
-    elif node.kind == CursorKind.BINARY_OPERATOR:
-        return BinaryOperator(node)
-    elif node.kind == CursorKind.UNARY_OPERATOR:
-        return UnaryOperator(node)
-    elif node.kind == CursorKind.TYPE_REF:
-        return TypeRef(node)
-    elif node.kind == CursorKind.PAREN_EXPR:
-        return ParenExpr(node)
-    elif node.kind == CursorKind.COMPOUND_ASSIGNMENT_OPERATOR:
-        return CompoundAssignmentOperator(node)
-    elif node.kind == CursorKind.UNEXPOSED_EXPR:
-        return UnexposedExpr(node)
+    if node.kind in FN_HASH:
+        return FN_HASH[node.kind](node)
     else:
         print(node.kind, file=sys.stderr)
         return AstNode(node)
@@ -479,10 +384,12 @@ def display_till(last):
     for i in range(displayed_till, last):
         print(stored[i], end='')
 
-
+SRC = []
 def parse(arg):
     global displayed_till
     idx = Index.create()
+    with open(arg) as f:
+        SRC.extend(f.readlines())
     translation_unit = idx.parse(arg)
     #assert translation_unit.cursor.displayname == 'calc_parse.c'
     print('''\
