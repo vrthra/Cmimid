@@ -72,21 +72,20 @@ class SrcNode(AstNode):
 class EnumDecl(StmtNode): pass
 class TypedefDecl(StmtNode): pass
 class IntegerLiteral(AstNode): pass
-class ParmDecl(AstNode): pass
 class StructDecl(StmtNode): pass
+class ReturnStmt(StmtNode): pass
+class VarDecl(StmtNode): pass
+class UnionDecl(StmtNode): pass
+class TypeDecl(StmtNode): pass
+
+class ParmDecl(AstNode): pass
 class DeclStmt(AstNode): pass
 class DeclRefExpr(SpellingNode): pass
-class ReturnStmt(StmtNode): pass
-class StructDecl(AstNode): pass
-class EnumDecl(AstNode): pass
-class TypeDecl(AstNode): pass
-class UnionDecl(AstNode): pass
 class ParenExpr(AstNode): pass
 class CompoundAssignmentOperator(AstNode): pass
 class TypeRef(AstNode): pass
 class UnaryOperator(AstNode): pass
 class BinaryOperator(AstNode): pass
-class VarDecl(StmtNode): pass
 class UnexposedExpr(AstNode):
     def __repr__(self):
         src = self.to_src()
