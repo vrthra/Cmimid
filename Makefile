@@ -27,7 +27,10 @@ instrumented/%.x: instrumented/%.c
 instrumented/%.d: examples/%.c src/instrument.py | instrumented
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
 
-instrumented/%.json: instrumented/%.x
+instrumented/calc_parse.input: instrumented/calc_parse.x
+	echo '1+1' > instrumented/calc_parse.input
+
+instrumented/%.json: instrumented/%.input
 	rm -rf $(pfuzzer)/instrumented
 	cp examples/calc_parse.h instrumented
 	cp -r instrumented $(pfuzzer)/instrumented
