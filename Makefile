@@ -30,6 +30,10 @@ instrumented/%.d: examples/%.c src/instrument.py | instrumented
 instrumented/calc_parse.input: instrumented/calc_parse.x
 	echo '1+1' > instrumented/calc_parse.input
 
+instrumented/%.input: instrumented/%.x
+	touch $<
+
+
 instrumented/%.json: instrumented/%.input
 	rm -rf $(pfuzzer)/instrumented
 	cp examples/calc_parse.h instrumented
