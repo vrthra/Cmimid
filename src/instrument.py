@@ -215,11 +215,36 @@ class CompoundStmt(AstNode):
         stmts = []
         children = self.node.get_children()
         self.check_children_not_macro()
-        for c in children:
-            rep = to_src(c)
+        label = None
+        for child in children:
+            rep = to_src(child)
+            if child.kind == CursorKind.CASE_STMT:
+                literal, *_ = child.get_children()
+                label = to_src(literal)
+                assert rep.startswith('case')
+                colon = rep.find(':')
+                init = rep[:colon]
+                rest = rep[colon+1:]
+                rep = '''\
+%s:
+scope__enter(%s);
+%s
+''' % (init, label, rest)
+
+            elif child.kind == CursorKind.DEFAULT_STMT:
+                label = 'default'
+                assert rep.startswith('default')
+                colon = rep.find(':')
+                init = rep[:colon]
+                rest = rep[colon+1:]
+                rep = '''\
+%s:
+scope__enter(%s);
+%s
+''' % (init, label, rest)
             if not rep:
-                print(c.kind, c.extent, file=sys.stderr)
-                continue
+               print(child.kind, child.extent, file=sys.stderr)
+               continue
 
             # handle missing semicolons
             if rep.strip()[-1] not in {'}', ';'}:
