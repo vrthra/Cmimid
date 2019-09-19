@@ -216,30 +216,33 @@ class CompoundStmt(AstNode):
         children = self.node.get_children()
         self.check_children_not_macro()
         label = None
+        seen_default = False
         for child in children:
             rep = to_src(child)
             if child.kind == CursorKind.CASE_STMT:
+                assert not seen_default
                 literal, *_ = child.get_children()
-                label = to_src(literal)
+                label = int(to_src(literal))
                 assert rep.startswith('case')
                 colon = rep.find(':')
                 init = rep[:colon]
                 rest = rep[colon+1:]
                 rep = '''\
 %s:
-scope__enter(%s);
+scope__enter(%d);
 %s
 ''' % (init, label, rest)
 
             elif child.kind == CursorKind.DEFAULT_STMT:
-                label = 'default'
+                seen_default = True
+                label += 1 # We dont expect any more after default
                 assert rep.startswith('default')
                 colon = rep.find(':')
                 init = rep[:colon]
                 rest = rep[colon+1:]
                 rep = '''\
 %s:
-scope__enter(%s);
+scope__enter(%d);
 %s
 ''' % (init, label, rest)
             if not rep:

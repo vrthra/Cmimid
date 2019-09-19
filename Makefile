@@ -31,7 +31,7 @@ instrumented/calc_parse.input: instrumented/calc_parse.x
 	echo '1+1' > instrumented/calc_parse.input
 
 instrumented/%.input: instrumented/%.x
-	touch $<
+	touch $@
 
 
 instrumented/%.json: instrumented/%.input
