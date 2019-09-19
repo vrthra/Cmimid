@@ -1,14 +1,15 @@
 .SECONDARY:
 
-PYTHON := python3
+PYTHON=python3
+pfuzzer=../checksum-repair
 
-EXAMPLE_C_SOURCE := example3.c
+EXAMPLE_C_SOURCE=example3.c
 
-LIBCLANG_PATH=/usr/lib/llvm-8/lib/libclang.so
 LIBCLANG_PATH=/usr/local/Cellar/llvm/8.0.1/lib/libclang.dylib
+LIBCLANG_PATH=/usr/lib/llvm-8/lib/libclang.so
 
-CLANG_FORMAT=/usr/lib/llvm-8/bin/clang-format
 CLANG_FORMAT=/usr/local/Cellar/llvm/8.0.1/bin/clang-format
+CLANG_FORMAT=/usr/lib/llvm-8/bin/clang-format
 
 instrument: | instrumented
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py examples/$(EXAMPLE_C_SOURCE) | $(CLANG_FORMAT) > instrumented/$(EXAMPLE_C_SOURCE)
@@ -25,6 +26,15 @@ instrumented/%.x: instrumented/%.c
 
 instrumented/%.d: examples/%.c src/instrument.py | instrumented
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
+
+instrumented/%.json: instrumented/%.x
+	rm -rf $(pfuzzer)/instrumented
+	cp examples/calc_parse.h instrumented
+	cp -r instrumented $(pfuzzer)/instrumented
+	cd $(pfuzzer) && $(MAKE) instrumented/$*.taint
+	cp $(pfuzzer)/instrumented/pygmalion.json instrumented/$*.json_
+	mv instrumented/$*.json_ instrumented/$*.json
+
 
 view:
 	${PYTHON} ./bin/pyclasvi.py -l $(LIBCLANG_PATH)
