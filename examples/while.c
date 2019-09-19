@@ -6,3 +6,16 @@ int main(int argc, char** argv) {
         j = 26;
     }
 }
+
+void test() {
+    int i = 0, j = 1;
+    while (i < 5) {
+        i += 1;
+        while(j < 3)
+          j = 26;
+    }
+
+    while(j > 10) {
+          j = 26;
+    }
+}
