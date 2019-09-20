@@ -2,6 +2,11 @@ import sys
 from clang.cindex import Index, Config, CursorKind, TokenKind
 import os
 
+# Notes: We need both STACK_EXIT and SCOPE_EXIT because
+# Break causes both STACK and SCOPE exits while
+# Continue only causes SCOPE exit.
+
+
 LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
 
