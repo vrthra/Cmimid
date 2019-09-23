@@ -4,6 +4,7 @@ int main(int argc, char** argv) {
     while (i < 5) {
         i += 1;
         j = 26;
+        continue;
     }
 }
 

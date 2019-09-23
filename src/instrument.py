@@ -81,7 +81,6 @@ class EnumDecl(StmtNode): pass
 class TypedefDecl(StmtNode): pass
 class IntegerLiteral(AstNode): pass
 class StructDecl(StmtNode): pass
-class ReturnStmt(StmtNode): pass
 class VarDecl(StmtNode): pass
 class UnionDecl(StmtNode): pass
 class TypeDecl(StmtNode): pass
@@ -100,6 +99,11 @@ class BinaryOperator(AstNode): pass
 class CaseStmt(AstNode): pass
 class DefaultStmt(AstNode): pass
 
+class ReturnStmt(AstNode):
+    def __repr__(self):
+        return '''\
+cmimid__return(CMIMID_RETURN);
+%s ;''' % super().__repr__()
 
 class BreakStmt(AstNode):
     def __repr__(self):
@@ -374,6 +378,8 @@ def parse(arg):
 #define CMIMID_WHILE 4
 #define CMIMID_IF 5
 #define CMIMID_SWITCH 6
+#define CMIMID_RETURN 7
+
 void cmimid__method_enter(int i) {}
 void cmimid__method_exit() {}
 void cmimid__stack_enter(int i, int j) {}
@@ -382,6 +388,7 @@ void cmimid__scope_enter(int i) {}
 void cmimid__scope_exit(int i) {}
 void cmimid__break(int i) {}
 void cmimid__continue(int i) {}
+void cmimid__return(int i) {}
 ''')
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
