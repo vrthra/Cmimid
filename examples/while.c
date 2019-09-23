@@ -7,6 +7,30 @@ int main(int argc, char** argv) {
     }
 }
 
+
+int while_break() {
+    int i = 0, j = 1;
+    while (i < 5) {
+        i += 1;
+        j = 26;
+        if (i == 0) {
+          break;
+        }
+    }
+}
+
+int while_continue() {
+    int i = 0, j = 1;
+    while (i < 5) {
+        i += 1;
+        j = 26;
+        if (i == 0) {
+          continue;
+        }
+    }
+}
+
+
 void test() {
     int i = 0, j = 1;
     while (i < 5) {
