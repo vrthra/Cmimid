@@ -22,13 +22,18 @@ instrumented/%.c: examples/%.c src/instrument.py | instrumented
 
 
 instrumented/%.x: instrumented/%.c
-	gcc -o $@ $< -I ./examples
+	gcc -g -o $@ $< -I ./examples
 
 instrumented/%.d: examples/%.c src/instrument.py | instrumented
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
 
 instrumented/calc_parse.input: instrumented/calc_parse.x
-	echo '1+1' > instrumented/calc_parse.input
+	echo '1+1' > $@
+
+
+instrumented/urlparse.input: instrumented/urlparse.x
+	echo 'http://www.google.com:80/q?search=me+you&test=last#fragment' > $@
+
 
 instrumented/%.input: instrumented/%.x
 	touch $@

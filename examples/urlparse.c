@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
 enum url_type {
     URL_NORMAL,
@@ -18,7 +19,9 @@ struct url_info {
     enum url_type type;
 };
 
-void parse_url(struct url_info *ui, char *url){
+void parse_url(struct url_info *ui){
+    char url[PATH_MAX];
+    fgets(url, MAX, stdin);
     char *p = url;
     char *q, *r, *s;
 
@@ -141,6 +144,6 @@ void url_unescape(char *buffer){
 
 int main(int argc, char* argv[]) {
     struct url_info url;
-    parse_url(&url, argv[1]);
+    parse_url(&url);
     return 0;
 }
