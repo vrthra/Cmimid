@@ -81,67 +81,6 @@ void parse_url(struct url_info *ui){
     }
 }
 
-char *url_escape_unsafe(const char *input){
-    const char *p = input;
-    unsigned char c;
-    char *out, *q;
-    int n = 0;
-
-    while ((c = *p++)) {
-        if (c < ' ' || c > '~') {
-            n += 3;		/* Need escaping */
-        } else {
-            n++;
-        }
-    }
-
-    q = out = malloc(n+1);
-    while ((c = *p++)) {
-        if (c < ' ' || c > '~') {
-            q += snprintf(q, 3, "%02X", c);
-        } else {
-            *q++ = c;
-        }
-    }
-
-    *q = '\000';
-
-    return out;
-}
-
-static int hexdigit(char c){
-    if (c >= '0' && c <= '9')
-        return c - '0';
-    c |= 0x20;
-    if (c >= 'a' && c <= 'f')
-        return c - 'a' + 10;
-    return -1;
-}
-
-void url_unescape(char *buffer){
-    const char *p = buffer;
-    char *q = buffer;
-    unsigned char c;
-    int x, y;
-
-    while ((c = *p++)) {
-        if (c == '%') {
-            x = hexdigit(p[0]);
-            if (x >= 0) {
-                y = hexdigit(p[1]);
-                if (y >= 0) {
-                    *q++ = (x << 4) + y;
-                    p += 2;
-                    continue;
-                }
-            }
-        }
-        *q++ = c;
-    }
-    *q = '\000';
-}
-
-
 int main(int argc, char* argv[]) {
     struct url_info url;
     parse_url(&url);
