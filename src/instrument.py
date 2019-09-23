@@ -32,9 +32,9 @@ def compound_body_with_cb(node, c):
 
     return '''\
 {
-scope__enter(%s);
+cmimid__scope_enter(%s);
 %s
-scope__exit(CMIMID_EXIT);
+cmimid__scope_exit(CMIMID_EXIT);
 }''' % (c1, rep)
 
 
@@ -104,14 +104,13 @@ class DefaultStmt(AstNode): pass
 class BreakStmt(AstNode):
     def __repr__(self):
         return '''\
-scope__exit(CMIMID_BREAK);
-stack__exit(CMIMID_BREAK);
+cmimid__break(CMIMID_BREAK);
 %s ;''' % super().__repr__()
 
 class ContinueStmt(AstNode):
     def __repr__(self):
         return '''\
-scope__exit(CMIMID_CONTINUE);
+cmimid__continue(CMIMID_CONTINUE);
 %s ;''' % super().__repr__()
 
 def extent(node):
@@ -135,9 +134,9 @@ class ForStmt(AstNode):
         c = get_id()
         body = compound_body_with_cb(children[-1], c)
         return '''\
-stack__enter(CMIMID_FOR, %s);
+cmimid__stack_enter(CMIMID_FOR, %s);
 %s %s
-stack__exit(CMIMID_EXIT);''' % (c, for_part, body)
+cmimid__stack_exit(CMIMID_EXIT);''' % (c, for_part, body)
 
 
 class WhileStmt(AstNode):
@@ -152,9 +151,9 @@ class WhileStmt(AstNode):
         body = compound_body_with_cb(children[1], c)
 
         return '''\
-stack__enter(CMIMID_WHILE, %s);
+cmimid__stack_enter(CMIMID_WHILE, %s);
 while (%s) %s
-stack__exit(CMIMID_EXIT);''' % (c, cond, body)
+cmimid__stack_exit(CMIMID_EXIT);''' % (c, cond, body)
 
 
 class IfStmt(AstNode):
@@ -186,9 +185,9 @@ class IfStmt(AstNode):
 
         if self.with_cb:
             return '''\
-stack__enter(CMIMID_IF, %s);
+cmimid__stack_enter(CMIMID_IF, %s);
 %s
-stack__exit(CMIMID_EXIT);''' % (c, block)
+cmimid__stack_exit(CMIMID_EXIT);''' % (c, block)
 
         return block
 
@@ -209,9 +208,9 @@ class SwitchStmt(AstNode):
         body = to_src(children[1])
 
         return '''\
-stack__enter(CMIMID_SWITCH, %s);
+cmimid__stack_enter(CMIMID_SWITCH, %s);
 %s %s
-stack__exit(CMIMID_EXIT)''' % (c, switch_part, body)
+cmimid__stack_exit(CMIMID_EXIT)''' % (c, switch_part, body)
 
 
 class CompoundStmt(AstNode):
@@ -234,7 +233,7 @@ class CompoundStmt(AstNode):
                 rest = rep[colon+1:]
                 rep = '''\
 %s:
-scope__enter(%d);
+cmimid__scope_enter(%d);
 %s
 ''' % (init, label, rest)
 
@@ -247,7 +246,7 @@ scope__enter(%d);
                 rest = rep[colon+1:]
                 rep = '''\
 %s:
-scope__enter(%d);
+cmimid__scope_enter(%d);
 %s
 ''' % (init, label, rest)
             if not rep:
@@ -281,9 +280,9 @@ class FunctionDecl(AstNode):
             return '''\
 %s
 %s(%s) {
-method__enter(%s);
+cmimid__method_enter(%s);
 %s
-method__exit();
+cmimid__method_exit();
 }''' % (return_type, function_name, params, c, body)
         else:
             # function declaration.
@@ -375,12 +374,14 @@ def parse(arg):
 #define CMIMID_WHILE 4
 #define CMIMID_IF 5
 #define CMIMID_SWITCH 6
-void method__enter(int i) {}
-void method__exit() {}
-void stack__enter(int i, int j) {}
-void stack__exit(int i) {}
-void scope__enter(int i) {}
-void scope__exit(int i) {}
+void cmimid__method_enter(int i) {}
+void cmimid__method_exit() {}
+void cmimid__stack_enter(int i, int j) {}
+void cmimid__stack_exit(int i) {}
+void cmimid__scope_enter(int i) {}
+void cmimid__scope_exit(int i) {}
+void cmimid__break(int i) {}
+void cmimid__continue(int i) {}
 ''')
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
