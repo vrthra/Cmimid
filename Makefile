@@ -42,6 +42,9 @@ instrumented/%.json: instrumented/%.input
 	cp $(pfuzzer)/instrumented/pygmalion.json instrumented/$*.json_
 	mv instrumented/$*.json_ instrumented/$*.json
 
+instrumented/%.events: instrumented/%.json
+	python3 ./src/events.py $<
+
 
 view:
 	${PYTHON} ./bin/pyclasvi.py -l $(LIBCLANG_PATH)

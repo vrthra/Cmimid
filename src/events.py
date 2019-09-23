@@ -97,11 +97,17 @@ def track_stack(e):
                 stack, stack_kind, stack_id, args = t
                 gen_events.append(('stack_exit', stack_kind, stack_id))
                 if stack_kind in {CMIMID_FOR, CMIMID_WHILE, CMIMID_SWITCH}:
-                    # stop unwinding
-                    break
+                    # this should not happen.
+                    assert False
             elif t[0] == 'scope':
                 scope, scope_kind, args = t
                 gen_events.append(('scope_exit', scope_kind))
+
+                stack, stack_kind, stack_id, args = cmimid_stack[-1]
+                if stack_kind in {CMIMID_FOR, CMIMID_WHILE, CMIMID_SWITCH}:
+                    # stop unwinding. The stack would get popped next.
+                    break
+
 
     elif e.fun in {'cmimid__continue'}:
         # continue is a little break. Unwind until the next
@@ -128,8 +134,9 @@ def track_stack(e):
 
 
 
-def process_events(events):
+def process_events(my_events):
     assert not cmimid_stack
+    events = [e for e in my_events if e['type'] in {'CMIMID_EVENT'}]
     for e in events:
         if e['type'] == 'CMIMID_EVENT':
             track_stack(O(**e))
