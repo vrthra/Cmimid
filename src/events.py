@@ -19,9 +19,6 @@ kind_map={CMIMID_FOR:'for', CMIMID_WHILE:'while', CMIMID_IF:'if', CMIMID_SWITCH:
 
 class O:
     def __init__(self, **keys): self.__dict__.update(keys)
-    @property
-    def i(self): return self.__dict__
-    def __xor__(self, o): return C(**{**self.__dict__, **o.i})
     def __repr__(self): return str(self.__dict__)
 
 def read_json(json_file):
@@ -33,10 +30,7 @@ def read_json(json_file):
     return json_arr
 
 cmimid_stack =  []
-
-last_stack = []
-method_stack = []
-
+pseudo_method_stack = []
 gen_events = []
 
 def to_key(method, name, num): return '%s:%s_%s' % (method, name, num)
@@ -46,7 +40,6 @@ def track_stack(e):
         mid, *args = e.info
         cmimid_stack.append(('method', mid))
         method_name = METHOD_PREFIX[-1]
-        method_stack.append([])
         gen_events.append(('method_enter', mid, method_name))
 
     elif e.fun in {'cmimid__method_exit'}:
@@ -54,12 +47,11 @@ def track_stack(e):
         assert method == 'method'
         gen_events.append(('method_exit', mid))
         method_name = METHOD_PREFIX[-1]
-        method_stack.pop()
 
 
     elif e.fun in {'cmimid__stack_enter'}:
         stack_kind, stack_id, *args = e.info
-        last_stack.append((stack_id, kind_map[stack_kind]))
+        pseudo_method_stack.append((stack_id, kind_map[stack_kind]))
         cmimid_stack.append(('stack', stack_kind, stack_id, args))
         gen_events.append(('stack_enter', kind_map[stack_kind], stack_id))
 
@@ -67,31 +59,18 @@ def track_stack(e):
         stack, stack_kind, stack_id, args = cmimid_stack.pop()
         assert stack == 'stack'
         gen_events.append(('stack_exit', stack_kind, stack_id))
-        last_stack.pop()
+        pseudo_method_stack.pop()
 
     elif e.fun in {'cmimid__scope_enter'}:
         scope_alt, *args = e.info
 
-        key = to_key(METHOD_PREFIX[-1], last_stack[-1][1], last_stack[-1][0])
+        key = to_key(METHOD_PREFIX[-1], pseudo_method_stack[-1][1], pseudo_method_stack[-1][0])
 
         name = "%(key)s %(alt)s" % { 'key': key, 'alt': scope_alt}
 
-        #if last_stack[-1][1] in {'while', 'for'}:
-        #    self.method_stack[-1] += 1
-        #elif self.name in {'if'}:
-        #    pass
-        #else:
-        #    assert False, self.name
-        #uid = json.dumps(self.method_stack)
-        #if self.name in {'while'}:
-        #    taints.trace_call('%s:%s_%s %s %s' % (self.method, self.name, self.num, self.can_empty, uid))
-        #else:
-        #    taints.trace_call('%s:%s_%s %s %s#%s' % (self.method, self.name, self.num, self.can_empty, self.alt, uid))
-        #taints.trace_set_method(self.name)
-
 
         cmimid_stack.append(('scope', scope_alt, args))
-        gen_events.append(('scope_enter', scope_alt, last_stack[-1][1], name))
+        gen_events.append(('scope_enter', scope_alt, pseudo_method_stack[-1][1], name))
 
     elif e.fun in {'cmimid__scope_exit'}:
         scope, scope_alt, args = cmimid_stack.pop()
@@ -165,7 +144,11 @@ def track_stack(e):
         assert False
 
 def track_comparison(e):
-    # {'type': 'INPUT_COMPARISON', 'index': [3], 'length': 4, 'value': '\n', 'operator': 'strcmp', 'operand': ['\n'], 'id': 1, 'stack': ['_real_program_main']}
+    # {'type': 'INPUT_COMPARISON', 'index': [3],
+    # 'length': 4, 'value': '\n',
+    # 'operator': 'strcmp',
+    # 'operand': ['\n'],
+    # 'id': 1, 'stack': ['_real_program_main']}
     indexes = e['index']
     for i in indexes:
         # we need only the accessed indexes
