@@ -32,10 +32,10 @@ def compound_body_with_cb(node, alt):
 
     return '''\
 {
-cmimid__scope_enter(%s);
+cmimid__scope_enter(%s, %s /*else*/);
 %s
 cmimid__scope_exit(CMIMID_EXIT);
-}''' % (salt, rep)
+}''' % (salt, '0' if alt == 0 else '1', rep)
 
 
 class AstNode:
@@ -237,7 +237,7 @@ class CompoundStmt(AstNode):
                 rest = rep[colon+1:]
                 rep = '''\
 %s:
-cmimid__scope_enter(%d);
+cmimid__scope_enter(%d, 0);
 %s
 ''' % (init, label, rest)
 
@@ -250,7 +250,7 @@ cmimid__scope_enter(%d);
                 rest = rep[colon+1:]
                 rep = '''\
 %s:
-cmimid__scope_enter(%d);
+cmimid__scope_enter(%d, 1/*default*/);
 %s
 ''' % (init, label, rest)
             if not rep:
@@ -384,7 +384,7 @@ void cmimid__method_enter(int i) {}
 void cmimid__method_exit() {}
 void cmimid__stack_enter(int i, int j) {}
 void cmimid__stack_exit(int i) {}
-void cmimid__scope_enter(int i) {}
+void cmimid__scope_enter(int i, int j) {}
 void cmimid__scope_exit(int i) {}
 void cmimid__break(int i) {}
 void cmimid__continue(int i) {}
