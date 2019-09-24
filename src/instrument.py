@@ -16,9 +16,9 @@ def get_id():
     counter += 1
     return str(counter)
 
-def compound_body_with_cb(node, c):
+def compound_body_with_cb(node, alt):
     #assert node.extent.start.line != node.extent.end.line
-    c1 = get_id()
+    salt = str(alt) #get_id()
     rep = ""
     if node.kind == CursorKind.COMPOUND_STMT:
         src = to_src(node)
@@ -35,7 +35,7 @@ def compound_body_with_cb(node, c):
 cmimid__scope_enter(%s);
 %s
 cmimid__scope_exit(CMIMID_EXIT);
-}''' % (c1, rep)
+}''' % (salt, rep)
 
 
 class AstNode:
@@ -136,7 +136,7 @@ class ForStmt(AstNode):
         for_part = ' '.join([t.spelling for t in for_part_tokens])
 
         c = get_id()
-        body = compound_body_with_cb(children[-1], c)
+        body = compound_body_with_cb(children[-1], '0')
         return '''\
 cmimid__stack_enter(CMIMID_FOR, %s);
 %s %s
@@ -152,7 +152,7 @@ class WhileStmt(AstNode):
 
         cond = to_src(children[0])
         c = get_id()
-        body = compound_body_with_cb(children[1], c)
+        body = compound_body_with_cb(children[1], '0')
 
         return '''\
 cmimid__stack_enter(CMIMID_WHILE, %s);
@@ -175,13 +175,13 @@ class IfStmt(AstNode):
             if i == 0:   # if condition
                 cond = "%s" % to_src(cmp)
             elif i == 1: # if body
-                if_body = compound_body_with_cb(cmp, c)
+                if_body = compound_body_with_cb(cmp, '0')
             elif i == 2: # else body (exists if there is an else)
                 if cmp.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
                     else_body = "%s" % repr(IfStmt(cmp, with_cb=False))
                 else:
-                    else_body = compound_body_with_cb(cmp, c)
+                    else_body = compound_body_with_cb(cmp, '1')
 
         block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
