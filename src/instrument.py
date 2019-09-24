@@ -32,10 +32,10 @@ def compound_body_with_cb(node, alt):
 
     return '''\
 {
-cmimid__scope_enter(%s, %s /*else*/);
+cmimid__scope_enter(%s, %s);
 %s
 cmimid__scope_exit(CMIMID_EXIT);
-}''' % (salt, '0' if alt == 0 else '1', rep)
+}''' % (salt, '0' if alt == '0' else '1 /*else*/', rep)
 
 
 class AstNode:
@@ -171,17 +171,17 @@ class IfStmt(AstNode):
         if_body = ""
         else_body = ""
 
-        for i, cmp in enumerate(self.node.get_children()):
+        for i, child in enumerate(self.node.get_children()):
             if i == 0:   # if condition
-                cond = "%s" % to_src(cmp)
+                cond = "%s" % to_src(child)
             elif i == 1: # if body
-                if_body = compound_body_with_cb(cmp, '0')
+                if_body = compound_body_with_cb(child, '0')
             elif i == 2: # else body (exists if there is an else)
-                if cmp.kind == CursorKind.IF_STMT:
+                if child.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
-                    else_body = "%s" % repr(IfStmt(cmp, with_cb=False))
+                    else_body = "%s" % repr(IfStmt(child, with_cb=False))
                 else:
-                    else_body = compound_body_with_cb(cmp, '1')
+                    else_body = compound_body_with_cb(child, '1')
 
         block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
