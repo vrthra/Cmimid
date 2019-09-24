@@ -132,16 +132,18 @@ def track_stack(e):
     else:
         assert False
 
+def track_comparison(evt):
+    print(evt)
 
 
-def process_events(my_events):
+
+def process_events(events):
     assert not cmimid_stack
-    events = [e for e in my_events if e['type'] in {'CMIMID_EVENT'}]
     for e in events:
         if e['type'] == 'CMIMID_EVENT':
             track_stack(O(**e))
         elif e['type'] == 'INPUT_COMPARISON':
-            print(e)
+            track_comparison(e)
     assert not cmimid_stack
     indent = 0
     for e in gen_events:
