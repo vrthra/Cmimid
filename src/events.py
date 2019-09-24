@@ -4,6 +4,9 @@ import pudb
 bp = pudb.set_trace
 import json
 
+import mimid_context
+import taints
+
 CMIMID_EXIT=0
 CMIMID_BREAK=1
 CMIMID_CONTINUE=2
@@ -32,22 +35,26 @@ def read_json(json_file):
 cmimid_stack =  []
 
 last_stack = []
+method_stack = []
 
 gen_events = []
 
+def to_key(method, name, num): return '%s:%s_%s' % (method, name, num)
 
 def track_stack(e):
     if e.fun in {'cmimid__method_enter'}:
         mid, *args = e.info
         cmimid_stack.append(('method', mid))
         method_name = METHOD_PREFIX[-1]
-        gen_events.append(('method_enter', mid))
+        method_stack.append([])
+        gen_events.append(('method_enter', mid, method_name))
 
     elif e.fun in {'cmimid__method_exit'}:
         method, mid = cmimid_stack.pop()
         assert method == 'method'
         gen_events.append(('method_exit', mid))
         method_name = METHOD_PREFIX[-1]
+        method_stack.pop()
 
 
     elif e.fun in {'cmimid__stack_enter'}:
@@ -65,11 +72,23 @@ def track_stack(e):
     elif e.fun in {'cmimid__scope_enter'}:
         scope_alt, *args = e.info
 
-        name = "%(prefix)s:%(kind)s_%(num)s %(alt)s" % {
-                'prefix': METHOD_PREFIX[-1],
-                'kind': last_stack[-1][1],
-                'num': last_stack[-1][0],
-                'alt': scope_alt}
+        key = to_key(METHOD_PREFIX[-1], last_stack[-1][1], last_stack[-1][0])
+
+        name = "%(key)s %(alt)s" % { 'key': key, 'alt': scope_alt}
+
+        #if last_stack[-1][1] in {'while', 'for'}:
+        #    self.method_stack[-1] += 1
+        #elif self.name in {'if'}:
+        #    pass
+        #else:
+        #    assert False, self.name
+        #uid = json.dumps(self.method_stack)
+        #if self.name in {'while'}:
+        #    taints.trace_call('%s:%s_%s %s %s' % (self.method, self.name, self.num, self.can_empty, uid))
+        #else:
+        #    taints.trace_call('%s:%s_%s %s %s#%s' % (self.method, self.name, self.num, self.can_empty, self.alt, uid))
+        #taints.trace_set_method(self.name)
+
 
         cmimid_stack.append(('scope', scope_alt, args))
         gen_events.append(('scope_enter', scope_alt, last_stack[-1][1], name))
@@ -152,12 +171,69 @@ def track_comparison(e):
         # we need only the accessed indexes
         gen_events.append(('comparison', i))
 
+def show_nested(gen_events):
+    indent = 0
+    for e in gen_events:
+        if '_enter' in e[0]:
+            print("|\t" * indent, e)
+            indent += 1
+        elif '_exit' in e[0]:
+            indent -= 1
+            print("|\t" * indent, e)
+
+def fire_events(gen_events):
+    comparisons = []
+    taints.trace_init()
+    method = []
+    for e in gen_events:
+        if 'method_enter' == e[0]:
+            method.append(mimid_context.method__(name=e[2], args=[]))
+            method[-1].__enter__()
+        elif 'method_exit' == e[0]:
+            method[-1].__exit__()
+            method.pop()
+
+        elif 'stack_enter' == e[0]:
+            can_empty = '?'
+            if e[1] in {'while', 'for'}:
+                can_empty = '?'
+            elif e[1] in {'switch', 'if'}:
+                # first need to check if the switch has default an if has else
+                can_empty = '-' # or =
+            method.append(mimid_context.stack__(name=e[1], num=e[2], method_i=method[-1], can_empty=can_empty))
+            method[-1].__enter__()
+        elif 'stack_exit' == e[0]:
+            method[-1].__exit__()
+            method.pop()
+
+        elif 'scope_enter' == e[0]:
+            method.append(mimid_context.scope__(alt=e[1], stack_i=method[-1]))
+            method[-1].__enter__()
+
+        elif 'scope_exit' == e[0]:
+            method[-1].__exit__()
+            method.pop()
+
+        elif 'comparison' == e[0]:
+            idx = e[1]
+            method_, stackdepth_, mid = taints.get_current_method()
+            comparisons.append((idx, inputstr[idx], mid))
+
+
+    j = { 'comparisons_fmt': 'idx, char, method_call_id',
+          'comparisons':comparisons,
+                'method_map_fmt': 'method_call_id, method_name, children',
+                'method_map': taints.convert_method_map(taints.METHOD_MAP),
+                'inputstr': inputstr,
+                'original': sys.argv[2],
+                'arg': sys.argv[2]}
+    print(json.dumps([j]))
+
 
 METHOD_PREFIX = None
 METHOD_NAME = None
 def process_events(events):
     comparisons_fmt = 'idx, char, method_call_id'
-    comparisons = []
     method_map_fmt = 'method_call_id, method_name, children'
     global METHOD_PREFIX
 
@@ -169,17 +245,11 @@ def process_events(events):
             track_comparison(e)
         elif e['type'] == 'STACK_EVENT':
             METHOD_PREFIX = e['stack']
-
     assert not cmimid_stack
-    indent = 0
-    for e in gen_events:
-        if '_enter' in e[0]:
-            print("|\t" * indent, e)
-            indent += 1
-        elif '_exit' in e[0]:
-            indent -= 1
-            print("|\t" * indent, e)
-
+    fire_events(gen_events)
+    #show_nested(gen_events)
 
 events = read_json(sys.argv[1])
+with open(sys.argv[2]) as f:
+    inputstr = f.read()
 process_events(events)
