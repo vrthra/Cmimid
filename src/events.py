@@ -31,6 +31,7 @@ def read_json(json_file):
 
 cmimid_stack =  []
 pseudo_method_stack = []
+non_empty_methods = set()
 gen_events = []
 
 def to_key(method, name, num): return '%s:%s_%s' % (method, name, num)
@@ -65,6 +66,8 @@ def track_stack(e):
 
     elif e.fun in {'cmimid__scope_enter'}:
         scope_alt, is_default_or_else, *args = e.info
+        if is_default_or_else == '1':
+            non_empty_methods.add(pseudo_method_stack[-1])
         cmimid_stack.append(('scope', scope_alt, args))
         gen_events.append(('scope_enter', scope_alt))
 
@@ -176,12 +179,18 @@ def fire_events(gen_events):
             method.pop()
 
         elif 'stack_enter' == e[0]:
+            stack, str_skind, stack_id = e
+
             can_empty = '?'
             if e[1] in {'while', 'for'}:
                 can_empty = '?'
             elif e[1] in {'switch', 'if'}:
                 # first need to check if the switch has default an if has else
-                can_empty = '-' # or = TODO
+                key = to_key(method[-1].method_name, str_skind, stack_id)
+                if key in non_empty_methods:
+                    can_empty = '=' # has default
+                else:
+                    can_empty = '-' # no default
             _, name, num = e
             method.append(mimid_context.stack__(name=name, num=num, method_i=method[-1], can_empty=can_empty))
             method[-1].__enter__()

@@ -10,6 +10,7 @@ class method__:
             self.name = "%s__%s" % (name, self.args) # <- not for now #TODO
         if args and hasattr(args[0], 'tag'):
             self.name = "%s:%s" % (args[0].tag, self.name)
+        self.method_name = name
         taints.trace_call(self.name)
 
     def __enter__(self):
@@ -24,6 +25,7 @@ class method__:
 class stack__:
     def __init__(self, name, num, method_i, can_empty):
         self.stack = method_i.stack
+        self.method_name = method_i.method_name
         self.can_empty = can_empty # * means yes. + means no, ? means to be determined
         self.name, self.num, self.method = name, num, method_i.name
 
@@ -44,6 +46,7 @@ class scope__:
     def __init__(self, alt, stack_i):
         self.name, self.num, self.method, self.alt = stack_i.name, stack_i.num, stack_i.method, alt
         self.stack = stack_i.stack
+        self.method_name = stack_i.method_name
         self.can_empty = stack_i.can_empty
 
     def __enter__(self):
