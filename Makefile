@@ -48,7 +48,8 @@ instrumented/%.json: instrumented/%.input
 	mv instrumented/$*.json_ instrumented/$*.json
 
 instrumented/%.events: instrumented/%.json
-	python3 ./src/events.py instrumented/$*.json instrumented/$*.input
+	python3 ./src/events.py instrumented/$*.json instrumented/$*.input > $@_
+	mv $@_ $@
 
 
 view:
