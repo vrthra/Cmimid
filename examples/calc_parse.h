@@ -1,6 +1,5 @@
-#ifndef CHECKSUM_REPAIR_BJRN_PDTG_CALC_PARSE_H
-#define CHECKSUM_REPAIR_BJRN_PDTG_CALC_PARSE_H
-
+#ifndef CALC_PARSE_H
+#define CALC_PARSE_H
 
 struct index_num {
     int index;
@@ -13,12 +12,8 @@ struct index_expr {
 };
 
 struct index_num parse_num(char* s, int i);
-
 struct index_expr parse_paren(char* s, int i);
-
 struct index_expr parse_expr(char* s, int i);
+#define BUFFER 10240
 
-
-
-
-#endif //CHECKSUM_REPAIR_BJRN_PDTG_CALC_PARSE_H
+#endif //CALC_PARSE_H
