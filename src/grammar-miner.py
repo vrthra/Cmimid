@@ -993,7 +993,10 @@ def main(tracefile):
     g = check_empty_rules(g)
     g = collapse_rules(g)
     g = convert_spaces(g)
-    e = remove_single_alts(cleanup_tokens(remove_duplicate_rule_keys(remove_single_entries(g))))
+    e = remove_single_entries(g)
+    e = remove_duplicate_rule_keys(e)
+    e = cleanup_tokens(e)
+    e = remove_single_alts(e)
     e = show_grammar(e, canonical=False)
     with open('instrumented/grammar.json', 'w+') as f:
         json.dump(e, f)
