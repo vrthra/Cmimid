@@ -88,7 +88,7 @@ def track_stack(e):
                 # stop unwinding
                 break
             elif t[0] == 'stack':
-                stack, stack_kind, stack_id, args = t
+                stack, stack_id, stack_kind = t
                 gen_events.append(('stack_exit', stack_id))
             elif t[0] == 'scope':
                 scope, scope_kind, args = t
