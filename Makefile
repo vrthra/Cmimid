@@ -48,8 +48,12 @@ instrumented/%.json: instrumented/%.input
 	mv instrumented/$*.json_ instrumented/$*.json
 
 instrumented/%.events: instrumented/%.json
-	python3 ./src/events.py instrumented/$*.json instrumented/$*.input > $@_
+	$(PYTHON) ./src/events.py instrumented/$*.json instrumented/$*.input > $@_
 	mv $@_ $@
+
+
+instrumented/%.grammar: instrumented/%.events
+	$(PYTHON) ./src/grammar-miner.py $<
 
 
 view:
