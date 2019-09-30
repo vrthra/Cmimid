@@ -5,8 +5,7 @@
 /*#include "stdbool.h"*/
 #include "calc_parse.h"
 
-struct index_num
-parse_num(char* s, int i) {
+struct index_num parse_num(char* s, int i) {
     struct index_num result;
     char* buf = (char*) malloc((strlen(s)-i) * sizeof(char)); //
     for (int j=0; j<strlen(s); j++){
