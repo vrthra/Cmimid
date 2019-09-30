@@ -88,8 +88,7 @@ struct index_expr parse_expr(char* s, int i) {
     return expressions;
 }
 
-int
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     char my_string[BUFFER];
     if (argc == 1) {
         char *v = fgets(my_string, BUFFER, stdin);
