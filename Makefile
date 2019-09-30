@@ -35,7 +35,7 @@ instrumented/urlparse.input: instrumented/urlparse.x
 	echo 'http://www.google.com:80/q?search=me+you&test=last#fragment' > $@
 
 
-instrumented/%.input: examples/%.i instrumented/%.x
+instrumented/%.input: examples/%.input instrumented/%.x
 	cat $< > $@
 
 

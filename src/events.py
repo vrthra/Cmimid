@@ -217,8 +217,9 @@ def fire_events(gen_events):
                 'method_map_fmt': 'method_call_id, method_name, children',
                 'method_map': taints.convert_method_map(taints.METHOD_MAP),
                 'inputstr': inputstr,
-                'original': sys.argv[2],
-                'arg': sys.argv[2]}
+                'original': sys.argv[1].replace('.json', '.x'), # the original -- non instrumented exec
+                'arg': sys.argv[2] # the file name of input str
+                }
     print(json.dumps([j]))
 
 
@@ -240,5 +241,6 @@ def process_events(events):
     fire_events(gen_events)
 
 events = read_json(sys.argv[1])
-with open(sys.argv[2]) as f: inputstr = f.read()
+with open(sys.argv[2]) as f:
+    inputstr = f.read()
 process_events(events)

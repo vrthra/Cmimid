@@ -100,6 +100,10 @@ int main(int argc, char *argv[]) {
         }
     } else {
         strcpy(my_string, argv[1]);
+        int read = strlen(my_string);
+        if (my_string[read-1] ==  '\n'){
+            my_string[read-1] = '\0';
+        }
     }
     parse_expr(my_string, 0);
 }
