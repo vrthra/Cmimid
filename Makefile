@@ -52,3 +52,4 @@ view:
 
 clean:
 	rm -rf build/*
+	cd $(pfuzzer) && $(MAKE) clean
