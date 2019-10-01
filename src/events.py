@@ -165,7 +165,7 @@ def show_nested(gen_events):
             indent -= 1
             print("|\t" * indent, e)
 
-def fire_events(gen_events):
+def fire_events(gen_events, inputstr):
     comparisons = []
     taints.trace_init()
     method = []
@@ -220,27 +220,61 @@ def fire_events(gen_events):
                 'original': sys.argv[1].replace('.json', '.x'), # the original -- non instrumented exec
                 'arg': sys.argv[2] # the file name of input str
                 }
-    print(json.dumps([j]))
+    return j
 
 
-METHOD_PREFIX = None
-def process_events(events):
-    global METHOD_PREFIX
-
+METHOD_PREFIX = []
+TRACK = False
+def process_events(my_events):
+    global METHOD_PREFIX, TRACK
     assert not cmimid_stack
-    for e in events:
-        if e['type'] == 'CMIMID_EVENT':
-            track_stack(O(**e))
-        elif e['type'] == 'INPUT_COMPARISON':
-            track_comparison(e)
-        elif e['type'] == 'STACK_EVENT':
-            # this only gets us the top level methods
-            # i.e no pseudo methods.
-            METHOD_PREFIX = e['stack']
-    assert not cmimid_stack
-    fire_events(gen_events)
+
+    event_arr = []
+    last_stack = 0
+    for e in my_events:
+        if e['type'] == 'STACK_EVENT':
+            cur_stack = len(e['stack'])
+            if cur_stack == 3:
+                if last_stack < cur_stack:
+                    # entering.
+                    assert not TRACK
+                    TRACK = True
+                    event_arr.append([])
+                elif last_stack > cur_stack:
+                    # exiting
+                    assert TRACK
+                    TRACK = False
+                else:
+                    assert False
+            last_stack = cur_stack
+        if TRACK:
+            event_arr[-1].append(e)
+    assert len(event_arr) == len(LINES)
+    returns = []
+    for i, events in enumerate(event_arr):
+        for e in events:
+            if e['type'] == 'COVERAGE_EVENT':
+                continue
+            if e['type'] == 'CMIMID_EVENT':
+                track_stack(O(**e))
+            elif e['type'] == 'INPUT_COMPARISON':
+                if TRACK:
+                    track_comparison(e)
+            elif e['type'] == 'STACK_EVENT':
+                # this only gets us the top level methods
+                # i.e no pseudo methods.
+                METHOD_PREFIX = e['stack']
+                #if METHOD_PREFIX ==  ['_real_program_main', 'process_input', 'process_input_record']:
+                if len(METHOD_PREFIX) > 2:
+                    TRACK = True
+                else:
+                    TRACK = False
+        ret = fire_events(gen_events, LINES[i])
+        returns.append(ret)
+        assert not cmimid_stack
+    return returns
 
 events = read_json(sys.argv[1])
 with open(sys.argv[2]) as f:
-    inputstr = f.read()
+    LINES = f.readlines()
 process_events(events)

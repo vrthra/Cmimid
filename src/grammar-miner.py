@@ -988,10 +988,21 @@ def main(tracefile):
     with open(tracefile) as f:
         my_trace = json.load(f)
     mined_trees = miner(my_trace)
+    with open('instrumented/mined_trees.json', 'w+') as f:
+        json.dump(mined_trees, f)
+
     generalized_trees = generalize_iter(mined_trees)
+    with open('instrumented/generalized_trees.json', 'w+') as f:
+        json.dump(generalized_trees, f)
     g = convert_to_grammar(generalized_trees)
+    with open('instrumented/g1.json', 'w+') as f:
+        json.dump(g, f)
     g = check_empty_rules(g)
+    with open('instrumented/g2.json', 'w+') as f:
+        json.dump(g, f)
     g = collapse_rules(g)
+    with open('instrumented/g3.json', 'w+') as f:
+        json.dump(g, f)
     g = convert_spaces(g)
     e = remove_single_entries(g)
     e = remove_duplicate_rule_keys(e)

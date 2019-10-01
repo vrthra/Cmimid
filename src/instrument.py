@@ -38,6 +38,20 @@ cmimid__scope_exit(CMIMID_EXIT);
 }''' % (salt, '0' if alt == '0' else '1 /*else*/', rep)
 
 
+def direct_source(node):
+    src = ''.join(SRC[node.extent.begin_int_data-2:node.extent.end_int_data-2])
+    if node.extent.start.line == node.extent.end.line:
+        lines = [SRC[node.extent.start.line-1]]
+        # columns start from 1
+        start_idx = node.extent.start.column-1
+        stop_idx = node.extent.end.column-1
+        lines[0] = lines[0][start_idx:stop_idx] # range does not include last -- but?.
+    else:
+        lines = SRC[node.extent.start.line-1: node.extent.end.line] # range end is not included
+        lines[0] = lines[0][node.extent.start.column-1:]
+        lines[-1] = lines[-1][:node.extent.end.column]
+    return ''.join(lines)
+
 class AstNode:
     def __init__(self, node):
         self.node = node
@@ -52,13 +66,7 @@ class AstNode:
             raise Exception("We do not know how to handle macros in code")
 
     def to_src(self):
-        src = ''.join(SRC[self.node.extent.begin_int_data-2:self.node.extent.end_int_data-2])
-        if self.node.extent.start.line == self.node.extent.end.line:
-            lines = [SRC[self.node.extent.start.line-1]]
-        else:
-            lines = SRC[self.node.extent.start.line-1: self.node.extent.end.line-1]
-        lines[0] = lines[0][self.node.extent.start.column-1:self.node.extent.end.column-1]
-        return ''.join(lines)
+        return direct_source(self.node)
 
     def __repr__(self):
         return " ".join([t.spelling for t in self.node.get_tokens()])
@@ -276,6 +284,9 @@ class FunctionDecl(AstNode):
         children = list(self.node.get_children())
         return_type = self.node.result_type.spelling
         function_name = self.node.spelling
+        if function_name in {'main', 'process_input', 'process_input_record'}:
+            return direct_source(self.node)
+
         c = get_id()
         cparams = [p for p in children if p.kind == CursorKind.PARM_DECL]
         params = ", ".join([to_src(c) for c in cparams])
