@@ -53,3 +53,6 @@ view:
 clean:
 	rm -rf build/*
 	cd $(pfuzzer) && $(MAKE) clean
+
+dump:
+	clang -Xclang -ast-dump -fsyntax-only $(src)
