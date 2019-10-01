@@ -33,11 +33,10 @@ def read_json(json_file):
 cmimid_stack =  []
 pseudo_method_stack = []
 non_empty_methods = set()
-gen_events = []
 
 def to_key(method, name, num): return '%s:%s_%s' % (method, name, num)
 
-def track_stack(e):
+def track_stack(e, gen_events):
     if e.fun in {'cmimid__method_enter'}:
         _mid, *args = e.info
         mname = METHOD_PREFIX[-1]
@@ -145,7 +144,7 @@ def track_stack(e):
         # TODO need goto
         assert False
 
-def track_comparison(e):
+def track_comparison(e, inputstring, gen_events):
     # {'type': 'INPUT_COMPARISON', 'index': [3],
     # 'length': 4, 'value': '\n',
     # 'operator': 'strcmp',
@@ -153,8 +152,9 @@ def track_comparison(e):
     # 'id': 1, 'stack': ['_real_program_main']}
     indexes = e['index']
     for i in indexes:
+        assert i < max_len
         # we need only the accessed indexes
-        gen_events.append(('comparison', i))
+        gen_events.append(('comparison', i, max_len, inputstring))
 
 def show_nested(gen_events):
     indent = 0
@@ -166,7 +166,7 @@ def show_nested(gen_events):
             indent -= 1
             print("|\t" * indent, e)
 
-def fire_events(gen_events):
+def fire_events(gen_events, inputstring):
     comparisons = []
     taints.trace_init()
     method = []
@@ -210,14 +210,14 @@ def fire_events(gen_events):
         elif 'comparison' == e[0]:
             idx = e[1]
             method_, stackdepth_, mid = taints.get_current_method()
-            comparisons.append((idx, inputstr[idx], mid))
+            comparisons.append((idx, inputstring[idx], mid))
 
 
     j = { 'comparisons_fmt': 'idx, char, method_call_id',
           'comparisons':comparisons,
                 'method_map_fmt': 'method_call_id, method_name, children',
                 'method_map': taints.convert_method_map(taints.METHOD_MAP),
-                'inputstr': inputstr,
+                'inputstr': inputstring,
                 'original': '%s.x' % (event_dir), # the original -- non instrumented exec
                 'arg': ifile # the file name of input str
                 }
@@ -225,21 +225,22 @@ def fire_events(gen_events):
 
 
 METHOD_PREFIX = None
-def process_events(events):
+def process_events(events, inputstring):
     global METHOD_PREFIX
+    gen_events = []
 
     assert not cmimid_stack
     for e in events:
         if e['type'] == 'CMIMID_EVENT':
-            track_stack(O(**e))
+            track_stack(O(**e), gen_events)
         elif e['type'] == 'INPUT_COMPARISON':
-            track_comparison(e)
+            track_comparison(e, inputstring, gen_events)
         elif e['type'] == 'STACK_EVENT':
             # this only gets us the top level methods
             # i.e no pseudo methods.
             METHOD_PREFIX = e['stack']
     assert not cmimid_stack
-    return fire_events(gen_events)
+    return fire_events(gen_events, inputstring)
 
 
 event_dir = sys.argv[1]
@@ -250,7 +251,8 @@ for arg in glob.glob("%s/*.json" % event_dir):
     ifile = arg.replace('.json', '')
     with open(ifile) as f:
         inputstr = f.read()
+    max_len = len(inputstr)
     events = read_json(arg)
-    ret = process_events(events)
+    ret = process_events(events, inputstr)
     returns.append(ret)
 print(json.dumps(returns))
