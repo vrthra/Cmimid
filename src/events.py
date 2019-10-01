@@ -152,9 +152,8 @@ def track_comparison(e, inputstring, gen_events):
     # 'id': 1, 'stack': ['_real_program_main']}
     indexes = e['index']
     for i in indexes:
-        assert i < max_len
         # we need only the accessed indexes
-        gen_events.append(('comparison', i, max_len, inputstring))
+        gen_events.append(('comparison', i, inputstring))
 
 def show_nested(gen_events):
     indent = 0
