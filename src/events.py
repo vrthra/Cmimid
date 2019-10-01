@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import glob
 import pudb
 bp = pudb.set_trace
 import json
@@ -217,10 +218,10 @@ def fire_events(gen_events):
                 'method_map_fmt': 'method_call_id, method_name, children',
                 'method_map': taints.convert_method_map(taints.METHOD_MAP),
                 'inputstr': inputstr,
-                'original': sys.argv[1].replace('.json', '.x'), # the original -- non instrumented exec
-                'arg': sys.argv[2] # the file name of input str
+                'original': '%s.x' % (event_dir), # the original -- non instrumented exec
+                'arg': ifile # the file name of input str
                 }
-    print(json.dumps([j]))
+    return j
 
 
 METHOD_PREFIX = None
@@ -238,9 +239,18 @@ def process_events(events):
             # i.e no pseudo methods.
             METHOD_PREFIX = e['stack']
     assert not cmimid_stack
-    fire_events(gen_events)
+    return fire_events(gen_events)
 
-events = read_json(sys.argv[1])
-with open(sys.argv[2]) as f:
-    inputstr = f.read()
-process_events(events)
+
+event_dir = sys.argv[1]
+if event_dir.endswith('/'):
+    event_dir = event_dir[0:-1]
+returns = []
+for arg in glob.glob("%s/*.json" % event_dir):
+    ifile = arg.replace('.json', '')
+    with open(ifile) as f:
+        inputstr = f.read()
+    events = read_json(arg)
+    ret = process_events(events)
+    returns.append(ret)
+print(json.dumps(returns))

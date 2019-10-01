@@ -333,6 +333,8 @@ def num_tokens(v, s):
 def s_fn(v):
     return num_tokens(v[0], set())
 
+MAX_SAMPLES=1
+
 def check_registered_loops_for_compatibility(idx_map, while_register, module):
     seen = {}
     to_replace = []

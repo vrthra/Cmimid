@@ -27,19 +27,26 @@ build/%.x: build/%.c
 build/%.d: examples/%.c src/instrument.py | build
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
 
-build/%.input: examples/%.input build/%.x
+build/%.input: examples/%.input
 	cat $< > $@
 
-build/%.json: build/%.input
-	rm -rf $(pfuzzer)/build
-	cp examples/calc_parse.h build
-	cp -r build $(pfuzzer)/build
-	cd $(pfuzzer) && $(MAKE) build/$*.taint
-	cp $(pfuzzer)/build/pygmalion.json build/$*.json_
-	mv build/$*.json_ build/$*.json
+build/%.json.done: build/%.x
+	mkdir -p $(pfuzzer)/build/
+	rm -rf $(pfuzzer)/build/*
+	cp examples/*.h build
+	cp -r build/* $(pfuzzer)/build
+	mkdir -p build/$*
+	for i in examples/$*.input.*; \
+	do\
+	  echo $$i; \
+	  cp $$i $(pfuzzer)/build/$*.input; \
+	  (cd $(pfuzzer) && $(MAKE) build/$*.taint;) ; \
+		cp $(pfuzzer)/build/pygmalion.json build/$*/$$(basename $$i).json; \
+		cp $$i build/$*/ ; \
+	done
 
-build/%.events: build/%.json
-	$(PYTHON) ./src/events.py build/$*.json build/$*.input > $@_
+build/%.events: build/%.json.done
+	$(PYTHON) ./src/events.py build/$* > $@_
 	mv $@_ $@
 
 
