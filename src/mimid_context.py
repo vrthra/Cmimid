@@ -10,7 +10,7 @@ class method__:
             self.name = "%s__%s" % (name, self.args) # <- not for now #TODO
         if args and hasattr(args[0], 'tag'):
             self.name = "%s:%s" % (args[0].tag, self.name)
-        self.method_name = name
+        self.method_name = self.name
         taints.trace_call(self.name)
 
     def __enter__(self):
@@ -27,7 +27,7 @@ class stack__:
         self.stack = method_i.stack
         self.method_name = method_i.method_name
         self.can_empty = can_empty # * means yes. + means no, ? means to be determined
-        self.name, self.num, self.method = name, num, method_i.name
+        self.name, self.num = name, num
 
     def __enter__(self):
         if self.name in {'while', 'for'}:
@@ -44,7 +44,7 @@ class stack__:
 import json
 class scope__:
     def __init__(self, alt, stack_i):
-        self.name, self.num, self.method, self.alt = stack_i.name, stack_i.num, stack_i.method, alt
+        self.name, self.num, self.method_name, self.alt = stack_i.name, stack_i.num, stack_i.method_name, alt
         self.stack = stack_i.stack
         self.method_name = stack_i.method_name
         self.can_empty = stack_i.can_empty
@@ -58,9 +58,9 @@ class scope__:
             assert False, self.name
         uid = json.dumps(self.stack)
         if self.name in {'while'}:
-            taints.trace_call('%s:%s_%s %s %s' % (self.method, self.name, self.num, self.can_empty, uid))
+            taints.trace_call('%s:%s_%s %s %s' % (self.method_name, self.name, self.num, self.can_empty, uid))
         else:
-            taints.trace_call('%s:%s_%s %s %s#%s' % (self.method, self.name, self.num, self.can_empty, self.alt, uid))
+            taints.trace_call('%s:%s_%s %s %s#%s' % (self.method_name, self.name, self.num, self.can_empty, self.alt, uid))
         taints.trace_set_method(self.name)
         return self
 
