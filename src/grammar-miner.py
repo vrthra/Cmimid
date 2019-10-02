@@ -2,7 +2,6 @@ import sys
 import json
 from subprocess import run
 
-methods  =[]
 Epsilon = '-'
 NoEpsilon = '='
 
@@ -84,9 +83,13 @@ def to_node(idxes, my_str):
 def to_tree(node, my_str):
     method_name = ("<%s>" % node['name']) if node['name'] is not None else '<START>'
     indexes = node['indexes']
-    node_children = [to_tree(c, my_str) for c in node.get('children', [])]
+    node_children = []
+    for c in node.get('children', []):
+        t = to_tree(c, my_str)
+        if t is None: continue
+        node_children.append(t)
     idx_children = indexes_to_children(indexes, my_str)
-    children = no_overlap([c for c in node_children if c is not None] + idx_children)
+    children = no_overlap(node_children + idx_children)
     if not children:
         return None
     start_idx = children[0][2]
