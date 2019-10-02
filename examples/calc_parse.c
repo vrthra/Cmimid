@@ -113,5 +113,6 @@ int main(int argc, char *argv[]) {
             my_string[read-1] = '\0';
         }
     }
+    printf("val: <%s>\n", my_string);
     parse_expr(my_string, 0, 0);
 }

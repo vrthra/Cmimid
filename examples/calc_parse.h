@@ -13,7 +13,7 @@ struct index_expr {
 
 struct index_num parse_num(char* s, int i);
 struct index_expr parse_paren(char* s, int i);
-struct index_expr parse_expr(char* s, int i);
+struct index_expr parse_expr(char* s, int i, int seen_paren);
 #define BUFFER 10240
 
 #endif //CALC_PARSE_H
