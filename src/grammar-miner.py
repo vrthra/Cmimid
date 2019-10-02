@@ -1,6 +1,6 @@
 import sys
 import json
-from subprocess import run
+import subprocess
 
 Epsilon = '-'
 NoEpsilon = '='
@@ -9,10 +9,25 @@ from operator import itemgetter
 from fuzzingbook.GrammarFuzzer import tree_to_string
 import itertools as it
 
+class O:
+    def __init__(self, **keys): self.__dict__.update(keys)
+    def __repr__(self): return str(self.__dict__)
+
 def do(command, env=None, shell=False, log=False, **args):
-    result = run(command, universal_newlines=True, shell=shell,
-                  env=dict(os.environ, **({} if env is None else env)),**args)
-    return result
+    result = subprocess.Popen(command,
+        stdout = subprocess.PIPE,
+        stderr = subprocess.STDOUT,
+    )
+    stdout, stderr = result.communicate()
+    if log:
+        with open('build/do.log', 'a+') as f:
+            print(json.dumps({'cmd':command, 'env':env, 'exitcode':result.returncode}), env, file=f)
+    return O(returncode=result.returncode, stdout=stdout, stderr=stderr)
+
+#def do(command, env=None, shell=False, log=False, **args):
+#    result = run(command, universal_newlines=True, shell=shell,
+#                  env=dict(os.environ, **({} if env is None else env)),**args)
+#    return result
 
 def reconstruct_method_tree(method_map):
     first_id = None
@@ -80,34 +95,6 @@ def to_node(idxes, my_str):
     assert max(idxes) == idxes[-1]
     return my_str[idxes[0]:idxes[-1] + 1], [], idxes[0], idxes[-1]
 
-def to_tree(node, my_str):
-    method_name = ("<%s>" % node['name']) if node['name'] is not None else '<START>'
-    indexes = node['indexes']
-    node_children = []
-    for c in node.get('children', []):
-        t = to_tree(c, my_str)
-        if t is None: continue
-        node_children.append(t)
-    idx_children = indexes_to_children(indexes, my_str)
-    children = no_overlap(node_children + idx_children)
-    if not children:
-        return None
-    start_idx = children[0][2]
-    end_idx = children[-1][3]
-    si = start_idx
-    my_children = []
-    # FILL IN chars that we did not compare. This is likely due to an i + n
-    # instruction.
-    for c in children:
-        if c[2] != si:
-            sbs = my_str[si: c[2]]
-            my_children.append((sbs, [], si, c[2] - 1))
-        my_children.append(c)
-        si = c[3] + 1
-
-    m = (method_name, my_children, start_idx, end_idx)
-    return m
-
 
 def indexes_to_children(indexes, my_str):
     lst = [
@@ -168,19 +155,48 @@ def no_overlap(arr):
                 # The rule is, the later child gets the say. So, we recursively
                 # remove any ranges that overlap with the current one from the
                 # overlapped range.
-                assert len(overlaps) == 1
-                oitem = list(overlaps)[0]
-                v = remove_overlap_from(my_ranges[oitem], (s,e))
-                del my_ranges[oitem]
-                if v:
-                    my_ranges[v[2:4]] = v
-                my_ranges[(s, e)] = a
+                # assert len(overlaps) == 1
+                #oitem = list(overlaps)[0]
+                for oitem in overlaps:
+                    v = remove_overlap_from(my_ranges[oitem], (s,e))
+                    del my_ranges[oitem]
+                    if v:
+                        my_ranges[v[2:4]] = v
+                    my_ranges[(s, e)] = a
             else:
                 my_ranges[(s, e)] = a
     res = my_ranges.values()
     # assert no overlap, and order by starting index
     s = sorted(res, key=lambda x: x[2])
     return s
+
+def to_tree(node, my_str):
+    method_name = ("<%s>" % node['name']) if node['name'] is not None else '<START>'
+    indexes = node['indexes']
+    node_children = []
+    for c in node.get('children', []):
+        t = to_tree(c, my_str)
+        if t is None: continue
+        node_children.append(t)
+    idx_children = indexes_to_children(indexes, my_str)
+    children = no_overlap(node_children + idx_children)
+    if not children:
+        return None
+    start_idx = children[0][2]
+    end_idx = children[-1][3]
+    si = start_idx
+    my_children = []
+    # FILL IN chars that we did not compare. This is likely due to an i + n
+    # instruction.
+    for c in children:
+        if c[2] != si:
+            sbs = my_str[si: c[2]]
+            my_children.append((sbs, [], si, c[2] - 1))
+        my_children.append(c)
+        si = c[3] + 1
+
+    m = (method_name, my_children, start_idx, end_idx)
+    return m
 
 def miner(call_traces):
     my_trees = []
@@ -262,23 +278,25 @@ def parse_name(name):
     ctrl_name, space, rest = rest.partition(' ')
     can_empty, space, stack = rest.partition(' ')
     ctrl, cname = ctrl_name.split('_')
-    if ':while_' in name:
+    if ':while_' in name or ':for_' in name:
         method_stack = json.loads(stack)
         return method, ctrl, int(cname), 0, can_empty, method_stack
-    elif ':if_' in name:
+    elif ':if_' in name or ':switch_' in name:
         num, mstack = stack.split('#')
         method_stack = json.loads(mstack)
         return method, ctrl, int(cname), num, can_empty, method_stack
 
 def unparse_name(method, ctrl, name, num, can_empty, cstack):
-    if ctrl == 'while':
+    if ctrl == 'while' or ctrl == 'for':
         return "<%s:%s_%s %s %s>" % (method, ctrl, name, can_empty, json.dumps(cstack))
     else:
         return "<%s:%s_%s %s %s#%s>" % (method, ctrl, name, can_empty, num, json.dumps(cstack))
 
+
+
 def update_stack(node, at, new_name):
     nname, children, *rest = node
-    if not (':if_' in nname or ':while_' in nname):
+    if not (':if_' in nname or ':switch_' in nname or ':while_' in nname or ':for_' in nname):
         return
     method, ctrl, cname, num, can_empty, cstack = parse_name(nname)
     cstack[at] = new_name
@@ -472,7 +490,7 @@ def generalize(tree, module):
     for i,child in enumerate(children):
         # now we need to map the while_name here to the ones in node
         # register. Essentially, we try to replace each.
-        if ':while_' not in child[0]:
+        if ':while_' not in child[0] and ':for_' not in child[0]:
             continue
         while_name = child[0].split(' ')[0]
         if last_while is None:
@@ -576,13 +594,13 @@ def to_fuzzable_grammar(grammar):
 def check_empty_rules(grammar):
     new_grammar = {}
     for k in grammar:
-        if k in ':if_':
+        if k in ':if_' or k in ':switch_':
             name, marker = k.split('#')
             if name.endswith(' *'):
                 new_grammar[k] = grammar[k].add(('',))
             else:
                 new_grammar[k] = grammar[k]
-        elif k in ':while_':
+        elif k in ':while_' or k in ':for_':
             # TODO -- we have to check the rules for sequences of whiles.
             # for now, ignore.
             new_grammar[k] = grammar[k]
@@ -993,6 +1011,7 @@ def main(tracefile):
     with open(tracefile) as f:
         my_trace = json.load(f)
     mined_trees = miner(my_trace)
+    with open('build/t1.json', 'w+') as f: json.dump(mined_trees, f)
     generalized_trees = generalize_iter(mined_trees)
     g = convert_to_grammar(generalized_trees)
     with open('build/g1_.json', 'w+') as f: json.dump(g, f)
