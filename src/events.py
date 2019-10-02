@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import sys
 import glob
-import pudb
-bp = pudb.set_trace
 import json
 
 import mimid_context
@@ -116,8 +114,6 @@ def track_stack(e, gen_events):
                 if str_skind in {'for', 'while', 'switch'}:
                     # stop unwinding. The stack would get popped next.
                     break
-
-
     elif e.fun in {'cmimid__continue'}:
         # continue is a little break. Unwind until the next
         # scope that is scope of a loop.
@@ -164,7 +160,6 @@ def show_nested(gen_events):
         elif '_exit' in e[0]:
             indent -= 1
             print("|\t" * indent, e)
-
 def fire_events(gen_events, inputstring):
     comparisons = []
     taints.trace_init()
@@ -224,6 +219,7 @@ def fire_events(gen_events, inputstring):
 
 
 METHOD_PREFIX = None
+IGNORE_OPS = {'tokenstore', 'tokencomp', 'strlen', 'eof'}
 def process_events(events, inputstring):
     global METHOD_PREFIX
     gen_events = []
@@ -231,8 +227,11 @@ def process_events(events, inputstring):
     assert not cmimid_stack
     for e in events:
         if e['type'] == 'CMIMID_EVENT':
+            if e['fun'] == 'load': continue
             track_stack(O(**e), gen_events)
         elif e['type'] == 'INPUT_COMPARISON':
+            if e['operator'] in IGNORE_OPS:
+                continue
             track_comparison(e, inputstring, gen_events)
         elif e['type'] == 'STACK_EVENT':
             # this only gets us the top level methods
