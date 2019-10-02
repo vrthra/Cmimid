@@ -57,7 +57,7 @@ class scope__:
         else:
             assert False, self.name
         uid = json.dumps(self.stack)
-        if self.name in {'while'}:
+        if self.name in {'while', 'for'}:
             taints.trace_call('%s:%s_%s %s %s' % (self.method_name, self.name, self.num, self.can_empty, uid))
         else:
             taints.trace_call('%s:%s_%s %s %s#%s' % (self.method_name, self.name, self.num, self.can_empty, self.alt, uid))
