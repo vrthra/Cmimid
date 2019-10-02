@@ -29,7 +29,7 @@ struct index_expr parse_paren(char* s, int i) {
         exit(11);
     } else {
         struct index_expr result;
-        result = parse_expr(s, i+1);
+        result = parse_expr(s, i+1, 1);
         if (result.index > strlen(s)){
             exit(12); /* Warning: index greater than string len!*/
         }
@@ -47,7 +47,7 @@ struct index_expr parse_paren(char* s, int i) {
 }
 
 /* Return values not correct yet.  */
-struct index_expr parse_expr(char* s, int i) {
+struct index_expr parse_expr(char* s, int i, int seen_paren) {
   struct index_expr expressions;
   expressions.expr_list = (char**) malloc((strlen(s)-i)* sizeof(char*));
   char** expr = expressions.expr_list;
@@ -68,10 +68,6 @@ struct index_expr parse_expr(char* s, int i) {
       assert(is_expr);
       is_expr = 0;
       char str[2] = {c, 0};
-      /*
-      str[0] = c;
-      //string always ends with a null character
-      str[1] = '\0';*/
       *expr = str;
       expr++;
       i++;
@@ -86,6 +82,7 @@ struct index_expr parse_expr(char* s, int i) {
     }
     else if (c == ')'){
       assert(is_expr);
+      assert(seen_paren);
       expressions.index = i;
       return expressions;
     } else {
@@ -93,6 +90,7 @@ struct index_expr parse_expr(char* s, int i) {
       exit(2);
     }
   }
+  assert(is_expr);
   expressions.index = i;
   return expressions;
 }
@@ -115,5 +113,5 @@ int main(int argc, char *argv[]) {
             my_string[read-1] = '\0';
         }
     }
-    parse_expr(my_string, 0);
+    parse_expr(my_string, 0, 0);
 }
