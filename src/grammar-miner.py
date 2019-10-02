@@ -218,6 +218,7 @@ def miner(call_traces):
     return my_trees
 
 import os.path, copy, random
+random.seed(0)
 
 
 def replace_nodes(a2, a1):
