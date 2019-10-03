@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <assert.h>
 
 #include "calc_parse.h"
 
@@ -57,7 +56,7 @@ struct index_expr parse_expr(char* s, int i, int seen_paren) {
   while ( i < strlen(s)){
     char c = s[i];
     if (isdigit(c)) {
-      assert(!is_expr);
+      if(is_expr) { exit(-1);}
       is_expr = 1;
       number = parse_num(s, i);
       i = number.index; /* set new index in input string */
@@ -65,7 +64,7 @@ struct index_expr parse_expr(char* s, int i, int seen_paren) {
       expr++;
     }
     else if (c == '+' || c == '-' || c == '*' || c == '/') {
-      assert(is_expr);
+      if(!is_expr) { exit(-1);}
       is_expr = 0;
       char str[2] = {c, 0};
       *expr = str;
@@ -73,7 +72,7 @@ struct index_expr parse_expr(char* s, int i, int seen_paren) {
       i++;
     }
     else if (c == '('){
-      assert(!is_expr);
+      if(is_expr) { exit(-1);}
       is_expr = 1;
       paren = parse_paren(s, i);
       i = paren.index;
@@ -81,8 +80,8 @@ struct index_expr parse_expr(char* s, int i, int seen_paren) {
       expr++;
     }
     else if (c == ')'){
-      assert(is_expr);
-      assert(seen_paren);
+      if(!is_expr) { exit(-1);}
+      if(!seen_paren) { exit(-2);}
       expressions.index = i;
       return expressions;
     } else {
@@ -90,7 +89,7 @@ struct index_expr parse_expr(char* s, int i, int seen_paren) {
       exit(2);
     }
   }
-  assert(is_expr);
+  if(!is_expr) { exit(-2);}
   expressions.index = i;
   return expressions;
 }
