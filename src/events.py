@@ -24,7 +24,9 @@ def read_json(json_file):
     json_arr = []
     with open(json_file) as f:
         arr =  f.readlines()
-    for a in arr:
+    for i,a in enumerate(arr):
+        if a.startswith('#'):
+            continue
         json_arr.append(json.loads(a))
     return json_arr
 
@@ -133,7 +135,7 @@ def track_stack(e, gen_events):
                 scope, scope_kind, args = t
                 gen_events.append(('scope_exit', scope_kind))
                 stack, stack_id, skind = cmimid_stack[-1]
-                if stack_kind in {'for', 'while', 'switch'}:
+                if skind in {'for', 'while', 'switch'}:
                     # stop unwinding
                     break
     else:
@@ -225,7 +227,7 @@ def process_events(events, inputstring):
     gen_events = []
 
     assert not cmimid_stack
-    for e in events:
+    for i,e in enumerate(events):
         if e['type'] == 'CMIMID_EVENT':
             if e['fun'] == 'load': continue
             track_stack(O(**e), gen_events)
