@@ -6,12 +6,20 @@ int main(int argc, char** argv) {
             i = 10;
             i += 1;
             break;
+        case 3:
+            break;
+        case 4:
         case 1:
             i = 20;
             break;
         default:
             i = 0;
-            break;
+    }
+    switch (i > 1) {
+      default:
+            i = 0;
+            i = 1;
+        break;
     }
     return 0;
 }
