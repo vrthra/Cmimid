@@ -13,7 +13,8 @@ import os
 # 3. Absolutely no C++ comments
 # 4. Put braces around individual case statements in a switch
 # 5. Braces initialization of struct members does not work as expected in many places
-# 6. Really no macros, even for things like isdigit or strncmp
+# 6. Defaults in switch should not contain breaks.
+# 7. Really no macros, even for things like isdigit or strncmp
 
 LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
@@ -29,12 +30,12 @@ def compound_body_with_cb(node, alt):
     salt = str(alt) #get_id()
     rep = ""
     if node.kind == CursorKind.COMPOUND_STMT:
-        src = to_src(node)
+        src = to_string(node)
         assert (src[0], src[-1]) == ('{', '}')
         assert (src[1], src[-2]) == ('\n', '\n')
         rep = src[2:-2]
     else:
-        rep = to_src(node)
+        rep = to_string(node)
         if rep[-1] != "}" and rep[-1] != "\n" and rep[-1] != ";":
             rep += " ;"
 
@@ -107,7 +108,6 @@ class CompoundAssignmentOperator(AstNode): pass
 class TypeRef(AstNode): pass
 class UnaryOperator(AstNode): pass
 class BinaryOperator(AstNode): pass
-class CaseStmt(AstNode): pass
 class DefaultStmt(AstNode): pass
 
 class ReturnStmt(AstNode):
@@ -130,6 +130,22 @@ cmimid__continue(CMIMID_CONTINUE);
 
 def extent(node):
     return range(node.extent.start.line,node.extent.end.line+1)
+
+
+
+class CaseStmt(AstNode):
+    def __repr__(self):
+       children = list(self.node.get_children())
+       if len(children) == 2:
+           label = to_string(children[0])
+           body = compound_body_with_cb(children[1], label)
+           return '''case %s: %s;''' % (label, body)
+       src = []
+       for child in children:
+           c = to_string(child)
+           src.append(s)
+       return '\n'.join(src)
+
 
 class ForStmt(AstNode):
     def __repr__(self):
@@ -161,7 +177,7 @@ class WhileStmt(AstNode):
         self.check_children_not_macro()
         assert(len(children) == 2)
 
-        cond = to_src(children[0])
+        cond = to_string(children[0])
         c = get_id()
         body = compound_body_with_cb(children[1], '0')
 
@@ -184,7 +200,7 @@ class IfStmt(AstNode):
 
         for i, child in enumerate(self.node.get_children()):
             if i == 0:   # if condition
-                cond = "%s" % to_src(child)
+                cond = "%s" % to_string(child)
             elif i == 1: # if body
                 if_body = compound_body_with_cb(child, '0')
             elif i == 2: # else body (exists if there is an else)
@@ -212,20 +228,13 @@ class SwitchStmt(AstNode):
         c = get_id()
         children = list(self.node.get_children())
         assert(len(children) == 2)
-
-        body_tokens_len = len(list(children[1].get_tokens()))
-
-        switch_part_tokens = list(self.node.get_tokens())[:-body_tokens_len]
-        switch_part = " ".join([t.spelling for t in switch_part_tokens])
-
         assert(children[1].kind == CursorKind.COMPOUND_STMT)
-        body_compound_stmt = CompoundStmt(children[1])
-        body = to_src(children[1])
-
+        switch_expr = to_string(children[0])
+        body = to_string(children[1])
         return '''\
 cmimid__stack_enter(CMIMID_SWITCH, %s);
-%s %s
-cmimid__stack_exit(CMIMID_EXIT)''' % (c, switch_part, body)
+switch (%s) %s
+cmimid__stack_exit(CMIMID_EXIT)''' % (c, switch_expr, body)
 
 
 class CompoundStmt(AstNode):
@@ -238,43 +247,39 @@ class CompoundStmt(AstNode):
         ilabel = 0
         seen_default = False
         for i,child in enumerate(children):
-            rep = to_src(child)
+            rep = to_string(child)
             if child.kind == CursorKind.CASE_STMT:
                 assert not seen_default
-                literal, *_ = child.get_children()
-                label = to_src(literal)
+                gchildren = list(child.get_children())
+                label = to_string(gchildren[0])
+                assert len(gchildren) == 2
+                fall_through = [label]
+                while(gchildren[1].kind == CursorKind.CASE_STMT):
+                    # fall through. We do not count it as a separate option.
+                    child = gchildren[1]
+                    gchildren = list(child.get_children())
+                    label = to_string(gchildren[0])
+                    fall_through.append(label)
+                    assert len(gchildren) == 2
                 ilabel += 1
-                if rep.startswith('case'):
-                    colon = rep.find(':')
-                    init = rep[:colon]
-                    rest = rep[colon+1:]
-                    rep = '''\
-%s:
+                body = to_string(gchildren[1])
+                rep = '''\
+%s
 cmimid__scope_enter(%d, 0);
 %s
-''' % (init, ilabel, rest)
-                else:
-                    bp()
-                    init = to_src(literal)
-                    rep = '''\
-case %s:
-cmimid__scope_enter(%d, 0);
-%s
-''' % (init, ilabel, rest)
-
+''' % ("\n".join(["case %s:" % c for c in fall_through]), ilabel, body)
 
             elif child.kind == CursorKind.DEFAULT_STMT:
                 seen_default = True
+                gchildren = list(child.get_children())
+                assert len(gchildren) == 1
+                body = to_string(gchildren[0])
                 ilabel += 1 # We dont expect any more after default
-                assert rep.startswith('default')
-                colon = rep.find(':')
-                init = rep[:colon]
-                rest = rep[colon+1:]
                 rep = '''\
-%s:
+default:
 cmimid__scope_enter(%d, 1/*default*/);
-%s
-''' % (init, ilabel, rest)
+%s;
+''' % (ilabel, body.strip())
             if not rep:
                print(child.kind, child.extent, file=sys.stderr)
                continue
@@ -284,6 +289,8 @@ cmimid__scope_enter(%d, 1/*default*/);
                 rep += ";"
 
             stmts.append(rep)
+        if seen_default:
+            stmts.append("cmimid__scope_exit(CMIMID_EXIT/*case default*/);")
 
         body = "\n".join(stmts)
         return '''\
@@ -300,9 +307,9 @@ class FunctionDecl(AstNode):
         function_name = self.node.spelling
         c = get_id()
         cparams = [p for p in children if p.kind == CursorKind.PARM_DECL]
-        params = ", ".join([to_src(c) for c in cparams])
+        params = ", ".join([to_string(c) for c in cparams])
         if children[-1].kind == CursorKind.COMPOUND_STMT:
-            body = to_src(children[-1])
+            body = to_string(children[-1])
             return '''\
 %s
 %s(%s) {
@@ -360,7 +367,7 @@ def to_ast(node):
         return AstNode(node)
 
 STOPPED = False
-def to_src(node):
+def to_string(node):
     global STOPPED
     stp = os.environ.get('STOP')
     if stp is not None and not STOPPED:
@@ -401,7 +408,7 @@ def display_till(last):
 def parse(arg):
     global displayed_till
     idx = Index.create()
-    translation_unit = idx.parse(arg)
+    translation_unit = idx.parse(arg, args = ['-xc++', '-std=c++14', '-I/your/include/path', '-I/more/include/path'] )
     print('''\
 #define CMIMID_EXIT 0
 #define CMIMID_BREAK 1
@@ -412,6 +419,8 @@ def parse(arg):
 #define CMIMID_SWITCH 6
 #define CMIMID_RETURN 7
 
+void cmimid__line(int i) {}
+
 void cmimid__method_enter(int i) {}
 void cmimid__method_exit() {}
 void cmimid__stack_enter(int i, int j) {}
@@ -421,15 +430,16 @@ void cmimid__scope_exit(int i) {}
 void cmimid__break(int i) {}
 void cmimid__continue(int i) {}
 void cmimid__return(int i) {}
+
 ''')
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
             display_till(i.location.line-1)
-            print(to_src(i), file=sys.stdout)
+            print(to_string(i), file=sys.stdout)
             displayed_till = i.extent.end.line
         else:
             pass
-           #skipped.append(to_src(i))
+           #skipped.append(to_string(i))
     display_till(len(SRC))
 
 store(sys.argv[1])
