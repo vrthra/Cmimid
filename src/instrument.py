@@ -10,8 +10,10 @@ import os
 # essentially held together with duct tape
 # 1. No macros -- translate all macros to expansions
 # 2. No enums -- enums with case statements fail
-# 3. Really no macros, even for things like isdigit or strncmp
+# 3. Absolutely no C++ comments
 # 4. Put braces around individual case statements in a switch
+# 5. Braces initialization of struct members does not work as expected in many places
+# 6. Really no macros, even for things like isdigit or strncmp
 
 LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
@@ -97,6 +99,7 @@ class CallExpr(SrcNode): pass
 class ParenExpr(SrcNode): pass
 class UnexposedExpr(SrcNode): pass
 class DeclRefExpr(SrcNode): pass
+class CharacterLiteral(SrcNode): pass
 
 class ParmDecl(AstNode): pass
 class DeclStmt(AstNode): pass
@@ -345,6 +348,7 @@ FN_HASH = {
         CursorKind.PAREN_EXPR: ParenExpr,
         CursorKind.COMPOUND_ASSIGNMENT_OPERATOR: CompoundAssignmentOperator,
         CursorKind.UNEXPOSED_EXPR: UnexposedExpr,
+        CursorKind.CHARACTER_LITERAL: CharacterLiteral,
         }
 
 
@@ -355,7 +359,16 @@ def to_ast(node):
         print(node.kind, file=sys.stderr)
         return AstNode(node)
 
+STOPPED = False
 def to_src(node):
+    global STOPPED
+    stp = os.environ.get('STOP')
+    if stp is not None and not STOPPED:
+        line = node.location.line
+        if int(line) > int(stp):
+            bp()
+            STOPPED = True
+
     v = to_ast(node)
     return repr(v)
 

@@ -4,7 +4,7 @@
 #define BUFFER 10240
 
 #include "vector.h"
-
+/*
 enum json_value_type {
 	TYPE_NULL,
 	TYPE_BOOL,
@@ -13,7 +13,7 @@ enum json_value_type {
 	TYPE_ARRAY, // Is a vector, all entries are plain 
 	TYPE_STRING,
 	TYPE_KEY
-};
+};*/
 
 typedef struct {
 	int type;
