@@ -14,15 +14,21 @@ CLANG_FORMAT=/usr/lib/llvm-8/bin/clang-format
 instrument: | build
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py examples/$(EXAMPLE_C_SOURCE) | $(CLANG_FORMAT) > build/$(EXAMPLE_C_SOURCE)
 
+build/%.out: examples/%.c
+	gcc -g -o $@ $< -I ./examples
+
+build/json.out: examples/json.c | build
+	gcc -g -o $@ $^ -I ./examples
 
 build: ; mkdir -p $@
 
-build/%.c: examples/%.c src/instrument.py | build
-	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $< | $(CLANG_FORMAT) > $@
-
+build/%.c: examples/%.c build/%.out src/instrument.py | build
+	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $< > $@_.tmp
+	cat $@_.tmp | $(CLANG_FORMAT) > $@_
+	mv $@_ $@
 
 build/%.x: build/%.c
-	gcc -g -o $@ $< -I ./examples
+	gcc -g -o $@ $^ -I ./examples
 
 build/%.d: examples/%.c src/instrument.py | build
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
@@ -52,6 +58,7 @@ build/%.events: build/%.json.done
 
 build/%.grammar: build/%.events
 	$(PYTHON) ./src/grammar-miner.py $<
+	cp build/g.json $@
 
 
 view:
