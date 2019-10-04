@@ -6,6 +6,12 @@ import os
 # Break causes both STACK and SCOPE exits while
 # Continue only causes SCOPE exit.
 
+# Notes: We need to sanitize C because our parser is
+# essentially held together with duct tape
+# 1. No macros -- translate all macros to expansions
+# 2. No enums -- enums with case statements fail
+# 3. Really no macros, even for things like isdigit or strncmp
+# 4. Put braces around individual case statements in a switch
 
 LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
@@ -48,6 +54,8 @@ class AstNode:
             if c.extent.start.line != c.extent.end.line:
                 continue
             if c.extent.start.column != c.extent.end.column:
+                continue
+            if c.kind == CursorKind.CASE_STMT: # I have no idea why I dont get this.
                 continue
             raise Exception("We do not know how to handle macros in code")
 
@@ -221,29 +229,40 @@ class CompoundStmt(AstNode):
     def __repr__(self):
         outer_range = extent(self.node)
         stmts = []
-        children = self.node.get_children()
+        children = list(self.node.get_children())
         self.check_children_not_macro()
         label = None
+        ilabel = 0
         seen_default = False
-        for child in children:
+        for i,child in enumerate(children):
             rep = to_src(child)
             if child.kind == CursorKind.CASE_STMT:
                 assert not seen_default
                 literal, *_ = child.get_children()
-                label = int(to_src(literal))
-                assert rep.startswith('case')
-                colon = rep.find(':')
-                init = rep[:colon]
-                rest = rep[colon+1:]
-                rep = '''\
+                label = to_src(literal)
+                ilabel += 1
+                if rep.startswith('case'):
+                    colon = rep.find(':')
+                    init = rep[:colon]
+                    rest = rep[colon+1:]
+                    rep = '''\
 %s:
 cmimid__scope_enter(%d, 0);
 %s
-''' % (init, label, rest)
+''' % (init, ilabel, rest)
+                else:
+                    bp()
+                    init = to_src(literal)
+                    rep = '''\
+case %s:
+cmimid__scope_enter(%d, 0);
+%s
+''' % (init, ilabel, rest)
+
 
             elif child.kind == CursorKind.DEFAULT_STMT:
                 seen_default = True
-                label += 1 # We dont expect any more after default
+                ilabel += 1 # We dont expect any more after default
                 assert rep.startswith('default')
                 colon = rep.find(':')
                 init = rep[:colon]
@@ -252,7 +271,7 @@ cmimid__scope_enter(%d, 0);
 %s:
 cmimid__scope_enter(%d, 1/*default*/);
 %s
-''' % (init, label, rest)
+''' % (init, ilabel, rest)
             if not rep:
                print(child.kind, child.extent, file=sys.stderr)
                continue
