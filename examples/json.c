@@ -158,7 +158,7 @@ static int json_parse_value(const char **cursor, json_value *parent) {
     char *end = strchr(*cursor, '"');
     if (end) {
       size_t len = end - start;
-      char *new_string = malloc((len + 1) * sizeof(char));
+      char *new_string = (char*) malloc((len + 1) * sizeof(char));
       memcpy(new_string, start, len);
       new_string[len] = '\0';
 
