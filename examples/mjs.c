@@ -3243,7 +3243,7 @@ unsigned long mjs_array_length(struct mjs *mjs, mjs_val_t v) {
 
   if (!mjs_is_object(v)) {
     len = 0;
-    goto clean;
+  return len;
   }
 
   for (p = get_object_struct(v)->properties; p != 
@@ -3257,7 +3257,6 @@ unsigned long mjs_array_length(struct mjs *mjs, mjs_val_t v) {
     }
   }
 
-clean:
   return len;
 }
 
@@ -3296,7 +3295,7 @@ static void mjs_array_push_internal(struct mjs *mjs) {
   if (!mjs_check_arg(mjs, -1 , "this", MJS_TYPE_OBJECT_ARRAY, 
                                                                      __null
                                                                          )) {
-    goto clean;
+  mjs_return(mjs, ret); return;
   }
 
 
@@ -3304,16 +3303,14 @@ static void mjs_array_push_internal(struct mjs *mjs) {
     rcode = mjs_array_push(mjs, mjs->vals.this_obj, mjs_arg(mjs, i));
     if (rcode != MJS_OK) {
       mjs_prepend_errorf(mjs, rcode, "");
-      goto clean;
+  mjs_return(mjs, ret); return;
     }
   }
 
 
   ret = mjs_mk_number(mjs, mjs_array_length(mjs, mjs->vals.this_obj));
 
-clean:
-  mjs_return(mjs, ret);
-  return;
+  mjs_return(mjs, ret); return;
 }
 
 static void move_item(struct mjs *mjs, mjs_val_t arr, unsigned long from,
@@ -3340,7 +3337,7 @@ static void mjs_array_splice(struct mjs *mjs) {
   if (!mjs_check_arg(mjs, -1 , "this", MJS_TYPE_OBJECT_ARRAY, 
                                                                      __null
                                                                          )) {
-    goto clean;
+  {mjs_return(mjs, ret); return;}
   }
 
 
@@ -3348,7 +3345,7 @@ static void mjs_array_splice(struct mjs *mjs) {
 
 
   if (!mjs_check_arg(mjs, 0, "start", MJS_TYPE_NUMBER, &start_v)) {
-    goto clean;
+  {mjs_return(mjs, ret); return;}
   }
   start = mjs_normalize_idx(mjs_get_int(mjs, start_v), arr_len);
 
@@ -3357,7 +3354,7 @@ static void mjs_array_splice(struct mjs *mjs) {
 
     if (!mjs_check_arg(mjs, 1, "deleteCount", MJS_TYPE_NUMBER,
                        &deleteCount_v)) {
-      goto clean;
+  {mjs_return(mjs, ret); return;}
     }
     delete_cnt = mjs_get_int(mjs, deleteCount_v);
     new_items_cnt = nargs - 2;
@@ -3383,7 +3380,7 @@ static void mjs_array_splice(struct mjs *mjs) {
     rcode = mjs_array_push(mjs, ret, cur);
     if (rcode != MJS_OK) {
       mjs_prepend_errorf(mjs, rcode, "");
-      goto clean;
+  {mjs_return(mjs, ret); return;}
     }
   }
 
@@ -3409,7 +3406,7 @@ static void mjs_array_splice(struct mjs *mjs) {
   }
 
 clean:
-  mjs_return(mjs, ret);
+  {mjs_return(mjs, ret); return;}
 }
 static void add_lineno_map_item(struct pstate *pstate) {
   if (pstate->last_emitted_line_no < pstate->line_no) {
@@ -3650,7 +3647,7 @@ static void mjs_load(struct mjs *mjs) {
       arg0 = mjs_arg(mjs, 0);
       path = mjs_get_cstring(mjs, &arg0);
       mjs_prepend_errorf(mjs, ret, "failed to exec file \"%s\"", path);
-      goto clean;
+  {mjs_return(mjs, ret); return;}
     }
 
   clean:
@@ -3761,7 +3758,7 @@ static mjs_err_t mjs_to_string(struct mjs *mjs, mjs_val_t *v, char **p,
              __null
                  ) {
       ret = MJS_OUT_OF_MEMORY;
-      goto clean;
+      return ret;
     }
     memmove(*p, buf, *sizep + 1);
     *need_free = 1;
@@ -3991,7 +3988,7 @@ static void mjs_die(struct mjs *mjs) {
 
 
   if (!mjs_check_arg(mjs, 0, "msg", MJS_TYPE_STRING, &msg_v)) {
-    goto clean;
+  {mjs_return(mjs, ((uint64_t)(1) << 63 | (uint64_t) 0x7ff0 << 48 | (uint64_t)(3) << 48)); return;}
   }
 
   msg = mjs_get_string(mjs, &msg_v, &msg_len);
@@ -4000,7 +3997,7 @@ static void mjs_die(struct mjs *mjs) {
   mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "%.*s", (int) msg_len, msg);
 
 clean:
-  mjs_return(mjs, ((uint64_t)(1) << 63 | (uint64_t) 0x7ff0 << 48 | (uint64_t)(3) << 48));
+  {mjs_return(mjs, ((uint64_t)(1) << 63 | (uint64_t) 0x7ff0 << 48 | (uint64_t)(3) << 48)); return;}
 }
 
 const char *mjs_strerror(struct mjs *mjs, enum mjs_err err) {
@@ -5093,7 +5090,7 @@ static mjs_err_t mjs_execute(struct mjs *mjs, size_t off, mjs_val_t *res) {
           i = off_ret - bp.start_idx;
           do { if (cs_log_print_prefix(LL_VERBOSE_DEBUG, "mjs.c", 4969)) { cs_log_printf ("RETURNING TO %d", (int) off_ret + 1); } } while (0);
         } else {
-          goto clean;
+  {mjs_bcode_part_get_by_offset(mjs, start_off)->exec_res = mjs->error; *res = mjs_pop(mjs); return mjs->error;}
         }
 
         break;
@@ -5311,10 +5308,7 @@ static mjs_err_t mjs_execute(struct mjs *mjs, size_t off, mjs_val_t *res) {
 
 clean:
 
-  mjs_bcode_part_get_by_offset(mjs, start_off)->exec_res = mjs->error;
-
-  *res = mjs_pop(mjs);
-  return mjs->error;
+  {mjs_bcode_part_get_by_offset(mjs, start_off)->exec_res = mjs->error; *res = mjs_pop(mjs); return mjs->error;}
 }
 
 static mjs_err_t mjs_exec_internal(struct mjs *mjs, const char *path,
@@ -5353,7 +5347,7 @@ mjs_err_t mjs_exec_file(struct mjs *mjs, const char *path, mjs_val_t *res) {
                         ) {
     error = MJS_FILE_READ_ERROR;
     mjs_prepend_errorf(mjs, error, "failed to read file \"%s\"", path);
-    goto clean;
+  {if (res != __null) *res = r; return error;}
   }
 
   r = ((uint64_t)(1) << 63 | (uint64_t) 0x7ff0 << 48 | (uint64_t)(3) << 48);
@@ -5361,10 +5355,7 @@ mjs_err_t mjs_exec_file(struct mjs *mjs, const char *path, mjs_val_t *res) {
   free(source_code);
 
 clean:
-  if (res != 
-            __null
-                ) *res = r;
-  return error;
+  {if (res != __null) *res = r; return error;}
 }
 
 mjs_err_t mjs_call(struct mjs *mjs, mjs_val_t *res, mjs_val_t func,
@@ -5581,7 +5572,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
                    || tmp_e - s < 2) {
     ret = MJS_TYPE_ERROR;
     mjs_prepend_errorf(mjs, ret, "1");
-    goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
   }
   tmp = find_closing_paren(tmp_e + 1, e);
   if (tmp == 
@@ -5589,7 +5580,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
                 ) {
     ret = MJS_TYPE_ERROR;
     mjs_prepend_errorf(mjs, ret, "2");
-    goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
   }
 
 
@@ -5624,7 +5615,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
                   ) {
       ret = MJS_TYPE_ERROR;
       mjs_prepend_errorf(mjs, ret, "3");
-      goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
     }
     args.len = tmp - args.p;
 
@@ -5637,7 +5628,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
   val_type = parse_cval_type(mjs, rt.p, rt.p + rt.len);
   if (val_type == MJS_FFI_CTYPE_INVALID) {
     ret = mjs->error;
-    goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
   }
   mjs_ffi_sig_set_val_type(sig, vtidx++, val_type);
 
@@ -5650,7 +5641,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
       ret = MJS_TYPE_ERROR;
       mjs_prepend_errorf(mjs, ret,
                          "resolver is not set, call mjs_set_ffi_resolver");
-      goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
     }
 
     snprintf(buf, sizeof(buf), "%.*s", (int) fn.len, fn.p);
@@ -5662,7 +5653,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
                       ) {
       ret = MJS_TYPE_ERROR;
       mjs_prepend_errorf(mjs, ret, "dlsym('%s') failed", buf);
-      goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
     }
   } else {
     tmp_e = strchr(tmp_e, ')');
@@ -5670,7 +5661,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
                 __null
                     ) {
       ret = MJS_TYPE_ERROR;
-      goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
     }
   }
 
@@ -5716,7 +5707,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
 
         ret = MJS_TYPE_ERROR;
         mjs_prepend_errorf(mjs, ret, "only one callback is allowed");
-        goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
       }
 
       sig->cb_sig = (mjs_ffi_sig*)calloc(sizeof(*sig->cb_sig), 1);
@@ -5728,7 +5719,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
         sig->cb_sig = 
                      __null
                          ;
-        goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
       }
       val_type = MJS_FFI_CTYPE_CALLBACK;
     } else {
@@ -5737,14 +5728,14 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
       if (val_type == MJS_FFI_CTYPE_INVALID) {
 
         ret = MJS_TYPE_ERROR;
-        goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
       }
     }
 
     if (!mjs_ffi_sig_set_val_type(sig, vtidx++, val_type)) {
       ret = MJS_TYPE_ERROR;
       mjs_prepend_errorf(mjs, ret, "too many callback args");
-      goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
     }
 
     if (*tmp_e == ',') {
@@ -5762,7 +5753,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
   mjs_ffi_sig_validate(mjs, sig, sig_type);
   if (!sig->is_valid) {
     ret = MJS_TYPE_ERROR;
-    goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
   }
 
 
@@ -5775,16 +5766,12 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
       mjs_prepend_errorf(mjs, ret,
                          "the callback signature is valid, but there's "
                          "no existing callback implementation for it");
-      goto clean;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
     }
   }
 
 clean:
-  if (ret != MJS_OK) {
-    mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s);
-    sig->is_valid = 0;
-  }
-  return ret;
+  {if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s); sig->is_valid = 0; } return ret;}
 }
 
 
@@ -5899,7 +5886,7 @@ static union ffi_cb_data_val ffi_cb_impl_generic(void *param,
                               , "MJS callback error",
                     1 );
 
-    goto clean;
+  {free(args); mjs_disown(mjs, &res); return ret;}
   }
 
 
@@ -5929,9 +5916,7 @@ static union ffi_cb_data_val ffi_cb_impl_generic(void *param,
   }
 
 clean:
-  free(args);
-  mjs_disown(mjs, &res);
-  return ret;
+  {free(args); mjs_disown(mjs, &res); return ret;}
 }
 
 static void ffi_init_cb_data_wwww(struct ffi_cb_data *data, uintptr_t w0,
@@ -6167,12 +6152,12 @@ static mjs_err_t mjs_ffi_call(struct mjs *mjs) {
 
   sig_str = mjs_get_string(mjs, &sig_str_v, &sig_str_len);
   e = mjs_parse_ffi_signature(mjs, sig_str, sig_str_len, psig, FFI_SIG_FUNC);
-  if (e != MJS_OK) goto clean;
+  if (e != MJS_OK) 
+  {mjs_return(mjs, ret_v); return e;}
   ret_v = mjs_ffi_sig_to_value(psig);
 
 clean:
-  mjs_return(mjs, ret_v);
-  return e;
+  {mjs_return(mjs, ret_v); return e;}
 }
 
 static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
@@ -6203,7 +6188,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
   } else {
     ret = MJS_TYPE_ERROR;
     mjs_prepend_errorf(mjs, ret, "non-ffi-callable value");
-    goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
   }
 
   memset(&cbdata, 0, sizeof(cbdata));
@@ -6233,7 +6218,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
     case MJS_FFI_CTYPE_INVALID:
       ret = MJS_TYPE_ERROR;
       mjs_prepend_errorf(mjs, ret, "wrong ffi return type");
-      goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
   }
   res.v.i = 0;
 
@@ -6244,7 +6229,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
     ret = MJS_TYPE_ERROR;
     mjs_prepend_errorf(mjs, ret, "got %d actuals, but function takes %d args",
                        nargs, psig->args_cnt);
-    goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
   }
 
   for (i = 0; i < nargs; i++) {
@@ -6269,7 +6254,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
           mjs_prepend_errorf(mjs, ret, "bad ffi arg #%d type: \"void\"", i);
         }
 
-        goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
       case MJS_FFI_CTYPE_USERDATA:
 
         if (cbdata.userdata_idx != -1) {
@@ -6277,7 +6262,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
           mjs_prepend_errorf(mjs, ret, "two or more userdata args: #%d and %d",
                              cbdata.userdata_idx, i);
 
-          goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
         }
         cbdata.userdata = arg;
         cbdata.userdata_idx = i;
@@ -6302,7 +6287,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
           mjs_prepend_errorf(
               mjs, ret, "actual arg #%d is not a string (the type idx is: %s)",
               i, mjs_typeof(arg));
-          goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
         }
         argvs[i] = arg;
         argvmgstr[i].p = mjs_get_string(mjs, &argvs[i], &argvmgstr[i].len);
@@ -6351,7 +6336,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
           mjs_prepend_errorf(
               mjs, ret, "actual arg #%d is not a string (the type idx is: %s)",
               i, mjs_typeof(arg));
-          goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
         }
       } break;
       case MJS_FFI_CTYPE_VOID_PTR:
@@ -6372,7 +6357,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
         } else {
           ret = MJS_TYPE_ERROR;
           mjs_prepend_errorf(mjs, ret, "actual arg #%d is not a ptr", i);
-          goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
         }
         break;
       case MJS_FFI_CTYPE_CALLBACK:
@@ -6389,14 +6374,14 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
           mjs_prepend_errorf(mjs, ret,
                              "actual arg #%d is not a function, but %s", i,
                              mjs_stringify_type((enum mjs_type) arg));
-          goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
         }
         break;
       case MJS_FFI_CTYPE_INVALID:
 
         ret = MJS_TYPE_ERROR;
         mjs_prepend_errorf(mjs, ret, "wrong arg type");
-        goto clean;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
       default:
         abort();
         break;
@@ -6493,13 +6478,7 @@ clean:
 
 
 
-  if (ret != MJS_OK) {
-    mjs_prepend_errorf(mjs, ret, "failed to call FFIed function");
-
-  }
-  mjs_return(mjs, resv);
-
-  return ret;
+  {  if (ret != MJS_OK) { mjs_prepend_errorf(mjs, ret, "failed to call FFIed function"); } mjs_return(mjs, resv); return ret; }
 }
 
 
@@ -6600,7 +6579,7 @@ static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
           sig->val_types[0] != MJS_FFI_CTYPE_VOID_PTR &&
           sig->val_types[0] != MJS_FFI_CTYPE_CHAR_PTR) {
         mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "invalid return value type");
-        goto clean;
+  {if (ret) { sig->is_valid = 1; } return ret;}
       }
       break;
     case FFI_SIG_CALLBACK:
@@ -6612,7 +6591,7 @@ static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
           sig->val_types[0] != MJS_FFI_CTYPE_FLOAT &&
           sig->val_types[0] != MJS_FFI_CTYPE_VOID_PTR) {
         mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "invalid return value type");
-        goto clean;
+  {if (ret) { sig->is_valid = 1; } return ret;}
       }
   }
 
@@ -6626,7 +6605,7 @@ static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
           mjs_prepend_errorf(mjs, MJS_TYPE_ERROR,
                              "more than one userdata arg: #%d and #%d",
                              (userdata_idx - 1), (i - 1));
-          goto clean;
+  {if (ret) { sig->is_valid = 1; } return ret;}
         }
         userdata_idx = i;
         break;
@@ -6637,7 +6616,7 @@ static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
           case FFI_SIG_CALLBACK:
             mjs_prepend_errorf(mjs, MJS_TYPE_ERROR,
                                "callback can't take another callback");
-            goto clean;
+  {if (ret) { sig->is_valid = 1; } return ret;}
         }
         callback_idx = i;
         break;
@@ -6656,7 +6635,7 @@ static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
       default:
         mjs_prepend_errorf(mjs, MJS_INTERNAL_ERROR, "invalid ffi_ctype: %d",
                            type);
-        goto clean;
+  {if (ret) { sig->is_valid = 1; } return ret;}
     }
 
     sig->args_cnt++;
@@ -6670,14 +6649,14 @@ args_over:
         mjs_prepend_errorf(mjs, MJS_TYPE_ERROR,
                            "callback and userdata should be either both "
                            "present or both absent");
-        goto clean;
+  {if (ret) { sig->is_valid = 1; } return ret;}
       }
       break;
     case FFI_SIG_CALLBACK:
       if (userdata_idx == 0) {
 
         mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "no userdata arg");
-        goto clean;
+  {if (ret) { sig->is_valid = 1; } return ret;}
       }
       break;
   }
@@ -6685,10 +6664,7 @@ args_over:
   ret = 1;
 
 clean:
-  if (ret) {
-    sig->is_valid = 1;
-  }
-  return ret;
+  {if (ret) { sig->is_valid = 1; } return ret;}
 }
 
 static int mjs_ffi_is_regular_word(mjs_ffi_ctype_t type) {
@@ -7319,7 +7295,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
   if (size > 0) *buf = '\0';
 
   if (!is_debug && should_skip_for_json(mjs_get_type(v))) {
-    goto clean;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
   }
 
   for (vp = mjs->json_visited_stack.buf;
@@ -7328,7 +7304,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
     if (*(mjs_val_t *) vp == v) {
       strncpy(buf, "[Circular]", size);
       len = 10;
-      goto clean;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
     }
   }
 
@@ -7351,7 +7327,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
           free(p);
         }
       }
-      goto clean;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
 
     case MJS_TYPE_STRING: {
 
@@ -7361,7 +7337,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
       size_t n;
       const char *str = mjs_get_string(mjs, &v, &n);
       len = snquote(buf, size, str, n);
-      goto clean;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
     }
 
     case MJS_TYPE_OBJECT_FUNCTION:
@@ -7406,7 +7382,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
 
     clean_iter:
       len = b - buf;
-      goto clean;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
     }
     case MJS_TYPE_OBJECT_ARRAY: {
       int has;
@@ -7424,7 +7400,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
             rcode = to_json_or_debug(mjs, el, b, (((size_t)(b - buf) < (size)) ? ((size) - (b - buf)) : 0), &tmp,
                                      is_debug);
             if (rcode != MJS_OK) {
-              goto clean;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
             }
           }
           b += tmp;
@@ -7438,7 +7414,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
       b += c_snprintf(b, (((size_t)(b - buf) < (size)) ? ((size) - (b - buf)) : 0), "]");
       mjs->json_visited_stack.len -= sizeof(v);
       len = b - buf;
-      goto clean;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
     }
 
     case MJS_TYPES_CNT:
@@ -7448,18 +7424,10 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
   abort();
 
   len = 0;
-  goto clean;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
 
 clean:
-  if (rcode != MJS_OK) {
-    len = 0;
-  }
-  if (res_len != 
-                __null
-                    ) {
-    *res_len = len;
-  }
-  return rcode;
+  {if (rcode != MJS_OK) { len = 0; } if (res_len != __null) { *res_len = len; } return rcode;}
 }
 
 static mjs_err_t mjs_json_stringify(struct mjs *mjs, mjs_val_t v,
@@ -7481,10 +7449,10 @@ static mjs_err_t mjs_json_stringify(struct mjs *mjs, mjs_val_t v,
    "*res == p"
    , "mjs.c", 7362, __extension__ __PRETTY_FUNCTION__))
                     ;
-    goto clean;
+  {if (rcode != MJS_OK && p != buf) { free(p); } return rcode;}
   } else {
     *res = p;
-    goto clean;
+  {if (rcode != MJS_OK && p != buf) { free(p); } return rcode;}
   }
 
 clean:
@@ -7492,10 +7460,7 @@ clean:
 
 
 
-  if (rcode != MJS_OK && p != buf) {
-    free(p);
-  }
-  return rcode;
+  {if (rcode != MJS_OK && p != buf) { free(p); } return rcode;}
 }
 
 
@@ -7955,7 +7920,7 @@ static mjs_err_t mjs_set_internal(struct mjs *mjs, mjs_val_t obj,
 
     rcode = mjs_to_string(mjs, &name_v, &name, &name_len, &need_free);
     if (rcode != MJS_OK) {
-      goto clean;
+  {if (need_free) { free(name); name = __null ; } return rcode;}
     }
   } else {
 
@@ -7993,13 +7958,7 @@ static mjs_err_t mjs_set_internal(struct mjs *mjs, mjs_val_t obj,
   p->value = val;
 
 clean:
-  if (need_free) {
-    free(name);
-    name = 
-          __null
-              ;
-  }
-  return rcode;
+  {if (need_free) { free(name); name = __null ; } return rcode;}
 }
 
 static void mjs_destroy_property(struct mjs_property **p) {
@@ -8071,14 +8030,14 @@ static void mjs_op_create_object(struct mjs *mjs) {
   mjs_val_t proto_v = mjs_arg(mjs, 0);
 
   if (!mjs_check_arg(mjs, 0, "proto", MJS_TYPE_OBJECT_GENERIC, &proto_v)) {
-    goto clean;
+    {mjs_return(mjs, ret); return;}
   }
 
   ret = mjs_mk_object(mjs);
   mjs_set(mjs, ret, "__p", ~0, proto_v);
 
 clean:
-  mjs_return(mjs, ret);
+  {mjs_return(mjs, ret); return;}
 }
 
 mjs_val_t mjs_struct_to_obj(struct mjs *mjs, const void *base,
