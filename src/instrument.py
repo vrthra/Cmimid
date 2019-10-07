@@ -181,9 +181,11 @@ class ForStmt(AstNode):
         for_part = ' '.join([t.spelling for t in for_part_tokens])
 
         c = get_id()
+        assert len(CURRENT_STACK) > 0
         CURRENT_STACK.append(('CMIMID_FOR', c))
         body = compound_body_with_cb(children[-1], '0')
         CURRENT_STACK.pop()
+        assert len(CURRENT_STACK) > 0
         return '''\
 cmimid__stack_enter(CMIMID_FOR, %s);
 %s %s
@@ -199,9 +201,11 @@ class WhileStmt(AstNode):
 
         cond = to_string(children[0])
         c = get_id()
+        assert len(CURRENT_STACK) > 0
         CURRENT_STACK.append(('CMIMID_WHILE', c))
         body = compound_body_with_cb(children[1], '0')
         CURRENT_STACK.pop()
+        assert len(CURRENT_STACK) > 0
 
         return '''\
 cmimid__stack_enter(CMIMID_WHILE, %s);
@@ -225,16 +229,20 @@ class IfStmt(AstNode):
             if i == 0:   # if condition
                 cond = "%s" % to_string(child)
             elif i == 1: # if body
+                assert len(CURRENT_STACK) > 0
                 CURRENT_STACK.append(('CMIMID_IF', c))
                 if_body = compound_body_with_cb(child, '0')
                 CURRENT_STACK.pop()
+                assert len(CURRENT_STACK) > 0
             elif i == 2: # else body (exists if there is an else)
                 if child.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
                     else_body = "%s" % repr(IfStmt(child, with_cb=False, my_id=c))
                 else:
+                    CURRENT_STACK.append(('CMIMID_IF', c))
                     else_body = compound_body_with_cb(child, '1')
                     CURRENT_STACK.pop()
+                    assert len(CURRENT_STACK) > 0
 
         block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
@@ -255,10 +263,12 @@ class SwitchStmt(AstNode):
         children = list(self.node.get_children())
         assert(len(children) == 2)
         assert(children[1].kind == CursorKind.COMPOUND_STMT)
+        assert len(CURRENT_STACK) > 0
         CURRENT_STACK.append(('CMIMID_SWITCH', c))
         switch_expr = to_string(children[0])
         body = to_string(children[1])
         CURRENT_STACK.pop()
+        assert len(CURRENT_STACK) > 0
         return '''\
 cmimid__stack_enter(CMIMID_SWITCH, %s);
 switch (%s) %s
