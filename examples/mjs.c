@@ -6312,8 +6312,45 @@ static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
 
       break;
     case MJS_FFI_CTYPE_NONE:
+      {
+        switch (sig_type) {
+          case FFI_SIG_FUNC:
+            if (!((callback_idx > 0 && userdata_idx > 0) ||
+                  (callback_idx == 0 && userdata_idx == 0))) {
+              mjs_prepend_errorf(mjs, MJS_TYPE_ERROR,
+                  "callback and userdata should be either both "
+                  "present or both absent");
+              {
+                if (ret) {
+                  sig->is_valid = 1;
+                }
+                return ret;
+              }
+            }
+            break;
+          case FFI_SIG_CALLBACK:
+            if (userdata_idx == 0) {
 
-      goto args_over;
+              mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "no userdata arg");
+              {
+                if (ret) {
+                  sig->is_valid = 1;
+                }
+                return ret;
+              }
+            }
+            break;
+        }
+
+        ret = 1;
+
+        {
+          if (ret) {
+            sig->is_valid = 1;
+          }
+          return ret;
+        }
+      }
     default:
       mjs_prepend_errorf(mjs, MJS_INTERNAL_ERROR, "invalid ffi_ctype: %d",
                          type);
@@ -6328,7 +6365,7 @@ static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
     sig->args_cnt++;
   }
 args_over:
-
+  {
   switch (sig_type) {
   case FFI_SIG_FUNC:
     if (!((callback_idx > 0 && userdata_idx > 0) ||
@@ -6365,6 +6402,7 @@ clean : {
     sig->is_valid = 1;
   }
   return ret;
+}
 }
 }
 
@@ -6987,7 +7025,16 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
             (((size_t)(b - buf) < (size)) ? ((size) - (b - buf)) : 0), &tmp,
             is_debug);
         if (rcode != MJS_OK) {
-          goto clean_iter;
+          len = b - buf;
+          {
+            if (rcode != MJS_OK) {
+              len = 0;
+            }
+            if (res_len != __null) {
+              *res_len = len;
+            }
+            return rcode;
+          }
         }
         b += tmp;
       }
@@ -6997,7 +7044,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
         b, (((size_t)(b - buf) < (size)) ? ((size) - (b - buf)) : 0), "}");
     mjs->json_visited_stack.len -= sizeof(v);
 
-  clean_iter:
+  clean_iter: {
     len = b - buf;
     {
       if (rcode != MJS_OK) {
@@ -7008,6 +7055,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
       }
       return rcode;
     }
+  }
   }
   case MJS_TYPE_OBJECT_ARRAY: {
     int has;
@@ -8420,10 +8468,10 @@ static mjs_err_t parse_mul_div_rem(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_unary(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(ops, p->tok.tok) != TOK_EOF) {
@@ -8447,14 +8495,13 @@ static mjs_err_t parse_mul_div_rem(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_mul_div_rem(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8466,10 +8513,10 @@ static mjs_err_t parse_plus_minus(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_mul_div_rem(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(ops, p->tok.tok) != TOK_EOF) {
@@ -8493,14 +8540,13 @@ static mjs_err_t parse_plus_minus(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_plus_minus(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8512,10 +8558,10 @@ static mjs_err_t parse_shifts(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_plus_minus(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(ops, p->tok.tok) != TOK_EOF) {
@@ -8539,14 +8585,13 @@ static mjs_err_t parse_shifts(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_shifts(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8557,10 +8602,10 @@ static mjs_err_t parse_comparison(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_shifts(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(s_comparison_ops, p->tok.tok) != TOK_EOF) {
@@ -8585,14 +8630,13 @@ static mjs_err_t parse_comparison(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_comparison(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8603,10 +8647,10 @@ static mjs_err_t parse_equality(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_comparison(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(s_equality_ops, p->tok.tok) != TOK_EOF) {
@@ -8631,14 +8675,13 @@ static mjs_err_t parse_equality(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_equality(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8650,10 +8693,10 @@ static mjs_err_t parse_bitwise_and(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_equality(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(ops, p->tok.tok) != TOK_EOF) {
@@ -8677,14 +8720,13 @@ static mjs_err_t parse_bitwise_and(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_bitwise_and(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8696,10 +8738,10 @@ static mjs_err_t parse_bitwise_xor(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_bitwise_and(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(ops, p->tok.tok) != TOK_EOF) {
@@ -8723,14 +8765,13 @@ static mjs_err_t parse_bitwise_xor(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_bitwise_xor(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8742,10 +8783,10 @@ static mjs_err_t parse_bitwise_or(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_bitwise_xor(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(ops, p->tok.tok) != TOK_EOF) {
@@ -8769,14 +8810,13 @@ static mjs_err_t parse_bitwise_or(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_bitwise_or(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8788,10 +8828,10 @@ static mjs_err_t parse_logical_and(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_bitwise_or(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(ops, p->tok.tok) != TOK_EOF) {
@@ -8815,14 +8855,13 @@ static mjs_err_t parse_logical_and(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_logical_and(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -8834,10 +8873,10 @@ static mjs_err_t parse_logical_or(struct pstate *p, int prev_op) {
     if (p->depth > (8192 / 16)) {
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");
       res = MJS_SYNTAX_ERROR;
-      goto binop_clean;
+    {p->depth--; return res;}
     }
     if ((res = parse_logical_and(p, TOK_EOF)) != MJS_OK)
-      goto binop_clean;
+    {p->depth--; return res;}
     if (prev_op != TOK_EOF)
       emit_op(p, prev_op);
     if (findtok(ops, p->tok.tok) != TOK_EOF) {
@@ -8861,14 +8900,13 @@ static mjs_err_t parse_logical_or(struct pstate *p, int prev_op) {
         pnext(p);
       } while (0);
       if ((res = parse_logical_or(p, op)) != MJS_OK)
-        goto binop_clean;
+    {p->depth--; return res;}
       if (off_if != 0) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
   binop_clean:
-    p->depth--;
-    return res;
+    {p->depth--; return res;}
   } while (0);
 }
 
@@ -10066,7 +10104,7 @@ const char *mjs_get_string(struct mjs *mjs, mjs_val_t *v, size_t *sizep) {
   size_t size = 0, llen;
 
   if (!mjs_is_string(*v)) {
-    goto clean;
+  {if (sizep != __null) { *sizep = size; } return p;}
   }
 
   if (tag ==
@@ -10089,7 +10127,7 @@ const char *mjs_get_string(struct mjs *mjs, mjs_val_t *v, size_t *sizep) {
       size = v;
       p = s + llen;
     } else {
-      goto clean;
+  {if (sizep != __null) { *sizep = size; } return p;}
     }
   } else if (tag == ((uint64_t)(1) << 63 | (uint64_t)0x7ff0 << 48 |
                      (uint64_t)(9) << 48)) {
@@ -10107,7 +10145,7 @@ const char *mjs_get_string(struct mjs *mjs, mjs_val_t *v, size_t *sizep) {
         size = v;
         memcpy((char **)&p, s + llen, sizeof(p));
       } else {
-        goto clean;
+  {if (sizep != __null) { *sizep = size; } return p;}
       }
     }
   } else {
@@ -10118,10 +10156,7 @@ const char *mjs_get_string(struct mjs *mjs, mjs_val_t *v, size_t *sizep) {
   }
 
 clean:
-  if (sizep != __null) {
-    *sizep = size;
-  }
-  return p;
+  {if (sizep != __null) { *sizep = size; } return p;}
 }
 
 const char *mjs_get_cstring(struct mjs *mjs, mjs_val_t *value) {
@@ -10216,19 +10251,19 @@ static void mjs_string_slice(struct mjs *mjs) {
   const char *s = __null;
 
   if (!mjs_check_arg(mjs, -1, "this", MJS_TYPE_STRING, __null)) {
-    goto clean;
+  {mjs_return(mjs, ret); return;}
   }
   s = mjs_get_string(mjs, &mjs->vals.this_obj, &size);
 
   if (!mjs_check_arg(mjs, 0, "beginSlice", MJS_TYPE_NUMBER, &beginSlice_v)) {
-    goto clean;
+  {mjs_return(mjs, ret); return;}
   }
   beginSlice = mjs_normalize_idx(mjs_get_int(mjs, beginSlice_v), size);
 
   if (nargs >= 2) {
 
     if (!mjs_check_arg(mjs, 1, "endSlice", MJS_TYPE_NUMBER, &endSlice_v)) {
-      goto clean;
+  {mjs_return(mjs, ret); return;}
     }
     endSlice = mjs_normalize_idx(mjs_get_int(mjs, endSlice_v), size);
   } else {
@@ -10243,7 +10278,7 @@ static void mjs_string_slice(struct mjs *mjs) {
   ret = mjs_mk_string(mjs, s + beginSlice, endSlice - beginSlice, 1);
 
 clean:
-  mjs_return(mjs, ret);
+  {mjs_return(mjs, ret); return;}
 }
 
 static void mjs_string_index_of(struct mjs *mjs) {
