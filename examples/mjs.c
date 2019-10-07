@@ -10292,17 +10292,17 @@ static void mjs_string_index_of(struct mjs *mjs) {
   size_t str_len = 0, substr_len = 0;
 
   if (!mjs_check_arg(mjs, -1, "this", MJS_TYPE_STRING, __null)) {
-    goto clean;
+  {mjs_return(mjs, ret); return; }
   }
   str = mjs_get_string(mjs, &mjs->vals.this_obj, &str_len);
 
   if (!mjs_check_arg(mjs, 0, "searchValue", MJS_TYPE_STRING, &substr_v)) {
-    goto clean;
+  {mjs_return(mjs, ret); return; }
   }
   substr = mjs_get_string(mjs, &substr_v, &substr_len);
   if (mjs_nargs(mjs) > 1) {
     if (!mjs_check_arg(mjs, 1, "fromIndex", MJS_TYPE_NUMBER, &idx_v)) {
-      goto clean;
+  {mjs_return(mjs, ret); return; }
     }
     idx = mjs_get_int(mjs, idx_v);
     if (idx < 0)
@@ -10324,7 +10324,7 @@ static void mjs_string_index_of(struct mjs *mjs) {
   }
 
 clean:
-  mjs_return(mjs, ret);
+  {mjs_return(mjs, ret); return; }
 }
 
 static void mjs_string_char_code_at(struct mjs *mjs) {
@@ -10337,12 +10337,12 @@ static void mjs_string_char_code_at(struct mjs *mjs) {
   const char *s = __null;
 
   if (!mjs_check_arg(mjs, -1, "this", MJS_TYPE_STRING, __null)) {
-    goto clean;
+  {mjs_return(mjs, ret); return; }
   }
   s = mjs_get_string(mjs, &mjs->vals.this_obj, &size);
 
   if (!mjs_check_arg(mjs, 0, "index", MJS_TYPE_NUMBER, &idx_v)) {
-    goto clean;
+  {mjs_return(mjs, ret); return; }
   }
   idx = mjs_normalize_idx(mjs_get_int(mjs, idx_v), size);
   if (idx >= 0 && idx < (int)size) {
@@ -10350,7 +10350,7 @@ static void mjs_string_char_code_at(struct mjs *mjs) {
   }
 
 clean:
-  mjs_return(mjs, ret);
+  {mjs_return(mjs, ret); return; }
 }
 
 static void mjs_mkstr(struct mjs *mjs) {
@@ -10388,24 +10388,24 @@ static void mjs_mkstr(struct mjs *mjs) {
     mjs_prepend_errorf(mjs, MJS_TYPE_ERROR,
                        "mkstr takes 2, 3 or 4 arguments: (ptr, len), (ptr, "
                        "offset, len) or (ptr, offset, len, copy)");
-    goto clean;
+  {mjs_return(mjs, ret); return; }
   }
 
   if (!mjs_is_foreign(ptr_v)) {
     mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "ptr should be a foreign pointer");
-    goto clean;
+  {mjs_return(mjs, ret); return; }
   }
 
   if (offset_v != ((uint64_t)(1) << 63 | (uint64_t)0x7ff0 << 48 |
                    (uint64_t)(3) << 48) &&
       !mjs_is_number(offset_v)) {
     mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "offset should be a number");
-    goto clean;
+  {mjs_return(mjs, ret); return; }
   }
 
   if (!mjs_is_number(len_v)) {
     mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "len should be a number");
-    goto clean;
+  {mjs_return(mjs, ret); return; }
   }
 
   copy = mjs_is_truthy(mjs, copy_v);
@@ -10420,7 +10420,7 @@ static void mjs_mkstr(struct mjs *mjs) {
   ret = mjs_mk_string(mjs, ptr + offset, len, copy);
 
 clean:
-  mjs_return(mjs, ret);
+  {mjs_return(mjs, ret); return; }
 }
 
 enum unescape_error {
