@@ -69,15 +69,24 @@ int sym;
 int int_val;
 char id_name[100];
 
+char* input_string = 0;
+int input_string_i = 0;
+
+
 void syntax_error() { fprintf(stderr, "syntax error\n"); exit(1); }
 
-void next_ch() { ch = getchar(); }
+void next_ch() {
+  ch = input_string[input_string_i];
+  input_string_i++;
+  /*ch = getchar();*/
+}
 
 void next_sym()
 { while(1) {
     switch (ch)
     { case ' ': case '\n': next_ch(); break;
       case EOF: sym = EOI; return;
+      case 0: sym = EOI; return;
       case '{': next_ch(); sym = LBRA; return;
       case '}': next_ch(); sym = RBRA; return;
       case '(': next_ch(); sym = LPAR; return;
@@ -281,17 +290,45 @@ void run()
 
 /* Main program. */
 
-int main()
-{ int i;
+int parse_expr(char* my_string)
+{
+  int i;
+  input_string = my_string;
 
   c(program());
 
   for (i=0; i<26; i++)
     globals[i] = 0;
-  run();
+  return 0;
+  /*run(); <- we cant deal with semantics here.
   for (i=0; i<26; i++)
     if (globals[i] != 0)
       printf("%c = %d\n", 'a'+i, globals[i]);
 
-  return 0;
+  return 0;*/
+}
+
+
+int main(int argc, char *argv[]) {
+    char my_string[10240];
+    int ret;
+    if (argc == 1) {
+        char *v = fgets(my_string, 10240, stdin);
+        if (!v) {
+          exit(1);
+        }
+        int read = strlen(my_string);
+        if (my_string[read-1] ==  '\n'){
+            my_string[read-1] = '\0';
+        }
+    } else {
+        strcpy(my_string, argv[1]);
+        int read = strlen(my_string);
+        if (my_string[read-1] ==  '\n'){
+            my_string[read-1] = '\0';
+        }
+    }
+    printf("val: <%s>\n", my_string);
+    ret = parse_expr(my_string);
+    return ret;
 }

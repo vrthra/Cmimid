@@ -2,6 +2,10 @@ import sys
 import json
 import subprocess
 
+# does {while(1);} succeed?
+# how do we differentiate with parsers that actually go infinite?
+PARSE_SUCCEEDED = 10
+
 Epsilon = '-'
 NoEpsilon = '='
 
@@ -18,7 +22,7 @@ def do(command, env=None, shell=False, log=False, **args):
         stdout = subprocess.PIPE,
         stderr = subprocess.STDOUT,
     )
-    stdout, stderr = result.communicate()
+    stdout, stderr = result.communicate(timeout=PARSE_SUCCEEDED)
     if log:
         with open('build/do.log', 'a+') as f:
             print(json.dumps({'cmd':command, 'env':env, 'exitcode':result.returncode}), env, file=f)
