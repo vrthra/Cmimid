@@ -19,6 +19,8 @@ import os
 LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
 
+CURRENT_STACK = [(-1, '-1')]
+
 counter = 0;
 def get_id():
     global counter
@@ -128,9 +130,25 @@ class ContinueStmt(AstNode):
 cmimid__continue(CMIMID_CONTINUE);
 %s ;''' % super().__repr__()
 
+class GotoStmt(AstNode):
+    def __repr__(self):
+        # it is not clear how exactly we should handle this.
+        assert False
+        return '''\
+cmimid__goto(CMIMID_GOTO);
+%s ;''' % super().__repr__()
+
+
+
 def extent(node):
     return range(node.extent.start.line,node.extent.end.line+1)
 
+
+class LabelStmt(AstNode):
+    def __repr__(self):
+        return '''\
+cmimid__label(CMIMID_LABEL, %s, %s);
+%s ;''' % (CURRENT_STACK[-1][0], CURRENT_STACK[-1][1], super().__repr__())
 
 
 class CaseStmt(AstNode):
@@ -163,7 +181,9 @@ class ForStmt(AstNode):
         for_part = ' '.join([t.spelling for t in for_part_tokens])
 
         c = get_id()
+        CURRENT_STACK.append(('CMIMID_FOR', c))
         body = compound_body_with_cb(children[-1], '0')
+        CURRENT_STACK.pop()
         return '''\
 cmimid__stack_enter(CMIMID_FOR, %s);
 %s %s
@@ -179,7 +199,9 @@ class WhileStmt(AstNode):
 
         cond = to_string(children[0])
         c = get_id()
+        CURRENT_STACK.append(('CMIMID_WHILE', c))
         body = compound_body_with_cb(children[1], '0')
+        CURRENT_STACK.pop()
 
         return '''\
 cmimid__stack_enter(CMIMID_WHILE, %s);
@@ -188,12 +210,13 @@ cmimid__stack_exit(CMIMID_EXIT);''' % (c, cond, body)
 
 
 class IfStmt(AstNode):
-    def __init__(self, node, with_cb=True):
+    def __init__(self, node, with_cb=True, my_id=None):
         super().__init__(node)
         self.with_cb = with_cb
+        self.my_id = my_id if my_id is not None else get_id()
 
     def __repr__(self):
-        c = get_id()
+        c = self.my_id
         cond =  ""
         if_body = ""
         else_body = ""
@@ -202,13 +225,16 @@ class IfStmt(AstNode):
             if i == 0:   # if condition
                 cond = "%s" % to_string(child)
             elif i == 1: # if body
+                CURRENT_STACK.append(('CMIMID_IF', c))
                 if_body = compound_body_with_cb(child, '0')
+                CURRENT_STACK.pop()
             elif i == 2: # else body (exists if there is an else)
                 if child.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
-                    else_body = "%s" % repr(IfStmt(child, with_cb=False))
+                    else_body = "%s" % repr(IfStmt(child, with_cb=False, my_id=c))
                 else:
                     else_body = compound_body_with_cb(child, '1')
+                    CURRENT_STACK.pop()
 
         block = "if ( %s ) %s" % (cond, if_body)
         if else_body != "":
@@ -229,8 +255,10 @@ class SwitchStmt(AstNode):
         children = list(self.node.get_children())
         assert(len(children) == 2)
         assert(children[1].kind == CursorKind.COMPOUND_STMT)
+        CURRENT_STACK.append(('CMIMID_SWITCH', c))
         switch_expr = to_string(children[0])
         body = to_string(children[1])
+        CURRENT_STACK.pop()
         return '''\
 cmimid__stack_enter(CMIMID_SWITCH, %s);
 switch (%s) %s
@@ -248,7 +276,11 @@ class CompoundStmt(AstNode):
         seen_default = False
         for i,child in enumerate(children):
             rep = to_string(child)
-            if child.kind == CursorKind.CASE_STMT:
+            if child.kind == CursorKind.LABEL_STMT:
+                # what is the outer scope here? Hopefully it is
+                # in CURRENT_STACK[-1]
+                pass
+            elif child.kind == CursorKind.CASE_STMT:
                 assert not seen_default
                 gchildren = list(child.get_children())
                 label = to_string(gchildren[0])
@@ -338,6 +370,7 @@ FN_HASH = {
         CursorKind.IF_STMT: IfStmt,
         CursorKind.SWITCH_STMT: SwitchStmt,
         CursorKind.CASE_STMT: CaseStmt,
+        CursorKind.LABEL_STMT: LabelStmt,
         CursorKind.DEFAULT_STMT: DefaultStmt,
         CursorKind.FOR_STMT: ForStmt,
         CursorKind.WHILE_STMT: WhileStmt,
@@ -356,6 +389,7 @@ FN_HASH = {
         CursorKind.COMPOUND_ASSIGNMENT_OPERATOR: CompoundAssignmentOperator,
         CursorKind.UNEXPOSED_EXPR: UnexposedExpr,
         CursorKind.CHARACTER_LITERAL: CharacterLiteral,
+        CursorKind.GOTO_STMT: GotoStmt,
         }
 
 
@@ -373,7 +407,6 @@ def to_string(node):
     if stp is not None and not STOPPED:
         line = node.location.line
         if int(line) > int(stp):
-            bp()
             STOPPED = True
 
     v = to_ast(node)
@@ -418,6 +451,8 @@ def parse(arg):
 #define CMIMID_IF 5
 #define CMIMID_SWITCH 6
 #define CMIMID_RETURN 7
+#define CMIMID_GOTO 8
+#define CMIMID_LABEL 9
 
 void cmimid__line(int i) {}
 
@@ -429,6 +464,8 @@ void cmimid__scope_enter(int i, int j) {}
 void cmimid__scope_exit(int i) {}
 void cmimid__break(int i) {}
 void cmimid__continue(int i) {}
+void cmimid__goto(int i) {}
+void cmimid__label(int i) {}
 void cmimid__return(int i) {}
 
 ''')
