@@ -68,9 +68,11 @@ class AstNode:
         src = ''.join(SRC[self.node.extent.begin_int_data-2:self.node.extent.end_int_data-2])
         if self.node.extent.start.line == self.node.extent.end.line:
             lines = [SRC[self.node.extent.start.line-1]]
+            lines[0] = lines[0][self.node.extent.start.column-1:self.node.extent.end.column-1]
         else:
-            lines = SRC[self.node.extent.start.line-1: self.node.extent.end.line-1]
-        lines[0] = lines[0][self.node.extent.start.column-1:self.node.extent.end.column-1]
+            lines = SRC[self.node.extent.start.line-1: self.node.extent.end.line] # last line not included
+            lines[0] = lines[0][self.node.extent.start.column-1:]
+            lines[-1] = lines[-1][:self.node.extent.end.column-1]
         return ''.join(lines)
 
     def __repr__(self):
@@ -103,6 +105,8 @@ class ParenExpr(SrcNode): pass
 class UnexposedExpr(SrcNode): pass
 class DeclRefExpr(SrcNode): pass
 class CharacterLiteral(SrcNode): pass
+class CXXUnaryExpr(SrcNode): pass
+class CStyleCastexpr(SrcNode): pass
 
 class ParmDecl(AstNode): pass
 class DeclStmt(AstNode): pass
@@ -111,6 +115,9 @@ class TypeRef(AstNode): pass
 class UnaryOperator(AstNode): pass
 class BinaryOperator(AstNode): pass
 class DefaultStmt(AstNode): pass
+class NullStmt(AstNode):
+    def __repr__(self):
+        return ';'
 
 class ReturnStmt(AstNode):
     def __repr__(self):
@@ -190,6 +197,27 @@ class ForStmt(AstNode):
 cmimid__stack_enter(CMIMID_FOR, %s);
 %s %s
 cmimid__stack_exit(CMIMID_EXIT);''' % (c, for_part, body)
+
+
+class DoStmt(AstNode):
+    def __repr__(self):
+        outer_range = extent(self.node)
+        children = list(self.node.get_children())
+        self.check_children_not_macro()
+        assert(len(children) == 2)
+
+        cond = to_string(children[1])
+        c = get_id()
+        assert len(CURRENT_STACK) > 0
+        CURRENT_STACK.append(('CMIMID_WHILE', c))
+        body = compound_body_with_cb(children[0], '0')
+        CURRENT_STACK.pop()
+        assert len(CURRENT_STACK) > 0
+
+        return '''\
+cmimid__stack_enter(CMIMID_WHILE, %s);
+do %s while (%s);
+cmimid__stack_exit(CMIMID_EXIT);''' % (c, body, cond)
 
 
 class WhileStmt(AstNode):
@@ -350,7 +378,7 @@ class FunctionDecl(AstNode):
         c = get_id()
         cparams = [p for p in children if p.kind == CursorKind.PARM_DECL]
         params = ", ".join([to_string(c) for c in cparams])
-        if children[-1].kind == CursorKind.COMPOUND_STMT:
+        if children and children[-1].kind == CursorKind.COMPOUND_STMT:
             body = to_string(children[-1])
             return '''\
 %s
@@ -382,8 +410,10 @@ FN_HASH = {
         CursorKind.CASE_STMT: CaseStmt,
         CursorKind.LABEL_STMT: LabelStmt,
         CursorKind.DEFAULT_STMT: DefaultStmt,
+        CursorKind.NULL_STMT: NullStmt,
         CursorKind.FOR_STMT: ForStmt,
         CursorKind.WHILE_STMT: WhileStmt,
+        CursorKind.DO_STMT: DoStmt,
         CursorKind.RETURN_STMT: ReturnStmt,
         CursorKind.BREAK_STMT: BreakStmt,
         CursorKind.CONTINUE_STMT: ContinueStmt,
@@ -394,6 +424,8 @@ FN_HASH = {
         CursorKind.CALL_EXPR: CallExpr,
         CursorKind.BINARY_OPERATOR: BinaryOperator,
         CursorKind.UNARY_OPERATOR: UnaryOperator,
+        CursorKind.CXX_UNARY_EXPR: CXXUnaryExpr,
+        CursorKind.CSTYLE_CAST_EXPR: CStyleCastexpr,
         CursorKind.TYPE_REF: TypeRef,
         CursorKind.PAREN_EXPR: ParenExpr,
         CursorKind.COMPOUND_ASSIGNMENT_OPERATOR: CompoundAssignmentOperator,
@@ -463,6 +495,7 @@ def parse(arg):
 #define CMIMID_RETURN 7
 #define CMIMID_GOTO 8
 #define CMIMID_LABEL 9
+#define CMIMID_DO 10
 
 void cmimid__line(int i) {}
 
