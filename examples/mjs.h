@@ -1079,3 +1079,5 @@ int mjs_get_offset_by_call_frame_num(struct mjs *mjs, int cf_num);
 
 #endif /* MJS_UTIL_PUBLIC_H_ */
 #endif /* MJS_EXPORT_INTERNAL_HEADERS */
+#include <ctype.h>
+#include <stdlib.h>
