@@ -2007,6 +2007,7 @@ static mjs_err_t mjs_exec_internal(struct mjs *mjs, const char *path,
   mjs_val_t r =
       ((uint64_t)(1) << 63 | (uint64_t)0x7ff0 << 48 | (uint64_t)(3) << 48);
   mjs->error = mjs_parse(path, src, mjs);
+  return mjs->error; /*TODO we care only about parsing for now*/
   if (cs_log_level >= LL_VERBOSE_DEBUG)
     mjs_dump(mjs, 1);
   if (generate_jsc == -1)
