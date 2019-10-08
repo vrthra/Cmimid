@@ -3369,7 +3369,28 @@ MJS_PRIVATE int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
         break;
       case MJS_FFI_CTYPE_NONE:
         /* No more arguments */
-        goto args_over;
+{switch (sig_type) {
+    case FFI_SIG_FUNC:
+      if (!((callback_idx > 0 && userdata_idx > 0) ||
+            (callback_idx == 0 && userdata_idx == 0))) {
+        mjs_prepend_errorf(mjs, MJS_TYPE_ERROR,
+                           "callback and userdata should be either both "
+                           "present or both absent");
+  {if (ret) { sig->is_valid = 1; } return ret;}
+      }
+      break;
+    case FFI_SIG_CALLBACK:
+      if (userdata_idx == 0) {
+        /* No userdata arg */
+        mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "no userdata arg");
+  {if (ret) { sig->is_valid = 1; } return ret;}
+      }
+      break;
+  }
+
+  ret = 1;
+
+  {if (ret) { sig->is_valid = 1; } return ret;}}
       default:
         mjs_prepend_errorf(mjs, MJS_INTERNAL_ERROR, "invalid ffi_ctype: %d",
                            type);
@@ -3380,7 +3401,7 @@ MJS_PRIVATE int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
   }
 args_over:
 
-  switch (sig_type) {
+  {switch (sig_type) {
     case FFI_SIG_FUNC:
       if (!((callback_idx > 0 && userdata_idx > 0) ||
             (callback_idx == 0 && userdata_idx == 0))) {
@@ -3402,7 +3423,7 @@ args_over:
   ret = 1;
 
 clean:
-  {if (ret) { sig->is_valid = 1; } return ret;}
+  {if (ret) { sig->is_valid = 1; } return ret;}}
 }
 
 MJS_PRIVATE int mjs_ffi_is_regular_word(mjs_ffi_ctype_t type) {
@@ -4978,9 +4999,10 @@ static void emit_op(struct pstate *pstate, int tok) {
     if (p->depth > (STACK_LIMIT / BINOP_STACK_FRAME_SIZE)) {                   \
       mjs_set_errorf(p->mjs, MJS_SYNTAX_ERROR, "parser stack overflow");       \
       res = MJS_SYNTAX_ERROR;                                                  \
-      goto binop_clean;                                                        \
+    {p->depth--;return res;}                                                   \
     }                                                                          \
-    if ((res = f1(p, TOK_EOF)) != MJS_OK) goto binop_clean;                    \
+    if ((res = f1(p, TOK_EOF)) != MJS_OK)                                      \
+    {p->depth--;return res;}                                                   \
     if (prev_op != TOK_EOF) emit_op(p, prev_op);                               \
     if (findtok(ops, p->tok.tok) != TOK_EOF) {                                 \
       int op = p->tok.tok;                                                     \
@@ -4998,7 +5020,8 @@ static void emit_op(struct pstate *pstate, int tok) {
         op = TOK_EOF;                                                          \
       }                                                                        \
       pnext1(p);                                                               \
-      if ((res = f2(p, op)) != MJS_OK) goto binop_clean;                       \
+      if ((res = f2(p, op)) != MJS_OK)                                         \
+    {p->depth--;return res;}                                                   \
                                                                                \
       if (off_if != 0) {                                                       \
         mjs_bcode_insert_offset(p, p->mjs, off_if,                             \
@@ -5006,8 +5029,7 @@ static void emit_op(struct pstate *pstate, int tok) {
       }                                                                        \
     }                                                                          \
   binop_clean:                                                                 \
-    p->depth--;                                                                \
-    return res;                                                                \
+    {p->depth--;return res;}                                                   \
   } while (0)
 
 #define PARSE_RTL_BINOP(p, f1, f2, ops, prev_op)        \
