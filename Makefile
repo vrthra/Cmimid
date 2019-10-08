@@ -3,6 +3,8 @@
 PYTHON=python3
 pfuzzer=../checksum-repair
 
+CFLAGS=-xc++ -std=c++14
+
 EXAMPLE_C_SOURCE=example3.c
 
 LIBCLANG_PATH=/usr/local/Cellar/llvm/8.0.1/lib/libclang.dylib
@@ -15,10 +17,10 @@ instrument: | build
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py examples/$(EXAMPLE_C_SOURCE) | $(CLANG_FORMAT) > build/$(EXAMPLE_C_SOURCE)
 
 build/%.out: examples/%.c
-	gcc -g -o $@ $< -I ./examples
+	gcc $(CFLAGS) -g -o $@ $< -I ./examples
 
 build/json.out: examples/json.c | build
-	gcc -g -o $@ $^ -I ./examples
+	gcc $(CFLAGS) -g -o $@ $^ -I ./examples
 
 build: ; mkdir -p $@
 
@@ -28,7 +30,7 @@ build/%.c: examples/%.c build/%.out src/instrument.py | build
 	mv $@_ $@
 
 build/%.x: build/%.c
-	gcc -g -o $@ $^ -I ./examples
+	gcc $(CFLAGS) -g -o $@ $^ -I ./examples
 
 build/%.d: examples/%.c src/instrument.py | build
 	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
