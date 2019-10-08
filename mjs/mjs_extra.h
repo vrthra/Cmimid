@@ -1,8027 +1,1860 @@
-# 1 "mjs_extra.h"
-# 1 "<built-in>" 1
-# 1 "<built-in>" 3
-# 349 "<built-in>" 3
-# 1 "<command line>" 1
-# 1 "<built-in>" 2
-# 1 "mjs_extra.h" 2
-# 1 "./mjs.h" 1
-# 69 "./mjs.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 1 3
-# 61 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 3
-# 1 "/usr/include/stdint.h" 1 3 4
-# 26 "/usr/include/stdint.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
-# 33 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 3 4
-# 1 "/usr/include/features.h" 1 3 4
-# 402 "/usr/include/features.h" 3 4
-# 1 "/usr/include/stdc-predef.h" 1 3 4
-# 403 "/usr/include/features.h" 2 3 4
-# 424 "/usr/include/features.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 1 3 4
-# 427 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 428 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/long-double.h" 1 3 4
-# 429 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 2 3 4
-# 425 "/usr/include/features.h" 2 3 4
-# 448 "/usr/include/features.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 1 3 4
-# 10 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/gnu/stubs-64.h" 1 3 4
-# 11 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 2 3 4
-# 449 "/usr/include/features.h" 2 3 4
-# 34 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 2 3 4
-# 27 "/usr/include/stdint.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/types.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/types.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 28 "/usr/include/x86_64-linux-gnu/bits/types.h" 2 3 4
-
-
-typedef unsigned char __u_char;
-typedef unsigned short int __u_short;
-typedef unsigned int __u_int;
-typedef unsigned long int __u_long;
-
-
-typedef signed char __int8_t;
-typedef unsigned char __uint8_t;
-typedef signed short int __int16_t;
-typedef unsigned short int __uint16_t;
-typedef signed int __int32_t;
-typedef unsigned int __uint32_t;
-
-typedef signed long int __int64_t;
-typedef unsigned long int __uint64_t;
-
-
-
-
-
-
-
-typedef long int __quad_t;
-typedef unsigned long int __u_quad_t;
-
-
-
-
-
-
-
-typedef long int __intmax_t;
-typedef unsigned long int __uintmax_t;
-# 130 "/usr/include/x86_64-linux-gnu/bits/types.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/typesizes.h" 1 3 4
-# 131 "/usr/include/x86_64-linux-gnu/bits/types.h" 2 3 4
-
-
-typedef unsigned long int __dev_t;
-typedef unsigned int __uid_t;
-typedef unsigned int __gid_t;
-typedef unsigned long int __ino_t;
-typedef unsigned long int __ino64_t;
-typedef unsigned int __mode_t;
-typedef unsigned long int __nlink_t;
-typedef long int __off_t;
-typedef long int __off64_t;
-typedef int __pid_t;
-typedef struct { int __val[2]; } __fsid_t;
-typedef long int __clock_t;
-typedef unsigned long int __rlim_t;
-typedef unsigned long int __rlim64_t;
-typedef unsigned int __id_t;
-typedef long int __time_t;
-typedef unsigned int __useconds_t;
-typedef long int __suseconds_t;
-
-typedef int __daddr_t;
-typedef int __key_t;
-
-
-typedef int __clockid_t;
-
-
-typedef void * __timer_t;
-
-
-typedef long int __blksize_t;
-
-
-
-
-typedef long int __blkcnt_t;
-typedef long int __blkcnt64_t;
-
-
-typedef unsigned long int __fsblkcnt_t;
-typedef unsigned long int __fsblkcnt64_t;
-
-
-typedef unsigned long int __fsfilcnt_t;
-typedef unsigned long int __fsfilcnt64_t;
-
-
-typedef long int __fsword_t;
-
-typedef long int __ssize_t;
-
-
-typedef long int __syscall_slong_t;
-
-typedef unsigned long int __syscall_ulong_t;
-
-
-
-typedef __off64_t __loff_t;
-typedef char *__caddr_t;
-
-
-typedef long int __intptr_t;
-
-
-typedef unsigned int __socklen_t;
-
-
-
-
-typedef int __sig_atomic_t;
-# 28 "/usr/include/stdint.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wchar.h" 1 3 4
-# 29 "/usr/include/stdint.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 30 "/usr/include/stdint.h" 2 3 4
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/stdint-intn.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/stdint-intn.h" 3 4
-typedef __int8_t int8_t;
-typedef __int16_t int16_t;
-typedef __int32_t int32_t;
-typedef __int64_t int64_t;
-# 35 "/usr/include/stdint.h" 2 3 4
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h" 3 4
-typedef __uint8_t uint8_t;
-typedef __uint16_t uint16_t;
-typedef __uint32_t uint32_t;
-typedef __uint64_t uint64_t;
-# 38 "/usr/include/stdint.h" 2 3 4
-
-
-
-
-
-typedef signed char int_least8_t;
-typedef short int int_least16_t;
-typedef int int_least32_t;
-
-typedef long int int_least64_t;
-
-
-
-
-
-
-typedef unsigned char uint_least8_t;
-typedef unsigned short int uint_least16_t;
-typedef unsigned int uint_least32_t;
-
-typedef unsigned long int uint_least64_t;
-# 68 "/usr/include/stdint.h" 3 4
-typedef signed char int_fast8_t;
-
-typedef long int int_fast16_t;
-typedef long int int_fast32_t;
-typedef long int int_fast64_t;
-# 81 "/usr/include/stdint.h" 3 4
-typedef unsigned char uint_fast8_t;
-
-typedef unsigned long int uint_fast16_t;
-typedef unsigned long int uint_fast32_t;
-typedef unsigned long int uint_fast64_t;
-# 97 "/usr/include/stdint.h" 3 4
-typedef long int intptr_t;
-
-
-typedef unsigned long int uintptr_t;
-# 111 "/usr/include/stdint.h" 3 4
-typedef __intmax_t intmax_t;
-typedef __uintmax_t uintmax_t;
-# 62 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 2 3
-# 70 "./mjs.h" 2
-
-
-
-
-
-# 1 "/usr/include/stdio.h" 1 3 4
-# 27 "/usr/include/stdio.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
-# 28 "/usr/include/stdio.h" 2 3 4
-
-
-
-
-
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 62 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 3 4
-typedef long unsigned int size_t;
-# 34 "/usr/include/stdio.h" 2 3 4
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/__FILE.h" 1 3 4
-
-
-
-struct _IO_FILE;
-typedef struct _IO_FILE __FILE;
-# 37 "/usr/include/stdio.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/FILE.h" 1 3 4
-
-
-
-struct _IO_FILE;
-
-
-typedef struct _IO_FILE FILE;
-# 38 "/usr/include/stdio.h" 2 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/libio.h" 1 3 4
-# 35 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/_G_config.h" 1 3 4
-# 19 "/usr/include/x86_64-linux-gnu/bits/_G_config.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 20 "/usr/include/x86_64-linux-gnu/bits/_G_config.h" 2 3 4
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h" 1 3 4
-# 13 "/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h" 3 4
-typedef struct
-{
-  int __count;
-  union
-  {
-    unsigned int __wch;
-    char __wchb[4];
-  } __value;
-} __mbstate_t;
-# 22 "/usr/include/x86_64-linux-gnu/bits/_G_config.h" 2 3 4
-
-
-
-
-typedef struct
-{
-  __off_t __pos;
-  __mbstate_t __state;
-} _G_fpos_t;
-typedef struct
-{
-  __off64_t __pos;
-  __mbstate_t __state;
-} _G_fpos64_t;
-# 36 "/usr/include/x86_64-linux-gnu/bits/libio.h" 2 3 4
-# 53 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdarg.h" 1 3 4
-# 30 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdarg.h" 3 4
-typedef __builtin_va_list va_list;
-# 48 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdarg.h" 3 4
-typedef __builtin_va_list __gnuc_va_list;
-# 54 "/usr/include/x86_64-linux-gnu/bits/libio.h" 2 3 4
-# 149 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-struct _IO_jump_t; struct _IO_FILE;
-
-
-
-
-typedef void _IO_lock_t;
-
-
-
-
-
-struct _IO_marker {
-  struct _IO_marker *_next;
-  struct _IO_FILE *_sbuf;
-
-
-
-  int _pos;
-# 177 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-};
-
-
-enum __codecvt_result
-{
-  __codecvt_ok,
-  __codecvt_partial,
-  __codecvt_error,
-  __codecvt_noconv
-};
-# 245 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-struct _IO_FILE {
-  int _flags;
-
-
-
-
-  char* _IO_read_ptr;
-  char* _IO_read_end;
-  char* _IO_read_base;
-  char* _IO_write_base;
-  char* _IO_write_ptr;
-  char* _IO_write_end;
-  char* _IO_buf_base;
-  char* _IO_buf_end;
-
-  char *_IO_save_base;
-  char *_IO_backup_base;
-  char *_IO_save_end;
-
-  struct _IO_marker *_markers;
-
-  struct _IO_FILE *_chain;
-
-  int _fileno;
-
-
-
-  int _flags2;
-
-  __off_t _old_offset;
-
-
-
-  unsigned short _cur_column;
-  signed char _vtable_offset;
-  char _shortbuf[1];
-
-
-
-  _IO_lock_t *_lock;
-# 293 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-  __off64_t _offset;
-
-
-
-
-
-
-
-  void *__pad1;
-  void *__pad2;
-  void *__pad3;
-  void *__pad4;
-
-  size_t __pad5;
-  int _mode;
-
-  char _unused2[15 * sizeof (int) - 4 * sizeof (void *) - sizeof (size_t)];
-
-};
-
-
-typedef struct _IO_FILE _IO_FILE;
-
-
-struct _IO_FILE_plus;
-
-extern struct _IO_FILE_plus _IO_2_1_stdin_;
-extern struct _IO_FILE_plus _IO_2_1_stdout_;
-extern struct _IO_FILE_plus _IO_2_1_stderr_;
-# 337 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-typedef __ssize_t __io_read_fn (void *__cookie, char *__buf, size_t __nbytes);
-
-
-
-
-
-
-
-typedef __ssize_t __io_write_fn (void *__cookie, const char *__buf,
-     size_t __n);
-
-
-
-
-
-
-
-typedef int __io_seek_fn (void *__cookie, __off64_t *__pos, int __w);
-
-
-typedef int __io_close_fn (void *__cookie);
-# 389 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-extern int __underflow (_IO_FILE *);
-extern int __uflow (_IO_FILE *);
-extern int __overflow (_IO_FILE *, int);
-# 433 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-extern int _IO_getc (_IO_FILE *__fp);
-extern int _IO_putc (int __c, _IO_FILE *__fp);
-extern int _IO_feof (_IO_FILE *__fp) __attribute__ ((__nothrow__ ));
-extern int _IO_ferror (_IO_FILE *__fp) __attribute__ ((__nothrow__ ));
-
-extern int _IO_peekc_locked (_IO_FILE *__fp);
-
-
-
-
-
-extern void _IO_flockfile (_IO_FILE *) __attribute__ ((__nothrow__ ));
-extern void _IO_funlockfile (_IO_FILE *) __attribute__ ((__nothrow__ ));
-extern int _IO_ftrylockfile (_IO_FILE *) __attribute__ ((__nothrow__ ));
-# 462 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-extern int _IO_vfscanf (_IO_FILE * __restrict, const char * __restrict,
-   __gnuc_va_list, int *__restrict);
-extern int _IO_vfprintf (_IO_FILE *__restrict, const char *__restrict,
-    __gnuc_va_list);
-extern __ssize_t _IO_padn (_IO_FILE *, int, __ssize_t);
-extern size_t _IO_sgetn (_IO_FILE *, void *, size_t);
-
-extern __off64_t _IO_seekoff (_IO_FILE *, __off64_t, int, int);
-extern __off64_t _IO_seekpos (_IO_FILE *, __off64_t, int);
-
-extern void _IO_free_backup_area (_IO_FILE *) __attribute__ ((__nothrow__ ));
-# 42 "/usr/include/stdio.h" 2 3 4
-
-
-
-
-typedef __gnuc_va_list va_list;
-# 57 "/usr/include/stdio.h" 3 4
-typedef __off_t off_t;
-# 71 "/usr/include/stdio.h" 3 4
-typedef __ssize_t ssize_t;
-
-
-
-
-
-
-typedef _G_fpos_t fpos_t;
-# 131 "/usr/include/stdio.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/stdio_lim.h" 1 3 4
-# 132 "/usr/include/stdio.h" 2 3 4
-
-
-
-extern struct _IO_FILE *stdin;
-extern struct _IO_FILE *stdout;
-extern struct _IO_FILE *stderr;
-
-
-
-
-
-
-extern int remove (const char *__filename) __attribute__ ((__nothrow__ ));
-
-extern int rename (const char *__old, const char *__new) __attribute__ ((__nothrow__ ));
-
-
-
-extern int renameat (int __oldfd, const char *__old, int __newfd,
-       const char *__new) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-extern FILE *tmpfile (void) ;
-# 173 "/usr/include/stdio.h" 3 4
-extern char *tmpnam (char *__s) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern char *tmpnam_r (char *__s) __attribute__ ((__nothrow__ )) ;
-# 190 "/usr/include/stdio.h" 3 4
-extern char *tempnam (const char *__dir, const char *__pfx)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__malloc__)) ;
-
-
-
-
-
-
-
-extern int fclose (FILE *__stream);
-
-
-
-
-extern int fflush (FILE *__stream);
-# 213 "/usr/include/stdio.h" 3 4
-extern int fflush_unlocked (FILE *__stream);
-# 232 "/usr/include/stdio.h" 3 4
-extern FILE *fopen (const char *__restrict __filename,
-      const char *__restrict __modes) ;
-
-
-
-
-extern FILE *freopen (const char *__restrict __filename,
-        const char *__restrict __modes,
-        FILE *__restrict __stream) ;
-# 265 "/usr/include/stdio.h" 3 4
-extern FILE *fdopen (int __fd, const char *__modes) __attribute__ ((__nothrow__ )) ;
-# 278 "/usr/include/stdio.h" 3 4
-extern FILE *fmemopen (void *__s, size_t __len, const char *__modes)
-  __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern FILE *open_memstream (char **__bufloc, size_t *__sizeloc) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-
-extern void setbuf (FILE *__restrict __stream, char *__restrict __buf) __attribute__ ((__nothrow__ ));
-
-
-
-extern int setvbuf (FILE *__restrict __stream, char *__restrict __buf,
-      int __modes, size_t __n) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern void setbuffer (FILE *__restrict __stream, char *__restrict __buf,
-         size_t __size) __attribute__ ((__nothrow__ ));
-
-
-extern void setlinebuf (FILE *__stream) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-extern int fprintf (FILE *__restrict __stream,
-      const char *__restrict __format, ...);
-
-
-
-
-extern int printf (const char *__restrict __format, ...);
-
-extern int sprintf (char *__restrict __s,
-      const char *__restrict __format, ...) __attribute__ ((__nothrow__));
-
-
-
-
-
-extern int vfprintf (FILE *__restrict __s, const char *__restrict __format,
-       __gnuc_va_list __arg);
-
-
-
-
-extern int vprintf (const char *__restrict __format, __gnuc_va_list __arg);
-
-extern int vsprintf (char *__restrict __s, const char *__restrict __format,
-       __gnuc_va_list __arg) __attribute__ ((__nothrow__));
-
-
-
-extern int snprintf (char *__restrict __s, size_t __maxlen,
-       const char *__restrict __format, ...)
-     __attribute__ ((__nothrow__)) __attribute__ ((__format__ (__printf__, 3, 4)));
-
-extern int vsnprintf (char *__restrict __s, size_t __maxlen,
-        const char *__restrict __format, __gnuc_va_list __arg)
-     __attribute__ ((__nothrow__)) __attribute__ ((__format__ (__printf__, 3, 0)));
-# 365 "/usr/include/stdio.h" 3 4
-extern int vdprintf (int __fd, const char *__restrict __fmt,
-       __gnuc_va_list __arg)
-     __attribute__ ((__format__ (__printf__, 2, 0)));
-extern int dprintf (int __fd, const char *__restrict __fmt, ...)
-     __attribute__ ((__format__ (__printf__, 2, 3)));
-
-
-
-
-
-
-
-extern int fscanf (FILE *__restrict __stream,
-     const char *__restrict __format, ...) ;
-
-
-
-
-extern int scanf (const char *__restrict __format, ...) ;
-
-extern int sscanf (const char *__restrict __s,
-     const char *__restrict __format, ...) __attribute__ ((__nothrow__ ));
-# 395 "/usr/include/stdio.h" 3 4
-extern int fscanf (FILE *__restrict __stream, const char *__restrict __format, ...) __asm__ ("" "__isoc99_fscanf") ;
-
-
-extern int scanf (const char *__restrict __format, ...) __asm__ ("" "__isoc99_scanf") ;
-
-extern int sscanf (const char *__restrict __s, const char *__restrict __format, ...) __asm__ ("" "__isoc99_sscanf") __attribute__ ((__nothrow__ ));
-# 420 "/usr/include/stdio.h" 3 4
-extern int vfscanf (FILE *__restrict __s, const char *__restrict __format,
-      __gnuc_va_list __arg)
-     __attribute__ ((__format__ (__scanf__, 2, 0))) ;
-
-
-
-
-
-extern int vscanf (const char *__restrict __format, __gnuc_va_list __arg)
-     __attribute__ ((__format__ (__scanf__, 1, 0))) ;
-
-
-extern int vsscanf (const char *__restrict __s,
-      const char *__restrict __format, __gnuc_va_list __arg)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__format__ (__scanf__, 2, 0)));
-# 443 "/usr/include/stdio.h" 3 4
-extern int vfscanf (FILE *__restrict __s, const char *__restrict __format, __gnuc_va_list __arg) __asm__ ("" "__isoc99_vfscanf")
-
-
-
-     __attribute__ ((__format__ (__scanf__, 2, 0))) ;
-extern int vscanf (const char *__restrict __format, __gnuc_va_list __arg) __asm__ ("" "__isoc99_vscanf")
-
-     __attribute__ ((__format__ (__scanf__, 1, 0))) ;
-extern int vsscanf (const char *__restrict __s, const char *__restrict __format, __gnuc_va_list __arg) __asm__ ("" "__isoc99_vsscanf") __attribute__ ((__nothrow__ ))
-
-
-
-     __attribute__ ((__format__ (__scanf__, 2, 0)));
-# 477 "/usr/include/stdio.h" 3 4
-extern int fgetc (FILE *__stream);
-extern int getc (FILE *__stream);
-
-
-
-
-
-extern int getchar (void);
-# 495 "/usr/include/stdio.h" 3 4
-extern int getc_unlocked (FILE *__stream);
-extern int getchar_unlocked (void);
-# 506 "/usr/include/stdio.h" 3 4
-extern int fgetc_unlocked (FILE *__stream);
-# 517 "/usr/include/stdio.h" 3 4
-extern int fputc (int __c, FILE *__stream);
-extern int putc (int __c, FILE *__stream);
-
-
-
-
-
-extern int putchar (int __c);
-# 537 "/usr/include/stdio.h" 3 4
-extern int fputc_unlocked (int __c, FILE *__stream);
-
-
-
-
-
-
-
-extern int putc_unlocked (int __c, FILE *__stream);
-extern int putchar_unlocked (int __c);
-
-
-
-
-
-
-extern int getw (FILE *__stream);
-
-
-extern int putw (int __w, FILE *__stream);
-
-
-
-
-
-
-
-extern char *fgets (char *__restrict __s, int __n, FILE *__restrict __stream)
-          ;
-# 603 "/usr/include/stdio.h" 3 4
-extern __ssize_t __getdelim (char **__restrict __lineptr,
-          size_t *__restrict __n, int __delimiter,
-          FILE *__restrict __stream) ;
-extern __ssize_t getdelim (char **__restrict __lineptr,
-        size_t *__restrict __n, int __delimiter,
-        FILE *__restrict __stream) ;
-
-
-
-
-
-
-
-extern __ssize_t getline (char **__restrict __lineptr,
-       size_t *__restrict __n,
-       FILE *__restrict __stream) ;
-
-
-
-
-
-
-
-extern int fputs (const char *__restrict __s, FILE *__restrict __stream);
-
-
-
-
-
-extern int puts (const char *__s);
-
-
-
-
-
-
-extern int ungetc (int __c, FILE *__stream);
-
-
-
-
-
-
-extern size_t fread (void *__restrict __ptr, size_t __size,
-       size_t __n, FILE *__restrict __stream) ;
-
-
-
-
-extern size_t fwrite (const void *__restrict __ptr, size_t __size,
-        size_t __n, FILE *__restrict __s);
-# 673 "/usr/include/stdio.h" 3 4
-extern size_t fread_unlocked (void *__restrict __ptr, size_t __size,
-         size_t __n, FILE *__restrict __stream) ;
-extern size_t fwrite_unlocked (const void *__restrict __ptr, size_t __size,
-          size_t __n, FILE *__restrict __stream);
-
-
-
-
-
-
-
-extern int fseek (FILE *__stream, long int __off, int __whence);
-
-
-
-
-extern long int ftell (FILE *__stream) ;
-
-
-
-
-extern void rewind (FILE *__stream);
-# 707 "/usr/include/stdio.h" 3 4
-extern int fseeko (FILE *__stream, __off_t __off, int __whence);
-
-
-
-
-extern __off_t ftello (FILE *__stream) ;
-# 731 "/usr/include/stdio.h" 3 4
-extern int fgetpos (FILE *__restrict __stream, fpos_t *__restrict __pos);
-
-
-
-
-extern int fsetpos (FILE *__stream, const fpos_t *__pos);
-# 757 "/usr/include/stdio.h" 3 4
-extern void clearerr (FILE *__stream) __attribute__ ((__nothrow__ ));
-
-extern int feof (FILE *__stream) __attribute__ ((__nothrow__ )) ;
-
-extern int ferror (FILE *__stream) __attribute__ ((__nothrow__ )) ;
-
-
-
-extern void clearerr_unlocked (FILE *__stream) __attribute__ ((__nothrow__ ));
-extern int feof_unlocked (FILE *__stream) __attribute__ ((__nothrow__ )) ;
-extern int ferror_unlocked (FILE *__stream) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-
-
-
-extern void perror (const char *__s);
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h" 1 3 4
-# 26 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h" 3 4
-extern int sys_nerr;
-extern const char *const sys_errlist[];
-# 782 "/usr/include/stdio.h" 2 3 4
-
-
-
-
-extern int fileno (FILE *__stream) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern int fileno_unlocked (FILE *__stream) __attribute__ ((__nothrow__ )) ;
-# 800 "/usr/include/stdio.h" 3 4
-extern FILE *popen (const char *__command, const char *__modes) ;
-
-
-
-
-
-extern int pclose (FILE *__stream);
-
-
-
-
-
-extern char *ctermid (char *__s) __attribute__ ((__nothrow__ ));
-# 840 "/usr/include/stdio.h" 3 4
-extern void flockfile (FILE *__stream) __attribute__ ((__nothrow__ ));
-
-
-
-extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ )) ;
-
-
-extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ ));
-# 76 "./mjs.h" 2
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3
-# 51 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 3
-typedef long int ptrdiff_t;
-# 90 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 3
-typedef int wchar_t;
-# 118 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 3
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/__stddef_max_align_t.h" 1 3
-# 35 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/__stddef_max_align_t.h" 3
-typedef struct {
-  long long __clang_max_align_nonce1
-      __attribute__((__aligned__(__alignof__(long long))));
-  long double __clang_max_align_nonce2
-      __attribute__((__aligned__(__alignof__(long double))));
-} max_align_t;
-# 119 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 2 3
-# 77 "./mjs.h" 2
-# 114 "./mjs.h"
-typedef uint64_t mjs_val_t;
-# 124 "./mjs.h"
-struct mjs;
-
-typedef enum mjs_err {
-  MJS_OK,
-  MJS_SYNTAX_ERROR,
-  MJS_REFERENCE_ERROR,
-  MJS_TYPE_ERROR,
-  MJS_OUT_OF_MEMORY,
-  MJS_INTERNAL_ERROR,
-  MJS_NOT_IMPLEMENTED_ERROR,
-  MJS_FILE_READ_ERROR,
-  MJS_BAD_ARGS_ERROR,
-
-  MJS_ERRS_CNT
-} mjs_err_t;
-struct mjs;
-
-
-struct mjs *mjs_create();
-
-struct mjs_create_opts {
-
-  const struct bf_code *code;
-};
-
-
-
-
-
-struct mjs *mjs_create_opt(struct mjs_create_opts opts);
-
-
-void mjs_destroy(struct mjs *mjs);
-
-mjs_val_t mjs_get_global(struct mjs *mjs);
-# 227 "./mjs.h"
-void mjs_own(struct mjs *mjs, mjs_val_t *v);
-
-
-
-
-
-
-int mjs_disown(struct mjs *mjs, mjs_val_t *v);
-
-mjs_err_t mjs_set_errorf(struct mjs *mjs, mjs_err_t err, const char *fmt, ...);
-# 245 "./mjs.h"
-mjs_err_t mjs_prepend_errorf(struct mjs *mjs, mjs_err_t err, const char *fmt,
-                             ...);
-
-
-
-
-
-
-void mjs_print_error(struct mjs *mjs, FILE *fp, const char *msg,
-                     int print_stack_trace);
-
-
-
-
-
-const char *mjs_strerror(struct mjs *mjs, enum mjs_err err);
-# 269 "./mjs.h"
-void mjs_set_generate_jsc(struct mjs *mjs, int generate_jsc);
-
-
-
-
-
-int mjs_nargs(struct mjs *mjs);
-
-
-
-
-
-mjs_val_t mjs_arg(struct mjs *mjs, int n);
-
-
-
-
-void mjs_return(struct mjs *mjs, mjs_val_t v);
-# 310 "./mjs.h"
-enum mjs_ffi_ctype {
-  MJS_FFI_CTYPE_NONE,
-  MJS_FFI_CTYPE_USERDATA,
-  MJS_FFI_CTYPE_CALLBACK,
-  MJS_FFI_CTYPE_INT,
-  MJS_FFI_CTYPE_BOOL,
-  MJS_FFI_CTYPE_DOUBLE,
-  MJS_FFI_CTYPE_FLOAT,
-  MJS_FFI_CTYPE_CHAR_PTR,
-  MJS_FFI_CTYPE_VOID_PTR,
-  MJS_FFI_CTYPE_STRUCT_MG_STR_PTR,
-  MJS_FFI_CTYPE_STRUCT_MG_STR,
-  MJS_FFI_CTYPE_INVALID,
-};
-
-typedef void *(mjs_ffi_resolver_t)(void *handle, const char *symbol);
-
-void mjs_set_ffi_resolver(struct mjs *mjs, mjs_ffi_resolver_t *dlsym);
-# 357 "./mjs.h"
-mjs_val_t mjs_mk_array(struct mjs *mjs);
-
-
-unsigned long mjs_array_length(struct mjs *mjs, mjs_val_t arr);
-
-
-mjs_err_t mjs_array_push(struct mjs *mjs, mjs_val_t arr, mjs_val_t v);
-
-
-
-
-
-mjs_val_t mjs_array_get(struct mjs *, mjs_val_t arr, unsigned long index);
-
-
-mjs_err_t mjs_array_set(struct mjs *mjs, mjs_val_t arr, unsigned long index,
-                        mjs_val_t v);
-
-
-int mjs_is_array(mjs_val_t v);
-
-
-void mjs_array_del(struct mjs *mjs, mjs_val_t arr, unsigned long index);
-# 640 "./mjs.h"
-mjs_err_t mjs_exec(struct mjs *, const char *src, mjs_val_t *res);
-mjs_err_t mjs_exec_buf(struct mjs *, const char *src, size_t, mjs_val_t *res);
-
-mjs_err_t mjs_exec_file(struct mjs *mjs, const char *path, mjs_val_t *res);
-mjs_err_t mjs_apply(struct mjs *mjs, mjs_val_t *res, mjs_val_t func,
-                    mjs_val_t this_val, int nargs, mjs_val_t *args);
-mjs_err_t mjs_call(struct mjs *mjs, mjs_val_t *res, mjs_val_t func,
-                   mjs_val_t this_val, int nargs, ...);
-mjs_val_t mjs_get_this(struct mjs *mjs);
-# 707 "./mjs.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3
-# 708 "./mjs.h" 2
-# 718 "./mjs.h"
-int mjs_is_object(mjs_val_t v);
-
-
-mjs_val_t mjs_mk_object(struct mjs *mjs);
-
-
-enum mjs_struct_field_type {
-  MJS_STRUCT_FIELD_TYPE_INVALID,
-  MJS_STRUCT_FIELD_TYPE_STRUCT,
-  MJS_STRUCT_FIELD_TYPE_STRUCT_PTR,
-  MJS_STRUCT_FIELD_TYPE_INT,
-  MJS_STRUCT_FIELD_TYPE_BOOL,
-  MJS_STRUCT_FIELD_TYPE_DOUBLE,
-  MJS_STRUCT_FIELD_TYPE_FLOAT,
-  MJS_STRUCT_FIELD_TYPE_CHAR_PTR,
-  MJS_STRUCT_FIELD_TYPE_VOID_PTR,
-  MJS_STRUCT_FIELD_TYPE_MG_STR_PTR,
-  MJS_STRUCT_FIELD_TYPE_MG_STR,
-  MJS_STRUCT_FIELD_TYPE_DATA,
-  MJS_STRUCT_FIELD_TYPE_INT8,
-  MJS_STRUCT_FIELD_TYPE_INT16,
-  MJS_STRUCT_FIELD_TYPE_UINT8,
-  MJS_STRUCT_FIELD_TYPE_UINT16,
-
-
-
-
-
-  MJS_STRUCT_FIELD_TYPE_CUSTOM,
-};
-
-
-struct mjs_c_struct_member {
-  const char *name;
-  int offset;
-  enum mjs_struct_field_type type;
-  const void *arg;
-};
-
-
-mjs_val_t mjs_struct_to_obj(struct mjs *mjs, const void *base,
-                            const struct mjs_c_struct_member *members);
-# 768 "./mjs.h"
-mjs_val_t mjs_get(struct mjs *mjs, mjs_val_t obj, const char *name,
-                  size_t name_len);
-
-
-
-
-mjs_val_t mjs_get_v(struct mjs *mjs, mjs_val_t obj, mjs_val_t name);
-
-
-
-
-mjs_val_t mjs_get_v_proto(struct mjs *mjs, mjs_val_t obj, mjs_val_t key);
-
-
-
-
-mjs_err_t mjs_set(struct mjs *mjs, mjs_val_t obj, const char *name, size_t len,
-                  mjs_val_t val);
-
-
-
-
-mjs_err_t mjs_set_v(struct mjs *mjs, mjs_val_t obj, mjs_val_t name,
-                    mjs_val_t val);
-# 802 "./mjs.h"
-int mjs_del(struct mjs *mjs, mjs_val_t obj, const char *name, size_t len);
-# 816 "./mjs.h"
-mjs_val_t mjs_next(struct mjs *mjs, mjs_val_t obj, mjs_val_t *iterator);
-# 847 "./mjs.h"
-typedef void (*mjs_func_ptr_t)(void);
-
-
-
-
-
-
-
-mjs_val_t mjs_mk_null(void);
-
-
-int mjs_is_null(mjs_val_t v);
-
-
-
-
-
-
-
-mjs_val_t mjs_mk_undefined(void);
-
-
-int mjs_is_undefined(mjs_val_t v);
-
-
-mjs_val_t mjs_mk_number(struct mjs *mjs, double num);
-
-
-
-
-
-
-double mjs_get_double(struct mjs *mjs, mjs_val_t v);
-
-
-
-
-
-
-
-int mjs_get_int(struct mjs *mjs, mjs_val_t v);
-
-
-
-
-
-int32_t mjs_get_int32(struct mjs *mjs, mjs_val_t v);
-
-
-int mjs_is_number(mjs_val_t v);
-# 917 "./mjs.h"
-mjs_val_t mjs_mk_foreign(struct mjs *mjs, void *ptr);
-
-
-
-
-
-mjs_val_t mjs_mk_foreign_func(struct mjs *mjs, mjs_func_ptr_t fn);
-
-
-
-
-
-
-void *mjs_get_ptr(struct mjs *mjs, mjs_val_t v);
-
-
-int mjs_is_foreign(mjs_val_t v);
-
-mjs_val_t mjs_mk_boolean(struct mjs *mjs, int v);
-int mjs_get_bool(struct mjs *mjs, mjs_val_t v);
-int mjs_is_boolean(mjs_val_t v);
-
-mjs_val_t mjs_mk_function(struct mjs *mjs, size_t off);
-int mjs_is_function(mjs_val_t v);
-# 977 "./mjs.h"
-mjs_val_t mjs_mk_string(struct mjs *mjs, const char *str, size_t len, int copy);
-
-
-int mjs_is_string(mjs_val_t v);
-# 999 "./mjs.h"
-const char *mjs_get_string(struct mjs *mjs, mjs_val_t *v, size_t *len);
-# 1013 "./mjs.h"
-const char *mjs_get_cstring(struct mjs *mjs, mjs_val_t *v);
-
-
-
-
-
-
-
-int mjs_strcmp(struct mjs *mjs, mjs_val_t *a, const char *b, size_t len);
-# 1046 "./mjs.h"
-const char *mjs_typeof(mjs_val_t v);
-
-void mjs_fprintf(mjs_val_t v, struct mjs *mjs, FILE *fp);
-void mjs_sprintf(mjs_val_t v, struct mjs *mjs, char *buf, size_t buflen);
-
-
-
-void mjs_disasm(const uint8_t *code, size_t len);
-void mjs_dump(struct mjs *mjs, int do_disasm);
-
-
-
-
-
-
-const char *mjs_get_bcode_filename_by_offset(struct mjs *mjs, int offset);
-
-
-
-
-int mjs_get_lineno_by_offset(struct mjs *mjs, int offset);
-
-
-
-
-
-
-
-int mjs_get_offset_by_call_frame_num(struct mjs *mjs, int cf_num);
-# 2 "mjs_extra.h" 2
-# 361 "mjs_extra.h"
-# 1 "/usr/include/arpa/inet.h" 1 3 4
-# 22 "/usr/include/arpa/inet.h" 3 4
-# 1 "/usr/include/netinet/in.h" 1 3 4
-# 23 "/usr/include/netinet/in.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/sys/socket.h" 1 3 4
-# 26 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h" 1 3 4
-# 23 "/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h" 2 3 4
-
-
-struct iovec
-  {
-    void *iov_base;
-    size_t iov_len;
-  };
-# 27 "/usr/include/x86_64-linux-gnu/sys/socket.h" 2 3 4
-
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 29 "/usr/include/x86_64-linux-gnu/sys/socket.h" 2 3 4
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/socket.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/socket.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 28 "/usr/include/x86_64-linux-gnu/bits/socket.h" 2 3 4
-
-# 1 "/usr/include/x86_64-linux-gnu/sys/types.h" 1 3 4
-# 33 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-typedef __u_char u_char;
-typedef __u_short u_short;
-typedef __u_int u_int;
-typedef __u_long u_long;
-typedef __quad_t quad_t;
-typedef __u_quad_t u_quad_t;
-typedef __fsid_t fsid_t;
-
-
-
-
-typedef __loff_t loff_t;
-
-
-
-typedef __ino_t ino_t;
-# 60 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-typedef __dev_t dev_t;
-
-
-
-
-typedef __gid_t gid_t;
-
-
-
-
-typedef __mode_t mode_t;
-
-
-
-
-typedef __nlink_t nlink_t;
-
-
-
-
-typedef __uid_t uid_t;
-# 98 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-typedef __pid_t pid_t;
-
-
-
-
-
-typedef __id_t id_t;
-# 115 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-typedef __daddr_t daddr_t;
-typedef __caddr_t caddr_t;
-
-
-
-
-
-typedef __key_t key_t;
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/clock_t.h" 1 3 4
-
-
-
-
-
-
-typedef __clock_t clock_t;
-# 128 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/clockid_t.h" 1 3 4
-
-
-
-
-
-
-typedef __clockid_t clockid_t;
-# 130 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/time_t.h" 1 3 4
-
-
-
-
-
-
-typedef __time_t time_t;
-# 131 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/timer_t.h" 1 3 4
-
-
-
-
-
-
-typedef __timer_t timer_t;
-# 132 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-# 145 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 146 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-
-
-
-typedef unsigned long int ulong;
-typedef unsigned short int ushort;
-typedef unsigned int uint;
-# 178 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-typedef unsigned int u_int8_t __attribute__ ((__mode__ (__QI__)));
-typedef unsigned int u_int16_t __attribute__ ((__mode__ (__HI__)));
-typedef unsigned int u_int32_t __attribute__ ((__mode__ (__SI__)));
-typedef unsigned int u_int64_t __attribute__ ((__mode__ (__DI__)));
-
-typedef int register_t __attribute__ ((__mode__ (__word__)));
-# 194 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-# 1 "/usr/include/endian.h" 1 3 4
-# 36 "/usr/include/endian.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/endian.h" 1 3 4
-# 37 "/usr/include/endian.h" 2 3 4
-# 60 "/usr/include/endian.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/byteswap.h" 1 3 4
-# 28 "/usr/include/x86_64-linux-gnu/bits/byteswap.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 29 "/usr/include/x86_64-linux-gnu/bits/byteswap.h" 2 3 4
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/byteswap-16.h" 1 3 4
-# 36 "/usr/include/x86_64-linux-gnu/bits/byteswap.h" 2 3 4
-# 61 "/usr/include/endian.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/uintn-identity.h" 1 3 4
-# 32 "/usr/include/x86_64-linux-gnu/bits/uintn-identity.h" 3 4
-static __inline __uint16_t
-__uint16_identity (__uint16_t __x)
-{
-  return __x;
-}
-
-static __inline __uint32_t
-__uint32_identity (__uint32_t __x)
-{
-  return __x;
-}
-
-static __inline __uint64_t
-__uint64_identity (__uint64_t __x)
-{
-  return __x;
-}
-# 62 "/usr/include/endian.h" 2 3 4
-# 195 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-
-
-# 1 "/usr/include/x86_64-linux-gnu/sys/select.h" 1 3 4
-# 30 "/usr/include/x86_64-linux-gnu/sys/select.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/select.h" 1 3 4
-# 22 "/usr/include/x86_64-linux-gnu/bits/select.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 23 "/usr/include/x86_64-linux-gnu/bits/select.h" 2 3 4
-# 31 "/usr/include/x86_64-linux-gnu/sys/select.h" 2 3 4
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h" 1 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h" 1 3 4
-
-
-
-
-typedef struct
-{
-  unsigned long int __val[(1024 / (8 * sizeof (unsigned long int)))];
-} __sigset_t;
-# 5 "/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h" 2 3 4
-
-
-typedef __sigset_t sigset_t;
-# 34 "/usr/include/x86_64-linux-gnu/sys/select.h" 2 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h" 1 3 4
-
-
-
-
-
-
-
-struct timeval
-{
-  __time_t tv_sec;
-  __suseconds_t tv_usec;
-};
-# 38 "/usr/include/x86_64-linux-gnu/sys/select.h" 2 3 4
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h" 1 3 4
-
-
-
-
-
-
-
-struct timespec
-{
-  __time_t tv_sec;
-  __syscall_slong_t tv_nsec;
-};
-# 40 "/usr/include/x86_64-linux-gnu/sys/select.h" 2 3 4
-
-
-
-typedef __suseconds_t suseconds_t;
-
-
-
-
-
-typedef long int __fd_mask;
-# 59 "/usr/include/x86_64-linux-gnu/sys/select.h" 3 4
-typedef struct
-  {
-
-
-
-
-
-
-    __fd_mask __fds_bits[1024 / (8 * (int) sizeof (__fd_mask))];
-
-
-  } fd_set;
-
-
-
-
-
-
-typedef __fd_mask fd_mask;
-# 101 "/usr/include/x86_64-linux-gnu/sys/select.h" 3 4
-extern int select (int __nfds, fd_set *__restrict __readfds,
-     fd_set *__restrict __writefds,
-     fd_set *__restrict __exceptfds,
-     struct timeval *__restrict __timeout);
-# 113 "/usr/include/x86_64-linux-gnu/sys/select.h" 3 4
-extern int pselect (int __nfds, fd_set *__restrict __readfds,
-      fd_set *__restrict __writefds,
-      fd_set *__restrict __exceptfds,
-      const struct timespec *__restrict __timeout,
-      const __sigset_t *__restrict __sigmask);
-# 198 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/sys/sysmacros.h" 1 3 4
-# 41 "/usr/include/x86_64-linux-gnu/sys/sysmacros.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/sysmacros.h" 1 3 4
-# 42 "/usr/include/x86_64-linux-gnu/sys/sysmacros.h" 2 3 4
-# 73 "/usr/include/x86_64-linux-gnu/sys/sysmacros.h" 3 4
-extern unsigned int gnu_dev_major (__dev_t __dev) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-extern unsigned int gnu_dev_minor (__dev_t __dev) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-extern __dev_t gnu_dev_makedev (unsigned int __major, unsigned int __minor) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 206 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-
-
-
-
-
-
-typedef __blksize_t blksize_t;
-
-
-
-
-
-
-typedef __blkcnt_t blkcnt_t;
-
-
-
-typedef __fsblkcnt_t fsblkcnt_t;
-
-
-
-typedef __fsfilcnt_t fsfilcnt_t;
-# 254 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h" 1 3 4
-# 23 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h" 1 3 4
-# 77 "/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h" 1 3 4
-# 21 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 22 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h" 2 3 4
-# 65 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h" 3 4
-struct __pthread_rwlock_arch_t
-{
-  unsigned int __readers;
-  unsigned int __writers;
-  unsigned int __wrphase_futex;
-  unsigned int __writers_futex;
-  unsigned int __pad3;
-  unsigned int __pad4;
-
-  int __cur_writer;
-  int __shared;
-  signed char __rwelision;
-
-
-
-
-  unsigned char __pad1[7];
-
-
-  unsigned long int __pad2;
-
-
-  unsigned int __flags;
-# 99 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h" 3 4
-};
-# 78 "/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h" 2 3 4
-
-
-
-
-typedef struct __pthread_internal_list
-{
-  struct __pthread_internal_list *__prev;
-  struct __pthread_internal_list *__next;
-} __pthread_list_t;
-# 118 "/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h" 3 4
-struct __pthread_mutex_s
-{
-  int __lock ;
-  unsigned int __count;
-  int __owner;
-
-  unsigned int __nusers;
-
-
-
-  int __kind;
-
-
-
-
-
-  short __spins; short __elision;
-  __pthread_list_t __list;
-# 146 "/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h" 3 4
-};
-
-
-
-
-struct __pthread_cond_s
-{
-  __extension__ union
-  {
-    __extension__ unsigned long long int __wseq;
-    struct
-    {
-      unsigned int __low;
-      unsigned int __high;
-    } __wseq32;
-  };
-  __extension__ union
-  {
-    __extension__ unsigned long long int __g1_start;
-    struct
-    {
-      unsigned int __low;
-      unsigned int __high;
-    } __g1_start32;
-  };
-  unsigned int __g_refs[2] ;
-  unsigned int __g_size[2];
-  unsigned int __g1_orig_size;
-  unsigned int __wrefs;
-  unsigned int __g_signals[2];
-};
-# 24 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h" 2 3 4
-
-
-
-typedef unsigned long int pthread_t;
-
-
-
-
-typedef union
-{
-  char __size[4];
-  int __align;
-} pthread_mutexattr_t;
-
-
-
-
-typedef union
-{
-  char __size[4];
-  int __align;
-} pthread_condattr_t;
-
-
-
-typedef unsigned int pthread_key_t;
-
-
-
-typedef int pthread_once_t;
-
-
-union pthread_attr_t
-{
-  char __size[56];
-  long int __align;
-};
-
-typedef union pthread_attr_t pthread_attr_t;
-
-
-
-
-typedef union
-{
-  struct __pthread_mutex_s __data;
-  char __size[40];
-  long int __align;
-} pthread_mutex_t;
-
-
-typedef union
-{
-  struct __pthread_cond_s __data;
-  char __size[48];
-  __extension__ long long int __align;
-} pthread_cond_t;
-
-
-
-
-
-typedef union
-{
-  struct __pthread_rwlock_arch_t __data;
-  char __size[56];
-  long int __align;
-} pthread_rwlock_t;
-
-typedef union
-{
-  char __size[8];
-  long int __align;
-} pthread_rwlockattr_t;
-
-
-
-
-
-typedef volatile int pthread_spinlock_t;
-
-
-
-
-typedef union
-{
-  char __size[32];
-  long int __align;
-} pthread_barrier_t;
-
-typedef union
-{
-  char __size[4];
-  int __align;
-} pthread_barrierattr_t;
-# 255 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
-# 30 "/usr/include/x86_64-linux-gnu/bits/socket.h" 2 3 4
-
-
-
-typedef __socklen_t socklen_t;
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/socket_type.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/socket_type.h" 3 4
-enum __socket_type
-{
-  SOCK_STREAM = 1,
-
-
-  SOCK_DGRAM = 2,
-
-
-  SOCK_RAW = 3,
-
-  SOCK_RDM = 4,
-
-  SOCK_SEQPACKET = 5,
-
-
-  SOCK_DCCP = 6,
-
-  SOCK_PACKET = 10,
-
-
-
-
-
-
-
-  SOCK_CLOEXEC = 02000000,
-
-
-  SOCK_NONBLOCK = 00004000
-
-
-};
-# 39 "/usr/include/x86_64-linux-gnu/bits/socket.h" 2 3 4
-# 172 "/usr/include/x86_64-linux-gnu/bits/socket.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/sockaddr.h" 1 3 4
-# 28 "/usr/include/x86_64-linux-gnu/bits/sockaddr.h" 3 4
-typedef unsigned short int sa_family_t;
-# 173 "/usr/include/x86_64-linux-gnu/bits/socket.h" 2 3 4
-
-
-struct sockaddr
-  {
-    sa_family_t sa_family;
-    char sa_data[14];
-  };
-# 188 "/usr/include/x86_64-linux-gnu/bits/socket.h" 3 4
-struct sockaddr_storage
-  {
-    sa_family_t ss_family;
-    char __ss_padding[(128 - (sizeof (unsigned short int)) - sizeof (unsigned long int))];
-    unsigned long int __ss_align;
-  };
-
-
-
-enum
-  {
-    MSG_OOB = 0x01,
-
-    MSG_PEEK = 0x02,
-
-    MSG_DONTROUTE = 0x04,
-
-
-
-
-
-
-    MSG_CTRUNC = 0x08,
-
-    MSG_PROXY = 0x10,
-
-    MSG_TRUNC = 0x20,
-
-    MSG_DONTWAIT = 0x40,
-
-    MSG_EOR = 0x80,
-
-    MSG_WAITALL = 0x100,
-
-    MSG_FIN = 0x200,
-
-    MSG_SYN = 0x400,
-
-    MSG_CONFIRM = 0x800,
-
-    MSG_RST = 0x1000,
-
-    MSG_ERRQUEUE = 0x2000,
-
-    MSG_NOSIGNAL = 0x4000,
-
-    MSG_MORE = 0x8000,
-
-    MSG_WAITFORONE = 0x10000,
-
-    MSG_BATCH = 0x40000,
-
-    MSG_ZEROCOPY = 0x4000000,
-
-    MSG_FASTOPEN = 0x20000000,
-
-
-    MSG_CMSG_CLOEXEC = 0x40000000
-
-
-
-  };
-
-
-
-
-struct msghdr
-  {
-    void *msg_name;
-    socklen_t msg_namelen;
-
-    struct iovec *msg_iov;
-    size_t msg_iovlen;
-
-    void *msg_control;
-    size_t msg_controllen;
-
-
-
-
-    int msg_flags;
-  };
-
-
-struct cmsghdr
-  {
-    size_t cmsg_len;
-
-
-
-
-    int cmsg_level;
-    int cmsg_type;
-
-    __extension__ unsigned char __cmsg_data [];
-
-  };
-# 302 "/usr/include/x86_64-linux-gnu/bits/socket.h" 3 4
-extern struct cmsghdr *__cmsg_nxthdr (struct msghdr *__mhdr,
-          struct cmsghdr *__cmsg) __attribute__ ((__nothrow__ ));
-# 329 "/usr/include/x86_64-linux-gnu/bits/socket.h" 3 4
-enum
-  {
-    SCM_RIGHTS = 0x01
-
-
-
-
-
-  };
-# 390 "/usr/include/x86_64-linux-gnu/bits/socket.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/asm/socket.h" 1 3 4
-# 1 "/usr/include/asm-generic/socket.h" 1 3 4
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/asm/sockios.h" 1 3 4
-# 1 "/usr/include/asm-generic/sockios.h" 1 3 4
-# 2 "/usr/include/x86_64-linux-gnu/asm/sockios.h" 2 3 4
-# 6 "/usr/include/asm-generic/socket.h" 2 3 4
-# 2 "/usr/include/x86_64-linux-gnu/asm/socket.h" 2 3 4
-# 391 "/usr/include/x86_64-linux-gnu/bits/socket.h" 2 3 4
-# 444 "/usr/include/x86_64-linux-gnu/bits/socket.h" 3 4
-struct linger
-  {
-    int l_onoff;
-    int l_linger;
-  };
-# 34 "/usr/include/x86_64-linux-gnu/sys/socket.h" 2 3 4
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h" 1 3 4
-
-
-
-
-
-struct osockaddr
-{
-  unsigned short int sa_family;
-  unsigned char sa_data[14];
-};
-# 37 "/usr/include/x86_64-linux-gnu/sys/socket.h" 2 3 4
-
-
-
-
-enum
-{
-  SHUT_RD = 0,
-
-  SHUT_WR,
-
-  SHUT_RDWR
-
-};
-# 102 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
-extern int socket (int __domain, int __type, int __protocol) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern int socketpair (int __domain, int __type, int __protocol,
-         int __fds[2]) __attribute__ ((__nothrow__ ));
-
-
-extern int bind (int __fd, const struct sockaddr * __addr, socklen_t __len)
-     __attribute__ ((__nothrow__ ));
-
-
-extern int getsockname (int __fd, struct sockaddr *__restrict __addr,
-   socklen_t *__restrict __len) __attribute__ ((__nothrow__ ));
-# 126 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
-extern int connect (int __fd, const struct sockaddr * __addr, socklen_t __len);
-
-
-
-extern int getpeername (int __fd, struct sockaddr *__restrict __addr,
-   socklen_t *__restrict __len) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern ssize_t send (int __fd, const void *__buf, size_t __n, int __flags);
-
-
-
-
-
-
-extern ssize_t recv (int __fd, void *__buf, size_t __n, int __flags);
-
-
-
-
-
-
-extern ssize_t sendto (int __fd, const void *__buf, size_t __n,
-         int __flags, const struct sockaddr * __addr,
-         socklen_t __addr_len);
-# 163 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
-extern ssize_t recvfrom (int __fd, void *__restrict __buf, size_t __n,
-    int __flags, struct sockaddr *__restrict __addr,
-    socklen_t *__restrict __addr_len);
-
-
-
-
-
-
-
-extern ssize_t sendmsg (int __fd, const struct msghdr *__message,
-   int __flags);
-# 191 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
-extern ssize_t recvmsg (int __fd, struct msghdr *__message, int __flags);
-# 208 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
-extern int getsockopt (int __fd, int __level, int __optname,
-         void *__restrict __optval,
-         socklen_t *__restrict __optlen) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int setsockopt (int __fd, int __level, int __optname,
-         const void *__optval, socklen_t __optlen) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern int listen (int __fd, int __n) __attribute__ ((__nothrow__ ));
-# 232 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
-extern int accept (int __fd, struct sockaddr *__restrict __addr,
-     socklen_t *__restrict __addr_len);
-# 250 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
-extern int shutdown (int __fd, int __how) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int sockatmark (int __fd) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-extern int isfdtype (int __fd, int __fdtype) __attribute__ ((__nothrow__ ));
-# 24 "/usr/include/netinet/in.h" 2 3 4
-
-
-
-
-
-
+#include "mjs.h"
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platform.h"
+#endif
+#ifndef CS_COMMON_PLATFORM_H_
+#define CS_COMMON_PLATFORM_H_
+
+/*
+ * For the "custom" platform, includes and dependencies can be
+ * provided through mg_locals.h.
+ */
+#define CS_P_CUSTOM 0
+#define CS_P_UNIX 1
+#define CS_P_WINDOWS 2
+#define CS_P_ESP32 15
+#define CS_P_ESP8266 3
+#define CS_P_CC3100 6
+#define CS_P_CC3200 4
+#define CS_P_CC3220 17
+#define CS_P_MSP432 5
+#define CS_P_TM4C129 14
+#define CS_P_MBED 7
+#define CS_P_WINCE 8
+#define CS_P_NXP_LPC 13
+#define CS_P_NXP_KINETIS 9
+#define CS_P_NRF51 12
+#define CS_P_NRF52 10
+#define CS_P_PIC32 11
+#define CS_P_RS14100 18
+#define CS_P_STM32 16
+/* Next id: 19 */
+
+/* If not specified explicitly, we guess platform by defines. */
+#ifndef CS_PLATFORM
+
+#if defined(TARGET_IS_MSP432P4XX) || defined(__MSP432P401R__)
+#define CS_PLATFORM CS_P_MSP432
+#elif defined(cc3200) || defined(TARGET_IS_CC3200)
+#define CS_PLATFORM CS_P_CC3200
+#elif defined(cc3220) || defined(TARGET_IS_CC3220)
+#define CS_PLATFORM CS_P_CC3220
+#elif defined(__unix__) || defined(__APPLE__)
+#define CS_PLATFORM CS_P_UNIX
+#elif defined(WINCE)
+#define CS_PLATFORM CS_P_WINCE
+#elif defined(_WIN32)
+#define CS_PLATFORM CS_P_WINDOWS
+#elif defined(__MBED__)
+#define CS_PLATFORM CS_P_MBED
+#elif defined(__USE_LPCOPEN)
+#define CS_PLATFORM CS_P_NXP_LPC
+#elif defined(FRDM_K64F) || defined(FREEDOM)
+#define CS_PLATFORM CS_P_NXP_KINETIS
+#elif defined(PIC32)
+#define CS_PLATFORM CS_P_PIC32
+#elif defined(ESP_PLATFORM)
+#define CS_PLATFORM CS_P_ESP32
+#elif defined(ICACHE_FLASH)
+#define CS_PLATFORM CS_P_ESP8266
+#elif defined(TARGET_IS_TM4C129_RA0) || defined(TARGET_IS_TM4C129_RA1) || \
+    defined(TARGET_IS_TM4C129_RA2)
+#define CS_PLATFORM CS_P_TM4C129
+#elif defined(RS14100)
+#define CS_PLATFORM CS_P_RS14100
+#elif defined(STM32)
+#define CS_PLATFORM CS_P_STM32
+#endif
+
+#ifndef CS_PLATFORM
+#error "CS_PLATFORM is not specified and we couldn't guess it."
+#endif
+
+#endif /* !defined(CS_PLATFORM) */
+
+#define MG_NET_IF_SOCKET 1
+#define MG_NET_IF_SIMPLELINK 2
+#define MG_NET_IF_LWIP_LOW_LEVEL 3
+#define MG_NET_IF_PIC32 4
+#define MG_NET_IF_NULL 5
+
+#define MG_SSL_IF_OPENSSL 1
+#define MG_SSL_IF_MBEDTLS 2
+#define MG_SSL_IF_SIMPLELINK 3
+
+/* Amalgamated: #include "common/platforms/platform_unix.h" */
+/* Amalgamated: #include "common/platforms/platform_windows.h" */
+/* Amalgamated: #include "common/platforms/platform_esp32.h" */
+/* Amalgamated: #include "common/platforms/platform_esp8266.h" */
+/* Amalgamated: #include "common/platforms/platform_cc3100.h" */
+/* Amalgamated: #include "common/platforms/platform_cc3200.h" */
+/* Amalgamated: #include "common/platforms/platform_cc3220.h" */
+/* Amalgamated: #include "common/platforms/platform_mbed.h" */
+/* Amalgamated: #include "common/platforms/platform_nrf51.h" */
+/* Amalgamated: #include "common/platforms/platform_nrf52.h" */
+/* Amalgamated: #include "common/platforms/platform_wince.h" */
+/* Amalgamated: #include "common/platforms/platform_nxp_lpc.h" */
+/* Amalgamated: #include "common/platforms/platform_nxp_kinetis.h" */
+/* Amalgamated: #include "common/platforms/platform_pic32.h" */
+/* Amalgamated: #include "common/platforms/platform_rs14100.h" */
+/* Amalgamated: #include "common/platforms/platform_stm32.h" */
+#if CS_PLATFORM == CS_P_CUSTOM
+#include <platform_custom.h>
+#endif
+
+/* Common stuff */
+
+#if !defined(PRINTF_LIKE)
+#if defined(__GNUC__) || defined(__clang__) || defined(__TI_COMPILER_VERSION__)
+#define PRINTF_LIKE(f, a) __attribute__((format(printf, f, a)))
+#else
+#define PRINTF_LIKE(f, a)
+#endif
+#endif
+
+#if !defined(WEAK)
+#if (defined(__GNUC__) || defined(__clang__) || \
+     defined(__TI_COMPILER_VERSION__)) &&       \
+    !defined(_WIN32)
+#define WEAK __attribute__((weak))
+#else
+#define WEAK
+#endif
+#endif
+
+#ifdef __GNUC__
+#define NORETURN __attribute__((noreturn))
+#define NOINLINE __attribute__((noinline))
+#define WARN_UNUSED_RESULT __attribute__((warn_unused_result))
+#define NOINSTR __attribute__((no_instrument_function))
+#define DO_NOT_WARN_UNUSED __attribute__((unused))
+#else
+#define NORETURN
+#define NOINLINE
+#define WARN_UNUSED_RESULT
+#define NOINSTR
+#define DO_NOT_WARN_UNUSED
+#endif /* __GNUC__ */
+
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
+#endif
+
+#endif /* CS_COMMON_PLATFORM_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_windows.h"
+#endif
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_WINDOWS_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_WINDOWS_H_
+#if CS_PLATFORM == CS_P_WINDOWS
+
+/*
+ * MSVC++ 14.0 _MSC_VER == 1900 (Visual Studio 2015)
+ * MSVC++ 12.0 _MSC_VER == 1800 (Visual Studio 2013)
+ * MSVC++ 11.0 _MSC_VER == 1700 (Visual Studio 2012)
+ * MSVC++ 10.0 _MSC_VER == 1600 (Visual Studio 2010)
+ * MSVC++ 9.0  _MSC_VER == 1500 (Visual Studio 2008)
+ * MSVC++ 8.0  _MSC_VER == 1400 (Visual Studio 2005)
+ * MSVC++ 7.1  _MSC_VER == 1310 (Visual Studio 2003)
+ * MSVC++ 7.0  _MSC_VER == 1300
+ * MSVC++ 6.0  _MSC_VER == 1200
+ * MSVC++ 5.0  _MSC_VER == 1100
+ */
+#ifdef _MSC_VER
+#pragma warning(disable : 4127) /* FD_SET() emits warning, disable it */
+#pragma warning(disable : 4204) /* missing c99 support */
+#endif
+
+#ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
+#define _WINSOCK_DEPRECATED_NO_WARNINGS 1
+#endif
+
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+#include <assert.h>
+#include <direct.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <io.h>
+#include <limits.h>
+#include <signal.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <ctype.h>
+
+#ifdef _MSC_VER
+#pragma comment(lib, "ws2_32.lib") /* Linking with winsock library */
+#endif
+
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <windows.h>
+#include <process.h>
+
+#if _MSC_VER < 1700
+typedef int bool;
+#else
+#include <stdbool.h>
+#endif
+
+#if defined(_MSC_VER) && _MSC_VER >= 1800
+#define strdup _strdup
+#endif
+
+#ifndef EINPROGRESS
+#define EINPROGRESS WSAEINPROGRESS
+#endif
+#ifndef EWOULDBLOCK
+#define EWOULDBLOCK WSAEWOULDBLOCK
+#endif
+#ifndef __func__
+#define STRX(x) #x
+#define STR(x) STRX(x)
+#define __func__ __FILE__ ":" STR(__LINE__)
+#endif
+#define snprintf _snprintf
+#define vsnprintf _vsnprintf
+#define to64(x) _atoi64(x)
+#if !defined(__MINGW32__) && !defined(__MINGW64__)
+#define popen(x, y) _popen((x), (y))
+#define pclose(x) _pclose(x)
+#define fileno _fileno
+#endif
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#define fseeko(x, y, z) _fseeki64((x), (y), (z))
+#else
+#define fseeko(x, y, z) fseek((x), (y), (z))
+#endif
+#if defined(_MSC_VER) && _MSC_VER <= 1200
+typedef unsigned long uintptr_t;
+typedef long intptr_t;
+#endif
+typedef int socklen_t;
+#if _MSC_VER >= 1700
+#include <stdint.h>
+#else
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+typedef int int32_t;
+typedef unsigned int uint32_t;
+typedef short int16_t;
+typedef unsigned short uint16_t;
+typedef __int64 int64_t;
+typedef unsigned __int64 uint64_t;
+#endif
+typedef SOCKET sock_t;
 typedef uint32_t in_addr_t;
-struct in_addr
-  {
-    in_addr_t s_addr;
-  };
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/in.h" 1 3 4
-# 142 "/usr/include/x86_64-linux-gnu/bits/in.h" 3 4
-struct ip_opts
-  {
-    struct in_addr ip_dst;
-    char ip_opts[40];
-  };
-
-
-struct ip_mreqn
-  {
-    struct in_addr imr_multiaddr;
-    struct in_addr imr_address;
-    int imr_ifindex;
-  };
-
-
-struct in_pktinfo
-  {
-    int ipi_ifindex;
-    struct in_addr ipi_spec_dst;
-    struct in_addr ipi_addr;
-  };
-# 38 "/usr/include/netinet/in.h" 2 3 4
-
-
-enum
-  {
-    IPPROTO_IP = 0,
-
-    IPPROTO_ICMP = 1,
-
-    IPPROTO_IGMP = 2,
-
-    IPPROTO_IPIP = 4,
-
-    IPPROTO_TCP = 6,
-
-    IPPROTO_EGP = 8,
-
-    IPPROTO_PUP = 12,
-
-    IPPROTO_UDP = 17,
-
-    IPPROTO_IDP = 22,
-
-    IPPROTO_TP = 29,
-
-    IPPROTO_DCCP = 33,
-
-    IPPROTO_IPV6 = 41,
-
-    IPPROTO_RSVP = 46,
-
-    IPPROTO_GRE = 47,
-
-    IPPROTO_ESP = 50,
-
-    IPPROTO_AH = 51,
-
-    IPPROTO_MTP = 92,
-
-    IPPROTO_BEETPH = 94,
-
-    IPPROTO_ENCAP = 98,
-
-    IPPROTO_PIM = 103,
-
-    IPPROTO_COMP = 108,
-
-    IPPROTO_SCTP = 132,
-
-    IPPROTO_UDPLITE = 136,
-
-    IPPROTO_MPLS = 137,
-
-    IPPROTO_RAW = 255,
-
-    IPPROTO_MAX
-  };
-
-
-
-
-
-enum
-  {
-    IPPROTO_HOPOPTS = 0,
-
-    IPPROTO_ROUTING = 43,
-
-    IPPROTO_FRAGMENT = 44,
-
-    IPPROTO_ICMPV6 = 58,
-
-    IPPROTO_NONE = 59,
-
-    IPPROTO_DSTOPTS = 60,
-
-    IPPROTO_MH = 135
-
-  };
-
-
-
-typedef uint16_t in_port_t;
-
-
-enum
-  {
-    IPPORT_ECHO = 7,
-    IPPORT_DISCARD = 9,
-    IPPORT_SYSTAT = 11,
-    IPPORT_DAYTIME = 13,
-    IPPORT_NETSTAT = 15,
-    IPPORT_FTP = 21,
-    IPPORT_TELNET = 23,
-    IPPORT_SMTP = 25,
-    IPPORT_TIMESERVER = 37,
-    IPPORT_NAMESERVER = 42,
-    IPPORT_WHOIS = 43,
-    IPPORT_MTP = 57,
-
-    IPPORT_TFTP = 69,
-    IPPORT_RJE = 77,
-    IPPORT_FINGER = 79,
-    IPPORT_TTYLINK = 87,
-    IPPORT_SUPDUP = 95,
-
-
-    IPPORT_EXECSERVER = 512,
-    IPPORT_LOGINSERVER = 513,
-    IPPORT_CMDSERVER = 514,
-    IPPORT_EFSSERVER = 520,
-
-
-    IPPORT_BIFFUDP = 512,
-    IPPORT_WHOSERVER = 513,
-    IPPORT_ROUTESERVER = 520,
-
-
-    IPPORT_RESERVED = 1024,
-
-
-    IPPORT_USERRESERVED = 5000
-  };
-# 211 "/usr/include/netinet/in.h" 3 4
-struct in6_addr
-  {
-    union
-      {
- uint8_t __u6_addr8[16];
- uint16_t __u6_addr16[8];
- uint32_t __u6_addr32[4];
-      } __in6_u;
-
-
-
-
-
-  };
-
-
-extern const struct in6_addr in6addr_any;
-extern const struct in6_addr in6addr_loopback;
-# 237 "/usr/include/netinet/in.h" 3 4
-struct sockaddr_in
-  {
-    sa_family_t sin_family;
-    in_port_t sin_port;
-    struct in_addr sin_addr;
-
-
-    unsigned char sin_zero[sizeof (struct sockaddr) -
-      (sizeof (unsigned short int)) -
-      sizeof (in_port_t) -
-      sizeof (struct in_addr)];
-  };
-
-
-
-struct sockaddr_in6
-  {
-    sa_family_t sin6_family;
-    in_port_t sin6_port;
-    uint32_t sin6_flowinfo;
-    struct in6_addr sin6_addr;
-    uint32_t sin6_scope_id;
-  };
-
-
-
-
-struct ip_mreq
-  {
-
-    struct in_addr imr_multiaddr;
-
-
-    struct in_addr imr_interface;
-  };
-
-struct ip_mreq_source
-  {
-
-    struct in_addr imr_multiaddr;
-
-
-    struct in_addr imr_interface;
-
-
-    struct in_addr imr_sourceaddr;
-  };
-
-
-
-
-struct ipv6_mreq
-  {
-
-    struct in6_addr ipv6mr_multiaddr;
-
-
-    unsigned int ipv6mr_interface;
-  };
-
-
-
-
-struct group_req
-  {
-
-    uint32_t gr_interface;
-
-
-    struct sockaddr_storage gr_group;
-  };
-
-struct group_source_req
-  {
-
-    uint32_t gsr_interface;
-
-
-    struct sockaddr_storage gsr_group;
-
-
-    struct sockaddr_storage gsr_source;
-  };
-
-
-
-struct ip_msfilter
-  {
-
-    struct in_addr imsf_multiaddr;
-
-
-    struct in_addr imsf_interface;
-
-
-    uint32_t imsf_fmode;
-
-
-    uint32_t imsf_numsrc;
-
-    struct in_addr imsf_slist[1];
-  };
-
-
-
-
-
-struct group_filter
-  {
-
-    uint32_t gf_interface;
-
-
-    struct sockaddr_storage gf_group;
-
-
-    uint32_t gf_fmode;
-
-
-    uint32_t gf_numsrc;
-
-    struct sockaddr_storage gf_slist[1];
-};
-# 374 "/usr/include/netinet/in.h" 3 4
-extern uint32_t ntohl (uint32_t __netlong) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-extern uint16_t ntohs (uint16_t __netshort)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-extern uint32_t htonl (uint32_t __hostlong)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-extern uint16_t htons (uint16_t __hostshort)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/byteswap.h" 1 3 4
-# 386 "/usr/include/netinet/in.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/uintn-identity.h" 1 3 4
-# 387 "/usr/include/netinet/in.h" 2 3 4
-# 502 "/usr/include/netinet/in.h" 3 4
-extern int bindresvport (int __sockfd, struct sockaddr_in *__sock_in) __attribute__ ((__nothrow__ ));
-
-
-extern int bindresvport6 (int __sockfd, struct sockaddr_in6 *__sock_in)
-     __attribute__ ((__nothrow__ ));
-# 23 "/usr/include/arpa/inet.h" 2 3 4
-# 34 "/usr/include/arpa/inet.h" 3 4
-extern in_addr_t inet_addr (const char *__cp) __attribute__ ((__nothrow__ ));
-
-
-extern in_addr_t inet_lnaof (struct in_addr __in) __attribute__ ((__nothrow__ ));
-
-
-
-extern struct in_addr inet_makeaddr (in_addr_t __net, in_addr_t __host)
-     __attribute__ ((__nothrow__ ));
-
-
-extern in_addr_t inet_netof (struct in_addr __in) __attribute__ ((__nothrow__ ));
-
-
-
-extern in_addr_t inet_network (const char *__cp) __attribute__ ((__nothrow__ ));
-
-
-
-extern char *inet_ntoa (struct in_addr __in) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int inet_pton (int __af, const char *__restrict __cp,
-        void *__restrict __buf) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern const char *inet_ntop (int __af, const void *__restrict __cp,
-         char *__restrict __buf, socklen_t __len)
-     __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern int inet_aton (const char *__cp, struct in_addr *__inp) __attribute__ ((__nothrow__ ));
-
-
-
-extern char *inet_neta (in_addr_t __net, char *__buf, size_t __len) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern char *inet_net_ntop (int __af, const void *__cp, int __bits,
-       char *__buf, size_t __len) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int inet_net_pton (int __af, const char *__cp,
-     void *__buf, size_t __len) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern unsigned int inet_nsap_addr (const char *__cp,
-        unsigned char *__buf, int __len) __attribute__ ((__nothrow__ ));
-
-
-
-extern char *inet_nsap_ntoa (int __len, const unsigned char *__cp,
-        char *__buf) __attribute__ ((__nothrow__ ));
-# 362 "mjs_extra.h" 2
-# 1 "/usr/include/assert.h" 1 3 4
-# 69 "/usr/include/assert.h" 3 4
-extern void __assert_fail (const char *__assertion, const char *__file,
-      unsigned int __line, const char *__function)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__noreturn__));
-
-
-extern void __assert_perror_fail (int __errnum, const char *__file,
-      unsigned int __line, const char *__function)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__noreturn__));
-
-
-
-
-extern void __assert (const char *__assertion, const char *__file, int __line)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__noreturn__));
-# 363 "mjs_extra.h" 2
-# 1 "/usr/include/ctype.h" 1 3 4
-# 46 "/usr/include/ctype.h" 3 4
-enum
-{
-  _ISupper = ((0) < 8 ? ((1 << (0)) << 8) : ((1 << (0)) >> 8)),
-  _ISlower = ((1) < 8 ? ((1 << (1)) << 8) : ((1 << (1)) >> 8)),
-  _ISalpha = ((2) < 8 ? ((1 << (2)) << 8) : ((1 << (2)) >> 8)),
-  _ISdigit = ((3) < 8 ? ((1 << (3)) << 8) : ((1 << (3)) >> 8)),
-  _ISxdigit = ((4) < 8 ? ((1 << (4)) << 8) : ((1 << (4)) >> 8)),
-  _ISspace = ((5) < 8 ? ((1 << (5)) << 8) : ((1 << (5)) >> 8)),
-  _ISprint = ((6) < 8 ? ((1 << (6)) << 8) : ((1 << (6)) >> 8)),
-  _ISgraph = ((7) < 8 ? ((1 << (7)) << 8) : ((1 << (7)) >> 8)),
-  _ISblank = ((8) < 8 ? ((1 << (8)) << 8) : ((1 << (8)) >> 8)),
-  _IScntrl = ((9) < 8 ? ((1 << (9)) << 8) : ((1 << (9)) >> 8)),
-  _ISpunct = ((10) < 8 ? ((1 << (10)) << 8) : ((1 << (10)) >> 8)),
-  _ISalnum = ((11) < 8 ? ((1 << (11)) << 8) : ((1 << (11)) >> 8))
-};
-# 79 "/usr/include/ctype.h" 3 4
-extern const unsigned short int **__ctype_b_loc (void)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-extern const __int32_t **__ctype_tolower_loc (void)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-extern const __int32_t **__ctype_toupper_loc (void)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 108 "/usr/include/ctype.h" 3 4
-extern int isalnum (int) __attribute__ ((__nothrow__ ));
-extern int isalpha (int) __attribute__ ((__nothrow__ ));
-extern int iscntrl (int) __attribute__ ((__nothrow__ ));
-extern int isdigit (int) __attribute__ ((__nothrow__ ));
-extern int islower (int) __attribute__ ((__nothrow__ ));
-extern int isgraph (int) __attribute__ ((__nothrow__ ));
-extern int isprint (int) __attribute__ ((__nothrow__ ));
-extern int ispunct (int) __attribute__ ((__nothrow__ ));
-extern int isspace (int) __attribute__ ((__nothrow__ ));
-extern int isupper (int) __attribute__ ((__nothrow__ ));
-extern int isxdigit (int) __attribute__ ((__nothrow__ ));
-
-
-
-extern int tolower (int __c) __attribute__ ((__nothrow__ ));
-
-
-extern int toupper (int __c) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int isblank (int) __attribute__ ((__nothrow__ ));
-# 142 "/usr/include/ctype.h" 3 4
-extern int isascii (int __c) __attribute__ ((__nothrow__ ));
-
-
-
-extern int toascii (int __c) __attribute__ ((__nothrow__ ));
-
-
-
-extern int _toupper (int) __attribute__ ((__nothrow__ ));
-extern int _tolower (int) __attribute__ ((__nothrow__ ));
-# 237 "/usr/include/ctype.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/locale_t.h" 1 3 4
-# 22 "/usr/include/x86_64-linux-gnu/bits/types/locale_t.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h" 1 3 4
-# 28 "/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h" 3 4
-struct __locale_struct
-{
-
-  struct __locale_data *__locales[13];
-
-
-  const unsigned short int *__ctype_b;
-  const int *__ctype_tolower;
-  const int *__ctype_toupper;
-
-
-  const char *__names[13];
-};
-
-typedef struct __locale_struct *__locale_t;
-# 23 "/usr/include/x86_64-linux-gnu/bits/types/locale_t.h" 2 3 4
-
-typedef __locale_t locale_t;
-# 238 "/usr/include/ctype.h" 2 3 4
-# 251 "/usr/include/ctype.h" 3 4
-extern int isalnum_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int isalpha_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int iscntrl_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int isdigit_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int islower_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int isgraph_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int isprint_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int ispunct_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int isspace_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int isupper_l (int, locale_t) __attribute__ ((__nothrow__ ));
-extern int isxdigit_l (int, locale_t) __attribute__ ((__nothrow__ ));
-
-extern int isblank_l (int, locale_t) __attribute__ ((__nothrow__ ));
-
-
-
-extern int __tolower_l (int __c, locale_t __l) __attribute__ ((__nothrow__ ));
-extern int tolower_l (int __c, locale_t __l) __attribute__ ((__nothrow__ ));
-
-
-extern int __toupper_l (int __c, locale_t __l) __attribute__ ((__nothrow__ ));
-extern int toupper_l (int __c, locale_t __l) __attribute__ ((__nothrow__ ));
-# 364 "mjs_extra.h" 2
-# 1 "/usr/include/dirent.h" 1 3 4
-# 61 "/usr/include/dirent.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/dirent.h" 1 3 4
-# 22 "/usr/include/x86_64-linux-gnu/bits/dirent.h" 3 4
-struct dirent
-  {
-
-    __ino_t d_ino;
-    __off_t d_off;
-
-
-
-
-    unsigned short int d_reclen;
-    unsigned char d_type;
-    char d_name[256];
-  };
-# 62 "/usr/include/dirent.h" 2 3 4
-# 97 "/usr/include/dirent.h" 3 4
-enum
-  {
-    DT_UNKNOWN = 0,
-
-    DT_FIFO = 1,
-
-    DT_CHR = 2,
-
-    DT_DIR = 4,
-
-    DT_BLK = 6,
-
-    DT_REG = 8,
-
-    DT_LNK = 10,
-
-    DT_SOCK = 12,
-
-    DT_WHT = 14
-
-  };
-# 127 "/usr/include/dirent.h" 3 4
-typedef struct __dirstream DIR;
-
-
-
-
-
-
-extern DIR *opendir (const char *__name) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern DIR *fdopendir (int __fd);
-
-
-
-
-
-
-
-extern int closedir (DIR *__dirp) __attribute__ ((__nonnull__ (1)));
-# 162 "/usr/include/dirent.h" 3 4
-extern struct dirent *readdir (DIR *__dirp) __attribute__ ((__nonnull__ (1)));
-# 183 "/usr/include/dirent.h" 3 4
-extern int readdir_r (DIR *__restrict __dirp,
-        struct dirent *__restrict __entry,
-        struct dirent **__restrict __result)
-     __attribute__ ((__nonnull__ (1, 2, 3))) __attribute__ ((__deprecated__));
-# 209 "/usr/include/dirent.h" 3 4
-extern void rewinddir (DIR *__dirp) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern void seekdir (DIR *__dirp, long int __pos) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern long int telldir (DIR *__dirp) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern int dirfd (DIR *__dirp) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 233 "/usr/include/dirent.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 1 3 4
-# 160 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 1 3 4
-# 38 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 3 4
-# 1 "/usr/include/linux/limits.h" 1 3 4
-# 39 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 2 3 4
-# 161 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 2 3 4
-# 234 "/usr/include/dirent.h" 2 3 4
-# 245 "/usr/include/dirent.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 246 "/usr/include/dirent.h" 2 3 4
-# 255 "/usr/include/dirent.h" 3 4
-extern int scandir (const char *__restrict __dir,
-      struct dirent ***__restrict __namelist,
-      int (*__selector) (const struct dirent *),
-      int (*__cmp) (const struct dirent **,
-      const struct dirent **))
-     __attribute__ ((__nonnull__ (1, 2)));
-# 325 "/usr/include/dirent.h" 3 4
-extern int alphasort (const struct dirent **__e1,
-        const struct dirent **__e2)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-# 353 "/usr/include/dirent.h" 3 4
-extern __ssize_t getdirentries (int __fd, char *__restrict __buf,
-    size_t __nbytes,
-    __off_t *__restrict __basep)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 4)));
-# 365 "mjs_extra.h" 2
-# 1 "/usr/include/errno.h" 1 3 4
-# 28 "/usr/include/errno.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/errno.h" 1 3 4
-# 26 "/usr/include/x86_64-linux-gnu/bits/errno.h" 3 4
-# 1 "/usr/include/linux/errno.h" 1 3 4
-# 1 "/usr/include/x86_64-linux-gnu/asm/errno.h" 1 3 4
-# 1 "/usr/include/asm-generic/errno.h" 1 3 4
-
-
-
-
-# 1 "/usr/include/asm-generic/errno-base.h" 1 3 4
-# 6 "/usr/include/asm-generic/errno.h" 2 3 4
-# 2 "/usr/include/x86_64-linux-gnu/asm/errno.h" 2 3 4
-# 2 "/usr/include/linux/errno.h" 2 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/errno.h" 2 3 4
-# 29 "/usr/include/errno.h" 2 3 4
-
-
-
-
-
-
-
-
-extern int *__errno_location (void) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 366 "mjs_extra.h" 2
-# 1 "/usr/include/fcntl.h" 1 3 4
-# 35 "/usr/include/fcntl.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/fcntl.h" 1 3 4
-# 35 "/usr/include/x86_64-linux-gnu/bits/fcntl.h" 3 4
-struct flock
-  {
-    short int l_type;
-    short int l_whence;
-
-    __off_t l_start;
-    __off_t l_len;
-
-
-
-
-    __pid_t l_pid;
-  };
-# 61 "/usr/include/x86_64-linux-gnu/bits/fcntl.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/fcntl-linux.h" 1 3 4
-# 62 "/usr/include/x86_64-linux-gnu/bits/fcntl.h" 2 3 4
-# 36 "/usr/include/fcntl.h" 2 3 4
-# 78 "/usr/include/fcntl.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/stat.h" 1 3 4
-# 46 "/usr/include/x86_64-linux-gnu/bits/stat.h" 3 4
-struct stat
-  {
-    __dev_t st_dev;
-
-
-
-
-    __ino_t st_ino;
-
-
-
-
-
-
-
-    __nlink_t st_nlink;
-    __mode_t st_mode;
-
-    __uid_t st_uid;
-    __gid_t st_gid;
-
-    int __pad0;
-
-    __dev_t st_rdev;
-
-
-
-
-    __off_t st_size;
-
-
-
-    __blksize_t st_blksize;
-
-    __blkcnt_t st_blocks;
-# 91 "/usr/include/x86_64-linux-gnu/bits/stat.h" 3 4
-    struct timespec st_atim;
-    struct timespec st_mtim;
-    struct timespec st_ctim;
-# 106 "/usr/include/x86_64-linux-gnu/bits/stat.h" 3 4
-    __syscall_slong_t __glibc_reserved[3];
-# 115 "/usr/include/x86_64-linux-gnu/bits/stat.h" 3 4
-  };
-# 79 "/usr/include/fcntl.h" 2 3 4
-# 147 "/usr/include/fcntl.h" 3 4
-extern int fcntl (int __fd, int __cmd, ...);
-# 157 "/usr/include/fcntl.h" 3 4
-extern int open (const char *__file, int __oflag, ...) __attribute__ ((__nonnull__ (1)));
-# 181 "/usr/include/fcntl.h" 3 4
-extern int openat (int __fd, const char *__file, int __oflag, ...)
-     __attribute__ ((__nonnull__ (2)));
-# 203 "/usr/include/fcntl.h" 3 4
-extern int creat (const char *__file, mode_t __mode) __attribute__ ((__nonnull__ (1)));
-# 232 "/usr/include/fcntl.h" 3 4
-extern int lockf (int __fd, int __cmd, off_t __len);
-# 249 "/usr/include/fcntl.h" 3 4
-extern int posix_fadvise (int __fd, off_t __offset, off_t __len,
-     int __advise) __attribute__ ((__nothrow__ ));
-# 271 "/usr/include/fcntl.h" 3 4
-extern int posix_fallocate (int __fd, off_t __offset, off_t __len);
-# 367 "mjs_extra.h" 2
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/inttypes.h" 1 3
-# 30 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/inttypes.h" 3
-# 1 "/usr/include/inttypes.h" 1 3 4
-# 27 "/usr/include/inttypes.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 1 3 4
-# 28 "/usr/include/inttypes.h" 2 3 4
-
-
-
-
-
-
-typedef int __gwchar_t;
-# 271 "/usr/include/inttypes.h" 3 4
-typedef struct
-  {
-    long int quot;
-    long int rem;
-  } imaxdiv_t;
-# 290 "/usr/include/inttypes.h" 3 4
-extern intmax_t imaxabs (intmax_t __n) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern imaxdiv_t imaxdiv (intmax_t __numer, intmax_t __denom)
-      __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern intmax_t strtoimax (const char *__restrict __nptr,
-      char **__restrict __endptr, int __base) __attribute__ ((__nothrow__ ));
-
-
-extern uintmax_t strtoumax (const char *__restrict __nptr,
-       char ** __restrict __endptr, int __base) __attribute__ ((__nothrow__ ));
-
-
-extern intmax_t wcstoimax (const __gwchar_t *__restrict __nptr,
-      __gwchar_t **__restrict __endptr, int __base)
-     __attribute__ ((__nothrow__ ));
-
-
-extern uintmax_t wcstoumax (const __gwchar_t *__restrict __nptr,
-       __gwchar_t ** __restrict __endptr, int __base)
-     __attribute__ ((__nothrow__ ));
-# 31 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/inttypes.h" 2 3
-# 368 "mjs_extra.h" 2
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 1 3
-# 369 "mjs_extra.h" 2
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/limits.h" 1 3
-# 37 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/limits.h" 3
-# 1 "/usr/include/limits.h" 1 3 4
-# 26 "/usr/include/limits.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
-# 27 "/usr/include/limits.h" 2 3 4
-# 187 "/usr/include/limits.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/posix2_lim.h" 1 3 4
-# 188 "/usr/include/limits.h" 2 3 4
-# 38 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/limits.h" 2 3
-# 370 "mjs_extra.h" 2
-# 1 "/usr/include/math.h" 1 3 4
-# 27 "/usr/include/math.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
-# 28 "/usr/include/math.h" 2 3 4
-# 40 "/usr/include/math.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/math-vector.h" 1 3 4
-# 25 "/usr/include/x86_64-linux-gnu/bits/math-vector.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h" 1 3 4
-# 26 "/usr/include/x86_64-linux-gnu/bits/math-vector.h" 2 3 4
-# 41 "/usr/include/math.h" 2 3 4
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/floatn.h" 1 3 4
-# 120 "/usr/include/x86_64-linux-gnu/bits/floatn.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/floatn-common.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/floatn-common.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/long-double.h" 1 3 4
-# 25 "/usr/include/x86_64-linux-gnu/bits/floatn-common.h" 2 3 4
-# 207 "/usr/include/x86_64-linux-gnu/bits/floatn-common.h" 3 4
-typedef float _Float32;
-# 244 "/usr/include/x86_64-linux-gnu/bits/floatn-common.h" 3 4
-typedef double _Float64;
-# 261 "/usr/include/x86_64-linux-gnu/bits/floatn-common.h" 3 4
-typedef double _Float32x;
-# 278 "/usr/include/x86_64-linux-gnu/bits/floatn-common.h" 3 4
-typedef long double _Float64x;
-# 121 "/usr/include/x86_64-linux-gnu/bits/floatn.h" 2 3 4
-# 44 "/usr/include/math.h" 2 3 4
-# 138 "/usr/include/math.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h" 1 3 4
-# 139 "/usr/include/math.h" 2 3 4
-# 149 "/usr/include/math.h" 3 4
-typedef float float_t;
-typedef double double_t;
-# 190 "/usr/include/math.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/fp-logb.h" 1 3 4
-# 191 "/usr/include/math.h" 2 3 4
-# 233 "/usr/include/math.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/fp-fast.h" 1 3 4
-# 234 "/usr/include/math.h" 2 3 4
-# 289 "/usr/include/math.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h" 1 3 4
-# 21 "/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h" 3 4
-extern int __fpclassify (double __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-
-
-extern int __signbit (double __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-
-
-
-extern int __isinf (double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __finite (double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __isnan (double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __iseqsig (double __x, double __y) __attribute__ ((__nothrow__ ));
-
-
-extern int __issignaling (double __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-# 290 "/usr/include/math.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 1 3 4
-# 53 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern double acos (double __x) __attribute__ ((__nothrow__ )); extern double __acos (double __x) __attribute__ ((__nothrow__ ));
-
-extern double asin (double __x) __attribute__ ((__nothrow__ )); extern double __asin (double __x) __attribute__ ((__nothrow__ ));
-
-extern double atan (double __x) __attribute__ ((__nothrow__ )); extern double __atan (double __x) __attribute__ ((__nothrow__ ));
-
-extern double atan2 (double __y, double __x) __attribute__ ((__nothrow__ )); extern double __atan2 (double __y, double __x) __attribute__ ((__nothrow__ ));
-
-
- extern double cos (double __x) __attribute__ ((__nothrow__ )); extern double __cos (double __x) __attribute__ ((__nothrow__ ));
-
- extern double sin (double __x) __attribute__ ((__nothrow__ )); extern double __sin (double __x) __attribute__ ((__nothrow__ ));
-
-extern double tan (double __x) __attribute__ ((__nothrow__ )); extern double __tan (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern double cosh (double __x) __attribute__ ((__nothrow__ )); extern double __cosh (double __x) __attribute__ ((__nothrow__ ));
-
-extern double sinh (double __x) __attribute__ ((__nothrow__ )); extern double __sinh (double __x) __attribute__ ((__nothrow__ ));
-
-extern double tanh (double __x) __attribute__ ((__nothrow__ )); extern double __tanh (double __x) __attribute__ ((__nothrow__ ));
-# 85 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern double acosh (double __x) __attribute__ ((__nothrow__ )); extern double __acosh (double __x) __attribute__ ((__nothrow__ ));
-
-extern double asinh (double __x) __attribute__ ((__nothrow__ )); extern double __asinh (double __x) __attribute__ ((__nothrow__ ));
-
-extern double atanh (double __x) __attribute__ ((__nothrow__ )); extern double __atanh (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
- extern double exp (double __x) __attribute__ ((__nothrow__ )); extern double __exp (double __x) __attribute__ ((__nothrow__ ));
-
-
-extern double frexp (double __x, int *__exponent) __attribute__ ((__nothrow__ )); extern double __frexp (double __x, int *__exponent) __attribute__ ((__nothrow__ ));
-
-
-extern double ldexp (double __x, int __exponent) __attribute__ ((__nothrow__ )); extern double __ldexp (double __x, int __exponent) __attribute__ ((__nothrow__ ));
-
-
- extern double log (double __x) __attribute__ ((__nothrow__ )); extern double __log (double __x) __attribute__ ((__nothrow__ ));
-
-
-extern double log10 (double __x) __attribute__ ((__nothrow__ )); extern double __log10 (double __x) __attribute__ ((__nothrow__ ));
-
-
-extern double modf (double __x, double *__iptr) __attribute__ ((__nothrow__ )); extern double __modf (double __x, double *__iptr) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-# 119 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern double expm1 (double __x) __attribute__ ((__nothrow__ )); extern double __expm1 (double __x) __attribute__ ((__nothrow__ ));
-
-
-extern double log1p (double __x) __attribute__ ((__nothrow__ )); extern double __log1p (double __x) __attribute__ ((__nothrow__ ));
-
-
-extern double logb (double __x) __attribute__ ((__nothrow__ )); extern double __logb (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern double exp2 (double __x) __attribute__ ((__nothrow__ )); extern double __exp2 (double __x) __attribute__ ((__nothrow__ ));
-
-
-extern double log2 (double __x) __attribute__ ((__nothrow__ )); extern double __log2 (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
- extern double pow (double __x, double __y) __attribute__ ((__nothrow__ )); extern double __pow (double __x, double __y) __attribute__ ((__nothrow__ ));
-
-
-extern double sqrt (double __x) __attribute__ ((__nothrow__ )); extern double __sqrt (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern double hypot (double __x, double __y) __attribute__ ((__nothrow__ )); extern double __hypot (double __x, double __y) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern double cbrt (double __x) __attribute__ ((__nothrow__ )); extern double __cbrt (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern double ceil (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __ceil (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern double fabs (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __fabs (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern double floor (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __floor (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern double fmod (double __x, double __y) __attribute__ ((__nothrow__ )); extern double __fmod (double __x, double __y) __attribute__ ((__nothrow__ ));
-# 177 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern int isinf (double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern int finite (double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern double drem (double __x, double __y) __attribute__ ((__nothrow__ )); extern double __drem (double __x, double __y) __attribute__ ((__nothrow__ ));
-
-
-
-extern double significand (double __x) __attribute__ ((__nothrow__ )); extern double __significand (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern double copysign (double __x, double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __copysign (double __x, double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern double nan (const char *__tagb) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __nan (const char *__tagb) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 211 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern int isnan (double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-
-extern double j0 (double) __attribute__ ((__nothrow__ )); extern double __j0 (double) __attribute__ ((__nothrow__ ));
-extern double j1 (double) __attribute__ ((__nothrow__ )); extern double __j1 (double) __attribute__ ((__nothrow__ ));
-extern double jn (int, double) __attribute__ ((__nothrow__ )); extern double __jn (int, double) __attribute__ ((__nothrow__ ));
-extern double y0 (double) __attribute__ ((__nothrow__ )); extern double __y0 (double) __attribute__ ((__nothrow__ ));
-extern double y1 (double) __attribute__ ((__nothrow__ )); extern double __y1 (double) __attribute__ ((__nothrow__ ));
-extern double yn (int, double) __attribute__ ((__nothrow__ )); extern double __yn (int, double) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern double erf (double) __attribute__ ((__nothrow__ )); extern double __erf (double) __attribute__ ((__nothrow__ ));
-extern double erfc (double) __attribute__ ((__nothrow__ )); extern double __erfc (double) __attribute__ ((__nothrow__ ));
-extern double lgamma (double) __attribute__ ((__nothrow__ )); extern double __lgamma (double) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern double tgamma (double) __attribute__ ((__nothrow__ )); extern double __tgamma (double) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern double gamma (double) __attribute__ ((__nothrow__ )); extern double __gamma (double) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-extern double lgamma_r (double, int *__signgamp) __attribute__ ((__nothrow__ )); extern double __lgamma_r (double, int *__signgamp) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern double rint (double __x) __attribute__ ((__nothrow__ )); extern double __rint (double __x) __attribute__ ((__nothrow__ ));
-
-
-extern double nextafter (double __x, double __y) __attribute__ ((__nothrow__ )); extern double __nextafter (double __x, double __y) __attribute__ ((__nothrow__ ));
-
-extern double nexttoward (double __x, long double __y) __attribute__ ((__nothrow__ )); extern double __nexttoward (double __x, long double __y) __attribute__ ((__nothrow__ ));
-# 272 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern double remainder (double __x, double __y) __attribute__ ((__nothrow__ )); extern double __remainder (double __x, double __y) __attribute__ ((__nothrow__ ));
-
-
-
-extern double scalbn (double __x, int __n) __attribute__ ((__nothrow__ )); extern double __scalbn (double __x, int __n) __attribute__ ((__nothrow__ ));
-
-
-
-extern int ilogb (double __x) __attribute__ ((__nothrow__ )); extern int __ilogb (double __x) __attribute__ ((__nothrow__ ));
-# 290 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern double scalbln (double __x, long int __n) __attribute__ ((__nothrow__ )); extern double __scalbln (double __x, long int __n) __attribute__ ((__nothrow__ ));
-
-
-
-extern double nearbyint (double __x) __attribute__ ((__nothrow__ )); extern double __nearbyint (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern double round (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __round (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-extern double trunc (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __trunc (double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern double remquo (double __x, double __y, int *__quo) __attribute__ ((__nothrow__ )); extern double __remquo (double __x, double __y, int *__quo) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern long int lrint (double __x) __attribute__ ((__nothrow__ )); extern long int __lrint (double __x) __attribute__ ((__nothrow__ ));
-__extension__
-extern long long int llrint (double __x) __attribute__ ((__nothrow__ )); extern long long int __llrint (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern long int lround (double __x) __attribute__ ((__nothrow__ )); extern long int __lround (double __x) __attribute__ ((__nothrow__ ));
-__extension__
-extern long long int llround (double __x) __attribute__ ((__nothrow__ )); extern long long int __llround (double __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern double fdim (double __x, double __y) __attribute__ ((__nothrow__ )); extern double __fdim (double __x, double __y) __attribute__ ((__nothrow__ ));
-
-
-extern double fmax (double __x, double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __fmax (double __x, double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern double fmin (double __x, double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern double __fmin (double __x, double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern double fma (double __x, double __y, double __z) __attribute__ ((__nothrow__ )); extern double __fma (double __x, double __y, double __z) __attribute__ ((__nothrow__ ));
-# 396 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern double scalb (double __x, double __n) __attribute__ ((__nothrow__ )); extern double __scalb (double __x, double __n) __attribute__ ((__nothrow__ ));
-# 291 "/usr/include/math.h" 2 3 4
-# 306 "/usr/include/math.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h" 1 3 4
-# 21 "/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h" 3 4
-extern int __fpclassifyf (float __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-
-
-extern int __signbitf (float __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-
-
-
-extern int __isinff (float __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __finitef (float __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __isnanf (float __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __iseqsigf (float __x, float __y) __attribute__ ((__nothrow__ ));
-
-
-extern int __issignalingf (float __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-# 307 "/usr/include/math.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 1 3 4
-# 53 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern float acosf (float __x) __attribute__ ((__nothrow__ )); extern float __acosf (float __x) __attribute__ ((__nothrow__ ));
-
-extern float asinf (float __x) __attribute__ ((__nothrow__ )); extern float __asinf (float __x) __attribute__ ((__nothrow__ ));
-
-extern float atanf (float __x) __attribute__ ((__nothrow__ )); extern float __atanf (float __x) __attribute__ ((__nothrow__ ));
-
-extern float atan2f (float __y, float __x) __attribute__ ((__nothrow__ )); extern float __atan2f (float __y, float __x) __attribute__ ((__nothrow__ ));
-
-
- extern float cosf (float __x) __attribute__ ((__nothrow__ )); extern float __cosf (float __x) __attribute__ ((__nothrow__ ));
-
- extern float sinf (float __x) __attribute__ ((__nothrow__ )); extern float __sinf (float __x) __attribute__ ((__nothrow__ ));
-
-extern float tanf (float __x) __attribute__ ((__nothrow__ )); extern float __tanf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern float coshf (float __x) __attribute__ ((__nothrow__ )); extern float __coshf (float __x) __attribute__ ((__nothrow__ ));
-
-extern float sinhf (float __x) __attribute__ ((__nothrow__ )); extern float __sinhf (float __x) __attribute__ ((__nothrow__ ));
-
-extern float tanhf (float __x) __attribute__ ((__nothrow__ )); extern float __tanhf (float __x) __attribute__ ((__nothrow__ ));
-# 85 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern float acoshf (float __x) __attribute__ ((__nothrow__ )); extern float __acoshf (float __x) __attribute__ ((__nothrow__ ));
-
-extern float asinhf (float __x) __attribute__ ((__nothrow__ )); extern float __asinhf (float __x) __attribute__ ((__nothrow__ ));
-
-extern float atanhf (float __x) __attribute__ ((__nothrow__ )); extern float __atanhf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
- extern float expf (float __x) __attribute__ ((__nothrow__ )); extern float __expf (float __x) __attribute__ ((__nothrow__ ));
-
-
-extern float frexpf (float __x, int *__exponent) __attribute__ ((__nothrow__ )); extern float __frexpf (float __x, int *__exponent) __attribute__ ((__nothrow__ ));
-
-
-extern float ldexpf (float __x, int __exponent) __attribute__ ((__nothrow__ )); extern float __ldexpf (float __x, int __exponent) __attribute__ ((__nothrow__ ));
-
-
- extern float logf (float __x) __attribute__ ((__nothrow__ )); extern float __logf (float __x) __attribute__ ((__nothrow__ ));
-
-
-extern float log10f (float __x) __attribute__ ((__nothrow__ )); extern float __log10f (float __x) __attribute__ ((__nothrow__ ));
-
-
-extern float modff (float __x, float *__iptr) __attribute__ ((__nothrow__ )); extern float __modff (float __x, float *__iptr) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-# 119 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern float expm1f (float __x) __attribute__ ((__nothrow__ )); extern float __expm1f (float __x) __attribute__ ((__nothrow__ ));
-
-
-extern float log1pf (float __x) __attribute__ ((__nothrow__ )); extern float __log1pf (float __x) __attribute__ ((__nothrow__ ));
-
-
-extern float logbf (float __x) __attribute__ ((__nothrow__ )); extern float __logbf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern float exp2f (float __x) __attribute__ ((__nothrow__ )); extern float __exp2f (float __x) __attribute__ ((__nothrow__ ));
-
-
-extern float log2f (float __x) __attribute__ ((__nothrow__ )); extern float __log2f (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
- extern float powf (float __x, float __y) __attribute__ ((__nothrow__ )); extern float __powf (float __x, float __y) __attribute__ ((__nothrow__ ));
-
-
-extern float sqrtf (float __x) __attribute__ ((__nothrow__ )); extern float __sqrtf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern float hypotf (float __x, float __y) __attribute__ ((__nothrow__ )); extern float __hypotf (float __x, float __y) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern float cbrtf (float __x) __attribute__ ((__nothrow__ )); extern float __cbrtf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern float ceilf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __ceilf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern float fabsf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __fabsf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern float floorf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __floorf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern float fmodf (float __x, float __y) __attribute__ ((__nothrow__ )); extern float __fmodf (float __x, float __y) __attribute__ ((__nothrow__ ));
-# 177 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern int isinff (float __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern int finitef (float __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern float dremf (float __x, float __y) __attribute__ ((__nothrow__ )); extern float __dremf (float __x, float __y) __attribute__ ((__nothrow__ ));
-
-
-
-extern float significandf (float __x) __attribute__ ((__nothrow__ )); extern float __significandf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern float copysignf (float __x, float __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __copysignf (float __x, float __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern float nanf (const char *__tagb) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __nanf (const char *__tagb) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 211 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern int isnanf (float __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-
-extern float j0f (float) __attribute__ ((__nothrow__ )); extern float __j0f (float) __attribute__ ((__nothrow__ ));
-extern float j1f (float) __attribute__ ((__nothrow__ )); extern float __j1f (float) __attribute__ ((__nothrow__ ));
-extern float jnf (int, float) __attribute__ ((__nothrow__ )); extern float __jnf (int, float) __attribute__ ((__nothrow__ ));
-extern float y0f (float) __attribute__ ((__nothrow__ )); extern float __y0f (float) __attribute__ ((__nothrow__ ));
-extern float y1f (float) __attribute__ ((__nothrow__ )); extern float __y1f (float) __attribute__ ((__nothrow__ ));
-extern float ynf (int, float) __attribute__ ((__nothrow__ )); extern float __ynf (int, float) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern float erff (float) __attribute__ ((__nothrow__ )); extern float __erff (float) __attribute__ ((__nothrow__ ));
-extern float erfcf (float) __attribute__ ((__nothrow__ )); extern float __erfcf (float) __attribute__ ((__nothrow__ ));
-extern float lgammaf (float) __attribute__ ((__nothrow__ )); extern float __lgammaf (float) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern float tgammaf (float) __attribute__ ((__nothrow__ )); extern float __tgammaf (float) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern float gammaf (float) __attribute__ ((__nothrow__ )); extern float __gammaf (float) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-extern float lgammaf_r (float, int *__signgamp) __attribute__ ((__nothrow__ )); extern float __lgammaf_r (float, int *__signgamp) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern float rintf (float __x) __attribute__ ((__nothrow__ )); extern float __rintf (float __x) __attribute__ ((__nothrow__ ));
-
-
-extern float nextafterf (float __x, float __y) __attribute__ ((__nothrow__ )); extern float __nextafterf (float __x, float __y) __attribute__ ((__nothrow__ ));
-
-extern float nexttowardf (float __x, long double __y) __attribute__ ((__nothrow__ )); extern float __nexttowardf (float __x, long double __y) __attribute__ ((__nothrow__ ));
-# 272 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern float remainderf (float __x, float __y) __attribute__ ((__nothrow__ )); extern float __remainderf (float __x, float __y) __attribute__ ((__nothrow__ ));
-
-
-
-extern float scalbnf (float __x, int __n) __attribute__ ((__nothrow__ )); extern float __scalbnf (float __x, int __n) __attribute__ ((__nothrow__ ));
-
-
-
-extern int ilogbf (float __x) __attribute__ ((__nothrow__ )); extern int __ilogbf (float __x) __attribute__ ((__nothrow__ ));
-# 290 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern float scalblnf (float __x, long int __n) __attribute__ ((__nothrow__ )); extern float __scalblnf (float __x, long int __n) __attribute__ ((__nothrow__ ));
-
-
-
-extern float nearbyintf (float __x) __attribute__ ((__nothrow__ )); extern float __nearbyintf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern float roundf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __roundf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-extern float truncf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __truncf (float __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern float remquof (float __x, float __y, int *__quo) __attribute__ ((__nothrow__ )); extern float __remquof (float __x, float __y, int *__quo) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern long int lrintf (float __x) __attribute__ ((__nothrow__ )); extern long int __lrintf (float __x) __attribute__ ((__nothrow__ ));
-__extension__
-extern long long int llrintf (float __x) __attribute__ ((__nothrow__ )); extern long long int __llrintf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern long int lroundf (float __x) __attribute__ ((__nothrow__ )); extern long int __lroundf (float __x) __attribute__ ((__nothrow__ ));
-__extension__
-extern long long int llroundf (float __x) __attribute__ ((__nothrow__ )); extern long long int __llroundf (float __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern float fdimf (float __x, float __y) __attribute__ ((__nothrow__ )); extern float __fdimf (float __x, float __y) __attribute__ ((__nothrow__ ));
-
-
-extern float fmaxf (float __x, float __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __fmaxf (float __x, float __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern float fminf (float __x, float __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern float __fminf (float __x, float __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern float fmaf (float __x, float __y, float __z) __attribute__ ((__nothrow__ )); extern float __fmaf (float __x, float __y, float __z) __attribute__ ((__nothrow__ ));
-# 396 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern float scalbf (float __x, float __n) __attribute__ ((__nothrow__ )); extern float __scalbf (float __x, float __n) __attribute__ ((__nothrow__ ));
-# 308 "/usr/include/math.h" 2 3 4
-# 349 "/usr/include/math.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h" 1 3 4
-# 21 "/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h" 3 4
-extern int __fpclassifyl (long double __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-
-
-extern int __signbitl (long double __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-
-
-
-extern int __isinfl (long double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __finitel (long double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __isnanl (long double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int __iseqsigl (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-
-
-extern int __issignalingl (long double __value) __attribute__ ((__nothrow__ ))
-     __attribute__ ((__const__));
-# 350 "/usr/include/math.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 1 3 4
-# 53 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern long double acosl (long double __x) __attribute__ ((__nothrow__ )); extern long double __acosl (long double __x) __attribute__ ((__nothrow__ ));
-
-extern long double asinl (long double __x) __attribute__ ((__nothrow__ )); extern long double __asinl (long double __x) __attribute__ ((__nothrow__ ));
-
-extern long double atanl (long double __x) __attribute__ ((__nothrow__ )); extern long double __atanl (long double __x) __attribute__ ((__nothrow__ ));
-
-extern long double atan2l (long double __y, long double __x) __attribute__ ((__nothrow__ )); extern long double __atan2l (long double __y, long double __x) __attribute__ ((__nothrow__ ));
-
-
- extern long double cosl (long double __x) __attribute__ ((__nothrow__ )); extern long double __cosl (long double __x) __attribute__ ((__nothrow__ ));
-
- extern long double sinl (long double __x) __attribute__ ((__nothrow__ )); extern long double __sinl (long double __x) __attribute__ ((__nothrow__ ));
-
-extern long double tanl (long double __x) __attribute__ ((__nothrow__ )); extern long double __tanl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern long double coshl (long double __x) __attribute__ ((__nothrow__ )); extern long double __coshl (long double __x) __attribute__ ((__nothrow__ ));
-
-extern long double sinhl (long double __x) __attribute__ ((__nothrow__ )); extern long double __sinhl (long double __x) __attribute__ ((__nothrow__ ));
-
-extern long double tanhl (long double __x) __attribute__ ((__nothrow__ )); extern long double __tanhl (long double __x) __attribute__ ((__nothrow__ ));
-# 85 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern long double acoshl (long double __x) __attribute__ ((__nothrow__ )); extern long double __acoshl (long double __x) __attribute__ ((__nothrow__ ));
-
-extern long double asinhl (long double __x) __attribute__ ((__nothrow__ )); extern long double __asinhl (long double __x) __attribute__ ((__nothrow__ ));
-
-extern long double atanhl (long double __x) __attribute__ ((__nothrow__ )); extern long double __atanhl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
- extern long double expl (long double __x) __attribute__ ((__nothrow__ )); extern long double __expl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-extern long double frexpl (long double __x, int *__exponent) __attribute__ ((__nothrow__ )); extern long double __frexpl (long double __x, int *__exponent) __attribute__ ((__nothrow__ ));
-
-
-extern long double ldexpl (long double __x, int __exponent) __attribute__ ((__nothrow__ )); extern long double __ldexpl (long double __x, int __exponent) __attribute__ ((__nothrow__ ));
-
-
- extern long double logl (long double __x) __attribute__ ((__nothrow__ )); extern long double __logl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-extern long double log10l (long double __x) __attribute__ ((__nothrow__ )); extern long double __log10l (long double __x) __attribute__ ((__nothrow__ ));
-
-
-extern long double modfl (long double __x, long double *__iptr) __attribute__ ((__nothrow__ )); extern long double __modfl (long double __x, long double *__iptr) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-# 119 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern long double expm1l (long double __x) __attribute__ ((__nothrow__ )); extern long double __expm1l (long double __x) __attribute__ ((__nothrow__ ));
-
-
-extern long double log1pl (long double __x) __attribute__ ((__nothrow__ )); extern long double __log1pl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-extern long double logbl (long double __x) __attribute__ ((__nothrow__ )); extern long double __logbl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern long double exp2l (long double __x) __attribute__ ((__nothrow__ )); extern long double __exp2l (long double __x) __attribute__ ((__nothrow__ ));
-
-
-extern long double log2l (long double __x) __attribute__ ((__nothrow__ )); extern long double __log2l (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
- extern long double powl (long double __x, long double __y) __attribute__ ((__nothrow__ )); extern long double __powl (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-
-
-extern long double sqrtl (long double __x) __attribute__ ((__nothrow__ )); extern long double __sqrtl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern long double hypotl (long double __x, long double __y) __attribute__ ((__nothrow__ )); extern long double __hypotl (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern long double cbrtl (long double __x) __attribute__ ((__nothrow__ )); extern long double __cbrtl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern long double ceill (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __ceill (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern long double fabsl (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __fabsl (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern long double floorl (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __floorl (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern long double fmodl (long double __x, long double __y) __attribute__ ((__nothrow__ )); extern long double __fmodl (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-# 177 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern int isinfl (long double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern int finitel (long double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern long double dreml (long double __x, long double __y) __attribute__ ((__nothrow__ )); extern long double __dreml (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-
-
-
-extern long double significandl (long double __x) __attribute__ ((__nothrow__ )); extern long double __significandl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern long double copysignl (long double __x, long double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __copysignl (long double __x, long double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern long double nanl (const char *__tagb) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __nanl (const char *__tagb) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 211 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern int isnanl (long double __value) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-
-extern long double j0l (long double) __attribute__ ((__nothrow__ )); extern long double __j0l (long double) __attribute__ ((__nothrow__ ));
-extern long double j1l (long double) __attribute__ ((__nothrow__ )); extern long double __j1l (long double) __attribute__ ((__nothrow__ ));
-extern long double jnl (int, long double) __attribute__ ((__nothrow__ )); extern long double __jnl (int, long double) __attribute__ ((__nothrow__ ));
-extern long double y0l (long double) __attribute__ ((__nothrow__ )); extern long double __y0l (long double) __attribute__ ((__nothrow__ ));
-extern long double y1l (long double) __attribute__ ((__nothrow__ )); extern long double __y1l (long double) __attribute__ ((__nothrow__ ));
-extern long double ynl (int, long double) __attribute__ ((__nothrow__ )); extern long double __ynl (int, long double) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern long double erfl (long double) __attribute__ ((__nothrow__ )); extern long double __erfl (long double) __attribute__ ((__nothrow__ ));
-extern long double erfcl (long double) __attribute__ ((__nothrow__ )); extern long double __erfcl (long double) __attribute__ ((__nothrow__ ));
-extern long double lgammal (long double) __attribute__ ((__nothrow__ )); extern long double __lgammal (long double) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern long double tgammal (long double) __attribute__ ((__nothrow__ )); extern long double __tgammal (long double) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern long double gammal (long double) __attribute__ ((__nothrow__ )); extern long double __gammal (long double) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-extern long double lgammal_r (long double, int *__signgamp) __attribute__ ((__nothrow__ )); extern long double __lgammal_r (long double, int *__signgamp) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern long double rintl (long double __x) __attribute__ ((__nothrow__ )); extern long double __rintl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-extern long double nextafterl (long double __x, long double __y) __attribute__ ((__nothrow__ )); extern long double __nextafterl (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-
-extern long double nexttowardl (long double __x, long double __y) __attribute__ ((__nothrow__ )); extern long double __nexttowardl (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-# 272 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern long double remainderl (long double __x, long double __y) __attribute__ ((__nothrow__ )); extern long double __remainderl (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-
-
-
-extern long double scalbnl (long double __x, int __n) __attribute__ ((__nothrow__ )); extern long double __scalbnl (long double __x, int __n) __attribute__ ((__nothrow__ ));
-
-
-
-extern int ilogbl (long double __x) __attribute__ ((__nothrow__ )); extern int __ilogbl (long double __x) __attribute__ ((__nothrow__ ));
-# 290 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern long double scalblnl (long double __x, long int __n) __attribute__ ((__nothrow__ )); extern long double __scalblnl (long double __x, long int __n) __attribute__ ((__nothrow__ ));
-
-
-
-extern long double nearbyintl (long double __x) __attribute__ ((__nothrow__ )); extern long double __nearbyintl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern long double roundl (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __roundl (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-extern long double truncl (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __truncl (long double __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern long double remquol (long double __x, long double __y, int *__quo) __attribute__ ((__nothrow__ )); extern long double __remquol (long double __x, long double __y, int *__quo) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern long int lrintl (long double __x) __attribute__ ((__nothrow__ )); extern long int __lrintl (long double __x) __attribute__ ((__nothrow__ ));
-__extension__
-extern long long int llrintl (long double __x) __attribute__ ((__nothrow__ )); extern long long int __llrintl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern long int lroundl (long double __x) __attribute__ ((__nothrow__ )); extern long int __lroundl (long double __x) __attribute__ ((__nothrow__ ));
-__extension__
-extern long long int llroundl (long double __x) __attribute__ ((__nothrow__ )); extern long long int __llroundl (long double __x) __attribute__ ((__nothrow__ ));
-
-
-
-extern long double fdiml (long double __x, long double __y) __attribute__ ((__nothrow__ )); extern long double __fdiml (long double __x, long double __y) __attribute__ ((__nothrow__ ));
-
-
-extern long double fmaxl (long double __x, long double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __fmaxl (long double __x, long double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern long double fminl (long double __x, long double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)); extern long double __fminl (long double __x, long double __y) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern long double fmal (long double __x, long double __y, long double __z) __attribute__ ((__nothrow__ )); extern long double __fmal (long double __x, long double __y, long double __z) __attribute__ ((__nothrow__ ));
-# 396 "/usr/include/x86_64-linux-gnu/bits/mathcalls.h" 3 4
-extern long double scalbl (long double __x, long double __n) __attribute__ ((__nothrow__ )); extern long double __scalbl (long double __x, long double __n) __attribute__ ((__nothrow__ ));
-# 351 "/usr/include/math.h" 2 3 4
-# 489 "/usr/include/math.h" 3 4
-extern int signgam;
-# 569 "/usr/include/math.h" 3 4
-enum
-  {
-    FP_NAN =
-
-      0,
-    FP_INFINITE =
-
-      1,
-    FP_ZERO =
-
-      2,
-    FP_SUBNORMAL =
-
-      3,
-    FP_NORMAL =
-
-      4
-  };
-# 371 "mjs_extra.h" 2
-# 1 "/usr/include/netdb.h" 1 3 4
-# 32 "/usr/include/netdb.h" 3 4
-# 1 "/usr/include/rpc/netdb.h" 1 3 4
-# 42 "/usr/include/rpc/netdb.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 43 "/usr/include/rpc/netdb.h" 2 3 4
-
-
-
-struct rpcent
-{
-  char *r_name;
-  char **r_aliases;
-  int r_number;
-};
-
-extern void setrpcent (int __stayopen) __attribute__ ((__nothrow__ ));
-extern void endrpcent (void) __attribute__ ((__nothrow__ ));
-extern struct rpcent *getrpcbyname (const char *__name) __attribute__ ((__nothrow__ ));
-extern struct rpcent *getrpcbynumber (int __number) __attribute__ ((__nothrow__ ));
-extern struct rpcent *getrpcent (void) __attribute__ ((__nothrow__ ));
-
-
-extern int getrpcbyname_r (const char *__name, struct rpcent *__result_buf,
-      char *__buffer, size_t __buflen,
-      struct rpcent **__result) __attribute__ ((__nothrow__ ));
-
-extern int getrpcbynumber_r (int __number, struct rpcent *__result_buf,
-        char *__buffer, size_t __buflen,
-        struct rpcent **__result) __attribute__ ((__nothrow__ ));
-
-extern int getrpcent_r (struct rpcent *__result_buf, char *__buffer,
-   size_t __buflen, struct rpcent **__result) __attribute__ ((__nothrow__ ));
-# 33 "/usr/include/netdb.h" 2 3 4
-
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/netdb.h" 1 3 4
-# 26 "/usr/include/x86_64-linux-gnu/bits/netdb.h" 3 4
-struct netent
-{
-  char *n_name;
-  char **n_aliases;
-  int n_addrtype;
-  uint32_t n_net;
-};
-# 41 "/usr/include/netdb.h" 2 3 4
-# 59 "/usr/include/netdb.h" 3 4
-extern int *__h_errno_location (void) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 90 "/usr/include/netdb.h" 3 4
-extern void herror (const char *__str) __attribute__ ((__nothrow__ ));
-
-
-extern const char *hstrerror (int __err_num) __attribute__ ((__nothrow__ ));
-
-
-
-
-struct hostent
-{
-  char *h_name;
-  char **h_aliases;
-  int h_addrtype;
-  int h_length;
-  char **h_addr_list;
-
-
-
-};
-
-
-
-
-
-
-extern void sethostent (int __stay_open);
-
-
-
-
-
-extern void endhostent (void);
-
-
-
-
-
-
-extern struct hostent *gethostent (void);
-
-
-
-
-
-
-extern struct hostent *gethostbyaddr (const void *__addr, __socklen_t __len,
-          int __type);
-
-
-
-
-
-extern struct hostent *gethostbyname (const char *__name);
-# 153 "/usr/include/netdb.h" 3 4
-extern struct hostent *gethostbyname2 (const char *__name, int __af);
-# 165 "/usr/include/netdb.h" 3 4
-extern int gethostent_r (struct hostent *__restrict __result_buf,
-    char *__restrict __buf, size_t __buflen,
-    struct hostent **__restrict __result,
-    int *__restrict __h_errnop);
-
-extern int gethostbyaddr_r (const void *__restrict __addr, __socklen_t __len,
-       int __type,
-       struct hostent *__restrict __result_buf,
-       char *__restrict __buf, size_t __buflen,
-       struct hostent **__restrict __result,
-       int *__restrict __h_errnop);
-
-extern int gethostbyname_r (const char *__restrict __name,
-       struct hostent *__restrict __result_buf,
-       char *__restrict __buf, size_t __buflen,
-       struct hostent **__restrict __result,
-       int *__restrict __h_errnop);
-
-extern int gethostbyname2_r (const char *__restrict __name, int __af,
-        struct hostent *__restrict __result_buf,
-        char *__restrict __buf, size_t __buflen,
-        struct hostent **__restrict __result,
-        int *__restrict __h_errnop);
-# 196 "/usr/include/netdb.h" 3 4
-extern void setnetent (int __stay_open);
-
-
-
-
-
-extern void endnetent (void);
-
-
-
-
-
-
-extern struct netent *getnetent (void);
-
-
-
-
-
-
-extern struct netent *getnetbyaddr (uint32_t __net, int __type);
-
-
-
-
-
-extern struct netent *getnetbyname (const char *__name);
-# 235 "/usr/include/netdb.h" 3 4
-extern int getnetent_r (struct netent *__restrict __result_buf,
-   char *__restrict __buf, size_t __buflen,
-   struct netent **__restrict __result,
-   int *__restrict __h_errnop);
-
-extern int getnetbyaddr_r (uint32_t __net, int __type,
-      struct netent *__restrict __result_buf,
-      char *__restrict __buf, size_t __buflen,
-      struct netent **__restrict __result,
-      int *__restrict __h_errnop);
-
-extern int getnetbyname_r (const char *__restrict __name,
-      struct netent *__restrict __result_buf,
-      char *__restrict __buf, size_t __buflen,
-      struct netent **__restrict __result,
-      int *__restrict __h_errnop);
-
-
-
-
-struct servent
-{
-  char *s_name;
-  char **s_aliases;
-  int s_port;
-  char *s_proto;
-};
-
-
-
-
-
-
-extern void setservent (int __stay_open);
-
-
-
-
-
-extern void endservent (void);
-
-
-
-
-
-
-extern struct servent *getservent (void);
-
-
-
-
-
-
-extern struct servent *getservbyname (const char *__name, const char *__proto);
-
-
-
-
-
-
-extern struct servent *getservbyport (int __port, const char *__proto);
-# 306 "/usr/include/netdb.h" 3 4
-extern int getservent_r (struct servent *__restrict __result_buf,
-    char *__restrict __buf, size_t __buflen,
-    struct servent **__restrict __result);
-
-extern int getservbyname_r (const char *__restrict __name,
-       const char *__restrict __proto,
-       struct servent *__restrict __result_buf,
-       char *__restrict __buf, size_t __buflen,
-       struct servent **__restrict __result);
-
-extern int getservbyport_r (int __port, const char *__restrict __proto,
-       struct servent *__restrict __result_buf,
-       char *__restrict __buf, size_t __buflen,
-       struct servent **__restrict __result);
-
-
-
-
-struct protoent
-{
-  char *p_name;
-  char **p_aliases;
-  int p_proto;
-};
-
-
-
-
-
-
-extern void setprotoent (int __stay_open);
-
-
-
-
-
-extern void endprotoent (void);
-
-
-
-
-
-
-extern struct protoent *getprotoent (void);
-
-
-
-
-
-extern struct protoent *getprotobyname (const char *__name);
-
-
-
-
-
-extern struct protoent *getprotobynumber (int __proto);
-# 372 "/usr/include/netdb.h" 3 4
-extern int getprotoent_r (struct protoent *__restrict __result_buf,
-     char *__restrict __buf, size_t __buflen,
-     struct protoent **__restrict __result);
-
-extern int getprotobyname_r (const char *__restrict __name,
-        struct protoent *__restrict __result_buf,
-        char *__restrict __buf, size_t __buflen,
-        struct protoent **__restrict __result);
-
-extern int getprotobynumber_r (int __proto,
-          struct protoent *__restrict __result_buf,
-          char *__restrict __buf, size_t __buflen,
-          struct protoent **__restrict __result);
-# 393 "/usr/include/netdb.h" 3 4
-extern int setnetgrent (const char *__netgroup);
-
-
-
-
-
-
-
-extern void endnetgrent (void);
-# 410 "/usr/include/netdb.h" 3 4
-extern int getnetgrent (char **__restrict __hostp,
-   char **__restrict __userp,
-   char **__restrict __domainp);
-# 421 "/usr/include/netdb.h" 3 4
-extern int innetgr (const char *__netgroup, const char *__host,
-      const char *__user, const char *__domain);
-
-
-
-
-
-
-
-extern int getnetgrent_r (char **__restrict __hostp,
-     char **__restrict __userp,
-     char **__restrict __domainp,
-     char *__restrict __buffer, size_t __buflen);
-# 449 "/usr/include/netdb.h" 3 4
-extern int rcmd (char **__restrict __ahost, unsigned short int __rport,
-   const char *__restrict __locuser,
-   const char *__restrict __remuser,
-   const char *__restrict __cmd, int *__restrict __fd2p);
-# 461 "/usr/include/netdb.h" 3 4
-extern int rcmd_af (char **__restrict __ahost, unsigned short int __rport,
-      const char *__restrict __locuser,
-      const char *__restrict __remuser,
-      const char *__restrict __cmd, int *__restrict __fd2p,
-      sa_family_t __af);
-# 477 "/usr/include/netdb.h" 3 4
-extern int rexec (char **__restrict __ahost, int __rport,
-    const char *__restrict __name,
-    const char *__restrict __pass,
-    const char *__restrict __cmd, int *__restrict __fd2p);
-# 489 "/usr/include/netdb.h" 3 4
-extern int rexec_af (char **__restrict __ahost, int __rport,
-       const char *__restrict __name,
-       const char *__restrict __pass,
-       const char *__restrict __cmd, int *__restrict __fd2p,
-       sa_family_t __af);
-# 503 "/usr/include/netdb.h" 3 4
-extern int ruserok (const char *__rhost, int __suser,
-      const char *__remuser, const char *__locuser);
-# 513 "/usr/include/netdb.h" 3 4
-extern int ruserok_af (const char *__rhost, int __suser,
-         const char *__remuser, const char *__locuser,
-         sa_family_t __af);
-# 526 "/usr/include/netdb.h" 3 4
-extern int iruserok (uint32_t __raddr, int __suser,
-       const char *__remuser, const char *__locuser);
-# 537 "/usr/include/netdb.h" 3 4
-extern int iruserok_af (const void *__raddr, int __suser,
-   const char *__remuser, const char *__locuser,
-   sa_family_t __af);
-# 549 "/usr/include/netdb.h" 3 4
-extern int rresvport (int *__alport);
-# 558 "/usr/include/netdb.h" 3 4
-extern int rresvport_af (int *__alport, sa_family_t __af);
-
-
-
-
-
-
-struct addrinfo
-{
-  int ai_flags;
-  int ai_family;
-  int ai_socktype;
-  int ai_protocol;
-  socklen_t ai_addrlen;
-  struct sockaddr *ai_addr;
-  char *ai_canonname;
-  struct addrinfo *ai_next;
-};
-# 660 "/usr/include/netdb.h" 3 4
-extern int getaddrinfo (const char *__restrict __name,
-   const char *__restrict __service,
-   const struct addrinfo *__restrict __req,
-   struct addrinfo **__restrict __pai);
-
-
-extern void freeaddrinfo (struct addrinfo *__ai) __attribute__ ((__nothrow__ ));
-
-
-extern const char *gai_strerror (int __ecode) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern int getnameinfo (const struct sockaddr *__restrict __sa,
-   socklen_t __salen, char *__restrict __host,
-   socklen_t __hostlen, char *__restrict __serv,
-   socklen_t __servlen, int __flags);
-# 372 "mjs_extra.h" 2
-
-# 1 "/usr/include/pthread.h" 1 3 4
-# 23 "/usr/include/pthread.h" 3 4
-# 1 "/usr/include/sched.h" 1 3 4
-# 29 "/usr/include/sched.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 30 "/usr/include/sched.h" 2 3 4
-# 43 "/usr/include/sched.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/sched.h" 1 3 4
-# 75 "/usr/include/x86_64-linux-gnu/bits/sched.h" 3 4
-struct sched_param
-{
-  int sched_priority;
-};
-# 44 "/usr/include/sched.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/cpu-set.h" 1 3 4
-# 32 "/usr/include/x86_64-linux-gnu/bits/cpu-set.h" 3 4
-typedef unsigned long int __cpu_mask;
-
-
-
-
-
-
-typedef struct
-{
-  __cpu_mask __bits[1024 / (8 * sizeof (__cpu_mask))];
-} cpu_set_t;
-# 117 "/usr/include/x86_64-linux-gnu/bits/cpu-set.h" 3 4
-extern int __sched_cpucount (size_t __setsize, const cpu_set_t *__setp)
-     __attribute__ ((__nothrow__ ));
-extern cpu_set_t *__sched_cpualloc (size_t __count) __attribute__ ((__nothrow__ )) ;
-extern void __sched_cpufree (cpu_set_t *__set) __attribute__ ((__nothrow__ ));
-# 45 "/usr/include/sched.h" 2 3 4
-# 54 "/usr/include/sched.h" 3 4
-extern int sched_setparam (__pid_t __pid, const struct sched_param *__param)
-     __attribute__ ((__nothrow__ ));
-
-
-extern int sched_getparam (__pid_t __pid, struct sched_param *__param) __attribute__ ((__nothrow__ ));
-
-
-extern int sched_setscheduler (__pid_t __pid, int __policy,
-          const struct sched_param *__param) __attribute__ ((__nothrow__ ));
-
-
-extern int sched_getscheduler (__pid_t __pid) __attribute__ ((__nothrow__ ));
-
-
-extern int sched_yield (void) __attribute__ ((__nothrow__ ));
-
-
-extern int sched_get_priority_max (int __algorithm) __attribute__ ((__nothrow__ ));
-
-
-extern int sched_get_priority_min (int __algorithm) __attribute__ ((__nothrow__ ));
-
-
-extern int sched_rr_get_interval (__pid_t __pid, struct timespec *__t) __attribute__ ((__nothrow__ ));
-# 24 "/usr/include/pthread.h" 2 3 4
-# 1 "/usr/include/time.h" 1 3 4
-# 29 "/usr/include/time.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 30 "/usr/include/time.h" 2 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/time.h" 1 3 4
-# 34 "/usr/include/time.h" 2 3 4
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h" 1 3 4
-
-
-
-
-
-
-struct tm
-{
-  int tm_sec;
-  int tm_min;
-  int tm_hour;
-  int tm_mday;
-  int tm_mon;
-  int tm_year;
-  int tm_wday;
-  int tm_yday;
-  int tm_isdst;
-
-
-  long int tm_gmtoff;
-  const char *tm_zone;
-
-
-
-
-};
-# 40 "/usr/include/time.h" 2 3 4
-
-
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h" 1 3 4
-
-
-
-
-
-
-
-struct itimerspec
-  {
-    struct timespec it_interval;
-    struct timespec it_value;
-  };
-# 49 "/usr/include/time.h" 2 3 4
-struct sigevent;
-# 72 "/usr/include/time.h" 3 4
-extern clock_t clock (void) __attribute__ ((__nothrow__ ));
-
-
-extern time_t time (time_t *__timer) __attribute__ ((__nothrow__ ));
-
-
-extern double difftime (time_t __time1, time_t __time0)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern time_t mktime (struct tm *__tp) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern size_t strftime (char *__restrict __s, size_t __maxsize,
-   const char *__restrict __format,
-   const struct tm *__restrict __tp) __attribute__ ((__nothrow__ ));
-# 104 "/usr/include/time.h" 3 4
-extern size_t strftime_l (char *__restrict __s, size_t __maxsize,
-     const char *__restrict __format,
-     const struct tm *__restrict __tp,
-     locale_t __loc) __attribute__ ((__nothrow__ ));
-# 119 "/usr/include/time.h" 3 4
-extern struct tm *gmtime (const time_t *__timer) __attribute__ ((__nothrow__ ));
-
-
-
-extern struct tm *localtime (const time_t *__timer) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern struct tm *gmtime_r (const time_t *__restrict __timer,
-       struct tm *__restrict __tp) __attribute__ ((__nothrow__ ));
-
-
-
-extern struct tm *localtime_r (const time_t *__restrict __timer,
-          struct tm *__restrict __tp) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern char *asctime (const struct tm *__tp) __attribute__ ((__nothrow__ ));
-
-
-extern char *ctime (const time_t *__timer) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern char *asctime_r (const struct tm *__restrict __tp,
-   char *__restrict __buf) __attribute__ ((__nothrow__ ));
-
-
-extern char *ctime_r (const time_t *__restrict __timer,
-        char *__restrict __buf) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern char *__tzname[2];
-extern int __daylight;
-extern long int __timezone;
-
-
-
-
-extern char *tzname[2];
-
-
-
-extern void tzset (void) __attribute__ ((__nothrow__ ));
-
-
-
-extern int daylight;
-extern long int timezone;
-
-
-
-
-
-extern int stime (const time_t *__when) __attribute__ ((__nothrow__ ));
-# 196 "/usr/include/time.h" 3 4
-extern time_t timegm (struct tm *__tp) __attribute__ ((__nothrow__ ));
-
-
-extern time_t timelocal (struct tm *__tp) __attribute__ ((__nothrow__ ));
-
-
-extern int dysize (int __year) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 211 "/usr/include/time.h" 3 4
-extern int nanosleep (const struct timespec *__requested_time,
-        struct timespec *__remaining);
-
-
-
-extern int clock_getres (clockid_t __clock_id, struct timespec *__res) __attribute__ ((__nothrow__ ));
-
-
-extern int clock_gettime (clockid_t __clock_id, struct timespec *__tp) __attribute__ ((__nothrow__ ));
-
-
-extern int clock_settime (clockid_t __clock_id, const struct timespec *__tp)
-     __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern int clock_nanosleep (clockid_t __clock_id, int __flags,
-       const struct timespec *__req,
-       struct timespec *__rem);
-
-
-extern int clock_getcpuclockid (pid_t __pid, clockid_t *__clock_id) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int timer_create (clockid_t __clock_id,
-    struct sigevent *__restrict __evp,
-    timer_t *__restrict __timerid) __attribute__ ((__nothrow__ ));
-
-
-extern int timer_delete (timer_t __timerid) __attribute__ ((__nothrow__ ));
-
-
-extern int timer_settime (timer_t __timerid, int __flags,
-     const struct itimerspec *__restrict __value,
-     struct itimerspec *__restrict __ovalue) __attribute__ ((__nothrow__ ));
-
-
-extern int timer_gettime (timer_t __timerid, struct itimerspec *__value)
-     __attribute__ ((__nothrow__ ));
-
-
-extern int timer_getoverrun (timer_t __timerid) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern int timespec_get (struct timespec *__ts, int __base)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 25 "/usr/include/pthread.h" 2 3 4
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/setjmp.h" 1 3 4
-# 26 "/usr/include/x86_64-linux-gnu/bits/setjmp.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/setjmp.h" 2 3 4
-
-
-
-
-typedef long int __jmp_buf[8];
-# 28 "/usr/include/pthread.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 29 "/usr/include/pthread.h" 2 3 4
-
-
-
-
-enum
-{
-  PTHREAD_CREATE_JOINABLE,
-
-  PTHREAD_CREATE_DETACHED
-
-};
-
-
-
-enum
-{
-  PTHREAD_MUTEX_TIMED_NP,
-  PTHREAD_MUTEX_RECURSIVE_NP,
-  PTHREAD_MUTEX_ERRORCHECK_NP,
-  PTHREAD_MUTEX_ADAPTIVE_NP
-
-  ,
-  PTHREAD_MUTEX_NORMAL = PTHREAD_MUTEX_TIMED_NP,
-  PTHREAD_MUTEX_RECURSIVE = PTHREAD_MUTEX_RECURSIVE_NP,
-  PTHREAD_MUTEX_ERRORCHECK = PTHREAD_MUTEX_ERRORCHECK_NP,
-  PTHREAD_MUTEX_DEFAULT = PTHREAD_MUTEX_NORMAL
-
-
-
-
-
-};
-
-
-
-
-enum
-{
-  PTHREAD_MUTEX_STALLED,
-  PTHREAD_MUTEX_STALLED_NP = PTHREAD_MUTEX_STALLED,
-  PTHREAD_MUTEX_ROBUST,
-  PTHREAD_MUTEX_ROBUST_NP = PTHREAD_MUTEX_ROBUST
-};
-
-
-
-
-
-enum
-{
-  PTHREAD_PRIO_NONE,
-  PTHREAD_PRIO_INHERIT,
-  PTHREAD_PRIO_PROTECT
-};
-# 115 "/usr/include/pthread.h" 3 4
-enum
-{
-  PTHREAD_RWLOCK_PREFER_READER_NP,
-  PTHREAD_RWLOCK_PREFER_WRITER_NP,
-  PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP,
-  PTHREAD_RWLOCK_DEFAULT_NP = PTHREAD_RWLOCK_PREFER_READER_NP
-};
-# 156 "/usr/include/pthread.h" 3 4
-enum
-{
-  PTHREAD_INHERIT_SCHED,
-
-  PTHREAD_EXPLICIT_SCHED
-
-};
-
-
-
-enum
-{
-  PTHREAD_SCOPE_SYSTEM,
-
-  PTHREAD_SCOPE_PROCESS
-
-};
-
-
-
-enum
-{
-  PTHREAD_PROCESS_PRIVATE,
-
-  PTHREAD_PROCESS_SHARED
-
-};
-# 191 "/usr/include/pthread.h" 3 4
-struct _pthread_cleanup_buffer
-{
-  void (*__routine) (void *);
-  void *__arg;
-  int __canceltype;
-  struct _pthread_cleanup_buffer *__prev;
-};
-
-
-enum
-{
-  PTHREAD_CANCEL_ENABLE,
-
-  PTHREAD_CANCEL_DISABLE
-
-};
-enum
-{
-  PTHREAD_CANCEL_DEFERRED,
-
-  PTHREAD_CANCEL_ASYNCHRONOUS
-
-};
-# 234 "/usr/include/pthread.h" 3 4
-extern int pthread_create (pthread_t *__restrict __newthread,
-      const pthread_attr_t *__restrict __attr,
-      void *(*__start_routine) (void *),
-      void *__restrict __arg) __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1, 3)));
-
-
-
-
-
-extern void pthread_exit (void *__retval) __attribute__ ((__noreturn__));
-
-
-
-
-
-
-
-extern int pthread_join (pthread_t __th, void **__thread_return);
-# 272 "/usr/include/pthread.h" 3 4
-extern int pthread_detach (pthread_t __th) __attribute__ ((__nothrow__ ));
-
-
-
-extern pthread_t pthread_self (void) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-extern int pthread_equal (pthread_t __thread1, pthread_t __thread2)
-  __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-
-
-
-extern int pthread_attr_init (pthread_attr_t *__attr) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_attr_destroy (pthread_attr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_attr_getdetachstate (const pthread_attr_t *__attr,
-     int *__detachstate)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_attr_setdetachstate (pthread_attr_t *__attr,
-     int __detachstate)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_attr_getguardsize (const pthread_attr_t *__attr,
-          size_t *__guardsize)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_attr_setguardsize (pthread_attr_t *__attr,
-          size_t __guardsize)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_attr_getschedparam (const pthread_attr_t *__restrict __attr,
-           struct sched_param *__restrict __param)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_attr_setschedparam (pthread_attr_t *__restrict __attr,
-           const struct sched_param *__restrict
-           __param) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_attr_getschedpolicy (const pthread_attr_t *__restrict
-     __attr, int *__restrict __policy)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_attr_setschedpolicy (pthread_attr_t *__attr, int __policy)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_attr_getinheritsched (const pthread_attr_t *__restrict
-      __attr, int *__restrict __inherit)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_attr_setinheritsched (pthread_attr_t *__attr,
-      int __inherit)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_attr_getscope (const pthread_attr_t *__restrict __attr,
-      int *__restrict __scope)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_attr_setscope (pthread_attr_t *__attr, int __scope)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_attr_getstackaddr (const pthread_attr_t *__restrict
-          __attr, void **__restrict __stackaddr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2))) __attribute__ ((__deprecated__));
-
-
-
-
-
-extern int pthread_attr_setstackaddr (pthread_attr_t *__attr,
-          void *__stackaddr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) __attribute__ ((__deprecated__));
-
-
-extern int pthread_attr_getstacksize (const pthread_attr_t *__restrict
-          __attr, size_t *__restrict __stacksize)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-extern int pthread_attr_setstacksize (pthread_attr_t *__attr,
-          size_t __stacksize)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_attr_getstack (const pthread_attr_t *__restrict __attr,
-      void **__restrict __stackaddr,
-      size_t *__restrict __stacksize)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2, 3)));
-
-
-
-
-extern int pthread_attr_setstack (pthread_attr_t *__attr, void *__stackaddr,
-      size_t __stacksize) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 430 "/usr/include/pthread.h" 3 4
-extern int pthread_setschedparam (pthread_t __target_thread, int __policy,
-      const struct sched_param *__param)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3)));
-
-
-extern int pthread_getschedparam (pthread_t __target_thread,
-      int *__restrict __policy,
-      struct sched_param *__restrict __param)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 3)));
-
-
-extern int pthread_setschedprio (pthread_t __target_thread, int __prio)
-     __attribute__ ((__nothrow__ ));
-# 495 "/usr/include/pthread.h" 3 4
-extern int pthread_once (pthread_once_t *__once_control,
-    void (*__init_routine) (void)) __attribute__ ((__nonnull__ (1, 2)));
-# 507 "/usr/include/pthread.h" 3 4
-extern int pthread_setcancelstate (int __state, int *__oldstate);
-
-
-
-extern int pthread_setcanceltype (int __type, int *__oldtype);
-
-
-extern int pthread_cancel (pthread_t __th);
-
-
-
-
-extern void pthread_testcancel (void);
-
-
-
-
-typedef struct
-{
-  struct
-  {
-    __jmp_buf __cancel_jmp_buf;
-    int __mask_was_saved;
-  } __cancel_jmp_buf[1];
-  void *__pad[4];
-} __pthread_unwind_buf_t __attribute__ ((__aligned__));
-# 541 "/usr/include/pthread.h" 3 4
-struct __pthread_cleanup_frame
-{
-  void (*__cancel_routine) (void *);
-  void *__cancel_arg;
-  int __do_it;
-  int __cancel_type;
-};
-# 681 "/usr/include/pthread.h" 3 4
-extern void __pthread_register_cancel (__pthread_unwind_buf_t *__buf)
-                            ;
-# 693 "/usr/include/pthread.h" 3 4
-extern void __pthread_unregister_cancel (__pthread_unwind_buf_t *__buf)
-                         ;
-# 734 "/usr/include/pthread.h" 3 4
-extern void __pthread_unwind_next (__pthread_unwind_buf_t *__buf)
-                             __attribute__ ((__noreturn__))
-
-     __attribute__ ((__weak__))
-
-     ;
-
-
-
-struct __jmp_buf_tag;
-extern int __sigsetjmp (struct __jmp_buf_tag *__env, int __savemask) __attribute__ ((__nothrow__));
-
-
-
-
-
-extern int pthread_mutex_init (pthread_mutex_t *__mutex,
-          const pthread_mutexattr_t *__mutexattr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_mutex_destroy (pthread_mutex_t *__mutex)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_mutex_trylock (pthread_mutex_t *__mutex)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_mutex_lock (pthread_mutex_t *__mutex)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_mutex_timedlock (pthread_mutex_t *__restrict __mutex,
-        const struct timespec *__restrict
-        __abstime) __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int pthread_mutex_unlock (pthread_mutex_t *__mutex)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_mutex_getprioceiling (const pthread_mutex_t *
-      __restrict __mutex,
-      int *__restrict __prioceiling)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int pthread_mutex_setprioceiling (pthread_mutex_t *__restrict __mutex,
-      int __prioceiling,
-      int *__restrict __old_ceiling)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 3)));
-
-
-
-
-extern int pthread_mutex_consistent (pthread_mutex_t *__mutex)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 807 "/usr/include/pthread.h" 3 4
-extern int pthread_mutexattr_init (pthread_mutexattr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_mutexattr_destroy (pthread_mutexattr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_mutexattr_getpshared (const pthread_mutexattr_t *
-      __restrict __attr,
-      int *__restrict __pshared)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_mutexattr_setpshared (pthread_mutexattr_t *__attr,
-      int __pshared)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_mutexattr_gettype (const pthread_mutexattr_t *__restrict
-          __attr, int *__restrict __kind)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-extern int pthread_mutexattr_settype (pthread_mutexattr_t *__attr, int __kind)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_mutexattr_getprotocol (const pthread_mutexattr_t *
-       __restrict __attr,
-       int *__restrict __protocol)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int pthread_mutexattr_setprotocol (pthread_mutexattr_t *__attr,
-       int __protocol)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_mutexattr_getprioceiling (const pthread_mutexattr_t *
-          __restrict __attr,
-          int *__restrict __prioceiling)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_mutexattr_setprioceiling (pthread_mutexattr_t *__attr,
-          int __prioceiling)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_mutexattr_getrobust (const pthread_mutexattr_t *__attr,
-     int *__robustness)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-
-
-
-extern int pthread_mutexattr_setrobust (pthread_mutexattr_t *__attr,
-     int __robustness)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 889 "/usr/include/pthread.h" 3 4
-extern int pthread_rwlock_init (pthread_rwlock_t *__restrict __rwlock,
-    const pthread_rwlockattr_t *__restrict
-    __attr) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_rwlock_destroy (pthread_rwlock_t *__rwlock)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_rwlock_rdlock (pthread_rwlock_t *__rwlock)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_rwlock_tryrdlock (pthread_rwlock_t *__rwlock)
-  __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_rwlock_timedrdlock (pthread_rwlock_t *__restrict __rwlock,
-           const struct timespec *__restrict
-           __abstime) __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int pthread_rwlock_wrlock (pthread_rwlock_t *__rwlock)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_rwlock_trywrlock (pthread_rwlock_t *__rwlock)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_rwlock_timedwrlock (pthread_rwlock_t *__restrict __rwlock,
-           const struct timespec *__restrict
-           __abstime) __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int pthread_rwlock_unlock (pthread_rwlock_t *__rwlock)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern int pthread_rwlockattr_init (pthread_rwlockattr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_rwlockattr_destroy (pthread_rwlockattr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_rwlockattr_getpshared (const pthread_rwlockattr_t *
-       __restrict __attr,
-       int *__restrict __pshared)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_rwlockattr_setpshared (pthread_rwlockattr_t *__attr,
-       int __pshared)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_rwlockattr_getkind_np (const pthread_rwlockattr_t *
-       __restrict __attr,
-       int *__restrict __pref)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_rwlockattr_setkind_np (pthread_rwlockattr_t *__attr,
-       int __pref) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-
-extern int pthread_cond_init (pthread_cond_t *__restrict __cond,
-         const pthread_condattr_t *__restrict __cond_attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_cond_destroy (pthread_cond_t *__cond)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_cond_signal (pthread_cond_t *__cond)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_cond_broadcast (pthread_cond_t *__cond)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern int pthread_cond_wait (pthread_cond_t *__restrict __cond,
-         pthread_mutex_t *__restrict __mutex)
-     __attribute__ ((__nonnull__ (1, 2)));
-# 1001 "/usr/include/pthread.h" 3 4
-extern int pthread_cond_timedwait (pthread_cond_t *__restrict __cond,
-       pthread_mutex_t *__restrict __mutex,
-       const struct timespec *__restrict __abstime)
-     __attribute__ ((__nonnull__ (1, 2, 3)));
-
-
-
-
-extern int pthread_condattr_init (pthread_condattr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_condattr_destroy (pthread_condattr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_condattr_getpshared (const pthread_condattr_t *
-     __restrict __attr,
-     int *__restrict __pshared)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_condattr_setpshared (pthread_condattr_t *__attr,
-     int __pshared) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_condattr_getclock (const pthread_condattr_t *
-          __restrict __attr,
-          __clockid_t *__restrict __clock_id)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_condattr_setclock (pthread_condattr_t *__attr,
-          __clockid_t __clock_id)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 1045 "/usr/include/pthread.h" 3 4
-extern int pthread_spin_init (pthread_spinlock_t *__lock, int __pshared)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_spin_destroy (pthread_spinlock_t *__lock)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_spin_lock (pthread_spinlock_t *__lock)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_spin_trylock (pthread_spinlock_t *__lock)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_spin_unlock (pthread_spinlock_t *__lock)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern int pthread_barrier_init (pthread_barrier_t *__restrict __barrier,
-     const pthread_barrierattr_t *__restrict
-     __attr, unsigned int __count)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_barrier_destroy (pthread_barrier_t *__barrier)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_barrier_wait (pthread_barrier_t *__barrier)
-     __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int pthread_barrierattr_init (pthread_barrierattr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_barrierattr_destroy (pthread_barrierattr_t *__attr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_barrierattr_getpshared (const pthread_barrierattr_t *
-        __restrict __attr,
-        int *__restrict __pshared)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int pthread_barrierattr_setpshared (pthread_barrierattr_t *__attr,
-        int __pshared)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 1112 "/usr/include/pthread.h" 3 4
-extern int pthread_key_create (pthread_key_t *__key,
-          void (*__destr_function) (void *))
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int pthread_key_delete (pthread_key_t __key) __attribute__ ((__nothrow__ ));
-
-
-extern void *pthread_getspecific (pthread_key_t __key) __attribute__ ((__nothrow__ ));
-
-
-extern int pthread_setspecific (pthread_key_t __key,
-    const void *__pointer) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern int pthread_getcpuclockid (pthread_t __thread_id,
-      __clockid_t *__clock_id)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-# 1146 "/usr/include/pthread.h" 3 4
-extern int pthread_atfork (void (*__prepare) (void),
-      void (*__parent) (void),
-      void (*__child) (void)) __attribute__ ((__nothrow__ ));
-# 374 "mjs_extra.h" 2
-# 1 "/usr/include/signal.h" 1 3 4
-# 30 "/usr/include/signal.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/signum.h" 1 3 4
-# 26 "/usr/include/x86_64-linux-gnu/bits/signum.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/signum-generic.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/signum.h" 2 3 4
-# 31 "/usr/include/signal.h" 2 3 4
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h" 1 3 4
-
-
-
-
-
-
-
-typedef __sig_atomic_t sig_atomic_t;
-# 33 "/usr/include/signal.h" 2 3 4
-# 57 "/usr/include/signal.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h" 1 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 5 "/usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h" 2 3 4
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h" 3 4
-union sigval
-{
-  int sival_int;
-  void *sival_ptr;
-};
-
-typedef union sigval __sigval_t;
-# 7 "/usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h" 2 3 4
-# 16 "/usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/siginfo-arch.h" 1 3 4
-# 17 "/usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h" 2 3 4
-# 36 "/usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h" 3 4
-typedef struct
-  {
-    int si_signo;
-
-    int si_errno;
-
-    int si_code;
-
-
-
-
-
-    int __pad0;
-
-
-    union
-      {
- int _pad[((128 / sizeof (int)) - 4)];
-
-
- struct
-   {
-     __pid_t si_pid;
-     __uid_t si_uid;
-   } _kill;
-
-
- struct
-   {
-     int si_tid;
-     int si_overrun;
-     __sigval_t si_sigval;
-   } _timer;
-
-
- struct
-   {
-     __pid_t si_pid;
-     __uid_t si_uid;
-     __sigval_t si_sigval;
-   } _rt;
-
-
- struct
-   {
-     __pid_t si_pid;
-     __uid_t si_uid;
-     int si_status;
-     __clock_t si_utime;
-     __clock_t si_stime;
-   } _sigchld;
-
-
- struct
-   {
-     void *si_addr;
-
-     short int si_addr_lsb;
-     union
-       {
-
-  struct
-    {
-      void *_lower;
-      void *_upper;
-    } _addr_bnd;
-
-  __uint32_t _pkey;
-       } _bounds;
-   } _sigfault;
-
-
- struct
-   {
-     long int si_band;
-     int si_fd;
-   } _sigpoll;
-
-
-
- struct
-   {
-     void *_call_addr;
-     int _syscall;
-     unsigned int _arch;
-   } _sigsys;
-
-      } _sifields;
-  } siginfo_t ;
-# 58 "/usr/include/signal.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h" 1 3 4
-# 35 "/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h" 3 4
-enum
-{
-  SI_ASYNCNL = -60,
-  SI_TKILL = -6,
-  SI_SIGIO,
-
-  SI_ASYNCIO,
-  SI_MESGQ,
-  SI_TIMER,
-
-
-
-
-
-  SI_QUEUE,
-  SI_USER,
-  SI_KERNEL = 0x80
-# 63 "/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h" 3 4
-};
-
-
-
-
-enum
-{
-  ILL_ILLOPC = 1,
-
-  ILL_ILLOPN,
-
-  ILL_ILLADR,
-
-  ILL_ILLTRP,
-
-  ILL_PRVOPC,
-
-  ILL_PRVREG,
-
-  ILL_COPROC,
-
-  ILL_BADSTK
-
-};
-
-
-enum
-{
-  FPE_INTDIV = 1,
-
-  FPE_INTOVF,
-
-  FPE_FLTDIV,
-
-  FPE_FLTOVF,
-
-  FPE_FLTUND,
-
-  FPE_FLTRES,
-
-  FPE_FLTINV,
-
-  FPE_FLTSUB
-
-};
-
-
-enum
-{
-  SEGV_MAPERR = 1,
-
-  SEGV_ACCERR,
-
-  SEGV_BNDERR,
-
-  SEGV_PKUERR
-
-};
-
-
-enum
-{
-  BUS_ADRALN = 1,
-
-  BUS_ADRERR,
-
-  BUS_OBJERR,
-
-  BUS_MCEERR_AR,
-
-  BUS_MCEERR_AO
-
-};
-# 151 "/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h" 3 4
-enum
-{
-  CLD_EXITED = 1,
-
-  CLD_KILLED,
-
-  CLD_DUMPED,
-
-  CLD_TRAPPED,
-
-  CLD_STOPPED,
-
-  CLD_CONTINUED
-
-};
-
-
-enum
-{
-  POLL_IN = 1,
-
-  POLL_OUT,
-
-  POLL_MSG,
-
-  POLL_ERR,
-
-  POLL_PRI,
-
-  POLL_HUP
-
-};
-# 59 "/usr/include/signal.h" 2 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h" 1 3 4
-# 16 "/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h" 3 4
-typedef __sigval_t sigval_t;
-# 63 "/usr/include/signal.h" 2 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h" 1 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 5 "/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h" 2 3 4
-# 22 "/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h" 3 4
-typedef struct sigevent
-  {
-    __sigval_t sigev_value;
-    int sigev_signo;
-    int sigev_notify;
-
-    union
-      {
- int _pad[((64 / sizeof (int)) - 4)];
-
-
-
- __pid_t _tid;
-
- struct
-   {
-     void (*_function) (__sigval_t);
-     pthread_attr_t *_attribute;
-   } _sigev_thread;
-      } _sigev_un;
-  } sigevent_t;
-# 67 "/usr/include/signal.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/sigevent-consts.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/sigevent-consts.h" 3 4
-enum
-{
-  SIGEV_SIGNAL = 0,
-
-  SIGEV_NONE,
-
-  SIGEV_THREAD,
-
-
-  SIGEV_THREAD_ID = 4
-
-
-};
-# 68 "/usr/include/signal.h" 2 3 4
-
-
-
-
-typedef void (*__sighandler_t) (int);
-
-
-
-
-extern __sighandler_t __sysv_signal (int __sig, __sighandler_t __handler)
-     __attribute__ ((__nothrow__ ));
-# 88 "/usr/include/signal.h" 3 4
-extern __sighandler_t signal (int __sig, __sighandler_t __handler)
-     __attribute__ ((__nothrow__ ));
-# 112 "/usr/include/signal.h" 3 4
-extern int kill (__pid_t __pid, int __sig) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern int killpg (__pid_t __pgrp, int __sig) __attribute__ ((__nothrow__ ));
-
-
-
-extern int raise (int __sig) __attribute__ ((__nothrow__ ));
-
-
-
-extern __sighandler_t ssignal (int __sig, __sighandler_t __handler)
-     __attribute__ ((__nothrow__ ));
-extern int gsignal (int __sig) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern void psignal (int __sig, const char *__s);
-
-
-extern void psiginfo (const siginfo_t *__pinfo, const char *__s);
-# 170 "/usr/include/signal.h" 3 4
-extern int sigblock (int __mask) __attribute__ ((__nothrow__ )) __attribute__ ((__deprecated__));
-
-
-extern int sigsetmask (int __mask) __attribute__ ((__nothrow__ )) __attribute__ ((__deprecated__));
-
-
-extern int siggetmask (void) __attribute__ ((__nothrow__ )) __attribute__ ((__deprecated__));
-# 190 "/usr/include/signal.h" 3 4
-typedef __sighandler_t sig_t;
-
-
-
-
-
-extern int sigemptyset (sigset_t *__set) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int sigfillset (sigset_t *__set) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int sigaddset (sigset_t *__set, int __signo) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int sigdelset (sigset_t *__set, int __signo) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int sigismember (const sigset_t *__set, int __signo)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 226 "/usr/include/signal.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/sigaction.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/sigaction.h" 3 4
-struct sigaction
-  {
-
-
-    union
-      {
-
- __sighandler_t sa_handler;
-
- void (*sa_sigaction) (int, siginfo_t *, void *);
-      }
-    __sigaction_handler;
-
-
-
-
-
-
-
-    __sigset_t sa_mask;
-
-
-    int sa_flags;
-
-
-    void (*sa_restorer) (void);
-  };
-# 227 "/usr/include/signal.h" 2 3 4
-
-
-extern int sigprocmask (int __how, const sigset_t *__restrict __set,
-   sigset_t *__restrict __oset) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern int sigsuspend (const sigset_t *__set) __attribute__ ((__nonnull__ (1)));
-
-
-extern int sigaction (int __sig, const struct sigaction *__restrict __act,
-        struct sigaction *__restrict __oact) __attribute__ ((__nothrow__ ));
-
-
-extern int sigpending (sigset_t *__set) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-
-extern int sigwait (const sigset_t *__restrict __set, int *__restrict __sig)
-     __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-
-
-
-extern int sigwaitinfo (const sigset_t *__restrict __set,
-   siginfo_t *__restrict __info) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern int sigtimedwait (const sigset_t *__restrict __set,
-    siginfo_t *__restrict __info,
-    const struct timespec *__restrict __timeout)
-     __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int sigqueue (__pid_t __pid, int __sig, const union sigval __val)
-     __attribute__ ((__nothrow__ ));
-# 286 "/usr/include/signal.h" 3 4
-extern const char *const _sys_siglist[(64 + 1)];
-extern const char *const sys_siglist[(64 + 1)];
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/sigcontext.h" 1 3 4
-# 31 "/usr/include/x86_64-linux-gnu/bits/sigcontext.h" 3 4
-struct _fpx_sw_bytes
-{
-  __uint32_t magic1;
-  __uint32_t extended_size;
-  __uint64_t xstate_bv;
-  __uint32_t xstate_size;
-  __uint32_t __glibc_reserved1[7];
-};
-
-struct _fpreg
-{
-  unsigned short significand[4];
-  unsigned short exponent;
-};
-
-struct _fpxreg
-{
-  unsigned short significand[4];
-  unsigned short exponent;
-  unsigned short __glibc_reserved1[3];
-};
-
-struct _xmmreg
-{
-  __uint32_t element[4];
-};
-# 123 "/usr/include/x86_64-linux-gnu/bits/sigcontext.h" 3 4
-struct _fpstate
-{
-
-  __uint16_t cwd;
-  __uint16_t swd;
-  __uint16_t ftw;
-  __uint16_t fop;
-  __uint64_t rip;
-  __uint64_t rdp;
-  __uint32_t mxcsr;
-  __uint32_t mxcr_mask;
-  struct _fpxreg _st[8];
-  struct _xmmreg _xmm[16];
-  __uint32_t __glibc_reserved1[24];
-};
-
-struct sigcontext
-{
-  __uint64_t r8;
-  __uint64_t r9;
-  __uint64_t r10;
-  __uint64_t r11;
-  __uint64_t r12;
-  __uint64_t r13;
-  __uint64_t r14;
-  __uint64_t r15;
-  __uint64_t rdi;
-  __uint64_t rsi;
-  __uint64_t rbp;
-  __uint64_t rbx;
-  __uint64_t rdx;
-  __uint64_t rax;
-  __uint64_t rcx;
-  __uint64_t rsp;
-  __uint64_t rip;
-  __uint64_t eflags;
-  unsigned short cs;
-  unsigned short gs;
-  unsigned short fs;
-  unsigned short __pad0;
-  __uint64_t err;
-  __uint64_t trapno;
-  __uint64_t oldmask;
-  __uint64_t cr2;
-  __extension__ union
-    {
-      struct _fpstate * fpstate;
-      __uint64_t __fpstate_word;
-    };
-  __uint64_t __reserved1 [8];
-};
-
-
-
-struct _xsave_hdr
-{
-  __uint64_t xstate_bv;
-  __uint64_t __glibc_reserved1[2];
-  __uint64_t __glibc_reserved2[5];
-};
-
-struct _ymmh_state
-{
-  __uint32_t ymmh_space[64];
-};
-
-struct _xstate
-{
-  struct _fpstate fpstate;
-  struct _xsave_hdr xstate_hdr;
-  struct _ymmh_state ymmh;
-};
-# 292 "/usr/include/signal.h" 2 3 4
-
-
-extern int sigreturn (struct sigcontext *__scp) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 302 "/usr/include/signal.h" 2 3 4
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/stack_t.h" 1 3 4
-# 23 "/usr/include/x86_64-linux-gnu/bits/types/stack_t.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/types/stack_t.h" 2 3 4
-
-
-typedef struct
-  {
-    void *ss_sp;
-    int ss_flags;
-    size_t ss_size;
-  } stack_t;
-# 304 "/usr/include/signal.h" 2 3 4
-
-
-# 1 "/usr/include/x86_64-linux-gnu/sys/ucontext.h" 1 3 4
-# 37 "/usr/include/x86_64-linux-gnu/sys/ucontext.h" 3 4
-__extension__ typedef long long int greg_t;
-# 46 "/usr/include/x86_64-linux-gnu/sys/ucontext.h" 3 4
-typedef greg_t gregset_t[23];
-# 101 "/usr/include/x86_64-linux-gnu/sys/ucontext.h" 3 4
-struct _libc_fpxreg
-{
-  unsigned short int significand[4];
-  unsigned short int exponent;
-  unsigned short int __glibc_reserved1[3];
-};
-
-struct _libc_xmmreg
-{
-  __uint32_t element[4];
-};
-
-struct _libc_fpstate
-{
-
-  __uint16_t cwd;
-  __uint16_t swd;
-  __uint16_t ftw;
-  __uint16_t fop;
-  __uint64_t rip;
-  __uint64_t rdp;
-  __uint32_t mxcsr;
-  __uint32_t mxcr_mask;
-  struct _libc_fpxreg _st[8];
-  struct _libc_xmmreg _xmm[16];
-  __uint32_t __glibc_reserved1[24];
-};
-
-
-typedef struct _libc_fpstate *fpregset_t;
-
-
-typedef struct
-  {
-    gregset_t gregs;
-
-    fpregset_t fpregs;
-    __extension__ unsigned long long __reserved1 [8];
-} mcontext_t;
-
-
-typedef struct ucontext_t
-  {
-    unsigned long int uc_flags;
-    struct ucontext_t *uc_link;
-    stack_t uc_stack;
-    mcontext_t uc_mcontext;
-    sigset_t uc_sigmask;
-    struct _libc_fpstate __fpregs_mem;
-  } ucontext_t;
-# 307 "/usr/include/signal.h" 2 3 4
-
-
-
-
-
-
-
-extern int siginterrupt (int __sig, int __interrupt) __attribute__ ((__nothrow__ ));
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/sigstack.h" 1 3 4
-# 317 "/usr/include/signal.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/ss_flags.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/ss_flags.h" 3 4
-enum
-{
-  SS_ONSTACK = 1,
-
-  SS_DISABLE
-
-};
-# 318 "/usr/include/signal.h" 2 3 4
-
-
-
-extern int sigaltstack (const stack_t *__restrict __ss,
-   stack_t *__restrict __oss) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h" 1 3 4
-# 23 "/usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h" 3 4
-struct sigstack
-  {
-    void *ss_sp;
-    int ss_onstack;
-  };
-# 328 "/usr/include/signal.h" 2 3 4
-
-
-
-
-
-
-
-extern int sigstack (struct sigstack *__ss, struct sigstack *__oss)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__deprecated__));
-# 359 "/usr/include/signal.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/sigthread.h" 1 3 4
-# 31 "/usr/include/x86_64-linux-gnu/bits/sigthread.h" 3 4
-extern int pthread_sigmask (int __how,
-       const __sigset_t *__restrict __newmask,
-       __sigset_t *__restrict __oldmask)__attribute__ ((__nothrow__ ));
-
-
-extern int pthread_kill (pthread_t __threadid, int __signo) __attribute__ ((__nothrow__ ));
-# 360 "/usr/include/signal.h" 2 3 4
-
-
-
-
-
-
-extern int __libc_current_sigrtmin (void) __attribute__ ((__nothrow__ ));
-
-extern int __libc_current_sigrtmax (void) __attribute__ ((__nothrow__ ));
-# 375 "mjs_extra.h" 2
-
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdbool.h" 1 3
-# 377 "mjs_extra.h" 2
-
-# 1 "/usr/include/stdlib.h" 1 3 4
-# 25 "/usr/include/stdlib.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
-# 26 "/usr/include/stdlib.h" 2 3 4
-
-
-
-
-
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 32 "/usr/include/stdlib.h" 2 3 4
-
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/waitflags.h" 1 3 4
-# 52 "/usr/include/x86_64-linux-gnu/bits/waitflags.h" 3 4
-typedef enum
-{
-  P_ALL,
-  P_PID,
-  P_PGID
-} idtype_t;
-# 40 "/usr/include/stdlib.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/waitstatus.h" 1 3 4
-# 41 "/usr/include/stdlib.h" 2 3 4
-# 58 "/usr/include/stdlib.h" 3 4
-typedef struct
-  {
-    int quot;
-    int rem;
-  } div_t;
-
-
-
-typedef struct
-  {
-    long int quot;
-    long int rem;
-  } ldiv_t;
-
-
-
-
-
-__extension__ typedef struct
-  {
-    long long int quot;
-    long long int rem;
-  } lldiv_t;
-# 97 "/usr/include/stdlib.h" 3 4
-extern size_t __ctype_get_mb_cur_max (void) __attribute__ ((__nothrow__ )) ;
-
-
-
-extern double atof (const char *__nptr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1))) ;
-
-extern int atoi (const char *__nptr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1))) ;
-
-extern long int atol (const char *__nptr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-__extension__ extern long long int atoll (const char *__nptr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-extern double strtod (const char *__restrict __nptr,
-        char **__restrict __endptr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern float strtof (const char *__restrict __nptr,
-       char **__restrict __endptr) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-extern long double strtold (const char *__restrict __nptr,
-       char **__restrict __endptr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 176 "/usr/include/stdlib.h" 3 4
-extern long int strtol (const char *__restrict __nptr,
-   char **__restrict __endptr, int __base)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-extern unsigned long int strtoul (const char *__restrict __nptr,
-      char **__restrict __endptr, int __base)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-__extension__
-extern long long int strtoq (const char *__restrict __nptr,
-        char **__restrict __endptr, int __base)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-__extension__
-extern unsigned long long int strtouq (const char *__restrict __nptr,
-           char **__restrict __endptr, int __base)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-__extension__
-extern long long int strtoll (const char *__restrict __nptr,
-         char **__restrict __endptr, int __base)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-__extension__
-extern unsigned long long int strtoull (const char *__restrict __nptr,
-     char **__restrict __endptr, int __base)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 385 "/usr/include/stdlib.h" 3 4
-extern char *l64a (long int __n) __attribute__ ((__nothrow__ )) ;
-
-
-extern long int a64l (const char *__s)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1))) ;
-# 401 "/usr/include/stdlib.h" 3 4
-extern long int random (void) __attribute__ ((__nothrow__ ));
-
-
-extern void srandom (unsigned int __seed) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern char *initstate (unsigned int __seed, char *__statebuf,
-   size_t __statelen) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-extern char *setstate (char *__statebuf) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-
-struct random_data
-  {
-    int32_t *fptr;
-    int32_t *rptr;
-    int32_t *state;
-    int rand_type;
-    int rand_deg;
-    int rand_sep;
-    int32_t *end_ptr;
-  };
-
-extern int random_r (struct random_data *__restrict __buf,
-       int32_t *__restrict __result) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-extern int srandom_r (unsigned int __seed, struct random_data *__buf)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-extern int initstate_r (unsigned int __seed, char *__restrict __statebuf,
-   size_t __statelen,
-   struct random_data *__restrict __buf)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 4)));
-
-extern int setstate_r (char *__restrict __statebuf,
-         struct random_data *__restrict __buf)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-
-extern int rand (void) __attribute__ ((__nothrow__ ));
-
-extern void srand (unsigned int __seed) __attribute__ ((__nothrow__ ));
-
-
-
-extern int rand_r (unsigned int *__seed) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-extern double drand48 (void) __attribute__ ((__nothrow__ ));
-extern double erand48 (unsigned short int __xsubi[3]) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern long int lrand48 (void) __attribute__ ((__nothrow__ ));
-extern long int nrand48 (unsigned short int __xsubi[3])
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern long int mrand48 (void) __attribute__ ((__nothrow__ ));
-extern long int jrand48 (unsigned short int __xsubi[3])
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern void srand48 (long int __seedval) __attribute__ ((__nothrow__ ));
-extern unsigned short int *seed48 (unsigned short int __seed16v[3])
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-extern void lcong48 (unsigned short int __param[7]) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-struct drand48_data
-  {
-    unsigned short int __x[3];
-    unsigned short int __old_x[3];
-    unsigned short int __c;
-    unsigned short int __init;
-    __extension__ unsigned long long int __a;
-
-  };
-
-
-extern int drand48_r (struct drand48_data *__restrict __buffer,
-        double *__restrict __result) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-extern int erand48_r (unsigned short int __xsubi[3],
-        struct drand48_data *__restrict __buffer,
-        double *__restrict __result) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int lrand48_r (struct drand48_data *__restrict __buffer,
-        long int *__restrict __result)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-extern int nrand48_r (unsigned short int __xsubi[3],
-        struct drand48_data *__restrict __buffer,
-        long int *__restrict __result)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int mrand48_r (struct drand48_data *__restrict __buffer,
-        long int *__restrict __result)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-extern int jrand48_r (unsigned short int __xsubi[3],
-        struct drand48_data *__restrict __buffer,
-        long int *__restrict __result)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int srand48_r (long int __seedval, struct drand48_data *__buffer)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-extern int seed48_r (unsigned short int __seed16v[3],
-       struct drand48_data *__buffer) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-extern int lcong48_r (unsigned short int __param[7],
-        struct drand48_data *__buffer)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-extern void *malloc (size_t __size) __attribute__ ((__nothrow__ )) __attribute__ ((__malloc__)) ;
-
-extern void *calloc (size_t __nmemb, size_t __size)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__malloc__)) ;
-
-
-
-
-
-
-extern void *realloc (void *__ptr, size_t __size)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__warn_unused_result__));
-# 563 "/usr/include/stdlib.h" 3 4
-extern void free (void *__ptr) __attribute__ ((__nothrow__ ));
-
-
-
-# 1 "/usr/include/alloca.h" 1 3 4
-# 24 "/usr/include/alloca.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 25 "/usr/include/alloca.h" 2 3 4
-
-
-
-
-
-
-
-extern void *alloca (size_t __size) __attribute__ ((__nothrow__ ));
-# 567 "/usr/include/stdlib.h" 2 3 4
-
-
-
-
-
-extern void *valloc (size_t __size) __attribute__ ((__nothrow__ )) __attribute__ ((__malloc__)) ;
-
-
-
-
-extern int posix_memalign (void **__memptr, size_t __alignment, size_t __size)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-
-extern void *aligned_alloc (size_t __alignment, size_t __size)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__malloc__)) ;
-
-
-
-extern void abort (void) __attribute__ ((__nothrow__ )) __attribute__ ((__noreturn__));
-
-
-
-extern int atexit (void (*__func) (void)) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-
-extern int at_quick_exit (void (*__func) (void)) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern int on_exit (void (*__func) (int __status, void *__arg), void *__arg)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern void exit (int __status) __attribute__ ((__nothrow__ )) __attribute__ ((__noreturn__));
-
-
-
-
-
-extern void quick_exit (int __status) __attribute__ ((__nothrow__ )) __attribute__ ((__noreturn__));
-
-
-
-
-
-extern void _Exit (int __status) __attribute__ ((__nothrow__ )) __attribute__ ((__noreturn__));
-
-
-
-
-extern char *getenv (const char *__name) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-# 644 "/usr/include/stdlib.h" 3 4
-extern int putenv (char *__string) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern int setenv (const char *__name, const char *__value, int __replace)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-extern int unsetenv (const char *__name) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern int clearenv (void) __attribute__ ((__nothrow__ ));
-# 672 "/usr/include/stdlib.h" 3 4
-extern char *mktemp (char *__template) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 685 "/usr/include/stdlib.h" 3 4
-extern int mkstemp (char *__template) __attribute__ ((__nonnull__ (1))) ;
-# 707 "/usr/include/stdlib.h" 3 4
-extern int mkstemps (char *__template, int __suffixlen) __attribute__ ((__nonnull__ (1))) ;
-# 728 "/usr/include/stdlib.h" 3 4
-extern char *mkdtemp (char *__template) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-# 781 "/usr/include/stdlib.h" 3 4
-extern int system (const char *__command) ;
-# 797 "/usr/include/stdlib.h" 3 4
-extern char *realpath (const char *__restrict __name,
-         char *__restrict __resolved) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-
-
-typedef int (*__compar_fn_t) (const void *, const void *);
-# 817 "/usr/include/stdlib.h" 3 4
-extern void *bsearch (const void *__key, const void *__base,
-        size_t __nmemb, size_t __size, __compar_fn_t __compar)
-     __attribute__ ((__nonnull__ (1, 2, 5))) ;
-
-
-
-
-
-
-
-extern void qsort (void *__base, size_t __nmemb, size_t __size,
-     __compar_fn_t __compar) __attribute__ ((__nonnull__ (1, 4)));
-# 837 "/usr/include/stdlib.h" 3 4
-extern int abs (int __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)) ;
-extern long int labs (long int __x) __attribute__ ((__nothrow__ )) __attribute__ ((__const__)) ;
-
-
-__extension__ extern long long int llabs (long long int __x)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__)) ;
-
-
-
-
-
-
-extern div_t div (int __numer, int __denom)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__)) ;
-extern ldiv_t ldiv (long int __numer, long int __denom)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__)) ;
-
-
-__extension__ extern lldiv_t lldiv (long long int __numer,
-        long long int __denom)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__)) ;
-# 869 "/usr/include/stdlib.h" 3 4
-extern char *ecvt (double __value, int __ndigit, int *__restrict __decpt,
-     int *__restrict __sign) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4))) ;
-
-
-
-
-extern char *fcvt (double __value, int __ndigit, int *__restrict __decpt,
-     int *__restrict __sign) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4))) ;
-
-
-
-
-extern char *gcvt (double __value, int __ndigit, char *__buf)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3))) ;
-
-
-
-
-extern char *qecvt (long double __value, int __ndigit,
-      int *__restrict __decpt, int *__restrict __sign)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4))) ;
-extern char *qfcvt (long double __value, int __ndigit,
-      int *__restrict __decpt, int *__restrict __sign)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4))) ;
-extern char *qgcvt (long double __value, int __ndigit, char *__buf)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3))) ;
-
-
-
-
-extern int ecvt_r (double __value, int __ndigit, int *__restrict __decpt,
-     int *__restrict __sign, char *__restrict __buf,
-     size_t __len) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4, 5)));
-extern int fcvt_r (double __value, int __ndigit, int *__restrict __decpt,
-     int *__restrict __sign, char *__restrict __buf,
-     size_t __len) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4, 5)));
-
-extern int qecvt_r (long double __value, int __ndigit,
-      int *__restrict __decpt, int *__restrict __sign,
-      char *__restrict __buf, size_t __len)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4, 5)));
-extern int qfcvt_r (long double __value, int __ndigit,
-      int *__restrict __decpt, int *__restrict __sign,
-      char *__restrict __buf, size_t __len)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4, 5)));
-
-
-
-
-
-extern int mblen (const char *__s, size_t __n) __attribute__ ((__nothrow__ ));
-
-
-extern int mbtowc (wchar_t *__restrict __pwc,
-     const char *__restrict __s, size_t __n) __attribute__ ((__nothrow__ ));
-
-
-extern int wctomb (char *__s, wchar_t __wchar) __attribute__ ((__nothrow__ ));
-
-
-
-extern size_t mbstowcs (wchar_t *__restrict __pwcs,
-   const char *__restrict __s, size_t __n) __attribute__ ((__nothrow__ ));
-
-extern size_t wcstombs (char *__restrict __s,
-   const wchar_t *__restrict __pwcs, size_t __n)
-     __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-
-extern int rpmatch (const char *__response) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-# 954 "/usr/include/stdlib.h" 3 4
-extern int getsubopt (char **__restrict __optionp,
-        char *const *__restrict __tokens,
-        char **__restrict __valuep)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2, 3))) ;
-# 1006 "/usr/include/stdlib.h" 3 4
-extern int getloadavg (double __loadavg[], int __nelem)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 1016 "/usr/include/stdlib.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/stdlib-float.h" 1 3 4
-# 1017 "/usr/include/stdlib.h" 2 3 4
-# 379 "mjs_extra.h" 2
-# 1 "/usr/include/string.h" 1 3 4
-# 26 "/usr/include/string.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
-# 27 "/usr/include/string.h" 2 3 4
-
-
-
-
-
-
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 34 "/usr/include/string.h" 2 3 4
-
-
-
-
-
-
-
-
-extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
-       size_t __n) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern void *memmove (void *__dest, const void *__src, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-
-extern void *memccpy (void *__restrict __dest, const void *__restrict __src,
-        int __c, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-extern void *memset (void *__s, int __c, size_t __n) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int memcmp (const void *__s1, const void *__s2, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-# 90 "/usr/include/string.h" 3 4
-extern void *memchr (const void *__s, int __c, size_t __n)
-      __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1)));
-# 121 "/usr/include/string.h" 3 4
-extern char *strcpy (char *__restrict __dest, const char *__restrict __src)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-extern char *strncpy (char *__restrict __dest,
-        const char *__restrict __src, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern char *strcat (char *__restrict __dest, const char *__restrict __src)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-extern char *strncat (char *__restrict __dest, const char *__restrict __src,
-        size_t __n) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int strcmp (const char *__s1, const char *__s2)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-
-extern int strncmp (const char *__s1, const char *__s2, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int strcoll (const char *__s1, const char *__s2)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-
-extern size_t strxfrm (char *__restrict __dest,
-         const char *__restrict __src, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-
-
-
-extern int strcoll_l (const char *__s1, const char *__s2, locale_t __l)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2, 3)));
-
-
-extern size_t strxfrm_l (char *__dest, const char *__src, size_t __n,
-    locale_t __l) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 4)));
-
-
-
-
-
-extern char *strdup (const char *__s)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__malloc__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern char *strndup (const char *__string, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__malloc__)) __attribute__ ((__nonnull__ (1)));
-# 225 "/usr/include/string.h" 3 4
-extern char *strchr (const char *__s, int __c)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1)));
-# 252 "/usr/include/string.h" 3 4
-extern char *strrchr (const char *__s, int __c)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1)));
-# 272 "/usr/include/string.h" 3 4
-extern size_t strcspn (const char *__s, const char *__reject)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern size_t strspn (const char *__s, const char *__accept)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-# 302 "/usr/include/string.h" 3 4
-extern char *strpbrk (const char *__s, const char *__accept)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-# 329 "/usr/include/string.h" 3 4
-extern char *strstr (const char *__haystack, const char *__needle)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-extern char *strtok (char *__restrict __s, const char *__restrict __delim)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-extern char *__strtok_r (char *__restrict __s,
-    const char *__restrict __delim,
-    char **__restrict __save_ptr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 3)));
-
-extern char *strtok_r (char *__restrict __s, const char *__restrict __delim,
-         char **__restrict __save_ptr)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 3)));
-# 384 "/usr/include/string.h" 3 4
-extern size_t strlen (const char *__s)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-extern size_t strnlen (const char *__string, size_t __maxlen)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-extern char *strerror (int __errnum) __attribute__ ((__nothrow__ ));
-# 409 "/usr/include/string.h" 3 4
-extern int strerror_r (int __errnum, char *__buf, size_t __buflen) __asm__ ("" "__xpg_strerror_r") __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-# 427 "/usr/include/string.h" 3 4
-extern char *strerror_l (int __errnum, locale_t __l) __attribute__ ((__nothrow__ ));
-
-
-
-
-# 1 "/usr/include/strings.h" 1 3 4
-# 23 "/usr/include/strings.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 24 "/usr/include/strings.h" 2 3 4
-# 34 "/usr/include/strings.h" 3 4
-extern int bcmp (const void *__s1, const void *__s2, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern void bcopy (const void *__src, void *__dest, size_t __n)
-  __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern void bzero (void *__s, size_t __n) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 68 "/usr/include/strings.h" 3 4
-extern char *index (const char *__s, int __c)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1)));
-# 96 "/usr/include/strings.h" 3 4
-extern char *rindex (const char *__s, int __c)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern int ffs (int __i) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-
-extern int ffsl (long int __l) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-__extension__ extern int ffsll (long long int __ll)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-extern int strcasecmp (const char *__s1, const char *__s2)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-extern int strncasecmp (const char *__s1, const char *__s2, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-
-
-extern int strcasecmp_l (const char *__s1, const char *__s2, locale_t __loc)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2, 3)));
-
-
-
-extern int strncasecmp_l (const char *__s1, const char *__s2,
-     size_t __n, locale_t __loc)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__pure__)) __attribute__ ((__nonnull__ (1, 2, 4)));
-# 432 "/usr/include/string.h" 2 3 4
-
-
-
-extern void explicit_bzero (void *__s, size_t __n) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern char *strsep (char **__restrict __stringp,
-       const char *__restrict __delim)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-extern char *strsignal (int __sig) __attribute__ ((__nothrow__ ));
-
-
-extern char *__stpcpy (char *__restrict __dest, const char *__restrict __src)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-extern char *stpcpy (char *__restrict __dest, const char *__restrict __src)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern char *__stpncpy (char *__restrict __dest,
-   const char *__restrict __src, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-extern char *stpncpy (char *__restrict __dest,
-        const char *__restrict __src, size_t __n)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-# 380 "mjs_extra.h" 2
-# 1 "/usr/include/x86_64-linux-gnu/sys/param.h" 1 3 4
-# 23 "/usr/include/x86_64-linux-gnu/sys/param.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/sys/param.h" 2 3 4
-
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/param.h" 1 3 4
-# 28 "/usr/include/x86_64-linux-gnu/bits/param.h" 3 4
-# 1 "/usr/include/linux/param.h" 1 3 4
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/asm/param.h" 1 3 4
-# 1 "/usr/include/asm-generic/param.h" 1 3 4
-# 2 "/usr/include/x86_64-linux-gnu/asm/param.h" 2 3 4
-# 6 "/usr/include/linux/param.h" 2 3 4
-# 29 "/usr/include/x86_64-linux-gnu/bits/param.h" 2 3 4
-# 32 "/usr/include/x86_64-linux-gnu/sys/param.h" 2 3 4
-# 381 "mjs_extra.h" 2
-
-
-# 1 "/usr/include/x86_64-linux-gnu/sys/stat.h" 1 3 4
-# 101 "/usr/include/x86_64-linux-gnu/sys/stat.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/stat.h" 1 3 4
-# 102 "/usr/include/x86_64-linux-gnu/sys/stat.h" 2 3 4
-# 205 "/usr/include/x86_64-linux-gnu/sys/stat.h" 3 4
-extern int stat (const char *__restrict __file,
-   struct stat *__restrict __buf) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int fstat (int __fd, struct stat *__buf) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-# 234 "/usr/include/x86_64-linux-gnu/sys/stat.h" 3 4
-extern int fstatat (int __fd, const char *__restrict __file,
-      struct stat *__restrict __buf, int __flag)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 3)));
-# 259 "/usr/include/x86_64-linux-gnu/sys/stat.h" 3 4
-extern int lstat (const char *__restrict __file,
-    struct stat *__restrict __buf) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-# 280 "/usr/include/x86_64-linux-gnu/sys/stat.h" 3 4
-extern int chmod (const char *__file, __mode_t __mode)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern int lchmod (const char *__file, __mode_t __mode)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-extern int fchmod (int __fd, __mode_t __mode) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern int fchmodat (int __fd, const char *__file, __mode_t __mode,
-       int __flag)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2))) ;
-
-
-
-
-
-
-extern __mode_t umask (__mode_t __mask) __attribute__ ((__nothrow__ ));
-# 317 "/usr/include/x86_64-linux-gnu/sys/stat.h" 3 4
-extern int mkdir (const char *__path, __mode_t __mode)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern int mkdirat (int __fd, const char *__path, __mode_t __mode)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-
-
-
-extern int mknod (const char *__path, __mode_t __mode, __dev_t __dev)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern int mknodat (int __fd, const char *__path, __mode_t __mode,
-      __dev_t __dev) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-
-
-extern int mkfifo (const char *__path, __mode_t __mode)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern int mkfifoat (int __fd, const char *__path, __mode_t __mode)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-
-
-extern int utimensat (int __fd, const char *__path,
-        const struct timespec __times[2],
-        int __flags)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-
-extern int futimens (int __fd, const struct timespec __times[2]) __attribute__ ((__nothrow__ ));
-# 395 "/usr/include/x86_64-linux-gnu/sys/stat.h" 3 4
-extern int __fxstat (int __ver, int __fildes, struct stat *__stat_buf)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3)));
-extern int __xstat (int __ver, const char *__filename,
-      struct stat *__stat_buf) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 3)));
-extern int __lxstat (int __ver, const char *__filename,
-       struct stat *__stat_buf) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 3)));
-extern int __fxstatat (int __ver, int __fildes, const char *__filename,
-         struct stat *__stat_buf, int __flag)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 4)));
-# 438 "/usr/include/x86_64-linux-gnu/sys/stat.h" 3 4
-extern int __xmknod (int __ver, const char *__path, __mode_t __mode,
-       __dev_t *__dev) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 4)));
-
-extern int __xmknodat (int __ver, int __fd, const char *__path,
-         __mode_t __mode, __dev_t *__dev)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 5)));
-# 384 "mjs_extra.h" 2
-# 1 "/usr/include/x86_64-linux-gnu/sys/time.h" 1 3 4
-# 52 "/usr/include/x86_64-linux-gnu/sys/time.h" 3 4
-struct timezone
-  {
-    int tz_minuteswest;
-    int tz_dsttime;
-  };
-
-typedef struct timezone *__restrict __timezone_ptr_t;
-# 68 "/usr/include/x86_64-linux-gnu/sys/time.h" 3 4
-extern int gettimeofday (struct timeval *__restrict __tv,
-    __timezone_ptr_t __tz) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-extern int settimeofday (const struct timeval *__tv,
-    const struct timezone *__tz)
-     __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern int adjtime (const struct timeval *__delta,
-      struct timeval *__olddelta) __attribute__ ((__nothrow__ ));
-
-
-
-
-enum __itimer_which
-  {
-
-    ITIMER_REAL = 0,
-
-
-    ITIMER_VIRTUAL = 1,
-
-
-
-    ITIMER_PROF = 2
-
-  };
-
-
-
-struct itimerval
-  {
-
-    struct timeval it_interval;
-
-    struct timeval it_value;
-  };
-
-
-
-
-
-
-typedef int __itimer_which_t;
-
-
-
-
-extern int getitimer (__itimer_which_t __which,
-        struct itimerval *__value) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int setitimer (__itimer_which_t __which,
-        const struct itimerval *__restrict __new,
-        struct itimerval *__restrict __old) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int utimes (const char *__file, const struct timeval __tvp[2])
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int lutimes (const char *__file, const struct timeval __tvp[2])
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern int futimes (int __fd, const struct timeval __tvp[2]) __attribute__ ((__nothrow__ ));
-# 385 "mjs_extra.h" 2
-
-# 1 "/usr/include/unistd.h" 1 3 4
-# 205 "/usr/include/unistd.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/posix_opt.h" 1 3 4
-# 206 "/usr/include/unistd.h" 2 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/environments.h" 1 3 4
-# 22 "/usr/include/x86_64-linux-gnu/bits/environments.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 23 "/usr/include/x86_64-linux-gnu/bits/environments.h" 2 3 4
-# 210 "/usr/include/unistd.h" 2 3 4
-# 229 "/usr/include/unistd.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 230 "/usr/include/unistd.h" 2 3 4
-# 258 "/usr/include/unistd.h" 3 4
-typedef __useconds_t useconds_t;
-# 290 "/usr/include/unistd.h" 3 4
-extern int access (const char *__name, int __type) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 307 "/usr/include/unistd.h" 3 4
-extern int faccessat (int __fd, const char *__file, int __type, int __flag)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2))) ;
-# 337 "/usr/include/unistd.h" 3 4
-extern __off_t lseek (int __fd, __off_t __offset, int __whence) __attribute__ ((__nothrow__ ));
-# 356 "/usr/include/unistd.h" 3 4
-extern int close (int __fd);
-
-
-
-
-
-
-extern ssize_t read (int __fd, void *__buf, size_t __nbytes) ;
-
-
-
-
-
-extern ssize_t write (int __fd, const void *__buf, size_t __n) ;
-# 379 "/usr/include/unistd.h" 3 4
-extern ssize_t pread (int __fd, void *__buf, size_t __nbytes,
-        __off_t __offset) ;
-
-
-
-
-
-
-extern ssize_t pwrite (int __fd, const void *__buf, size_t __n,
-         __off_t __offset) ;
-# 420 "/usr/include/unistd.h" 3 4
-extern int pipe (int __pipedes[2]) __attribute__ ((__nothrow__ )) ;
-# 435 "/usr/include/unistd.h" 3 4
-extern unsigned int alarm (unsigned int __seconds) __attribute__ ((__nothrow__ ));
-# 447 "/usr/include/unistd.h" 3 4
-extern unsigned int sleep (unsigned int __seconds);
-
-
-
-
-
-
-
-extern __useconds_t ualarm (__useconds_t __value, __useconds_t __interval)
-     __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern int usleep (__useconds_t __useconds);
-# 472 "/usr/include/unistd.h" 3 4
-extern int pause (void);
-
-
-
-extern int chown (const char *__file, __uid_t __owner, __gid_t __group)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-extern int fchown (int __fd, __uid_t __owner, __gid_t __group) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern int lchown (const char *__file, __uid_t __owner, __gid_t __group)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-
-
-
-extern int fchownat (int __fd, const char *__file, __uid_t __owner,
-       __gid_t __group, int __flag)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2))) ;
-
-
-
-extern int chdir (const char *__path) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-extern int fchdir (int __fd) __attribute__ ((__nothrow__ )) ;
-# 514 "/usr/include/unistd.h" 3 4
-extern char *getcwd (char *__buf, size_t __size) __attribute__ ((__nothrow__ )) ;
-# 528 "/usr/include/unistd.h" 3 4
-extern char *getwd (char *__buf)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) __attribute__ ((__deprecated__)) ;
-
-
-
-
-extern int dup (int __fd) __attribute__ ((__nothrow__ )) ;
-
-
-extern int dup2 (int __fd, int __fd2) __attribute__ ((__nothrow__ ));
-# 546 "/usr/include/unistd.h" 3 4
-extern char **__environ;
-
-
-
-
-
-
-
-extern int execve (const char *__path, char *const __argv[],
-     char *const __envp[]) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-extern int fexecve (int __fd, char *const __argv[], char *const __envp[])
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-
-extern int execv (const char *__path, char *const __argv[])
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int execle (const char *__path, const char *__arg, ...)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int execl (const char *__path, const char *__arg, ...)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-extern int execvp (const char *__file, char *const __argv[])
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-
-
-
-
-extern int execlp (const char *__file, const char *__arg, ...)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-# 601 "/usr/include/unistd.h" 3 4
-extern int nice (int __inc) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern void _exit (int __status) __attribute__ ((__noreturn__));
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/confname.h" 1 3 4
-# 24 "/usr/include/x86_64-linux-gnu/bits/confname.h" 3 4
-enum
-  {
-    _PC_LINK_MAX,
-
-    _PC_MAX_CANON,
-
-    _PC_MAX_INPUT,
-
-    _PC_NAME_MAX,
-
-    _PC_PATH_MAX,
-
-    _PC_PIPE_BUF,
-
-    _PC_CHOWN_RESTRICTED,
-
-    _PC_NO_TRUNC,
-
-    _PC_VDISABLE,
-
-    _PC_SYNC_IO,
-
-    _PC_ASYNC_IO,
-
-    _PC_PRIO_IO,
-
-    _PC_SOCK_MAXBUF,
-
-    _PC_FILESIZEBITS,
-
-    _PC_REC_INCR_XFER_SIZE,
-
-    _PC_REC_MAX_XFER_SIZE,
-
-    _PC_REC_MIN_XFER_SIZE,
-
-    _PC_REC_XFER_ALIGN,
-
-    _PC_ALLOC_SIZE_MIN,
-
-    _PC_SYMLINK_MAX,
-
-    _PC_2_SYMLINKS
-
-  };
-
-
-enum
-  {
-    _SC_ARG_MAX,
-
-    _SC_CHILD_MAX,
-
-    _SC_CLK_TCK,
-
-    _SC_NGROUPS_MAX,
-
-    _SC_OPEN_MAX,
-
-    _SC_STREAM_MAX,
-
-    _SC_TZNAME_MAX,
-
-    _SC_JOB_CONTROL,
-
-    _SC_SAVED_IDS,
-
-    _SC_REALTIME_SIGNALS,
-
-    _SC_PRIORITY_SCHEDULING,
-
-    _SC_TIMERS,
-
-    _SC_ASYNCHRONOUS_IO,
-
-    _SC_PRIORITIZED_IO,
-
-    _SC_SYNCHRONIZED_IO,
-
-    _SC_FSYNC,
-
-    _SC_MAPPED_FILES,
-
-    _SC_MEMLOCK,
-
-    _SC_MEMLOCK_RANGE,
-
-    _SC_MEMORY_PROTECTION,
-
-    _SC_MESSAGE_PASSING,
-
-    _SC_SEMAPHORES,
-
-    _SC_SHARED_MEMORY_OBJECTS,
-
-    _SC_AIO_LISTIO_MAX,
-
-    _SC_AIO_MAX,
-
-    _SC_AIO_PRIO_DELTA_MAX,
-
-    _SC_DELAYTIMER_MAX,
-
-    _SC_MQ_OPEN_MAX,
-
-    _SC_MQ_PRIO_MAX,
-
-    _SC_VERSION,
-
-    _SC_PAGESIZE,
-
-
-    _SC_RTSIG_MAX,
-
-    _SC_SEM_NSEMS_MAX,
-
-    _SC_SEM_VALUE_MAX,
-
-    _SC_SIGQUEUE_MAX,
-
-    _SC_TIMER_MAX,
-
-
-
-
-    _SC_BC_BASE_MAX,
-
-    _SC_BC_DIM_MAX,
-
-    _SC_BC_SCALE_MAX,
-
-    _SC_BC_STRING_MAX,
-
-    _SC_COLL_WEIGHTS_MAX,
-
-    _SC_EQUIV_CLASS_MAX,
-
-    _SC_EXPR_NEST_MAX,
-
-    _SC_LINE_MAX,
-
-    _SC_RE_DUP_MAX,
-
-    _SC_CHARCLASS_NAME_MAX,
-
-
-    _SC_2_VERSION,
-
-    _SC_2_C_BIND,
-
-    _SC_2_C_DEV,
-
-    _SC_2_FORT_DEV,
-
-    _SC_2_FORT_RUN,
-
-    _SC_2_SW_DEV,
-
-    _SC_2_LOCALEDEF,
-
-
-    _SC_PII,
-
-    _SC_PII_XTI,
-
-    _SC_PII_SOCKET,
-
-    _SC_PII_INTERNET,
-
-    _SC_PII_OSI,
-
-    _SC_POLL,
-
-    _SC_SELECT,
-
-    _SC_UIO_MAXIOV,
-
-    _SC_IOV_MAX = _SC_UIO_MAXIOV,
-
-    _SC_PII_INTERNET_STREAM,
-
-    _SC_PII_INTERNET_DGRAM,
-
-    _SC_PII_OSI_COTS,
-
-    _SC_PII_OSI_CLTS,
-
-    _SC_PII_OSI_M,
-
-    _SC_T_IOV_MAX,
-
-
-
-    _SC_THREADS,
-
-    _SC_THREAD_SAFE_FUNCTIONS,
-
-    _SC_GETGR_R_SIZE_MAX,
-
-    _SC_GETPW_R_SIZE_MAX,
-
-    _SC_LOGIN_NAME_MAX,
-
-    _SC_TTY_NAME_MAX,
-
-    _SC_THREAD_DESTRUCTOR_ITERATIONS,
-
-    _SC_THREAD_KEYS_MAX,
-
-    _SC_THREAD_STACK_MIN,
-
-    _SC_THREAD_THREADS_MAX,
-
-    _SC_THREAD_ATTR_STACKADDR,
-
-    _SC_THREAD_ATTR_STACKSIZE,
-
-    _SC_THREAD_PRIORITY_SCHEDULING,
-
-    _SC_THREAD_PRIO_INHERIT,
-
-    _SC_THREAD_PRIO_PROTECT,
-
-    _SC_THREAD_PROCESS_SHARED,
-
-
-    _SC_NPROCESSORS_CONF,
-
-    _SC_NPROCESSORS_ONLN,
-
-    _SC_PHYS_PAGES,
-
-    _SC_AVPHYS_PAGES,
-
-    _SC_ATEXIT_MAX,
-
-    _SC_PASS_MAX,
-
-
-    _SC_XOPEN_VERSION,
-
-    _SC_XOPEN_XCU_VERSION,
-
-    _SC_XOPEN_UNIX,
-
-    _SC_XOPEN_CRYPT,
-
-    _SC_XOPEN_ENH_I18N,
-
-    _SC_XOPEN_SHM,
-
-
-    _SC_2_CHAR_TERM,
-
-    _SC_2_C_VERSION,
-
-    _SC_2_UPE,
-
-
-    _SC_XOPEN_XPG2,
-
-    _SC_XOPEN_XPG3,
-
-    _SC_XOPEN_XPG4,
-
-
-    _SC_CHAR_BIT,
-
-    _SC_CHAR_MAX,
-
-    _SC_CHAR_MIN,
-
-    _SC_INT_MAX,
-
-    _SC_INT_MIN,
-
-    _SC_LONG_BIT,
-
-    _SC_WORD_BIT,
-
-    _SC_MB_LEN_MAX,
-
-    _SC_NZERO,
-
-    _SC_SSIZE_MAX,
-
-    _SC_SCHAR_MAX,
-
-    _SC_SCHAR_MIN,
-
-    _SC_SHRT_MAX,
-
-    _SC_SHRT_MIN,
-
-    _SC_UCHAR_MAX,
-
-    _SC_UINT_MAX,
-
-    _SC_ULONG_MAX,
-
-    _SC_USHRT_MAX,
-
-
-    _SC_NL_ARGMAX,
-
-    _SC_NL_LANGMAX,
-
-    _SC_NL_MSGMAX,
-
-    _SC_NL_NMAX,
-
-    _SC_NL_SETMAX,
-
-    _SC_NL_TEXTMAX,
-
-
-    _SC_XBS5_ILP32_OFF32,
-
-    _SC_XBS5_ILP32_OFFBIG,
-
-    _SC_XBS5_LP64_OFF64,
-
-    _SC_XBS5_LPBIG_OFFBIG,
-
-
-    _SC_XOPEN_LEGACY,
-
-    _SC_XOPEN_REALTIME,
-
-    _SC_XOPEN_REALTIME_THREADS,
-
-
-    _SC_ADVISORY_INFO,
-
-    _SC_BARRIERS,
-
-    _SC_BASE,
-
-    _SC_C_LANG_SUPPORT,
-
-    _SC_C_LANG_SUPPORT_R,
-
-    _SC_CLOCK_SELECTION,
-
-    _SC_CPUTIME,
-
-    _SC_THREAD_CPUTIME,
-
-    _SC_DEVICE_IO,
-
-    _SC_DEVICE_SPECIFIC,
-
-    _SC_DEVICE_SPECIFIC_R,
-
-    _SC_FD_MGMT,
-
-    _SC_FIFO,
-
-    _SC_PIPE,
-
-    _SC_FILE_ATTRIBUTES,
-
-    _SC_FILE_LOCKING,
-
-    _SC_FILE_SYSTEM,
-
-    _SC_MONOTONIC_CLOCK,
-
-    _SC_MULTI_PROCESS,
-
-    _SC_SINGLE_PROCESS,
-
-    _SC_NETWORKING,
-
-    _SC_READER_WRITER_LOCKS,
-
-    _SC_SPIN_LOCKS,
-
-    _SC_REGEXP,
-
-    _SC_REGEX_VERSION,
-
-    _SC_SHELL,
-
-    _SC_SIGNALS,
-
-    _SC_SPAWN,
-
-    _SC_SPORADIC_SERVER,
-
-    _SC_THREAD_SPORADIC_SERVER,
-
-    _SC_SYSTEM_DATABASE,
-
-    _SC_SYSTEM_DATABASE_R,
-
-    _SC_TIMEOUTS,
-
-    _SC_TYPED_MEMORY_OBJECTS,
-
-    _SC_USER_GROUPS,
-
-    _SC_USER_GROUPS_R,
-
-    _SC_2_PBS,
-
-    _SC_2_PBS_ACCOUNTING,
-
-    _SC_2_PBS_LOCATE,
-
-    _SC_2_PBS_MESSAGE,
-
-    _SC_2_PBS_TRACK,
-
-    _SC_SYMLOOP_MAX,
-
-    _SC_STREAMS,
-
-    _SC_2_PBS_CHECKPOINT,
-
-
-    _SC_V6_ILP32_OFF32,
-
-    _SC_V6_ILP32_OFFBIG,
-
-    _SC_V6_LP64_OFF64,
-
-    _SC_V6_LPBIG_OFFBIG,
-
-
-    _SC_HOST_NAME_MAX,
-
-    _SC_TRACE,
-
-    _SC_TRACE_EVENT_FILTER,
-
-    _SC_TRACE_INHERIT,
-
-    _SC_TRACE_LOG,
-
-
-    _SC_LEVEL1_ICACHE_SIZE,
-
-    _SC_LEVEL1_ICACHE_ASSOC,
-
-    _SC_LEVEL1_ICACHE_LINESIZE,
-
-    _SC_LEVEL1_DCACHE_SIZE,
-
-    _SC_LEVEL1_DCACHE_ASSOC,
-
-    _SC_LEVEL1_DCACHE_LINESIZE,
-
-    _SC_LEVEL2_CACHE_SIZE,
-
-    _SC_LEVEL2_CACHE_ASSOC,
-
-    _SC_LEVEL2_CACHE_LINESIZE,
-
-    _SC_LEVEL3_CACHE_SIZE,
-
-    _SC_LEVEL3_CACHE_ASSOC,
-
-    _SC_LEVEL3_CACHE_LINESIZE,
-
-    _SC_LEVEL4_CACHE_SIZE,
-
-    _SC_LEVEL4_CACHE_ASSOC,
-
-    _SC_LEVEL4_CACHE_LINESIZE,
-
-
-
-    _SC_IPV6 = _SC_LEVEL1_ICACHE_SIZE + 50,
-
-    _SC_RAW_SOCKETS,
-
-
-    _SC_V7_ILP32_OFF32,
-
-    _SC_V7_ILP32_OFFBIG,
-
-    _SC_V7_LP64_OFF64,
-
-    _SC_V7_LPBIG_OFFBIG,
-
-
-    _SC_SS_REPL_MAX,
-
-
-    _SC_TRACE_EVENT_NAME_MAX,
-
-    _SC_TRACE_NAME_MAX,
-
-    _SC_TRACE_SYS_MAX,
-
-    _SC_TRACE_USER_EVENT_MAX,
-
-
-    _SC_XOPEN_STREAMS,
-
-
-    _SC_THREAD_ROBUST_PRIO_INHERIT,
-
-    _SC_THREAD_ROBUST_PRIO_PROTECT
-
-  };
-
-
-enum
-  {
-    _CS_PATH,
-
-
-    _CS_V6_WIDTH_RESTRICTED_ENVS,
-
-
-
-    _CS_GNU_LIBC_VERSION,
-
-    _CS_GNU_LIBPTHREAD_VERSION,
-
-
-    _CS_V5_WIDTH_RESTRICTED_ENVS,
-
-
-
-    _CS_V7_WIDTH_RESTRICTED_ENVS,
-
-
-
-    _CS_LFS_CFLAGS = 1000,
-
-    _CS_LFS_LDFLAGS,
-
-    _CS_LFS_LIBS,
-
-    _CS_LFS_LINTFLAGS,
-
-    _CS_LFS64_CFLAGS,
-
-    _CS_LFS64_LDFLAGS,
-
-    _CS_LFS64_LIBS,
-
-    _CS_LFS64_LINTFLAGS,
-
-
-    _CS_XBS5_ILP32_OFF32_CFLAGS = 1100,
-
-    _CS_XBS5_ILP32_OFF32_LDFLAGS,
-
-    _CS_XBS5_ILP32_OFF32_LIBS,
-
-    _CS_XBS5_ILP32_OFF32_LINTFLAGS,
-
-    _CS_XBS5_ILP32_OFFBIG_CFLAGS,
-
-    _CS_XBS5_ILP32_OFFBIG_LDFLAGS,
-
-    _CS_XBS5_ILP32_OFFBIG_LIBS,
-
-    _CS_XBS5_ILP32_OFFBIG_LINTFLAGS,
-
-    _CS_XBS5_LP64_OFF64_CFLAGS,
-
-    _CS_XBS5_LP64_OFF64_LDFLAGS,
-
-    _CS_XBS5_LP64_OFF64_LIBS,
-
-    _CS_XBS5_LP64_OFF64_LINTFLAGS,
-
-    _CS_XBS5_LPBIG_OFFBIG_CFLAGS,
-
-    _CS_XBS5_LPBIG_OFFBIG_LDFLAGS,
-
-    _CS_XBS5_LPBIG_OFFBIG_LIBS,
-
-    _CS_XBS5_LPBIG_OFFBIG_LINTFLAGS,
-
-
-    _CS_POSIX_V6_ILP32_OFF32_CFLAGS,
-
-    _CS_POSIX_V6_ILP32_OFF32_LDFLAGS,
-
-    _CS_POSIX_V6_ILP32_OFF32_LIBS,
-
-    _CS_POSIX_V6_ILP32_OFF32_LINTFLAGS,
-
-    _CS_POSIX_V6_ILP32_OFFBIG_CFLAGS,
-
-    _CS_POSIX_V6_ILP32_OFFBIG_LDFLAGS,
-
-    _CS_POSIX_V6_ILP32_OFFBIG_LIBS,
-
-    _CS_POSIX_V6_ILP32_OFFBIG_LINTFLAGS,
-
-    _CS_POSIX_V6_LP64_OFF64_CFLAGS,
-
-    _CS_POSIX_V6_LP64_OFF64_LDFLAGS,
-
-    _CS_POSIX_V6_LP64_OFF64_LIBS,
-
-    _CS_POSIX_V6_LP64_OFF64_LINTFLAGS,
-
-    _CS_POSIX_V6_LPBIG_OFFBIG_CFLAGS,
-
-    _CS_POSIX_V6_LPBIG_OFFBIG_LDFLAGS,
-
-    _CS_POSIX_V6_LPBIG_OFFBIG_LIBS,
-
-    _CS_POSIX_V6_LPBIG_OFFBIG_LINTFLAGS,
-
-
-    _CS_POSIX_V7_ILP32_OFF32_CFLAGS,
-
-    _CS_POSIX_V7_ILP32_OFF32_LDFLAGS,
-
-    _CS_POSIX_V7_ILP32_OFF32_LIBS,
-
-    _CS_POSIX_V7_ILP32_OFF32_LINTFLAGS,
-
-    _CS_POSIX_V7_ILP32_OFFBIG_CFLAGS,
-
-    _CS_POSIX_V7_ILP32_OFFBIG_LDFLAGS,
-
-    _CS_POSIX_V7_ILP32_OFFBIG_LIBS,
-
-    _CS_POSIX_V7_ILP32_OFFBIG_LINTFLAGS,
-
-    _CS_POSIX_V7_LP64_OFF64_CFLAGS,
-
-    _CS_POSIX_V7_LP64_OFF64_LDFLAGS,
-
-    _CS_POSIX_V7_LP64_OFF64_LIBS,
-
-    _CS_POSIX_V7_LP64_OFF64_LINTFLAGS,
-
-    _CS_POSIX_V7_LPBIG_OFFBIG_CFLAGS,
-
-    _CS_POSIX_V7_LPBIG_OFFBIG_LDFLAGS,
-
-    _CS_POSIX_V7_LPBIG_OFFBIG_LIBS,
-
-    _CS_POSIX_V7_LPBIG_OFFBIG_LINTFLAGS,
-
-
-    _CS_V6_ENV,
-
-    _CS_V7_ENV
-
-  };
-# 613 "/usr/include/unistd.h" 2 3 4
-
-
-extern long int pathconf (const char *__path, int __name)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-extern long int fpathconf (int __fd, int __name) __attribute__ ((__nothrow__ ));
-
-
-extern long int sysconf (int __name) __attribute__ ((__nothrow__ ));
-
-
-
-extern size_t confstr (int __name, char *__buf, size_t __len) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern __pid_t getpid (void) __attribute__ ((__nothrow__ ));
-
-
-extern __pid_t getppid (void) __attribute__ ((__nothrow__ ));
-
-
-extern __pid_t getpgrp (void) __attribute__ ((__nothrow__ ));
-
-
-extern __pid_t __getpgid (__pid_t __pid) __attribute__ ((__nothrow__ ));
-
-extern __pid_t getpgid (__pid_t __pid) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern int setpgid (__pid_t __pid, __pid_t __pgid) __attribute__ ((__nothrow__ ));
-# 663 "/usr/include/unistd.h" 3 4
-extern int setpgrp (void) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern __pid_t setsid (void) __attribute__ ((__nothrow__ ));
-
-
-
-extern __pid_t getsid (__pid_t __pid) __attribute__ ((__nothrow__ ));
-
-
-
-extern __uid_t getuid (void) __attribute__ ((__nothrow__ ));
-
-
-extern __uid_t geteuid (void) __attribute__ ((__nothrow__ ));
-
-
-extern __gid_t getgid (void) __attribute__ ((__nothrow__ ));
-
-
-extern __gid_t getegid (void) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int getgroups (int __size, __gid_t __list[]) __attribute__ ((__nothrow__ )) ;
-# 703 "/usr/include/unistd.h" 3 4
-extern int setuid (__uid_t __uid) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern int setreuid (__uid_t __ruid, __uid_t __euid) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern int seteuid (__uid_t __uid) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-
-
-extern int setgid (__gid_t __gid) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern int setregid (__gid_t __rgid, __gid_t __egid) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-extern int setegid (__gid_t __gid) __attribute__ ((__nothrow__ )) ;
-# 759 "/usr/include/unistd.h" 3 4
-extern __pid_t fork (void) __attribute__ ((__nothrow__));
-
-
-
-
-
-
-
-extern __pid_t vfork (void) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern char *ttyname (int __fd) __attribute__ ((__nothrow__ ));
-
-
-
-extern int ttyname_r (int __fd, char *__buf, size_t __buflen)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2))) ;
-
-
-
-extern int isatty (int __fd) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int ttyslot (void) __attribute__ ((__nothrow__ ));
-
-
-
-
-extern int link (const char *__from, const char *__to)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2))) ;
-
-
-
-
-extern int linkat (int __fromfd, const char *__from, int __tofd,
-     const char *__to, int __flags)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 4))) ;
-
-
-
-
-extern int symlink (const char *__from, const char *__to)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2))) ;
-
-
-
-
-extern ssize_t readlink (const char *__restrict __path,
-    char *__restrict __buf, size_t __len)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2))) ;
-
-
-
-
-extern int symlinkat (const char *__from, int __tofd,
-        const char *__to) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 3))) ;
-
-
-extern ssize_t readlinkat (int __fd, const char *__restrict __path,
-      char *__restrict __buf, size_t __len)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 3))) ;
-
-
-
-extern int unlink (const char *__name) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern int unlinkat (int __fd, const char *__name, int __flag)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-
-
-
-extern int rmdir (const char *__path) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-extern __pid_t tcgetpgrp (int __fd) __attribute__ ((__nothrow__ ));
-
-
-extern int tcsetpgrp (int __fd, __pid_t __pgrp_id) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-
-extern char *getlogin (void);
-
-
-
-
-
-
-
-extern int getlogin_r (char *__name, size_t __name_len) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-extern int setlogin (const char *__name) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/getopt_posix.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/getopt_posix.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/getopt_core.h" 1 3 4
-# 36 "/usr/include/x86_64-linux-gnu/bits/getopt_core.h" 3 4
-extern char *optarg;
-# 50 "/usr/include/x86_64-linux-gnu/bits/getopt_core.h" 3 4
-extern int optind;
-
-
-
-
-extern int opterr;
-
-
-
-extern int optopt;
-# 91 "/usr/include/x86_64-linux-gnu/bits/getopt_core.h" 3 4
-extern int getopt (int ___argc, char *const *___argv, const char *__shortopts)
-       __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 3)));
-# 28 "/usr/include/x86_64-linux-gnu/bits/getopt_posix.h" 2 3 4
-# 873 "/usr/include/unistd.h" 2 3 4
-
-
-
-
-
-
-
-extern int gethostname (char *__name, size_t __len) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-extern int sethostname (const char *__name, size_t __len)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-extern int sethostid (long int __id) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-
-extern int getdomainname (char *__name, size_t __len)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-extern int setdomainname (const char *__name, size_t __len)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-
-
-extern int vhangup (void) __attribute__ ((__nothrow__ ));
-
-
-extern int revoke (const char *__file) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-
-
-
-
-extern int profil (unsigned short int *__sample_buffer, size_t __size,
-     size_t __offset, unsigned int __scale)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-extern int acct (const char *__name) __attribute__ ((__nothrow__ ));
-
-
-
-extern char *getusershell (void) __attribute__ ((__nothrow__ ));
-extern void endusershell (void) __attribute__ ((__nothrow__ ));
-extern void setusershell (void) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern int daemon (int __nochdir, int __noclose) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-
-
-extern int chroot (const char *__path) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-
-
-
-extern char *getpass (const char *__prompt) __attribute__ ((__nonnull__ (1)));
-
-
-
-
-
-
-
-extern int fsync (int __fd);
-# 970 "/usr/include/unistd.h" 3 4
-extern long int gethostid (void);
-
-
-extern void sync (void) __attribute__ ((__nothrow__ ));
-
-
-
-
-
-extern int getpagesize (void) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-
-
-
-
-extern int getdtablesize (void) __attribute__ ((__nothrow__ ));
-# 994 "/usr/include/unistd.h" 3 4
-extern int truncate (const char *__file, __off_t __length)
-     __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1))) ;
-# 1017 "/usr/include/unistd.h" 3 4
-extern int ftruncate (int __fd, __off_t __length) __attribute__ ((__nothrow__ )) ;
-# 1038 "/usr/include/unistd.h" 3 4
-extern int brk (void *__addr) __attribute__ ((__nothrow__ )) ;
-
-
-
-
-
-extern void *sbrk (intptr_t __delta) __attribute__ ((__nothrow__ ));
-# 1059 "/usr/include/unistd.h" 3 4
-extern long int syscall (long int __sysno, ...) __attribute__ ((__nothrow__ ));
-# 1118 "/usr/include/unistd.h" 3 4
-extern int fdatasync (int __fildes);
-# 1167 "/usr/include/unistd.h" 3 4
-int getentropy (void *__buffer, size_t __length) ;
-# 387 "mjs_extra.h" 2
-# 406 "mjs_extra.h"
+#ifndef UINT16_MAX
+#define UINT16_MAX 65535
+#endif
+#ifndef UINT32_MAX
+#define UINT32_MAX 4294967295
+#endif
+#ifndef pid_t
+#define pid_t HANDLE
+#endif
+#define INT64_FMT "I64d"
+#define INT64_X_FMT "I64x"
+#define SIZE_T_FMT "Iu"
+typedef struct _stati64 cs_stat_t;
+#ifndef S_ISDIR
+#define S_ISDIR(x) (((x) &_S_IFMT) == _S_IFDIR)
+#endif
+#ifndef S_ISREG
+#define S_ISREG(x) (((x) &_S_IFMT) == _S_IFREG)
+#endif
+#define DIRSEP '\\'
+#define CS_DEFINE_DIRENT
+
+#ifndef va_copy
+#ifdef __va_copy
+#define va_copy __va_copy
+#else
+#define va_copy(x, y) (x) = (y)
+#endif
+#endif
+
+#ifndef MG_MAX_HTTP_REQUEST_SIZE
+#define MG_MAX_HTTP_REQUEST_SIZE 8192
+#endif
+
+#ifndef MG_MAX_HTTP_SEND_MBUF
+#define MG_MAX_HTTP_SEND_MBUF 4096
+#endif
+
+#ifndef MG_MAX_HTTP_HEADERS
+#define MG_MAX_HTTP_HEADERS 40
+#endif
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#ifndef MG_ENABLE_BROADCAST
+#define MG_ENABLE_BROADCAST 1
+#endif
+
+#ifndef MG_ENABLE_DIRECTORY_LISTING
+#define MG_ENABLE_DIRECTORY_LISTING 1
+#endif
+
+#ifndef MG_ENABLE_FILESYSTEM
+#define MG_ENABLE_FILESYSTEM 1
+#endif
+
+#ifndef MG_ENABLE_HTTP_CGI
+#define MG_ENABLE_HTTP_CGI MG_ENABLE_FILESYSTEM
+#endif
+
+#ifndef MG_NET_IF
+#define MG_NET_IF MG_NET_IF_SOCKET
+#endif
+
+unsigned int sleep(unsigned int seconds);
+
+/* https://stackoverflow.com/questions/16647819/timegm-cross-platform */
+#define timegm _mkgmtime
+
+#define gmtime_r(a, b) \
+  do {                 \
+    *(b) = *gmtime(a); \
+  } while (0)
+
+#endif /* CS_PLATFORM == CS_P_WINDOWS */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_WINDOWS_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_unix.h"
+#endif
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_UNIX_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_UNIX_H_
+#if CS_PLATFORM == CS_P_UNIX
+
+#ifndef _XOPEN_SOURCE
+#define _XOPEN_SOURCE 600
+#endif
+
+/* <inttypes.h> wants this for C++ */
+#ifndef __STDC_FORMAT_MACROS
+#define __STDC_FORMAT_MACROS
+#endif
+
+/* C++ wants that for INT64_MAX */
+#ifndef __STDC_LIMIT_MACROS
+#define __STDC_LIMIT_MACROS
+#endif
+
+/* Enable fseeko() and ftello() functions */
+#ifndef _LARGEFILE_SOURCE
+#define _LARGEFILE_SOURCE
+#endif
+
+/* Enable 64-bit file offsets */
+#ifndef _FILE_OFFSET_BITS
+#define _FILE_OFFSET_BITS 64
+#endif
+
+#include <arpa/inet.h>
+#include <assert.h>
+#include <ctype.h>
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include <limits.h>
+#include <math.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/param.h>
+#include <sys/socket.h>
+#include <sys/select.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#ifdef __APPLE__
+#include <machine/endian.h>
+#ifndef BYTE_ORDER
+#define LITTLE_ENDIAN __DARWIN_LITTLE_ENDIAN
+#define BIG_ENDIAN __DARWIN_BIG_ENDIAN
+#define PDP_ENDIAN __DARWIN_PDP_ENDIAN
+#define BYTE_ORDER __DARWIN_BYTE_ORDER
+#endif
+#endif
+
+/*
+ * osx correctly avoids defining strtoll when compiling in strict ansi mode.
+ * c++ 11 standard defines strtoll as well.
+ * We require strtoll, and if your embedded pre-c99 compiler lacks one, please
+ * implement a shim.
+ */
+#if !(defined(__cplusplus) && __cplusplus >= 201103L) && \
+    !(defined(__DARWIN_C_LEVEL) && __DARWIN_C_LEVEL >= 200809L)
 long long strtoll(const char *, char **, int);
-
+#endif
 
 typedef int sock_t;
+#define INVALID_SOCKET (-1)
+#define SIZE_T_FMT "zu"
+typedef struct stat cs_stat_t;
+#define DIRSEP '/'
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT PRId64
+#define INT64_X_FMT PRIx64
 
+#ifndef __cdecl
+#define __cdecl
+#endif
+
+#ifndef va_copy
+#ifdef __va_copy
+#define va_copy __va_copy
+#else
+#define va_copy(x, y) (x) = (y)
+#endif
+#endif
+
+#define closesocket(x) close(x)
+
+#ifndef MG_MAX_HTTP_REQUEST_SIZE
+#define MG_MAX_HTTP_REQUEST_SIZE 8192
+#endif
+
+#ifndef MG_MAX_HTTP_SEND_MBUF
+#define MG_MAX_HTTP_SEND_MBUF 4096
+#endif
+
+#ifndef MG_MAX_HTTP_HEADERS
+#define MG_MAX_HTTP_HEADERS 40
+#endif
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#ifndef MG_ENABLE_BROADCAST
+#define MG_ENABLE_BROADCAST 1
+#endif
+
+#ifndef MG_ENABLE_DIRECTORY_LISTING
+#define MG_ENABLE_DIRECTORY_LISTING 1
+#endif
+
+#ifndef MG_ENABLE_FILESYSTEM
+#define MG_ENABLE_FILESYSTEM 1
+#endif
+
+#ifndef MG_ENABLE_HTTP_CGI
+#define MG_ENABLE_HTTP_CGI MG_ENABLE_FILESYSTEM
+#endif
+
+#ifndef MG_NET_IF
+#define MG_NET_IF MG_NET_IF_SOCKET
+#endif
+
+#ifndef MG_HOSTS_FILE_NAME
+#define MG_HOSTS_FILE_NAME "/etc/hosts"
+#endif
+
+#ifndef MG_RESOLV_CONF_FILE_NAME
+#define MG_RESOLV_CONF_FILE_NAME "/etc/resolv.conf"
+#endif
+
+#endif /* CS_PLATFORM == CS_P_UNIX */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_UNIX_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_esp32.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_ESP32_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_ESP32_H_
+#if CS_PLATFORM == CS_P_ESP32
+
+#include <assert.h>
+#include <ctype.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <inttypes.h>
+#include <machine/endian.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+
+#define SIZE_T_FMT "u"
+typedef struct stat cs_stat_t;
+#define DIRSEP '/'
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT PRId64
+#define INT64_X_FMT PRIx64
+#define __cdecl
+#define _FILE_OFFSET_BITS 32
+
+#define MG_LWIP 1
+
+#ifndef MG_NET_IF
+#define MG_NET_IF MG_NET_IF_SOCKET
+#endif
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#endif /* CS_PLATFORM == CS_P_ESP32 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_ESP32_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_esp8266.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_ESP8266_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_ESP8266_H_
+#if CS_PLATFORM == CS_P_ESP8266
+
+#include <assert.h>
+#include <ctype.h>
+#include <fcntl.h>
+#include <inttypes.h>
+#include <machine/endian.h>
+#include <stdbool.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+
+#define SIZE_T_FMT "u"
+typedef struct stat cs_stat_t;
+#define DIRSEP '/'
+#if !defined(MGOS_VFS_DEFINE_DIRENT)
+#define CS_DEFINE_DIRENT
+#endif
+
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT PRId64
+#define INT64_X_FMT PRIx64
+#define __cdecl
+#define _FILE_OFFSET_BITS 32
+
+#define MG_LWIP 1
+
+/* struct timeval is defined in sys/time.h. */
+#define LWIP_TIMEVAL_PRIVATE 0
+
+#ifndef MG_NET_IF
+#include <lwip/opt.h>
+#if LWIP_SOCKET /* RTOS SDK has LWIP sockets */
+#define MG_NET_IF MG_NET_IF_SOCKET
+#else
+#define MG_NET_IF MG_NET_IF_LWIP_LOW_LEVEL
+#endif
+#endif
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#define inet_ntop(af, src, dst, size)                                          \
+  (((af) == AF_INET) ? ipaddr_ntoa_r((const ip_addr_t *) (src), (dst), (size)) \
+                     : NULL)
+#define inet_pton(af, src, dst) \
+  (((af) == AF_INET) ? ipaddr_aton((src), (ip_addr_t *) (dst)) : 0)
+
+#endif /* CS_PLATFORM == CS_P_ESP8266 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_ESP8266_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_cc3100.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_CC3100_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_CC3100_H_
+#if CS_PLATFORM == CS_P_CC3100
+
+#include <assert.h>
+#include <ctype.h>
+#include <errno.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
+
+#define MG_NET_IF MG_NET_IF_SIMPLELINK
+#define MG_SSL_IF MG_SSL_IF_SIMPLELINK
+
+/*
+ * CC3100 SDK and STM32 SDK include headers w/out path, just like
+ * #include "simplelink.h". As result, we have to add all required directories
+ * into Makefile IPATH and do the same thing (include w/out path)
+ */
+
+#include <simplelink.h>
+#include <netapp.h>
+#undef timeval
+
+typedef int sock_t;
+#define INVALID_SOCKET (-1)
+
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT PRId64
+#define INT64_X_FMT PRIx64
+#define SIZE_T_FMT "u"
+
+#define SOMAXCONN 8
+
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
+char *inet_ntoa(struct in_addr in);
+int inet_pton(int af, const char *src, void *dst);
+
+#endif /* CS_PLATFORM == CS_P_CC3100 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_CC3100_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/simplelink/cs_simplelink.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_SIMPLELINK_CS_SIMPLELINK_H_
+#define CS_COMMON_PLATFORMS_SIMPLELINK_CS_SIMPLELINK_H_
+
+#if defined(MG_NET_IF) && MG_NET_IF == MG_NET_IF_SIMPLELINK
+
+/* If simplelink.h is already included, all bets are off. */
+#if !defined(__SIMPLELINK_H__)
+
+#include <stdbool.h>
+
+#ifndef __TI_COMPILER_VERSION__
+#undef __CONCAT
+#undef FD_CLR
+#undef FD_ISSET
+#undef FD_SET
+#undef FD_SETSIZE
+#undef FD_ZERO
+#undef fd_set
+#endif
+
+#if CS_PLATFORM == CS_P_CC3220
+#include <ti/drivers/net/wifi/porting/user.h>
+#include <ti/drivers/net/wifi/simplelink.h>
+#include <ti/drivers/net/wifi/sl_socket.h>
+#include <ti/drivers/net/wifi/netapp.h>
+#else
+/* We want to disable SL_INC_STD_BSD_API_NAMING, so we include user.h ourselves
+ * and undef it. */
+#define PROVISIONING_API_H_
+#include <simplelink/user.h>
+#undef PROVISIONING_API_H_
+#undef SL_INC_STD_BSD_API_NAMING
+
+#include <simplelink/include/simplelink.h>
+#include <simplelink/include/netapp.h>
+#endif /* CS_PLATFORM == CS_P_CC3220 */
+
+/* Now define only the subset of the BSD API that we use.
+ * Notably, close(), read() and write() are not defined. */
+#define AF_INET SL_AF_INET
+
+#define socklen_t SlSocklen_t
+#define sockaddr SlSockAddr_t
+#define sockaddr_in SlSockAddrIn_t
+#define in_addr SlInAddr_t
+
+#define SOCK_STREAM SL_SOCK_STREAM
+#define SOCK_DGRAM SL_SOCK_DGRAM
+
+#define htonl sl_Htonl
+#define ntohl sl_Ntohl
+#define htons sl_Htons
+#define ntohs sl_Ntohs
+
+#ifndef EACCES
+#define EACCES SL_EACCES
+#endif
+#ifndef EAFNOSUPPORT
+#define EAFNOSUPPORT SL_EAFNOSUPPORT
+#endif
+#ifndef EAGAIN
+#define EAGAIN SL_EAGAIN
+#endif
+#ifndef EBADF
+#define EBADF SL_EBADF
+#endif
+#ifndef EINVAL
+#define EINVAL SL_EINVAL
+#endif
+#ifndef ENOMEM
+#define ENOMEM SL_ENOMEM
+#endif
+#ifndef EWOULDBLOCK
+#define EWOULDBLOCK SL_EWOULDBLOCK
+#endif
+
+#define SOMAXCONN 8
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
+char *inet_ntoa(struct in_addr in);
+int inet_pton(int af, const char *src, void *dst);
+
+struct mg_mgr;
+struct mg_connection;
+
+typedef void (*mg_init_cb)(struct mg_mgr *mgr);
+bool mg_start_task(int priority, int stack_size, mg_init_cb mg_init);
+
+void mg_run_in_task(void (*cb)(struct mg_mgr *mgr, void *arg), void *cb_arg);
+
+int sl_fs_init(void);
+
+void sl_restart_cb(struct mg_mgr *mgr);
+
+int sl_set_ssl_opts(int sock, struct mg_connection *nc);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* !defined(__SIMPLELINK_H__) */
+
+/* Compatibility with older versions of SimpleLink */
+#if SL_MAJOR_VERSION_NUM < 2
+
+#define SL_ERROR_BSD_EAGAIN SL_EAGAIN
+#define SL_ERROR_BSD_EALREADY SL_EALREADY
+#define SL_ERROR_BSD_ENOPROTOOPT SL_ENOPROTOOPT
+#define SL_ERROR_BSD_ESECDATEERROR SL_ESECDATEERROR
+#define SL_ERROR_BSD_ESECSNOVERIFY SL_ESECSNOVERIFY
+#define SL_ERROR_FS_FAILED_TO_ALLOCATE_MEM SL_FS_ERR_FAILED_TO_ALLOCATE_MEM
+#define SL_ERROR_FS_FILE_HAS_NOT_BEEN_CLOSE_CORRECTLY \
+  SL_FS_FILE_HAS_NOT_BEEN_CLOSE_CORRECTLY
+#define SL_ERROR_FS_FILE_NAME_EXIST SL_FS_FILE_NAME_EXIST
+#define SL_ERROR_FS_FILE_NOT_EXISTS SL_FS_ERR_FILE_NOT_EXISTS
+#define SL_ERROR_FS_NO_AVAILABLE_NV_INDEX SL_FS_ERR_NO_AVAILABLE_NV_INDEX
+#define SL_ERROR_FS_NOT_ENOUGH_STORAGE_SPACE SL_FS_ERR_NO_AVAILABLE_BLOCKS
+#define SL_ERROR_FS_NOT_SUPPORTED SL_FS_ERR_NOT_SUPPORTED
+#define SL_ERROR_FS_WRONG_FILE_NAME SL_FS_WRONG_FILE_NAME
+#define SL_ERROR_FS_INVALID_HANDLE SL_FS_ERR_INVALID_HANDLE
+#define SL_NETCFG_MAC_ADDRESS_GET SL_MAC_ADDRESS_GET
+#define SL_SOCKET_FD_ZERO SL_FD_ZERO
+#define SL_SOCKET_FD_SET SL_FD_SET
+#define SL_SOCKET_FD_ISSET SL_FD_ISSET
+#define SL_SO_SECURE_DOMAIN_NAME_VERIFICATION SO_SECURE_DOMAIN_NAME_VERIFICATION
+
+#define SL_FS_READ FS_MODE_OPEN_READ
+#define SL_FS_WRITE FS_MODE_OPEN_WRITE
+
+#define SL_FI_FILE_SIZE(fi) ((fi).FileLen)
+#define SL_FI_FILE_MAX_SIZE(fi) ((fi).AllocatedLen)
+
+#define SlDeviceVersion_t SlVersionFull
+#define sl_DeviceGet sl_DevGet
+#define SL_DEVICE_GENERAL SL_DEVICE_GENERAL_CONFIGURATION
+#define SL_LEN_TYPE _u8
+#define SL_OPT_TYPE _u8
+
+#else /* SL_MAJOR_VERSION_NUM >= 2 */
+
+#define FS_MODE_OPEN_CREATE(max_size, flag) \
+  (SL_FS_CREATE | SL_FS_CREATE_MAX_SIZE(max_size))
+#define SL_FI_FILE_SIZE(fi) ((fi).Len)
+#define SL_FI_FILE_MAX_SIZE(fi) ((fi).MaxSize)
+
+#define SL_LEN_TYPE _u16
+#define SL_OPT_TYPE _u16
+
+#endif /* SL_MAJOR_VERSION_NUM < 2 */
+
+int slfs_open(const unsigned char *fname, uint32_t flags, uint32_t *token);
+
+#endif /* MG_NET_IF == MG_NET_IF_SIMPLELINK */
+
+#endif /* CS_COMMON_PLATFORMS_SIMPLELINK_CS_SIMPLELINK_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_cc3200.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_CC3200_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_CC3200_H_
+#if CS_PLATFORM == CS_P_CC3200
+
+#include <assert.h>
+#include <ctype.h>
+#include <errno.h>
+#include <inttypes.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
+
+#ifndef __TI_COMPILER_VERSION__
+#include <fcntl.h>
+#include <sys/time.h>
+#endif
+
+#define MG_NET_IF MG_NET_IF_SIMPLELINK
+#define MG_SSL_IF MG_SSL_IF_SIMPLELINK
+
+/* Only SPIFFS supports directories, SLFS does not. */
+#if defined(CC3200_FS_SPIFFS) && !defined(MG_ENABLE_DIRECTORY_LISTING)
+#define MG_ENABLE_DIRECTORY_LISTING 1
+#endif
+
+/* Amalgamated: #include "common/platforms/simplelink/cs_simplelink.h" */
+
+typedef int sock_t;
+#define INVALID_SOCKET (-1)
+#define SIZE_T_FMT "u"
+typedef struct stat cs_stat_t;
+#define DIRSEP '/'
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT PRId64
+#define INT64_X_FMT PRIx64
+#define __cdecl
+
+#define fileno(x) -1
+
+/* Some functions we implement for Mongoose. */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __TI_COMPILER_VERSION__
+struct SlTimeval_t;
+#define timeval SlTimeval_t
+int gettimeofday(struct timeval *t, void *tz);
+int settimeofday(const struct timeval *tv, const void *tz);
+
+int asprintf(char **strp, const char *fmt, ...);
+
+#endif
+
+/* TI's libc does not have stat & friends, add them. */
+#ifdef __TI_COMPILER_VERSION__
+
+#include <file.h>
+
+typedef unsigned int mode_t;
+typedef size_t _off_t;
+typedef long ssize_t;
+
+struct stat {
+  int st_ino;
+  mode_t st_mode;
+  int st_nlink;
+  time_t st_mtime;
+  off_t st_size;
+};
+
+int _stat(const char *pathname, struct stat *st);
+int stat(const char *pathname, struct stat *st);
+
+#define __S_IFMT 0170000
+
+#define __S_IFDIR 0040000
+#define __S_IFCHR 0020000
+#define __S_IFREG 0100000
+
+#define __S_ISTYPE(mode, mask) (((mode) &__S_IFMT) == (mask))
+
+#define S_IFDIR __S_IFDIR
+#define S_IFCHR __S_IFCHR
+#define S_IFREG __S_IFREG
+#define S_ISDIR(mode) __S_ISTYPE((mode), __S_IFDIR)
+#define S_ISREG(mode) __S_ISTYPE((mode), __S_IFREG)
+
+/* 5.x series compilers don't have va_copy, 16.x do. */
+#if __TI_COMPILER_VERSION__ < 16000000
+#define va_copy(apc, ap) ((apc) = (ap))
+#endif
+
+#endif /* __TI_COMPILER_VERSION__ */
+
+#ifdef CC3200_FS_SLFS
+#define MG_FS_SLFS
+#endif
+
+#if (defined(CC3200_FS_SPIFFS) || defined(CC3200_FS_SLFS)) && \
+    !defined(MG_ENABLE_FILESYSTEM)
+#define MG_ENABLE_FILESYSTEM 1
+#define CS_DEFINE_DIRENT
+#endif
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CS_PLATFORM == CS_P_CC3200 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_CC3200_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_cc3220.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_CC3220_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_CC3220_H_
+#if CS_PLATFORM == CS_P_CC3220
+
+#include <assert.h>
+#include <ctype.h>
+#include <errno.h>
+#include <inttypes.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
+
+#ifndef __TI_COMPILER_VERSION__
+#include <fcntl.h>
+#include <sys/time.h>
+#endif
+
+#define MG_NET_IF MG_NET_IF_SIMPLELINK
+#ifndef MG_SSL_IF
+#define MG_SSL_IF MG_SSL_IF_SIMPLELINK
+#endif
+
+/* Only SPIFFS supports directories, SLFS does not. */
+#if defined(CC3220_FS_SPIFFS) && !defined(MG_ENABLE_DIRECTORY_LISTING)
+#define MG_ENABLE_DIRECTORY_LISTING 1
+#endif
+
+/* Amalgamated: #include "common/platforms/simplelink/cs_simplelink.h" */
+
+typedef int sock_t;
+#define INVALID_SOCKET (-1)
+#define SIZE_T_FMT "u"
+typedef struct stat cs_stat_t;
+#define DIRSEP '/'
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT PRId64
+#define INT64_X_FMT PRIx64
+#define __cdecl
+
+#define fileno(x) -1
+
+/* Some functions we implement for Mongoose. */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __TI_COMPILER_VERSION__
+struct SlTimeval_t;
+#define timeval SlTimeval_t
+int gettimeofday(struct timeval *t, void *tz);
+int settimeofday(const struct timeval *tv, const void *tz);
+
+int asprintf(char **strp, const char *fmt, ...);
+
+#endif
+
+/* TI's libc does not have stat & friends, add them. */
+#ifdef __TI_COMPILER_VERSION__
+
+#include <file.h>
+
+typedef unsigned int mode_t;
+typedef size_t _off_t;
+typedef long ssize_t;
+
+struct stat {
+  int st_ino;
+  mode_t st_mode;
+  int st_nlink;
+  time_t st_mtime;
+  off_t st_size;
+};
+
+int _stat(const char *pathname, struct stat *st);
+int stat(const char *pathname, struct stat *st);
+
+#define __S_IFMT 0170000
+
+#define __S_IFDIR 0040000
+#define __S_IFCHR 0020000
+#define __S_IFREG 0100000
+
+#define __S_ISTYPE(mode, mask) (((mode) &__S_IFMT) == (mask))
+
+#define S_IFDIR __S_IFDIR
+#define S_IFCHR __S_IFCHR
+#define S_IFREG __S_IFREG
+#define S_ISDIR(mode) __S_ISTYPE((mode), __S_IFDIR)
+#define S_ISREG(mode) __S_ISTYPE((mode), __S_IFREG)
+
+#endif /* __TI_COMPILER_VERSION__ */
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CS_PLATFORM == CS_P_CC3220 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_CC3200_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_mbed.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_MBED_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_MBED_H_
+#if CS_PLATFORM == CS_P_MBED
+
+/*
+ * mbed.h contains C++ code (e.g. templates), thus, it should be processed
+ * only if included directly to startup file (ex: main.cpp)
+ */
+#ifdef __cplusplus
+/* Amalgamated: #include "mbed.h" */
+#endif /* __cplusplus */
+
+#include <assert.h>
+#include <ctype.h>
+#include <errno.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <stdio.h>
 
 typedef struct stat cs_stat_t;
-# 1858 "mjs_extra.h"
+#define DIRSEP '/'
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+/*
+ * mbed can be compiled with the ARM compiler which
+ * just doesn't come with a gettimeofday shim
+ * because it's a BSD API and ARM targets embedded
+ * non-unix platforms.
+ */
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+#define _TIMEVAL_DEFINED
+#define gettimeofday _gettimeofday
+
+/* copied from GCC on ARM; for some reason useconds are signed */
+typedef long suseconds_t; /* microseconds (signed) */
+struct timeval {
+  time_t tv_sec;       /* seconds */
+  suseconds_t tv_usec; /* and microseconds */
+};
+
+#endif
+
+#if MG_NET_IF == MG_NET_IF_SIMPLELINK
+
+#define MG_SIMPLELINK_NO_OSI 1
+
+#include <simplelink.h>
+
+typedef int sock_t;
+#define INVALID_SOCKET (-1)
+
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT PRId64
+#define INT64_X_FMT PRIx64
+#define SIZE_T_FMT "u"
+
+#define SOMAXCONN 8
+
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
+char *inet_ntoa(struct in_addr in);
+int inet_pton(int af, const char *src, void *dst);
+int inet_aton(const char *cp, struct in_addr *inp);
+in_addr_t inet_addr(const char *cp);
+
+#endif /* MG_NET_IF == MG_NET_IF_SIMPLELINK */
+
+#endif /* CS_PLATFORM == CS_P_MBED */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_MBED_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_nrf51.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_NRF51_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_NRF51_H_
+#if CS_PLATFORM == CS_P_NRF51
+
+#include <assert.h>
+#include <ctype.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
+
+#define to64(x) strtoll(x, NULL, 10)
+
+#define MG_NET_IF MG_NET_IF_LWIP_LOW_LEVEL
+#define MG_LWIP 1
+#define MG_ENABLE_IPV6 1
+
+/*
+ * For ARM C Compiler, make lwip to export `struct timeval`; for other
+ * compilers, suppress it.
+ */
+#if !defined(__ARMCC_VERSION)
+#define LWIP_TIMEVAL_PRIVATE 0
+#else
+struct timeval;
+int gettimeofday(struct timeval *tp, void *tzp);
+#endif
+
+#define INT64_FMT PRId64
+#define SIZE_T_FMT "u"
+
+/*
+ * ARM C Compiler doesn't have strdup, so we provide it
+ */
+#define CS_ENABLE_STRDUP defined(__ARMCC_VERSION)
+
+#endif /* CS_PLATFORM == CS_P_NRF51 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_NRF51_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_nrf52.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_NRF52_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_NRF52_H_
+#if CS_PLATFORM == CS_P_NRF52
+
+#include <assert.h>
+#include <ctype.h>
+#include <errno.h>
+#include <inttypes.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
+
+#define to64(x) strtoll(x, NULL, 10)
+
+#define MG_NET_IF MG_NET_IF_LWIP_LOW_LEVEL
+#define MG_LWIP 1
+#define MG_ENABLE_IPV6 1
+
+#if !defined(ENOSPC)
+#define ENOSPC 28 /* No space left on device */
+#endif
+
+/*
+ * For ARM C Compiler, make lwip to export `struct timeval`; for other
+ * compilers, suppress it.
+ */
+#if !defined(__ARMCC_VERSION)
+#define LWIP_TIMEVAL_PRIVATE 0
+#endif
+
+#define INT64_FMT PRId64
+#define SIZE_T_FMT "u"
+
+/*
+ * ARM C Compiler doesn't have strdup, so we provide it
+ */
+#define CS_ENABLE_STRDUP defined(__ARMCC_VERSION)
+
+#endif /* CS_PLATFORM == CS_P_NRF52 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_NRF52_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_wince.h"
+#endif
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_WINCE_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_WINCE_H_
+
+#if CS_PLATFORM == CS_P_WINCE
+
+/*
+ * MSVC++ 14.0 _MSC_VER == 1900 (Visual Studio 2015)
+ * MSVC++ 12.0 _MSC_VER == 1800 (Visual Studio 2013)
+ * MSVC++ 11.0 _MSC_VER == 1700 (Visual Studio 2012)
+ * MSVC++ 10.0 _MSC_VER == 1600 (Visual Studio 2010)
+ * MSVC++ 9.0  _MSC_VER == 1500 (Visual Studio 2008)
+ * MSVC++ 8.0  _MSC_VER == 1400 (Visual Studio 2005)
+ * MSVC++ 7.1  _MSC_VER == 1310 (Visual Studio 2003)
+ * MSVC++ 7.0  _MSC_VER == 1300
+ * MSVC++ 6.0  _MSC_VER == 1200
+ * MSVC++ 5.0  _MSC_VER == 1100
+ */
+#pragma warning(disable : 4127) /* FD_SET() emits warning, disable it */
+#pragma warning(disable : 4204) /* missing c99 support */
+
+#ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
+#define _WINSOCK_DEPRECATED_NO_WARNINGS 1
+#endif
+
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+#include <assert.h>
+#include <limits.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#pragma comment(lib, "ws2.lib") /* Linking with WinCE winsock library */
+
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <windows.h>
+
+#define strdup _strdup
+
+#ifndef EINPROGRESS
+#define EINPROGRESS WSAEINPROGRESS
+#endif
+
+#ifndef EWOULDBLOCK
+#define EWOULDBLOCK WSAEWOULDBLOCK
+#endif
+
+#ifndef EAGAIN
+#define EAGAIN EWOULDBLOCK
+#endif
+
+#ifndef __func__
+#define STRX(x) #x
+#define STR(x) STRX(x)
+#define __func__ __FILE__ ":" STR(__LINE__)
+#endif
+
+#define snprintf _snprintf
+#define fileno _fileno
+#define vsnprintf _vsnprintf
+#define sleep(x) Sleep((x) *1000)
+#define to64(x) _atoi64(x)
+#define rmdir _rmdir
+
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#define fseeko(x, y, z) _fseeki64((x), (y), (z))
+#else
+#define fseeko(x, y, z) fseek((x), (y), (z))
+#endif
+
+typedef int socklen_t;
+
+#if _MSC_VER >= 1700
+#include <stdint.h>
+#else
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+typedef int int32_t;
+typedef unsigned int uint32_t;
+typedef short int16_t;
+typedef unsigned short uint16_t;
+typedef __int64 int64_t;
+typedef unsigned __int64 uint64_t;
+#endif
+
+typedef SOCKET sock_t;
+typedef uint32_t in_addr_t;
+
+#ifndef UINT16_MAX
+#define UINT16_MAX 65535
+#endif
+
+#ifndef UINT32_MAX
+#define UINT32_MAX 4294967295
+#endif
+
+#ifndef pid_t
+#define pid_t HANDLE
+#endif
+
+#define INT64_FMT "I64d"
+#define INT64_X_FMT "I64x"
+/* TODO(alashkin): check if this is correct */
+#define SIZE_T_FMT "u"
+
+#define DIRSEP '\\'
+#define CS_DEFINE_DIRENT
+
+#ifndef va_copy
+#ifdef __va_copy
+#define va_copy __va_copy
+#else
+#define va_copy(x, y) (x) = (y)
+#endif
+#endif
+
+#ifndef MG_MAX_HTTP_REQUEST_SIZE
+#define MG_MAX_HTTP_REQUEST_SIZE 8192
+#endif
+
+#ifndef MG_MAX_HTTP_SEND_MBUF
+#define MG_MAX_HTTP_SEND_MBUF 4096
+#endif
+
+#ifndef MG_MAX_HTTP_HEADERS
+#define MG_MAX_HTTP_HEADERS 40
+#endif
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#define abort() DebugBreak();
+
+#ifndef BUFSIZ
+#define BUFSIZ 4096
+#endif
+/*
+ * Explicitly disabling MG_ENABLE_THREADS for WinCE
+ * because they are enabled for _WIN32 by default
+ */
+#ifndef MG_ENABLE_THREADS
+#define MG_ENABLE_THREADS 0
+#endif
+
+#ifndef MG_ENABLE_FILESYSTEM
+#define MG_ENABLE_FILESYSTEM 1
+#endif
+
+#ifndef MG_NET_IF
+#define MG_NET_IF MG_NET_IF_SOCKET
+#endif
+
+typedef struct _stati64 {
+  uint32_t st_mtime;
+  uint32_t st_size;
+  uint32_t st_mode;
+} cs_stat_t;
+
+/*
+ * WinCE 6.0 has a lot of useful definitions in ATL (not windows.h) headers
+ * use #ifdefs to avoid conflicts
+ */
+
+#ifndef ENOENT
+#define ENOENT ERROR_PATH_NOT_FOUND
+#endif
+
+#ifndef EACCES
+#define EACCES ERROR_ACCESS_DENIED
+#endif
+
+#ifndef ENOMEM
+#define ENOMEM ERROR_NOT_ENOUGH_MEMORY
+#endif
+
+#ifndef _UINTPTR_T_DEFINED
+typedef unsigned int *uintptr_t;
+#endif
+
+#define _S_IFREG 2
+#define _S_IFDIR 4
+
+#ifndef S_ISDIR
+#define S_ISDIR(x) (((x) &_S_IFDIR) != 0)
+#endif
+
+#ifndef S_ISREG
+#define S_ISREG(x) (((x) &_S_IFREG) != 0)
+#endif
+
+int open(const char *filename, int oflag, int pmode);
+int _wstati64(const wchar_t *path, cs_stat_t *st);
+const char *strerror();
+
+#endif /* CS_PLATFORM == CS_P_WINCE */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_WINCE_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_nxp_lpc.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_NXP_LPC_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_NXP_LPC_H_
+
+#if CS_PLATFORM == CS_P_NXP_LPC
+
+#include <ctype.h>
+#include <stdint.h>
+#include <string.h>
+
+#define SIZE_T_FMT "u"
+typedef struct stat cs_stat_t;
+#define INT64_FMT "lld"
+#define INT64_X_FMT "llx"
+#define __cdecl
+
+#define MG_LWIP 1
+
+#define MG_NET_IF MG_NET_IF_LWIP_LOW_LEVEL
+
+/*
+ * LPCXpress comes with 3 C library implementations: Newlib, NewlibNano and
+ *Redlib.
+ * See https://community.nxp.com/message/630860 for more details.
+ *
+ * Redlib is the default and lacks certain things, so we provide them.
+ */
+#ifdef __REDLIB_INTERFACE_VERSION__
+
+/* Let LWIP define timeval for us. */
+#define LWIP_TIMEVAL_PRIVATE 1
+
+#define va_copy(d, s) __builtin_va_copy(d, s)
+
+#define CS_ENABLE_TO64 1
+#define to64(x) cs_to64(x)
+
+#define CS_ENABLE_STRDUP 1
+
+#else
+
+#include <sys/time.h>
+#define LWIP_TIMEVAL_PRIVATE 0
+#define to64(x) strtoll(x, NULL, 10)
+
+#endif
+
+#endif /* CS_PLATFORM == CS_P_NXP_LPC */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_NXP_LPC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_nxp_kinetis.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_NXP_KINETIS_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_NXP_KINETIS_H_
+
+#if CS_PLATFORM == CS_P_NXP_KINETIS
+
+#include <ctype.h>
+#include <inttypes.h>
+#include <string.h>
+#include <sys/time.h>
+
+#define SIZE_T_FMT "u"
+typedef struct stat cs_stat_t;
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT "lld"
+#define INT64_X_FMT "llx"
+#define __cdecl
+
+#define MG_LWIP 1
+
+#define MG_NET_IF MG_NET_IF_LWIP_LOW_LEVEL
+
+/* struct timeval is defined in sys/time.h. */
+#define LWIP_TIMEVAL_PRIVATE 0
+
+#endif /* CS_PLATFORM == CS_P_NXP_KINETIS */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_NXP_KINETIS_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_pic32.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_PIC32_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_PIC32_H_
+
+#if CS_PLATFORM == CS_P_PIC32
+
+#define MG_NET_IF MG_NET_IF_PIC32
+
+#include <stdint.h>
+#include <time.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+#include <system_config.h>
+#include <system_definitions.h>
+
+#include <sys/types.h>
+
+typedef TCP_SOCKET sock_t;
+#define to64(x) strtoll(x, NULL, 10)
+
+#define SIZE_T_FMT "lu"
+#define INT64_FMT "lld"
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+char *inet_ntoa(struct in_addr in);
+
+#endif /* CS_PLATFORM == CS_P_PIC32 */
+
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_PIC32_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_rs14100.h"
+#endif
+/*
+ * Copyright (c) 2014-2019 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_RS14100_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_RS14100_H_
+#if CS_PLATFORM == CS_P_RS14100
+
+#include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#ifdef MGOS_HAVE_VFS_COMMON
+#include <mgos_vfs.h>
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT "lld"
+#define SIZE_T_FMT "u"
+typedef struct stat cs_stat_t;
+#define DIRSEP '/'
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#ifndef MG_ENABLE_FILESYSTEM
+#define MG_ENABLE_FILESYSTEM 1
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CS_PLATFORM == CS_P_RS14100 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_RS14100_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/platforms/platform_stm32.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_PLATFORMS_PLATFORM_STM32_H_
+#define CS_COMMON_PLATFORMS_PLATFORM_STM32_H_
+#if CS_PLATFORM == CS_P_STM32
+
+#include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <dirent.h>
+
+#include <stm32_sdk_hal.h>
+
+#define to64(x) strtoll(x, NULL, 10)
+#define INT64_FMT "lld"
+#define SIZE_T_FMT "u"
+typedef struct stat cs_stat_t;
+#define DIRSEP '/'
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+#ifndef MG_ENABLE_FILESYSTEM
+#define MG_ENABLE_FILESYSTEM 1
+#endif
+
+#endif /* CS_PLATFORM == CS_P_STM32 */
+#endif /* CS_COMMON_PLATFORMS_PLATFORM_STM32_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/cs_dbg.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_CS_DBG_H_
+#define CS_COMMON_CS_DBG_H_
+
+/* Amalgamated: #include "common/platform.h" */
+
+#if CS_ENABLE_STDIO
+#include <stdio.h>
+#endif
+
+#ifndef CS_ENABLE_DEBUG
+#define CS_ENABLE_DEBUG 0
+#endif
+
+#ifndef CS_LOG_PREFIX_LEN
+#define CS_LOG_PREFIX_LEN 24
+#endif
+
+#ifndef CS_LOG_ENABLE_TS_DIFF
+#define CS_LOG_ENABLE_TS_DIFF 0
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Log level; `LL_INFO` is the default. Use `cs_log_set_level()` to change it.
+ */
 enum cs_log_level {
   LL_NONE = -1,
   LL_ERROR = 0,
@@ -8034,233 +1867,709 @@ enum cs_log_level {
   _LL_MAX = 5,
 };
 
-
-
-
-
+/*
+ * Set max log level to print; messages with the level above the given one will
+ * not be printed.
+ */
 void cs_log_set_level(enum cs_log_level level);
-# 1887 "mjs_extra.h"
+
+/*
+ * A comma-separated set of prefix=level.
+ * prefix is matched against the log prefix exactly as printed, including line
+ * number, but partial match is ok. Check stops on first matching entry.
+ * If nothing matches, default level is used.
+ *
+ * Examples:
+ *   main.c:=4 - everything from main C at verbose debug level.
+ *   mongoose.c=1,mjs.c=1,=4 - everything at verbose debug except mg_* and mjs_*
+ *
+ */
 void cs_log_set_file_level(const char *file_level);
-# 1896 "mjs_extra.h"
+
+/*
+ * Helper function which prints message prefix with the given `level`.
+ * If message should be printed (according to the current log level
+ * and filter), prints the prefix and returns 1, otherwise returns 0.
+ *
+ * Clients should typically just use `LOG()` macro.
+ */
 int cs_log_print_prefix(enum cs_log_level level, const char *fname, int line);
 
 extern enum cs_log_level cs_log_level;
 
+#if CS_ENABLE_STDIO
 
-
-
-
-
+/*
+ * Set file to write logs into. If `NULL`, logs go to `stderr`.
+ */
 void cs_log_set_file(FILE *file);
 
+/*
+ * Prints log to the current log file, appends "\n" in the end and flushes the
+ * stream.
+ */
+void cs_log_printf(const char *fmt, ...) PRINTF_LIKE(1, 2);
 
+#if CS_ENABLE_STDIO
 
+/*
+ * Format and print message `x` with the given level `l`. Example:
+ *
+ * ```c
+ * LOG(LL_INFO, ("my info message: %d", 123));
+ * LOG(LL_DEBUG, ("my debug message: %d", 123));
+ * ```
+ */
+#define LOG(l, x)                                     \
+  do {                                                \
+    if (cs_log_print_prefix(l, __FILE__, __LINE__)) { \
+      cs_log_printf x;                                \
+    }                                                 \
+  } while (0)
 
+#else
 
-void cs_log_printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-# 1993 "mjs_extra.h"
+#define LOG(l, x) ((void) l)
+
+#endif
+
+#ifndef CS_NDEBUG
+
+/*
+ * Shortcut for `LOG(LL_VERBOSE_DEBUG, (...))`
+ */
+#define DBG(x) LOG(LL_VERBOSE_DEBUG, x)
+
+#else /* NDEBUG */
+
+#define DBG(x)
+
+#endif
+
+#else /* CS_ENABLE_STDIO */
+
+#define LOG(l, x)
+#define DBG(x)
+
+#endif
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* CS_COMMON_CS_DBG_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/cs_time.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_CS_TIME_H_
+#define CS_COMMON_CS_TIME_H_
+
+#include <time.h>
+
+/* Amalgamated: #include "common/platform.h" */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* Sub-second granularity time(). */
 double cs_time(void);
 
-
-
-
-
+/*
+ * Similar to (non-standard) timegm, converts broken-down time into the number
+ * of seconds since Unix Epoch.
+ */
 double cs_timegm(const struct tm *tm);
-# 2029 "mjs_extra.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3
-# 2030 "mjs_extra.h" 2
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
+#endif /* CS_COMMON_CS_TIME_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/mg_str.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+#ifndef CS_COMMON_MG_STR_H_
+#define CS_COMMON_MG_STR_H_
 
+#include <stddef.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
+/* Describes chunk of memory */
 struct mg_str {
-  const char *p;
-  size_t len;
+  const char *p; /* Memory chunk pointer */
+  size_t len;    /* Memory chunk length */
 };
 
-
-
-
-
+/*
+ * Helper function for creating mg_str struct from plain C string.
+ * `NULL` is allowed and becomes `{NULL, 0}`.
+ */
 struct mg_str mg_mk_str(const char *s);
 
-
-
-
+/*
+ * Like `mg_mk_str`, but takes string length explicitly.
+ */
 struct mg_str mg_mk_str_n(const char *s, size_t len);
-# 2064 "mjs_extra.h"
+
+/* Macro for initializing mg_str. */
+#define MG_MK_STR(str_literal) \
+  { str_literal, sizeof(str_literal) - 1 }
+#define MG_MK_STR_N(str_literal, len) \
+  { str_literal, len }
+#define MG_NULL_STR \
+  { NULL, 0 }
+
+/*
+ * Cross-platform version of `strcmp()` where where first string is
+ * specified by `struct mg_str`.
+ */
 int mg_vcmp(const struct mg_str *str2, const char *str1);
 
-
-
-
-
+/*
+ * Cross-platform version of `strncasecmp()` where first string is
+ * specified by `struct mg_str`.
+ */
 int mg_vcasecmp(const struct mg_str *str2, const char *str1);
 
-
+/* Creates a copy of s (heap-allocated). */
 struct mg_str mg_strdup(const struct mg_str s);
 
-
-
-
-
+/*
+ * Creates a copy of s (heap-allocated).
+ * Resulting string is NUL-terminated (but NUL is not included in len).
+ */
 struct mg_str mg_strdup_nul(const struct mg_str s);
 
-
-
-
+/*
+ * Locates character in a string.
+ */
 const char *mg_strchr(const struct mg_str s, int c);
 
-
-
-
+/*
+ * Compare two `mg_str`s; return value is the same as `strcmp`.
+ */
 int mg_strcmp(const struct mg_str str1, const struct mg_str str2);
 
-
-
-
+/*
+ * Like `mg_strcmp`, but compares at most `n` characters.
+ */
 int mg_strncmp(const struct mg_str str1, const struct mg_str str2, size_t n);
 
-
-
-
+/*
+ * Free the string (assuming it was heap allocated).
+ */
 void mg_strfree(struct mg_str *s);
 
-
-
-
+/*
+ * Finds the first occurrence of a substring `needle` in the `haystack`.
+ */
 const char *mg_strstr(const struct mg_str haystack, const struct mg_str needle);
 
-
+/* Strip whitespace at the start and the end of s */
 struct mg_str mg_strstrip(struct mg_str s);
 
-
+/* Returns 1 if s starts with the given prefix. */
 int mg_str_starts_with(struct mg_str s, struct mg_str prefix);
-# 2182 "mjs_extra.h"
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CS_COMMON_MG_STR_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/str_util.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_STR_UTIL_H_
+#define CS_COMMON_STR_UTIL_H_
+
+#include <stdarg.h>
+#include <stdlib.h>
+
+/* Amalgamated: #include "common/mg_str.h" */
+/* Amalgamated: #include "common/platform.h" */
+
+#ifndef CS_ENABLE_STRDUP
+#define CS_ENABLE_STRDUP 0
+#endif
+
+#ifndef CS_ENABLE_TO64
+#define CS_ENABLE_TO64 0
+#endif
+
+/*
+ * Expands to a string representation of its argument: e.g.
+ * `CS_STRINGIFY_LIT(5) expands to "5"`
+ */
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#define CS_STRINGIFY_LIT(...) #__VA_ARGS__
+#else
+#define CS_STRINGIFY_LIT(x) #x
+#endif
+
+/*
+ * Expands to a string representation of its argument, which is allowed
+ * to be a macro: e.g.
+ *
+ * #define FOO 123
+ * CS_STRINGIFY_MACRO(FOO)
+ *
+ * expands to 123.
+ */
+#define CS_STRINGIFY_MACRO(x) CS_STRINGIFY_LIT(x)
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*
+ * Equivalent of standard `strnlen()`.
+ */
 size_t c_strnlen(const char *s, size_t maxlen);
 
-
-
-
+/*
+ * Equivalent of standard `snprintf()`.
+ */
 int c_snprintf(char *buf, size_t buf_size, const char *format, ...)
-    __attribute__((format(printf, 3, 4)));
+    PRINTF_LIKE(3, 4);
 
-
-
-
+/*
+ * Equivalent of standard `vsnprintf()`.
+ */
 int c_vsnprintf(char *buf, size_t buf_size, const char *format, va_list ap);
 
-
-
-
-
+/*
+ * Find the first occurrence of find in s, where the search is limited to the
+ * first slen characters of s.
+ */
 const char *c_strnstr(const char *s, const char *find, size_t slen);
 
-
-
-
-
-
+/*
+ * Stringify binary data. Output buffer size must be 2 * size_of_input + 1
+ * because each byte of input takes 2 bytes in string representation
+ * plus 1 byte for the terminating \0 character.
+ */
 void cs_to_hex(char *to, const unsigned char *p, size_t len);
 
-
-
-
-
+/*
+ * Convert stringified binary data back to binary.
+ * Does the reverse of `cs_to_hex()`.
+ */
 void cs_from_hex(char *to, const char *p, size_t len);
-# 2232 "mjs_extra.h"
+
+#if CS_ENABLE_STRDUP
+/*
+ * Equivalent of standard `strdup()`, defined if only `CS_ENABLE_STRDUP` is 1.
+ */
+char *strdup(const char *src);
+#endif
+
+#if CS_ENABLE_TO64
+#include <stdint.h>
+/*
+ * Simple string -> int64 conversion routine.
+ */
+int64_t cs_to64(const char *s);
+#endif
+
+/*
+ * Cross-platform version of `strncasecmp()`.
+ */
 int mg_ncasecmp(const char *s1, const char *s2, size_t len);
 
-
-
-
+/*
+ * Cross-platform version of `strcasecmp()`.
+ */
 int mg_casecmp(const char *s1, const char *s2);
-# 2256 "mjs_extra.h"
+
+/*
+ * Prints message to the buffer. If the buffer is large enough to hold the
+ * message, it returns buffer. If buffer is to small, it allocates a large
+ * enough buffer on heap and returns allocated buffer.
+ * This is a supposed use case:
+ *
+ * ```c
+ *    char buf[5], *p = buf;
+ *    mg_avprintf(&p, sizeof(buf), "%s", "hi there");
+ *    use_p_somehow(p);
+ *    if (p != buf) {
+ *      free(p);
+ *    }
+ * ```
+ *
+ * The purpose of this is to avoid malloc-ing if generated strings are small.
+ */
 int mg_asprintf(char **buf, size_t size, const char *fmt, ...)
-    __attribute__((format(printf, 3, 4)));
+    PRINTF_LIKE(3, 4);
 
-
+/* Same as mg_asprintf, but takes varargs list. */
 int mg_avprintf(char **buf, size_t size, const char *fmt, va_list ap);
-# 2275 "mjs_extra.h"
+
+/*
+ * A helper function for traversing a comma separated list of values.
+ * It returns a list pointer shifted to the next value or NULL if the end
+ * of the list found.
+ * The value is stored in a val vector. If the value has a form "x=y", then
+ * eq_val vector is initialised to point to the "y" part, and val vector length
+ * is adjusted to point only to "x".
+ * If the list is just a comma separated list of entries, like "aa,bb,cc" then
+ * `eq_val` will contain zero-length string.
+ *
+ * The purpose of this function is to parse comma separated string without
+ * any copying/memory allocation.
+ */
 const char *mg_next_comma_list_entry(const char *list, struct mg_str *val,
                                      struct mg_str *eq_val);
 
-
-
-
-
-
+/*
+ * Like `mg_next_comma_list_entry()`, but takes `list` as `struct mg_str`.
+ * NB: Test return value's .p, not .len. On last itreation that yields result
+ * .len will be 0 but .p will not. When finished, .p will be NULL.
+ */
 struct mg_str mg_next_comma_list_entry_n(struct mg_str list, struct mg_str *val,
                                          struct mg_str *eq_val);
-# 2306 "mjs_extra.h"
+
+/*
+ * Matches 0-terminated string (mg_match_prefix) or string with given length
+ * mg_match_prefix_n against a glob pattern. Glob syntax:
+ * ```
+ * - * matches zero or more characters until a slash character /
+ * - ** matches zero or more characters
+ * - ? Matches exactly one character which is not a slash /
+ * - | or ,  divides alternative patterns
+ * - any other character matches itself
+ * ```
+ * Match is case-insensitive. Return number of bytes matched.
+ * Examples:
+ * ```
+ * mg_match_prefix("a*f", len, "abcdefgh") == 6
+ * mg_match_prefix("a*f", len, "abcdexgh") == 0
+ * mg_match_prefix("a*f|de*,xy", len, "defgh") == 5
+ * mg_match_prefix("?*", len, "abc") == 3
+ * mg_match_prefix("?*", len, "") == 0
+ * ```
+ */
 size_t mg_match_prefix(const char *pattern, int pattern_len, const char *str);
 
-
-
-
+/*
+ * Like `mg_match_prefix()`, but takes `pattern` and `str` as `struct mg_str`.
+ */
 size_t mg_match_prefix_n(const struct mg_str pattern, const struct mg_str str);
-# 2354 "mjs_extra.h"
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CS_COMMON_STR_UTIL_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/cs_file.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_CS_FILE_H_
+#define CS_COMMON_CS_FILE_H_
+
+/* Amalgamated: #include "common/platform.h" */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Read whole file `path` in memory. It is responsibility of the caller
+ * to `free()` allocated memory. File content is guaranteed to be
+ * '\0'-terminated. File size is returned in `size` variable, which does not
+ * count terminating `\0`.
+ * Return: allocated memory, or NULL on error.
+ */
 char *cs_read_file(const char *path, size_t *size);
-# 2419 "mjs_extra.h"
+
+#ifdef CS_MMAP
+/*
+ * Only on platforms which support mmapping: mmap file `path` to the returned
+ * address. File size is written to `*size`.
+ */
+char *cs_mmap_file(const char *path, size_t *size);
+#endif
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* CS_COMMON_CS_FILE_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/mbuf.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ * Mbufs are mutable/growing memory buffers, like C++ strings.
+ * Mbuf can append data to the end of a buffer or insert data into arbitrary
+ * position in the middle of a buffer. The buffer grows automatically when
+ * needed.
+ */
+
+#ifndef CS_COMMON_MBUF_H_
+#define CS_COMMON_MBUF_H_
+
+#include <stdlib.h>
+/* Amalgamated: #include "common/platform.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+#ifndef MBUF_SIZE_MULTIPLIER
+#define MBUF_SIZE_MULTIPLIER 1.5
+#endif
+
+#ifndef MBUF_SIZE_MAX_HEADROOM
+#ifdef BUFSIZ
+#define MBUF_SIZE_MAX_HEADROOM BUFSIZ
+#else
+#define MBUF_SIZE_MAX_HEADROOM 1024
+#endif
+#endif
+
+/* Memory buffer descriptor */
 struct mbuf {
-  char *buf;
-  size_t len;
-  size_t size;
+  char *buf;   /* Buffer pointer */
+  size_t len;  /* Data length. Data is located between offset 0 and len. */
+  size_t size; /* Buffer size allocated by realloc(1). Must be >= len */
 };
 
-
-
-
-
+/*
+ * Initialises an Mbuf.
+ * `initial_capacity` specifies the initial capacity of the mbuf.
+ */
 void mbuf_init(struct mbuf *, size_t initial_capacity);
 
-
+/* Frees the space allocated for the mbuffer and resets the mbuf structure. */
 void mbuf_free(struct mbuf *);
 
-
-
-
-
-
+/*
+ * Appends data to the Mbuf.
+ *
+ * Returns the number of bytes appended or 0 if out of memory.
+ */
 size_t mbuf_append(struct mbuf *, const void *data, size_t data_size);
 
-
-
-
-
-
-
+/*
+ * Appends data to the Mbuf and frees it (data must be heap-allocated).
+ *
+ * Returns the number of bytes appended or 0 if out of memory.
+ * data is freed irrespective of return value.
+ */
 size_t mbuf_append_and_free(struct mbuf *, void *data, size_t data_size);
-# 2456 "mjs_extra.h"
+
+/*
+ * Inserts data at a specified offset in the Mbuf.
+ *
+ * Existing data will be shifted forwards and the buffer will
+ * be grown if necessary.
+ * Returns the number of bytes inserted.
+ */
 size_t mbuf_insert(struct mbuf *, size_t, const void *, size_t);
 
-
+/* Removes `data_size` bytes from the beginning of the buffer. */
 void mbuf_remove(struct mbuf *, size_t data_size);
 
-
-
-
-
-
-
+/*
+ * Resizes an Mbuf.
+ *
+ * If `new_size` is smaller than buffer's `len`, the
+ * resize is not performed.
+ */
 void mbuf_resize(struct mbuf *, size_t new_size);
 
-
+/* Moves the state from one mbuf to the other. */
 void mbuf_move(struct mbuf *from, struct mbuf *to);
 
-
+/* Removes all the data from mbuf (if any). */
 void mbuf_clear(struct mbuf *);
 
-
+/* Shrinks an Mbuf by resizing its `size` to `len`. */
 void mbuf_trim(struct mbuf *);
-# 2560 "mjs_extra.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3
-# 2561 "mjs_extra.h" 2
-# 2571 "mjs_extra.h"
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* CS_COMMON_MBUF_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/mg_mem.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_COMMON_MG_MEM_H_
+#define CS_COMMON_MG_MEM_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef MG_MALLOC
+#define MG_MALLOC malloc
+#endif
+
+#ifndef MG_CALLOC
+#define MG_CALLOC calloc
+#endif
+
+#ifndef MG_REALLOC
+#define MG_REALLOC realloc
+#endif
+
+#ifndef MG_FREE
+#define MG_FREE free
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CS_COMMON_MG_MEM_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "frozen/frozen.h"
+#endif
+/*
+ * Copyright (c) 2004-2013 Sergey Lyubka <valenok@gmail.com>
+ * Copyright (c) 2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CS_FROZEN_FROZEN_H_
+#define CS_FROZEN_FROZEN_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdio.h>
+
+#if defined(_WIN32) && _MSC_VER < 1700
+typedef int bool;
+enum { false = 0, true = 1 };
+#else
+#include <stdbool.h>
+#endif
+
+/* JSON token type */
 enum json_token_type {
-  JSON_TYPE_INVALID = 0,
+  JSON_TYPE_INVALID = 0, /* memsetting to 0 should create INVALID value */
   JSON_TYPE_STRING,
   JSON_TYPE_NUMBER,
   JSON_TYPE_TRUE,
@@ -8274,32 +2583,65 @@ enum json_token_type {
   JSON_TYPES_CNT
 };
 
-
-
-
-
+/*
+ * Structure containing token type and value. Used in `json_walk()` and
+ * `json_scanf()` with the format specifier `%T`.
+ */
 struct json_token {
-  const char *ptr;
-  int len;
-  enum json_token_type type;
+  const char *ptr;           /* Points to the beginning of the value */
+  int len;                   /* Value length */
+  enum json_token_type type; /* Type of the token, possible values are above */
 };
-# 2629 "mjs_extra.h"
+
+#define JSON_INVALID_TOKEN \
+  { 0, 0, JSON_TYPE_INVALID }
+
+/* Error codes */
+#define JSON_STRING_INVALID -1
+#define JSON_STRING_INCOMPLETE -2
+
+/*
+ * Callback-based SAX-like API.
+ *
+ * Property name and length is given only if it's available: i.e. if current
+ * event is an object's property. In other cases, `name` is `NULL`. For
+ * example, name is never given:
+ *   - For the first value in the JSON string;
+ *   - For events JSON_TYPE_OBJECT_END and JSON_TYPE_ARRAY_END
+ *
+ * E.g. for the input `{ "foo": 123, "bar": [ 1, 2, { "baz": true } ] }`,
+ * the sequence of callback invocations will be as follows:
+ *
+ * - type: JSON_TYPE_OBJECT_START, name: NULL, path: "", value: NULL
+ * - type: JSON_TYPE_NUMBER, name: "foo", path: ".foo", value: "123"
+ * - type: JSON_TYPE_ARRAY_START,  name: "bar", path: ".bar", value: NULL
+ * - type: JSON_TYPE_NUMBER, name: "0", path: ".bar[0]", value: "1"
+ * - type: JSON_TYPE_NUMBER, name: "1", path: ".bar[1]", value: "2"
+ * - type: JSON_TYPE_OBJECT_START, name: "2", path: ".bar[2]", value: NULL
+ * - type: JSON_TYPE_TRUE, name: "baz", path: ".bar[2].baz", value: "true"
+ * - type: JSON_TYPE_OBJECT_END, name: NULL, path: ".bar[2]", value: "{ \"baz\":
+ *true }"
+ * - type: JSON_TYPE_ARRAY_END, name: NULL, path: ".bar", value: "[ 1, 2, {
+ *\"baz\": true } ]"
+ * - type: JSON_TYPE_OBJECT_END, name: NULL, path: "", value: "{ \"foo\": 123,
+ *\"bar\": [ 1, 2, { \"baz\": true } ] }"
+ */
 typedef void (*json_walk_callback_t)(void *callback_data, const char *name,
                                      size_t name_len, const char *path,
                                      const struct json_token *token);
 
-
-
-
-
-
+/*
+ * Parse `json_string`, invoking `callback` in a way similar to SAX parsers;
+ * see `json_walk_callback_t`.
+ * Return number of processed bytes, or a negative error code.
+ */
 int json_walk(const char *json_string, int json_string_length,
               json_walk_callback_t callback, void *callback_data);
 
-
-
-
-
+/*
+ * JSON generation API.
+ * struct json_out abstracts output, allowing alternative printing plugins.
+ */
 struct json_out {
   int (*printer)(struct json_out *, const char *str, size_t len);
   union {
@@ -8315,86 +2657,232 @@ struct json_out {
 
 extern int json_printer_buf(struct json_out *, const char *, size_t);
 extern int json_printer_file(struct json_out *, const char *, size_t);
-# 2674 "mjs_extra.h"
+
+#define JSON_OUT_BUF(buf, len) \
+  {                            \
+    json_printer_buf, {        \
+      { buf, len, 0 }          \
+    }                          \
+  }
+#define JSON_OUT_FILE(fp)   \
+  {                         \
+    json_printer_file, {    \
+      { (char *) fp, 0, 0 } \
+    }                       \
+  }
+
 typedef int (*json_printf_callback_t)(struct json_out *, va_list *ap);
-# 2691 "mjs_extra.h"
+
+/*
+ * Generate formatted output into a given sting buffer.
+ * This is a superset of printf() function, with extra format specifiers:
+ *  - `%B` print json boolean, `true` or `false`. Accepts an `int`.
+ *  - `%Q` print quoted escaped string or `null`. Accepts a `const char *`.
+ *  - `%.*Q` same as `%Q`, but with length. Accepts `int`, `const char *`
+ *  - `%V` print quoted base64-encoded string. Accepts a `const char *`, `int`.
+ *  - `%H` print quoted hex-encoded string. Accepts a `int`, `const char *`.
+ *  - `%M` invokes a json_printf_callback_t function. That callback function
+ *  can consume more parameters.
+ *
+ * Return number of bytes printed. If the return value is bigger than the
+ * supplied buffer, that is an indicator of overflow. In the overflow case,
+ * overflown bytes are not printed.
+ */
 int json_printf(struct json_out *, const char *fmt, ...);
 int json_vprintf(struct json_out *, const char *fmt, va_list ap);
 
-
-
-
-
+/*
+ * Same as json_printf, but prints to a file.
+ * File is created if does not exist. File is truncated if already exists.
+ */
 int json_fprintf(const char *file_name, const char *fmt, ...);
 int json_vfprintf(const char *file_name, const char *fmt, va_list ap);
-# 2712 "mjs_extra.h"
+
+/*
+ * Print JSON into an allocated 0-terminated string.
+ * Return allocated string, or NULL on error.
+ * Example:
+ *
+ * ```c
+ *   char *str = json_asprintf("{a:%H}", 3, "abc");
+ *   printf("%s\n", str);  // Prints "616263"
+ *   free(str);
+ * ```
+ */
 char *json_asprintf(const char *fmt, ...);
 char *json_vasprintf(const char *fmt, va_list ap);
 
-
-
-
-
-
+/*
+ * Helper %M callback that prints contiguous C arrays.
+ * Consumes void *array_ptr, size_t array_size, size_t elem_size, char *fmt
+ * Return number of bytes printed.
+ */
 int json_printf_array(struct json_out *, va_list *ap);
-# 2749 "mjs_extra.h"
+
+/*
+ * Scan JSON string `str`, performing scanf-like conversions according to `fmt`.
+ * This is a `scanf()` - like function, with following differences:
+ *
+ * 1. Object keys in the format string may be not quoted, e.g. "{key: %d}"
+ * 2. Order of keys in an object is irrelevant.
+ * 3. Several extra format specifiers are supported:
+ *    - %B: consumes `int *` (or `char *`, if `sizeof(bool) == sizeof(char)`),
+ *       expects boolean `true` or `false`.
+ *    - %Q: consumes `char **`, expects quoted, JSON-encoded string. Scanned
+ *       string is malloc-ed, caller must free() the string.
+ *    - %V: consumes `char **`, `int *`. Expects base64-encoded string.
+ *       Result string is base64-decoded, malloced and NUL-terminated.
+ *       The length of result string is stored in `int *` placeholder.
+ *       Caller must free() the result.
+ *    - %H: consumes `int *`, `char **`.
+ *       Expects a hex-encoded string, e.g. "fa014f".
+ *       Result string is hex-decoded, malloced and NUL-terminated.
+ *       The length of the result string is stored in `int *` placeholder.
+ *       Caller must free() the result.
+ *    - %M: consumes custom scanning function pointer and
+ *       `void *user_data` parameter - see json_scanner_t definition.
+ *    - %T: consumes `struct json_token *`, fills it out with matched token.
+ *
+ * Return number of elements successfully scanned & converted.
+ * Negative number means scan error.
+ */
 int json_scanf(const char *str, int str_len, const char *fmt, ...);
 int json_vscanf(const char *str, int str_len, const char *fmt, va_list ap);
 
-
+/* json_scanf's %M handler  */
 typedef void (*json_scanner_t)(const char *str, int len, void *user_data);
 
-
-
-
-
-
+/*
+ * Helper function to scan array item with given path and index.
+ * Fills `token` with the matched JSON token.
+ * Return -1 if no array element found, otherwise non-negative token length.
+ */
 int json_scanf_array_elem(const char *s, int len, const char *path, int index,
                           struct json_token *token);
-# 2770 "mjs_extra.h"
+
+/*
+ * Unescape JSON-encoded string src,slen into dst, dlen.
+ * src and dst may overlap.
+ * If destination buffer is too small (or zero-length), result string is not
+ * written but the length is counted nevertheless (similar to snprintf).
+ * Return the length of unescaped string in bytes.
+ */
 int json_unescape(const char *src, int slen, char *dst, int dlen);
 
-
-
-
-
+/*
+ * Escape a string `str`, `str_len` into the printer `out`.
+ * Return the number of bytes printed.
+ */
 int json_escape(struct json_out *out, const char *str, size_t str_len);
 
-
-
-
-
+/*
+ * Read the whole file in memory.
+ * Return malloc-ed file content, or NULL on error. The caller must free().
+ */
 char *json_fread(const char *file_name);
-# 2797 "mjs_extra.h"
+
+/*
+ * Update given JSON string `s,len` by changing the value at given `json_path`.
+ * The result is saved to `out`. If `json_fmt` == NULL, that deletes the key.
+ * If path is not present, missing keys are added. Array path without an
+ * index pushes a value to the end of an array.
+ * Return 1 if the string was changed, 0 otherwise.
+ *
+ * Example:  s is a JSON string { "a": 1, "b": [ 2 ] }
+ *   json_setf(s, len, out, ".a", "7");     // { "a": 7, "b": [ 2 ] }
+ *   json_setf(s, len, out, ".b", "7");     // { "a": 1, "b": 7 }
+ *   json_setf(s, len, out, ".b[]", "7");   // { "a": 1, "b": [ 2,7 ] }
+ *   json_setf(s, len, out, ".b", NULL);    // { "a": 1 }
+ */
 int json_setf(const char *s, int len, struct json_out *out,
               const char *json_path, const char *json_fmt, ...);
 
 int json_vsetf(const char *s, int len, struct json_out *out,
                const char *json_path, const char *json_fmt, va_list ap);
 
-
-
-
-
+/*
+ * Pretty-print JSON string `s,len` into `out`.
+ * Return number of processed bytes in `s`.
+ */
 int json_prettify(const char *s, int len, struct json_out *out);
 
-
-
-
-
-
+/*
+ * Prettify JSON file `file_name`.
+ * Return number of processed bytes, or negative number of error.
+ * On error, file content is not modified.
+ */
 int json_prettify_file(const char *file_name);
-# 2832 "mjs_extra.h"
+
+/*
+ * Iterate over an object at given JSON `path`.
+ * On each iteration, fill the `key` and `val` tokens. It is OK to pass NULL
+ * for `key`, or `val`, in which case they won't be populated.
+ * Return an opaque value suitable for the next iteration, or NULL when done.
+ *
+ * Example:
+ *
+ * ```c
+ * void *h = NULL;
+ * struct json_token key, val;
+ * while ((h = json_next_key(s, len, h, ".foo", &key, &val)) != NULL) {
+ *   printf("[%.*s] -> [%.*s]\n", key.len, key.ptr, val.len, val.ptr);
+ * }
+ * ```
+ */
 void *json_next_key(const char *s, int len, void *handle, const char *path,
                     struct json_token *key, struct json_token *val);
 
-
-
-
-
+/*
+ * Iterate over an array at given JSON `path`.
+ * Similar to `json_next_key`, but fills array index `idx` instead of `key`.
+ */
 void *json_next_elem(const char *s, int len, void *handle, const char *path,
                      int *idx, struct json_token *val);
-# 2886 "mjs_extra.h"
+
+#ifndef JSON_MAX_PATH_LEN
+#define JSON_MAX_PATH_LEN 256
+#endif
+
+#ifndef JSON_MINIMAL
+#define JSON_MINIMAL 0
+#endif
+
+#ifndef JSON_ENABLE_BASE64
+#define JSON_ENABLE_BASE64 !JSON_MINIMAL
+#endif
+
+#ifndef JSON_ENABLE_HEX
+#define JSON_ENABLE_HEX !JSON_MINIMAL
+#endif
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* CS_FROZEN_FROZEN_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/ffi/ffi.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_FFI_FFI_H_
+#define MJS_FFI_FFI_H_
+
+/* Amalgamated: #include "common/platform.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Maximum number of word-sized args to ffi-ed function. If at least one
+ * of the args is double, only 2 args are allowed.
+ */
+#define FFI_MAX_ARGS_CNT 6
+
 typedef void(ffi_fn_t)(void);
 
 typedef intptr_t ffi_word_t;
@@ -8419,48 +2907,546 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
              struct ffi_arg *args);
 
 void ffi_set_word(struct ffi_arg *arg, ffi_word_t v);
-void ffi_set_bool(struct ffi_arg *arg, _Bool v);
+void ffi_set_bool(struct ffi_arg *arg, bool v);
 void ffi_set_ptr(struct ffi_arg *arg, void *v);
 void ffi_set_double(struct ffi_arg *arg, double v);
 void ffi_set_float(struct ffi_arg *arg, float v);
-# 2931 "mjs_extra.h"
-# 1 "/usr/include/assert.h" 1 3 4
-# 2932 "mjs_extra.h" 2
-# 2998 "mjs_extra.h"
-# 1 "/usr/include/dlfcn.h" 1 3 4
-# 24 "/usr/include/dlfcn.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 25 "/usr/include/dlfcn.h" 2 3 4
 
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
-# 1 "/usr/include/x86_64-linux-gnu/bits/dlfcn.h" 1 3 4
-# 28 "/usr/include/dlfcn.h" 2 3 4
-# 56 "/usr/include/dlfcn.h" 3 4
-extern void *dlopen (const char *__file, int __mode) __attribute__ ((__nothrow__));
+#endif /* MJS_FFI_FFI_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_internal.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
 
+#ifndef MJS_INTERNAL_H_
+#define MJS_INTERNAL_H_
 
+#include <assert.h>
+#include <ctype.h>
+#include <math.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 
-extern int dlclose (void *__handle) __attribute__ ((__nothrow__)) __attribute__ ((__nonnull__ (1)));
+#ifndef FAST
+#define FAST
+#endif
 
+#ifndef STATIC
+#define STATIC
+#endif
 
+#ifndef ENDL
+#define ENDL "\n"
+#endif
 
-extern void *dlsym (void *__restrict __handle,
-      const char *__restrict __name) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
-# 82 "/usr/include/dlfcn.h" 3 4
-extern char *dlerror (void) __attribute__ ((__nothrow__ ));
-# 2999 "mjs_extra.h" 2
-# 3374 "mjs_extra.h"
-static mjs_val_t
+#ifdef MJS_EXPOSE_PRIVATE
+#define MJS_PRIVATE
+#define MJS_EXTERN extern
+#else
+#define MJS_PRIVATE static
+#define MJS_EXTERN static
+#endif
+
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+#endif
+
+#if !defined(WEAK)
+#if (defined(__GNUC__) || defined(__TI_COMPILER_VERSION__)) && !defined(_WIN32)
+#define WEAK __attribute__((weak))
+#else
+#define WEAK
+#endif
+#endif
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+/* Amalgamated: #include "common/cs_dbg.h" */
+/* Amalgamated: #include "common/cs_file.h" */
+/* Amalgamated: #include "common/mbuf.h" */
+
+#if defined(_WIN32) && _MSC_VER < 1700
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+typedef int int32_t;
+typedef unsigned int uint32_t;
+typedef short int16_t;
+typedef unsigned short uint16_t;
+typedef __int64 int64_t;
+typedef unsigned long uintptr_t;
+#define STRX(x) #x
+#define STR(x) STRX(x)
+#define __func__ __FILE__ ":" STR(__LINE__)
+// #define snprintf _snprintf
+#define vsnprintf _vsnprintf
+#define isnan(x) _isnan(x)
+#define va_copy(x, y) (x) = (y)
+#define CS_DEFINE_DIRENT
+#include <windows.h>
+#else
+#if defined(__unix__) || defined(__APPLE__)
+#include <dlfcn.h>
+#endif
+#endif
+
+/*
+ * Number of bytes reserved for the jump offset initially. The most practical
+ * value is 1, but for testing it's useful to set it to 0 and to some large
+ * value as well (like, 4), to make sure that the code behaves correctly under
+ * all circumstances.
+ */
+#ifndef MJS_INIT_OFFSET_SIZE
+#define MJS_INIT_OFFSET_SIZE 1
+#endif
+
+#endif /* MJS_INTERNAL_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_license.h"
+#endif
+/*
+ * Copyright (c) 2017 Cesanta Software Limited
+ * All rights reserved
+ *
+ * This software is dual-licensed: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation. For the terms of this
+ * license, see <http://www.gnu.org/licenses/>.
+ *
+ * You are free to use this software under the terms of the GNU General
+ * Public License, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * Alternatively, you can license this software under a commercial
+ * license, as set out in <https://www.cesanta.com/license>.
+ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_features.h"
+#endif
+/*
+ * Copyright (c) 2017 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_FEATURES_H_
+#define MJS_FEATURES_H_
+
+#if !defined(MJS_AGGRESSIVE_GC)
+#define MJS_AGGRESSIVE_GC 0
+#endif
+
+#if !defined(MJS_MEMORY_STATS)
+#define MJS_MEMORY_STATS 0
+#endif
+
+/*
+ * MJS_GENERATE_JSC: if enabled, and if mmapping is also enabled (CS_MMAP),
+ * then execution of any .js file will result in creation of a .jsc file with
+ * precompiled bcode, and this .jsc file will be mmapped, instead of keeping
+ * bcode in RAM.
+ *
+ * By default it's enabled (provided that CS_MMAP is defined)
+ */
+#if !defined(MJS_GENERATE_JSC)
+#if defined(CS_MMAP)
+#define MJS_GENERATE_JSC 1
+#else
+#define MJS_GENERATE_JSC 0
+#endif
+#endif
+
+#endif /* MJS_FEATURES_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_core_public.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_CORE_PUBLIC_H_
+#define MJS_CORE_PUBLIC_H_
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1700
+#include <stdint.h>
+#else
+typedef unsigned __int64 uint64_t;
+typedef int int32_t;
+typedef unsigned char uint8_t;
+#endif
+#include <stdio.h>
+#include <stddef.h>
+/* Amalgamated: #include "mjs/src/mjs_license.h" */
+/* Amalgamated: #include "mjs/src/mjs_features.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+#define MJS_ENABLE_DEBUG 1
+
+/*
+ *  Double-precision floating-point number, IEEE 754
+ *
+ *  64 bit (8 bytes) in total
+ *  1  bit sign
+ *  11 bits exponent
+ *  52 bits mantissa
+ *      7         6        5        4        3        2        1        0
+ *  seeeeeee|eeeemmmm|mmmmmmmm|mmmmmmmm|mmmmmmmm|mmmmmmmm|mmmmmmmm|mmmmmmmm
+ *
+ * If an exponent is all-1 and mantissa is all-0, then it is an INFINITY:
+ *  11111111|11110000|00000000|00000000|00000000|00000000|00000000|00000000
+ *
+ * If an exponent is all-1 and mantissa's MSB is 1, it is a quiet NaN:
+ *  11111111|11111000|00000000|00000000|00000000|00000000|00000000|00000000
+ *
+ *  MJS NaN-packing:
+ *    sign and exponent is 0xfff
+ *    4 bits specify type (tag), must be non-zero
+ *    48 bits specify value
+ *
+ *  11111111|1111tttt|vvvvvvvv|vvvvvvvv|vvvvvvvv|vvvvvvvv|vvvvvvvv|vvvvvvvv
+ *   NaN marker |type|  48-bit placeholder for values: pointers, strings
+ *
+ * On 64-bit platforms, pointers are really 48 bit only, so they can fit,
+ * provided they are sign extended
+ */
+
+typedef uint64_t mjs_val_t;
+
+/* This if-0 is a dirty workaround to force etags to pick `struct mjs` */
+#if 0
+/* Opaque structure. MJS engine context. */
+struct mjs {
+  /* ... */
+};
+#endif
+
+struct mjs;
+
+typedef enum mjs_err {
+  MJS_OK,
+  MJS_SYNTAX_ERROR,
+  MJS_REFERENCE_ERROR,
+  MJS_TYPE_ERROR,
+  MJS_OUT_OF_MEMORY,
+  MJS_INTERNAL_ERROR,
+  MJS_NOT_IMPLEMENTED_ERROR,
+  MJS_FILE_READ_ERROR,
+  MJS_BAD_ARGS_ERROR,
+
+  MJS_ERRS_CNT
+} mjs_err_t;
+struct mjs;
+
+/* Create MJS instance */
+struct mjs *mjs_create();
+
+struct mjs_create_opts {
+  /* use non-default bytecode definition file, testing-only */
+  const struct bf_code *code;
+};
+
+/*
+ * Like `msj_create()`, but allows to customize initial MJS state, see `struct
+ * mjs_create_opts`.
+ */
+struct mjs *mjs_create_opt(struct mjs_create_opts opts);
+
+/* Destroy MJS instance */
+void mjs_destroy(struct mjs *mjs);
+
+mjs_val_t mjs_get_global(struct mjs *mjs);
+
+/*
+ * Tells the GC about an MJS value variable/field owned by C code.
+ *
+ * The user's C code should own mjs_val_t variables if the value's lifetime
+ * crosses any invocation of `mjs_exec()` and friends, including `mjs_call()`.
+ *
+ * The registration of the variable prevents the GC from mistakenly treat the
+ * object as garbage.
+ *
+ * User code should also explicitly disown the variables with `mjs_disown()`
+ * once it goes out of scope or the structure containing the mjs_val_t field is
+ * freed.
+ *
+ * Consider the following examples:
+ *
+ * Correct (owning is not necessary):
+ * ```c
+ * mjs_val_t res;
+ * mjs_exec(mjs, "....some script", &res);
+ * // ... use res somehow
+ *
+ * mjs_val_t res;
+ * mjs_exec(mjs, "....some script2", &res);
+ * // ... use new res somehow
+ * ```
+ *
+ * WRONG:
+ * ```c
+ * mjs_val_t res1;
+ * mjs_exec(mjs, "....some script", &res1);
+ *
+ * mjs_val_t res2;
+ * mjs_exec(mjs, "....some script2", &res2);
+ *
+ * // ... use res1 (WRONG!) and res2
+ * ```
+ *
+ * The code above is wrong, because after the second invocation of
+ * `mjs_exec()`, the value of `res1` is invalidated.
+ *
+ * Correct (res1 is owned)
+ * ```c
+ * mjs_val_t res1 = MJS_UNDEFINED;
+ * mjs_own(mjs, &res1);
+ * mjs_exec(mjs, "....some script", &res1);
+ *
+ * mjs_val_t res2 = MJS_UNDEFINED;
+ * mjs_exec(mjs, "....some script2", &res2);
+ *
+ * // ... use res1 and res2
+ * mjs_disown(mjs, &res1);
+ * ```
+ *
+ * NOTE that we explicly initialized `res1` to a valid value before owning it
+ * (in this case, the value is `MJS_UNDEFINED`). Owning an uninitialized
+ * variable is an undefined behaviour.
+ *
+ * Of course, it's not an error to own a variable even if it's not mandatory:
+ * e.g. in the last example we could own both `res1` and `res2`. Probably it
+ * would help us in the future, when we refactor the code so that `res2` has to
+ * be owned, and we could forget to do that.
+ *
+ * Also, if the user code has some C function called from MJS, and in this C
+ * function some MJS value (`mjs_val_t`) needs to be stored somewhhere and to
+ * stay alive after the C function has returned, it also needs to be properly
+ * owned.
+ */
+void mjs_own(struct mjs *mjs, mjs_val_t *v);
+
+/*
+ * Disowns the value previously owned by `mjs_own()`.
+ *
+ * Returns 1 if value is found, 0 otherwise.
+ */
+int mjs_disown(struct mjs *mjs, mjs_val_t *v);
+
+mjs_err_t mjs_set_errorf(struct mjs *mjs, mjs_err_t err, const char *fmt, ...);
+
+/*
+ * If there is no error message already set, then it's equal to
+ * `mjs_set_errorf()`.
+ *
+ * Otherwise, an old message gets prepended with the new one, followed by a
+ * colon. (the previously set error code is kept)
+ */
+mjs_err_t mjs_prepend_errorf(struct mjs *mjs, mjs_err_t err, const char *fmt,
+                             ...);
+
+/*
+ * Print the last error details. If print_stack_trace is non-zero, also
+ * print stack trace. `msg` is the message which gets prepended to the actual
+ * error message, if it's NULL, then "MJS error" is used.
+ */
+void mjs_print_error(struct mjs *mjs, FILE *fp, const char *msg,
+                     int print_stack_trace);
+
+/*
+ * return a string representation of an error.
+ * the error string might be overwritten by calls to `mjs_set_errorf`.
+ */
+const char *mjs_strerror(struct mjs *mjs, enum mjs_err err);
+
+/*
+ * Sets whether *.jsc files are generated when *.js file is executed. By
+ * default it's 0.
+ *
+ * If either `MJS_GENERATE_JSC` or `CS_MMAP` is off, then this function has no
+ * effect.
+ */
+void mjs_set_generate_jsc(struct mjs *mjs, int generate_jsc);
+
+/*
+ * When invoked from a cfunction, returns number of arguments passed to the
+ * current JS function call.
+ */
+int mjs_nargs(struct mjs *mjs);
+
+/*
+ * When invoked from a cfunction, returns n-th argument to the current JS
+ * function call.
+ */
+mjs_val_t mjs_arg(struct mjs *mjs, int n);
+
+/*
+ * Sets return value for the current JS function call.
+ */
+void mjs_return(struct mjs *mjs, mjs_val_t v);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_CORE_PUBLIC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_array_public.h"
+#endif
+/*
+ * Copyright (c) 2017 Cesanta Software Limited
+ * All rights reserved
+ */
+
+/*
+ * === Arrays
+ */
+
+#ifndef MJS_ARRAY_PUBLIC_H_
+#define MJS_ARRAY_PUBLIC_H_
+
+/* Amalgamated: #include "mjs/src/mjs_core_public.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/* Make an empty array object */
+mjs_val_t mjs_mk_array(struct mjs *mjs);
+
+/* Returns length on an array. If `arr` is not an array, 0 is returned. */
+unsigned long mjs_array_length(struct mjs *mjs, mjs_val_t arr);
+
+/* Insert value `v` in array `arr` at the end of the array. */
+mjs_err_t mjs_array_push(struct mjs *mjs, mjs_val_t arr, mjs_val_t v);
+
+/*
+ * Return array member at index `index`. If `index` is out of bounds, undefined
+ * is returned.
+ */
+mjs_val_t mjs_array_get(struct mjs *, mjs_val_t arr, unsigned long index);
+
+/* Insert value `v` into `arr` at index `index`. */
+mjs_err_t mjs_array_set(struct mjs *mjs, mjs_val_t arr, unsigned long index,
+                        mjs_val_t v);
+
+/* Returns true if the given value is an array */
+int mjs_is_array(mjs_val_t v);
+
+/* Delete value in array `arr` at index `index`, if it exists. */
+void mjs_array_del(struct mjs *mjs, mjs_val_t arr, unsigned long index);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_ARRAY_PUBLIC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_array.h"
+#endif
+/*
+ * Copyright (c) 2014 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_ARRAY_H_
+#define MJS_ARRAY_H_
+
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+/* Amalgamated: #include "mjs/src/mjs_array_public.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+MJS_PRIVATE mjs_val_t
 mjs_array_get2(struct mjs *mjs, mjs_val_t arr, unsigned long index, int *has);
 
-static void mjs_array_splice(struct mjs *mjs);
+MJS_PRIVATE void mjs_array_splice(struct mjs *mjs);
 
-static void mjs_array_push_internal(struct mjs *mjs);
-# 3446 "mjs_extra.h"
+MJS_PRIVATE void mjs_array_push_internal(struct mjs *mjs);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_ARRAY_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_ffi_public.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_FFI_PUBLIC_H_
+#define MJS_FFI_PUBLIC_H_
+
+/* Amalgamated: #include "mjs/src/mjs_core_public.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+enum mjs_ffi_ctype {
+  MJS_FFI_CTYPE_NONE,
+  MJS_FFI_CTYPE_USERDATA,
+  MJS_FFI_CTYPE_CALLBACK,
+  MJS_FFI_CTYPE_INT,
+  MJS_FFI_CTYPE_BOOL,
+  MJS_FFI_CTYPE_DOUBLE,
+  MJS_FFI_CTYPE_FLOAT,
+  MJS_FFI_CTYPE_CHAR_PTR,
+  MJS_FFI_CTYPE_VOID_PTR,
+  MJS_FFI_CTYPE_STRUCT_MG_STR_PTR,
+  MJS_FFI_CTYPE_STRUCT_MG_STR,
+  MJS_FFI_CTYPE_INVALID,
+};
+
+typedef void *(mjs_ffi_resolver_t)(void *handle, const char *symbol);
+
+void mjs_set_ffi_resolver(struct mjs *mjs, mjs_ffi_resolver_t *dlsym);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_FFI_PUBLIC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_ffi.h"
+#endif
+/*
+ * Copyright (c) 2017 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_FFI_H_
+#define MJS_FFI_H_
+
+/* Amalgamated: #include "mjs/src/ffi/ffi.h" */
+/* Amalgamated: #include "mjs/src/mjs_ffi_public.h" */
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 mjs_ffi_resolver_t dlsym;
 
-
-
+#define MJS_CB_ARGS_MAX_CNT 6
+#define MJS_CB_SIGNATURE_MAX_SIZE (MJS_CB_ARGS_MAX_CNT + 1 /* return type */)
 
 typedef uint8_t mjs_ffi_ctype_t;
 
@@ -8469,78 +3455,86 @@ enum ffi_sig_type {
   FFI_SIG_CALLBACK,
 };
 
-
-
-
+/*
+ * Parsed FFI signature
+ */
 struct mjs_ffi_sig {
-# 3471 "mjs_extra.h"
+  /*
+   * Callback signature, corresponds to the arg of type MJS_FFI_CTYPE_CALLBACK
+   * TODO(dfrank): probably we'll need to support multiple callback/userdata
+   * pairs
+   *
+   * NOTE(dfrank): instances of this structure are grouped into GC arenas and
+   * managed by GC, and for the GC mark to work, the first element should be
+   * a pointer (so that the two LSBs are not used).
+   */
   struct mjs_ffi_sig *cb_sig;
 
+  /*
+   * The first item is the return value type (for `void`, `MJS_FFI_CTYPE_NONE`
+   * is used); the rest are arguments. If some argument is
+   * `MJS_FFI_CTYPE_NONE`, it means that there are no more arguments.
+   */
+  mjs_ffi_ctype_t val_types[MJS_CB_SIGNATURE_MAX_SIZE];
 
-
-
-
-
-  mjs_ffi_ctype_t val_types[(6 + 1 )];
-
-
-
-
-
-
+  /*
+   * Function to call. If `is_callback` is not set, then it's the function
+   * obtained by dlsym; otherwise it's a pointer to the appropriate callback
+   * implementation.
+   */
   ffi_fn_t *fn;
 
-
+  /* Number of arguments in the signature */
   int8_t args_cnt;
 
-
-
-
-
+  /*
+   * If set, then the signature represents the callback (as opposed to a normal
+   * function), and `fn` points to the suitable callback implementation.
+   */
   unsigned is_callback : 1;
   unsigned is_valid : 1;
 };
 typedef struct mjs_ffi_sig mjs_ffi_sig_t;
 
+/* Initialize new FFI signature */
+MJS_PRIVATE void mjs_ffi_sig_init(mjs_ffi_sig_t *sig);
+/* Copy existing FFI signature */
+MJS_PRIVATE void mjs_ffi_sig_copy(mjs_ffi_sig_t *to, const mjs_ffi_sig_t *from);
+/* Free FFI signature. NOTE: the pointer `sig` itself is not freed */
+MJS_PRIVATE void mjs_ffi_sig_free(mjs_ffi_sig_t *sig);
 
-static void mjs_ffi_sig_init(mjs_ffi_sig_t *sig);
+/*
+ * Creates a new FFI signature from the GC arena, and return mjs_val_t which
+ * wraps it.
+ */
+MJS_PRIVATE mjs_val_t mjs_mk_ffi_sig(struct mjs *mjs);
 
-static void mjs_ffi_sig_copy(mjs_ffi_sig_t *to, const mjs_ffi_sig_t *from);
+/*
+ * Checks whether the given value is a FFI signature.
+ */
+MJS_PRIVATE int mjs_is_ffi_sig(mjs_val_t v);
 
-static void mjs_ffi_sig_free(mjs_ffi_sig_t *sig);
+/*
+ * Wraps FFI signature structure into mjs_val_t value.
+ */
+MJS_PRIVATE mjs_val_t mjs_ffi_sig_to_value(struct mjs_ffi_sig *psig);
 
+/*
+ * Extracts a pointer to the FFI signature struct from the mjs_val_t value.
+ */
+MJS_PRIVATE struct mjs_ffi_sig *mjs_get_ffi_sig_struct(mjs_val_t v);
 
+/*
+ * A wrapper for mjs_ffi_sig_free() suitable to use as a GC cell destructor.
+ */
+MJS_PRIVATE void mjs_ffi_sig_destructor(struct mjs *mjs, void *psig);
 
-
-
-static mjs_val_t mjs_mk_ffi_sig(struct mjs *mjs);
-
-
-
-
-static int mjs_is_ffi_sig(mjs_val_t v);
-
-
-
-
-static mjs_val_t mjs_ffi_sig_to_value(struct mjs_ffi_sig *psig);
-
-
-
-
-static struct mjs_ffi_sig *mjs_get_ffi_sig_struct(mjs_val_t v);
-
-
-
-
-static void mjs_ffi_sig_destructor(struct mjs *mjs, void *psig);
-
-static int mjs_ffi_sig_set_val_type(mjs_ffi_sig_t *sig, int idx,
+MJS_PRIVATE int mjs_ffi_sig_set_val_type(mjs_ffi_sig_t *sig, int idx,
                                          mjs_ffi_ctype_t type);
-static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
+MJS_PRIVATE int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
                                      enum ffi_sig_type sig_type);
-static int mjs_ffi_is_regular_word(mjs_ffi_ctype_t type);
-static int mjs_ffi_is_regular_word_or_void(mjs_ffi_ctype_t type);
+MJS_PRIVATE int mjs_ffi_is_regular_word(mjs_ffi_ctype_t type);
+MJS_PRIVATE int mjs_ffi_is_regular_word_or_void(mjs_ffi_ctype_t type);
 
 struct mjs_ffi_cb_args {
   struct mjs_ffi_cb_args *next;
@@ -8551,21 +3545,43 @@ struct mjs_ffi_cb_args {
 };
 typedef struct mjs_ffi_cb_args ffi_cb_args_t;
 
+/*
+ * cfunction:
+ * Parses the FFI signature string and returns a value wrapping mjs_ffi_sig_t.
+ */
+MJS_PRIVATE mjs_err_t mjs_ffi_call(struct mjs *mjs);
 
+/*
+ * cfunction:
+ * Performs the FFI signature call.
+ */
+MJS_PRIVATE mjs_err_t mjs_ffi_call2(struct mjs *mjs);
 
+MJS_PRIVATE void mjs_ffi_cb_free(struct mjs *);
+MJS_PRIVATE void mjs_ffi_args_free_list(struct mjs *mjs);
 
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
-static mjs_err_t mjs_ffi_call(struct mjs *mjs);
+#endif /* MJS_FFI_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_mm.h"
+#endif
+/*
+ * Copyright (c) 2014-2016 Cesanta Software Limited
+ * All rights reserved
+ */
 
+#ifndef MJS_MM_H_
+#define MJS_MM_H_
 
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
 
-
-static mjs_err_t mjs_ffi_call2(struct mjs *mjs);
-
-static void mjs_ffi_cb_free(struct mjs *);
-static void mjs_ffi_args_free_list(struct mjs *mjs);
-# 3585 "mjs_extra.h"
 struct mjs;
 
 typedef void (*gc_cell_destructor_t)(struct mjs *mjs, void *);
@@ -8579,18 +3595,49 @@ struct gc_block {
 struct gc_arena {
   struct gc_block *blocks;
   size_t size_increment;
-  struct gc_cell *free;
+  struct gc_cell *free; /* head of free list */
   size_t cell_size;
 
-
-
-
-
-
+#if MJS_MEMORY_STATS
+  unsigned long allocations; /* cumulative counter of allocations */
+  unsigned long garbage;     /* cumulative counter of garbage */
+  unsigned long alive;       /* number of living cells */
+#endif
 
   gc_cell_destructor_t destructor;
 };
-# 3641 "mjs_extra.h"
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_MM_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_gc.h"
+#endif
+/*
+ * Copyright (c) 2014 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_GC_H_
+#define MJS_GC_H_
+
+/* Amalgamated: #include "mjs/src/mjs_core.h" */
+/* Amalgamated: #include "mjs/src/mjs_mm.h" */
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * performs arithmetics on gc_cell pointers as if they were arena->cell_size
+ * bytes wide
+ */
+#define GC_CELL_OP(arena, cell, op, arg) \
+  ((struct gc_cell *) (((char *) (cell)) op((arg) * (arena)->cell_size)))
+
 struct gc_cell {
   union {
     struct gc_cell *link;
@@ -8598,38 +3645,64 @@ struct gc_cell {
   } head;
 };
 
-
-
-
-
+/*
+ * Perform garbage collection.
+ * Pass true to full in order to reclaim unused heap back to the OS.
+ */
 void mjs_gc(struct mjs *mjs, int full);
 
-static int gc_strings_is_gc_needed(struct mjs *mjs);
+MJS_PRIVATE int gc_strings_is_gc_needed(struct mjs *mjs);
 
+/* perform gc if not inhibited */
+MJS_PRIVATE int maybe_gc(struct mjs *mjs);
 
-static int maybe_gc(struct mjs *mjs);
+MJS_PRIVATE struct mjs_object *new_object(struct mjs *);
+MJS_PRIVATE struct mjs_property *new_property(struct mjs *);
+MJS_PRIVATE struct mjs_ffi_sig *new_ffi_sig(struct mjs *mjs);
 
-static struct mjs_object *new_object(struct mjs *);
-static struct mjs_property *new_property(struct mjs *);
-static struct mjs_ffi_sig *new_ffi_sig(struct mjs *mjs);
+MJS_PRIVATE void gc_mark(struct mjs *mjs, mjs_val_t *val);
 
-static void gc_mark(struct mjs *mjs, mjs_val_t *val);
+MJS_PRIVATE void gc_arena_init(struct gc_arena *, size_t, size_t, size_t);
+MJS_PRIVATE void gc_arena_destroy(struct mjs *, struct gc_arena *a);
+MJS_PRIVATE void gc_sweep(struct mjs *, struct gc_arena *, size_t);
+MJS_PRIVATE void *gc_alloc_cell(struct mjs *, struct gc_arena *);
 
-static void gc_arena_init(struct gc_arena *, size_t, size_t, size_t);
-static void gc_arena_destroy(struct mjs *, struct gc_arena *a);
-static void gc_sweep(struct mjs *, struct gc_arena *, size_t);
-static void *gc_alloc_cell(struct mjs *, struct gc_arena *);
+MJS_PRIVATE uint64_t gc_string_mjs_val_to_offset(mjs_val_t v);
 
-static uint64_t gc_string_mjs_val_to_offset(mjs_val_t v);
+/* return 0 if v is an object/function with a bad pointer */
+MJS_PRIVATE int gc_check_val(struct mjs *mjs, mjs_val_t v);
 
+/* checks whether a pointer is within the ranges of an arena */
+MJS_PRIVATE int gc_check_ptr(const struct gc_arena *a, const void *p);
 
-static int gc_check_val(struct mjs *mjs, mjs_val_t v);
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
+#endif /* MJS_GC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_core.h"
+#endif
+/*
+ * Copyright (c) 2017 Cesanta Software Limited
+ * All rights reserved
+ */
 
-static int gc_check_ptr(const struct gc_arena *a, const void *p);
-# 3704 "mjs_extra.h"
+#ifndef MJS_CORE_H
+#define MJS_CORE_H
+
+/* Amalgamated: #include "mjs/src/mjs_ffi.h" */
+/* Amalgamated: #include "mjs/src/mjs_gc.h" */
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+#define JUMP_INSTRUCTION_SIZE 2
+
 enum mjs_type {
-
+  /* Primitive types */
   MJS_TYPE_UNDEFINED,
   MJS_TYPE_NULL,
   MJS_TYPE_BOOLEAN,
@@ -8637,19 +3710,19 @@ enum mjs_type {
   MJS_TYPE_STRING,
   MJS_TYPE_FOREIGN,
 
-
+  /* Different classes of Object type */
   MJS_TYPE_OBJECT_GENERIC,
   MJS_TYPE_OBJECT_ARRAY,
   MJS_TYPE_OBJECT_FUNCTION,
-
-
-
+  /*
+   * TODO(dfrank): if we support prototypes, need to add items for them here
+   */
 
   MJS_TYPES_CNT
 };
 
 enum mjs_call_stack_frame_item {
-  CALL_STACK_FRAME_ITEM_RETVAL_STACK_IDX,
+  CALL_STACK_FRAME_ITEM_RETVAL_STACK_IDX, /* TOS */
   CALL_STACK_FRAME_ITEM_LOOP_ADDR_IDX,
   CALL_STACK_FRAME_ITEM_SCOPE_IDX,
   CALL_STACK_FRAME_ITEM_RETURN_ADDR,
@@ -8657,38 +3730,66 @@ enum mjs_call_stack_frame_item {
 
   CALL_STACK_FRAME_ITEMS_CNT
 };
-# 3762 "mjs_extra.h"
-struct mjs_vals {
 
+/*
+ * A tag is made of the sign bit and the 4 lower order bits of byte 6.
+ * So in total we have 32 possible tags.
+ *
+ * Tag (1,0) however cannot hold a zero payload otherwise it's interpreted as an
+ * INFINITY; for simplicity we're just not going to use that combination.
+ */
+#define MAKE_TAG(s, t) \
+  ((uint64_t)(s) << 63 | (uint64_t) 0x7ff0 << 48 | (uint64_t)(t) << 48)
+
+#define MJS_TAG_OBJECT MAKE_TAG(1, 1)
+#define MJS_TAG_FOREIGN MAKE_TAG(1, 2)
+#define MJS_TAG_UNDEFINED MAKE_TAG(1, 3)
+#define MJS_TAG_BOOLEAN MAKE_TAG(1, 4)
+#define MJS_TAG_NAN MAKE_TAG(1, 5)
+#define MJS_TAG_STRING_I MAKE_TAG(1, 6)  /* Inlined string len < 5 */
+#define MJS_TAG_STRING_5 MAKE_TAG(1, 7)  /* Inlined string len 5 */
+#define MJS_TAG_STRING_O MAKE_TAG(1, 8)  /* Owned string */
+#define MJS_TAG_STRING_F MAKE_TAG(1, 9)  /* Foreign string */
+#define MJS_TAG_STRING_C MAKE_TAG(1, 10) /* String chunk */
+#define MJS_TAG_STRING_D MAKE_TAG(1, 11) /* Dictionary string  */
+#define MJS_TAG_ARRAY MAKE_TAG(1, 12)
+#define MJS_TAG_FUNCTION MAKE_TAG(1, 13)
+#define MJS_TAG_FUNCTION_FFI MAKE_TAG(1, 14)
+#define MJS_TAG_NULL MAKE_TAG(1, 15)
+
+#define MJS_TAG_MASK MAKE_TAG(1, 15)
+
+struct mjs_vals {
+  /* Current `this` value  */
   mjs_val_t this_obj;
   mjs_val_t dataview_proto;
 
-
-
-
-
+  /*
+   * The object against which the last `OP_GET` was invoked. Needed for
+   * "method invocation pattern".
+   */
   mjs_val_t last_getprop_obj;
 };
 
 struct mjs_bcode_part {
-
+  /* Global index of the bcode part */
   size_t start_idx;
 
-
+  /* Actual bcode data */
   struct {
-    const char *p;
-    size_t len;
+    const char *p; /* Memory chunk pointer */
+    size_t len;    /* Memory chunk length */
   } data;
 
-
-
-
-
-
-
+  /*
+   * Result of evaluation (not parsing: if there is an error during parsing,
+   * the bcode is not even committed). It is used to determine whether we
+   * need to evaluate the file: if file was already evaluated, and the result
+   * was MJS_OK, then we won't evaluate it again. Otherwise, we will.
+   */
   mjs_err_t exec_res : 4;
 
-
+  /* If set, bcode data does not need to be freed */
   unsigned in_rom : 1;
 };
 
@@ -8699,18 +3800,18 @@ struct mjs {
   struct mbuf stack;
   struct mbuf call_stack;
   struct mbuf arg_stack;
-  struct mbuf scopes;
-  struct mbuf loop_addresses;
-  struct mbuf owned_strings;
-  struct mbuf foreign_strings;
+  struct mbuf scopes;          /* Scope objects */
+  struct mbuf loop_addresses;  /* Addresses for breaks & continues */
+  struct mbuf owned_strings;   /* Sequence of (varint len, char data[]) */
+  struct mbuf foreign_strings; /* Sequence of (varint len, char *data) */
   struct mbuf owned_values;
   struct mbuf json_visited_stack;
   struct mjs_vals vals;
   char *error_msg;
   char *stack_trace;
   enum mjs_err error;
-  mjs_ffi_resolver_t *dlsym;
-  ffi_cb_args_t *ffi_cb_args;
+  mjs_ffi_resolver_t *dlsym;  /* Symbol resolver function for FFI */
+  ffi_cb_args_t *ffi_cb_args; /* List of FFI args descriptors */
   size_t cur_bcode_offset;
 
   struct gc_arena object_arena;
@@ -8722,260 +3823,964 @@ struct mjs {
   unsigned generate_jsc : 1;
 };
 
-
-
-
+/*
+ * Bcode header: type of the items, and item numbers.
+ */
 typedef uint32_t mjs_header_item_t;
 enum mjs_header_items {
-  MJS_HDR_ITEM_TOTAL_SIZE,
-
-  MJS_HDR_ITEM_BCODE_OFFSET,
-
-  MJS_HDR_ITEM_MAP_OFFSET,
-
+  MJS_HDR_ITEM_TOTAL_SIZE,   /* Total size of the bcode (not counting the
+                                OP_BCODE_HEADER byte) */
+  MJS_HDR_ITEM_BCODE_OFFSET, /* Offset to the start of the actual bcode (not
+                                counting the OP_BCODE_HEADER byte) */
+  MJS_HDR_ITEM_MAP_OFFSET,   /* Offset to the start of offset-to-line_no mapping
+                                k*/
 
   MJS_HDR_ITEMS_CNT
 };
 
-static size_t mjs_get_func_addr(mjs_val_t v);
+MJS_PRIVATE size_t mjs_get_func_addr(mjs_val_t v);
 
-static int mjs_getretvalpos(struct mjs *mjs);
+MJS_PRIVATE int mjs_getretvalpos(struct mjs *mjs);
 
-static enum mjs_type mjs_get_type(mjs_val_t v);
+MJS_PRIVATE enum mjs_type mjs_get_type(mjs_val_t v);
 
+/*
+ * Prints stack trace starting from the given bcode offset; other offsets
+ * (if any) will be fetched from the call_stack.
+ */
+MJS_PRIVATE void mjs_gen_stack_trace(struct mjs *mjs, size_t offset);
 
+MJS_PRIVATE mjs_val_t vtop(struct mbuf *m);
+MJS_PRIVATE size_t mjs_stack_size(const struct mbuf *m);
+MJS_PRIVATE mjs_val_t *vptr(struct mbuf *m, int idx);
+MJS_PRIVATE void push_mjs_val(struct mbuf *m, mjs_val_t v);
+MJS_PRIVATE mjs_val_t mjs_pop_val(struct mbuf *m);
+MJS_PRIVATE mjs_val_t mjs_pop(struct mjs *mjs);
+MJS_PRIVATE void mjs_push(struct mjs *mjs, mjs_val_t v);
+MJS_PRIVATE void mjs_die(struct mjs *mjs);
 
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
+#endif /* MJS_CORE_H */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_conversion.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
 
-static void mjs_gen_stack_trace(struct mjs *mjs, size_t offset);
+#ifndef MJS_CONVERSION_H_
+#define MJS_CONVERSION_H_
 
-static mjs_val_t vtop(struct mbuf *m);
-static size_t mjs_stack_size(const struct mbuf *m);
-static mjs_val_t *vptr(struct mbuf *m, int idx);
-static void push_mjs_val(struct mbuf *m, mjs_val_t v);
-static mjs_val_t mjs_pop_val(struct mbuf *m);
-static mjs_val_t mjs_pop(struct mjs *mjs);
-static void mjs_push(struct mjs *mjs, mjs_val_t v);
-static void mjs_die(struct mjs *mjs);
-# 3895 "mjs_extra.h"
-static mjs_err_t mjs_to_string(struct mjs *mjs, mjs_val_t *v, char **p,
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+/* Amalgamated: #include "mjs/src/mjs_core.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Tries to convert `mjs_val_t` to a string, returns MJS_OK if successful.
+ * String is returned as a pair of pointers: `char **p, size_t *sizep`.
+ *
+ * Caller must also provide a non-null `need_free`, and if it is non-zero,
+ * then the string `*p` should be freed by the caller.
+ *
+ * MJS does not support `toString()` and `valueOf()`, so, passing an object
+ * always results in `MJS_TYPE_ERROR`.
+ */
+MJS_PRIVATE mjs_err_t mjs_to_string(struct mjs *mjs, mjs_val_t *v, char **p,
                                     size_t *sizep, int *need_free);
 
+/*
+ * Converts value to boolean as in the expression `if (v)`.
+ */
+MJS_PRIVATE mjs_val_t mjs_to_boolean_v(struct mjs *mjs, mjs_val_t v);
 
+MJS_PRIVATE int mjs_is_truthy(struct mjs *mjs, mjs_val_t v);
 
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
-static mjs_val_t mjs_to_boolean_v(struct mjs *mjs, mjs_val_t v);
+#endif /* MJS_CONVERSION_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_object_public.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
 
-static int mjs_is_truthy(struct mjs *mjs, mjs_val_t v);
-# 4055 "mjs_extra.h"
+#ifndef MJS_OBJECT_PUBLIC_H_
+#define MJS_OBJECT_PUBLIC_H_
+
+#include <stddef.h>
+/* Amalgamated: #include "mjs/src/mjs_core_public.h" */
+/* Amalgamated: #include "mjs/src/mjs_ffi_public.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Returns true if the given value is an object or array.
+ */
+int mjs_is_object(mjs_val_t v);
+
+/* Make an empty object */
+mjs_val_t mjs_mk_object(struct mjs *mjs);
+
+/* Field types for struct-object conversion. */
+enum mjs_struct_field_type {
+  MJS_STRUCT_FIELD_TYPE_INVALID,
+  MJS_STRUCT_FIELD_TYPE_STRUCT,     /* Struct, arg points to def. */
+  MJS_STRUCT_FIELD_TYPE_STRUCT_PTR, /* Ptr to struct, arg points to def. */
+  MJS_STRUCT_FIELD_TYPE_INT,
+  MJS_STRUCT_FIELD_TYPE_BOOL,
+  MJS_STRUCT_FIELD_TYPE_DOUBLE,
+  MJS_STRUCT_FIELD_TYPE_FLOAT,
+  MJS_STRUCT_FIELD_TYPE_CHAR_PTR,   /* NUL-terminated string. */
+  MJS_STRUCT_FIELD_TYPE_VOID_PTR,   /* Converted to foreign ptr. */
+  MJS_STRUCT_FIELD_TYPE_MG_STR_PTR, /* Converted to string. */
+  MJS_STRUCT_FIELD_TYPE_MG_STR,     /* Converted to string. */
+  MJS_STRUCT_FIELD_TYPE_DATA,       /* Data, arg is length, becomes string. */
+  MJS_STRUCT_FIELD_TYPE_INT8,
+  MJS_STRUCT_FIELD_TYPE_INT16,
+  MJS_STRUCT_FIELD_TYPE_UINT8,
+  MJS_STRUCT_FIELD_TYPE_UINT16,
+  /*
+   * User-provided function. Arg is a pointer to function that takes void *
+   * (pointer to field within the struct) and returns mjs_val_t:
+   * mjs_val_t field_value(struct mjs *mjs, const void *field_ptr) { ... }
+   */
+  MJS_STRUCT_FIELD_TYPE_CUSTOM,
+};
+
+/* C structure layout descriptor - needed by mjs_struct_to_obj */
+struct mjs_c_struct_member {
+  const char *name;
+  int offset;
+  enum mjs_struct_field_type type;
+  const void *arg; /* Additional argument, used for some types. */
+};
+
+/* Create flat JS object from a C memory descriptor */
+mjs_val_t mjs_struct_to_obj(struct mjs *mjs, const void *base,
+                            const struct mjs_c_struct_member *members);
+
+/*
+ * Lookup property `name` in object `obj`. If `obj` holds no such property,
+ * an `undefined` value is returned.
+ *
+ * If `name_len` is ~0, `name` is assumed to be NUL-terminated and
+ * `strlen(name)` is used.
+ */
+mjs_val_t mjs_get(struct mjs *mjs, mjs_val_t obj, const char *name,
+                  size_t name_len);
+
+/*
+ * Like mjs_get but with a JS string.
+ */
+mjs_val_t mjs_get_v(struct mjs *mjs, mjs_val_t obj, mjs_val_t name);
+
+/*
+ * Like mjs_get_v but lookup the prototype chain.
+ */
+mjs_val_t mjs_get_v_proto(struct mjs *mjs, mjs_val_t obj, mjs_val_t key);
+
+/*
+ * Set object property. Behaves just like JavaScript assignment.
+ */
+mjs_err_t mjs_set(struct mjs *mjs, mjs_val_t obj, const char *name, size_t len,
+                  mjs_val_t val);
+
+/*
+ * Like mjs_set but the name is already a JS string.
+ */
+mjs_err_t mjs_set_v(struct mjs *mjs, mjs_val_t obj, mjs_val_t name,
+                    mjs_val_t val);
+
+/*
+ * Delete own property `name` of the object `obj`. Does not follow the
+ * prototype chain.
+ *
+ * If `name_len` is ~0, `name` is assumed to be NUL-terminated and
+ * `strlen(name)` is used.
+ *
+ * Returns 0 on success, -1 on error.
+ */
+int mjs_del(struct mjs *mjs, mjs_val_t obj, const char *name, size_t len);
+
+/*
+ * Iterate over `obj` properties.
+ * First call should set `iterator` to MJS_UNDEFINED.
+ * Return object's key (a string), or MJS_UNDEFINED when no more keys left.
+ * Do not mutate the object during iteration.
+ *
+ * Example:
+ *   mjs_val_t key, iter = MJS_UNDEFINED;
+ *   while ((key = mjs_next(mjs, obj, &iter)) != MJS_UNDEFINED) {
+ *     // Do something with the obj/key ...
+ *   }
+ */
+mjs_val_t mjs_next(struct mjs *mjs, mjs_val_t obj, mjs_val_t *iterator);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_OBJECT_PUBLIC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_object.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_OBJECT_H_
+#define MJS_OBJECT_H_
+
+/* Amalgamated: #include "mjs/src/mjs_object_public.h" */
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 struct mjs;
 
 struct mjs_property {
-  struct mjs_property *next;
-  mjs_val_t name;
-  mjs_val_t value;
+  struct mjs_property *next; /* Linkage in struct mjs_object::properties */
+  mjs_val_t name;            /* Property name (a string) */
+  mjs_val_t value;           /* Property value */
 };
 
 struct mjs_object {
   struct mjs_property *properties;
 };
 
-static struct mjs_object *get_object_struct(mjs_val_t v);
-static struct mjs_property *mjs_get_own_property(struct mjs *mjs,
+MJS_PRIVATE struct mjs_object *get_object_struct(mjs_val_t v);
+MJS_PRIVATE struct mjs_property *mjs_get_own_property(struct mjs *mjs,
                                                       mjs_val_t obj,
                                                       const char *name,
                                                       size_t len);
 
-static struct mjs_property *mjs_get_own_property_v(struct mjs *mjs,
+MJS_PRIVATE struct mjs_property *mjs_get_own_property_v(struct mjs *mjs,
                                                         mjs_val_t obj,
                                                         mjs_val_t key);
 
-
-
-
-
-
-static mjs_err_t mjs_set_internal(struct mjs *mjs, mjs_val_t obj,
+/*
+ * A worker function for `mjs_set()` and `mjs_set_v()`: it takes name as both
+ * ptr+len and mjs_val_t. If `name` pointer is not NULL, it takes precedence
+ * over `name_v`.
+ */
+MJS_PRIVATE mjs_err_t mjs_set_internal(struct mjs *mjs, mjs_val_t obj,
                                        mjs_val_t name_v, char *name,
                                        size_t name_len, mjs_val_t val);
 
+/*
+ * Implementation of `Object.create(proto)`
+ */
+MJS_PRIVATE void mjs_op_create_object(struct mjs *mjs);
 
+#define MJS_PROTO_PROP_NAME "__p" /* Make it < 5 chars */
 
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
-static void mjs_op_create_object(struct mjs *mjs);
-# 4243 "mjs_extra.h"
-static mjs_val_t mjs_legit_pointer_to_value(void *p);
+#endif /* MJS_OBJECT_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_primitive_public.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
 
+#ifndef MJS_PRIMITIVE_PUBLIC_H_
+#define MJS_PRIMITIVE_PUBLIC_H_
 
+/* Amalgamated: #include "mjs/src/mjs_core_public.h" */
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
 
+/* JavaScript `null` value */
+#define MJS_NULL MJS_TAG_NULL
 
-static mjs_val_t mjs_pointer_to_value(struct mjs *mjs, void *p);
+/* JavaScript `undefined` value */
+#define MJS_UNDEFINED MJS_TAG_UNDEFINED
 
+/* Function pointer type used in `mjs_mk_foreign_func`. */
+typedef void (*mjs_func_ptr_t)(void);
 
+/*
+ * Make `null` primitive value.
+ *
+ * NOTE: this function is deprecated and will be removed in future releases.
+ * Use `MJS_NULL` instead.
+ */
+mjs_val_t mjs_mk_null(void);
 
+/* Returns true if given value is a primitive `null` value */
+int mjs_is_null(mjs_val_t v);
 
-static void *get_ptr(mjs_val_t v);
+/*
+ * Make `undefined` primitive value.
+ *
+ * NOTE: this function is deprecated and will be removed in future releases.
+ * Use `MJS_UNDEFINED` instead.
+ */
+mjs_val_t mjs_mk_undefined(void);
 
+/* Returns true if given value is a primitive `undefined` value */
+int mjs_is_undefined(mjs_val_t v);
 
+/* Make numeric primitive value */
+mjs_val_t mjs_mk_number(struct mjs *mjs, double num);
 
+/*
+ * Returns number value stored in `mjs_val_t` as `double`.
+ *
+ * Returns NaN for non-numbers.
+ */
+double mjs_get_double(struct mjs *mjs, mjs_val_t v);
 
-static void mjs_op_isnan(struct mjs *mjs);
-# 4371 "mjs_extra.h"
-static unsigned long cstr_to_ulong(const char *s, size_t len, int *ok);
-static mjs_err_t
+/*
+ * Returns number value stored in `mjs_val_t` as `int`. If the number value is
+ * not an integer, the fraction part will be discarded.
+ *
+ * If the given value is a non-number, or NaN, the result is undefined.
+ */
+int mjs_get_int(struct mjs *mjs, mjs_val_t v);
+
+/*
+ * Like mjs_get_int but ensures that the returned type
+ * is a 32-bit signed integer.
+ */
+int32_t mjs_get_int32(struct mjs *mjs, mjs_val_t v);
+
+/* Returns true if given value is a primitive number value */
+int mjs_is_number(mjs_val_t v);
+
+/*
+ * Make JavaScript value that holds C/C++ `void *` pointer.
+ *
+ * A foreign value is completely opaque and JS code cannot do anything useful
+ * with it except holding it in properties and passing it around.
+ * It behaves like a sealed object with no properties.
+ *
+ * NOTE:
+ * Only valid pointers (as defined by each supported architecture) will fully
+ * preserved. In particular, all supported 64-bit architectures (x86_64, ARM-64)
+ * actually define a 48-bit virtual address space.
+ * Foreign values will be sign-extended as required, i.e creating a foreign
+ * value of something like `(void *) -1` will work as expected. This is
+ * important because in some 64-bit OSs (e.g. Solaris) the user stack grows
+ * downwards from the end of the address space.
+ *
+ * If you need to store exactly sizeof(void*) bytes of raw data where
+ * `sizeof(void*)` >= 8, please use byte arrays instead.
+ */
+mjs_val_t mjs_mk_foreign(struct mjs *mjs, void *ptr);
+
+/*
+ * Make JavaScript value that holds C/C++ function pointer, similarly to
+ * `mjs_mk_foreign`.
+ */
+mjs_val_t mjs_mk_foreign_func(struct mjs *mjs, mjs_func_ptr_t fn);
+
+/*
+ * Returns `void *` pointer stored in `mjs_val_t`.
+ *
+ * Returns NULL if the value is not a foreign pointer.
+ */
+void *mjs_get_ptr(struct mjs *mjs, mjs_val_t v);
+
+/* Returns true if given value holds `void *` pointer */
+int mjs_is_foreign(mjs_val_t v);
+
+mjs_val_t mjs_mk_boolean(struct mjs *mjs, int v);
+int mjs_get_bool(struct mjs *mjs, mjs_val_t v);
+int mjs_is_boolean(mjs_val_t v);
+
+mjs_val_t mjs_mk_function(struct mjs *mjs, size_t off);
+int mjs_is_function(mjs_val_t v);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_PRIMITIVE_PUBLIC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_primitive.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_PRIMITIVE_H
+#define MJS_PRIMITIVE_H
+
+/* Amalgamated: #include "mjs/src/mjs_primitive_public.h" */
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Convert a pointer to mjs_val_t. If pointer is not valid, mjs crashes.
+ */
+MJS_PRIVATE mjs_val_t mjs_legit_pointer_to_value(void *p);
+
+/*
+ * Convert a pointer to mjs_val_t. If pointer is not valid, error is set
+ * in the mjs context.
+ */
+MJS_PRIVATE mjs_val_t mjs_pointer_to_value(struct mjs *mjs, void *p);
+
+/*
+ * Extracts a pointer from the mjs_val_t value.
+ */
+MJS_PRIVATE void *get_ptr(mjs_val_t v);
+
+/*
+ * Implementation for JS isNaN()
+ */
+MJS_PRIVATE void mjs_op_isnan(struct mjs *mjs);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_PRIMITIVE_H */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_string_public.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_STRING_PUBLIC_H_
+#define MJS_STRING_PUBLIC_H_
+
+/* Amalgamated: #include "mjs/src/mjs_core_public.h" */
+
+#define MJS_STRING_LITERAL_MAX_LEN 128
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Creates a string primitive value.
+ * `str` must point to the utf8 string of length `len`.
+ * If `len` is ~0, `str` is assumed to be NUL-terminated and `strlen(str)` is
+ * used.
+ *
+ * If `copy` is non-zero, the string data is copied and owned by the GC. The
+ * caller can free the string data afterwards. Otherwise (`copy` is zero), the
+ * caller owns the string data, and is responsible for not freeing it while it
+ * is used.
+ */
+mjs_val_t mjs_mk_string(struct mjs *mjs, const char *str, size_t len, int copy);
+
+/* Returns true if given value is a primitive string value */
+int mjs_is_string(mjs_val_t v);
+
+/*
+ * Returns a pointer to the string stored in `mjs_val_t`.
+ *
+ * String length returned in `len`, which is allowed to be NULL. Returns NULL
+ * if the value is not a string.
+ *
+ * JS strings can contain embedded NUL chars and may or may not be NUL
+ * terminated.
+ *
+ * CAUTION: creating new JavaScript object, array, or string may kick in a
+ * garbage collector, which in turn may relocate string data and invalidate
+ * pointer returned by `mjs_get_string()`.
+ *
+ * Short JS strings are embedded inside the `mjs_val_t` value itself. This
+ * is why a pointer to a `mjs_val_t` is required. It also means that the string
+ * data will become invalid once that `mjs_val_t` value goes out of scope.
+ */
+const char *mjs_get_string(struct mjs *mjs, mjs_val_t *v, size_t *len);
+
+/*
+ * Returns a pointer to the string stored in `mjs_val_t`.
+ *
+ * Returns NULL if the value is not a string or if the string is not compatible
+ * with a C string.
+ *
+ * C compatible strings contain exactly one NUL char, in terminal position.
+ *
+ * All strings owned by the MJS engine (see `mjs_mk_string()`) are guaranteed to
+ * be NUL terminated. Out of these, those that don't include embedded NUL chars
+ * are guaranteed to be C compatible.
+ */
+const char *mjs_get_cstring(struct mjs *mjs, mjs_val_t *v);
+
+/*
+ * Returns the standard strcmp comparison code after comparing a JS string a
+ * with a possibly non null-terminated string b. NOTE: the strings are equal
+ * only if their length is equal, i.e. the len field doesn't imply strncmp
+ * behaviour.
+ */
+int mjs_strcmp(struct mjs *mjs, mjs_val_t *a, const char *b, size_t len);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_STRING_PUBLIC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_string.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_STRING_H_
+#define MJS_STRING_H_
+
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+/* Amalgamated: #include "mjs/src/mjs_string_public.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Size of the extra space for strings mbuf that is needed to avoid frequent
+ * reallocations
+ */
+#define _MJS_STRING_BUF_RESERVE 100
+
+MJS_PRIVATE unsigned long cstr_to_ulong(const char *s, size_t len, int *ok);
+MJS_PRIVATE mjs_err_t
 str_to_ulong(struct mjs *mjs, mjs_val_t v, int *ok, unsigned long *res);
-static int s_cmp(struct mjs *mjs, mjs_val_t a, mjs_val_t b);
-static mjs_val_t s_concat(struct mjs *mjs, mjs_val_t a, mjs_val_t b);
+MJS_PRIVATE int s_cmp(struct mjs *mjs, mjs_val_t a, mjs_val_t b);
+MJS_PRIVATE mjs_val_t s_concat(struct mjs *mjs, mjs_val_t a, mjs_val_t b);
 
-static void embed_string(struct mbuf *m, size_t offset, const char *p,
-                              size_t len, uint8_t flags);
+MJS_PRIVATE void embed_string(struct mbuf *m, size_t offset, const char *p,
+                              size_t len, uint8_t /*enum embstr_flags*/ flags);
 
-static void mjs_mkstr(struct mjs *mjs);
+MJS_PRIVATE void mjs_mkstr(struct mjs *mjs);
 
-static void mjs_string_slice(struct mjs *mjs);
-static void mjs_string_index_of(struct mjs *mjs);
-static void mjs_string_char_code_at(struct mjs *mjs);
-# 4466 "mjs_extra.h"
+MJS_PRIVATE void mjs_string_slice(struct mjs *mjs);
+MJS_PRIVATE void mjs_string_index_of(struct mjs *mjs);
+MJS_PRIVATE void mjs_string_char_code_at(struct mjs *mjs);
+
+#define EMBSTR_ZERO_TERM 1
+#define EMBSTR_UNESCAPE 2
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_STRING_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_util_public.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_UTIL_PUBLIC_H_
+#define MJS_UTIL_PUBLIC_H_
+
+/* Amalgamated: #include "mjs/src/mjs_core_public.h" */
+#include <stdio.h>
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+const char *mjs_typeof(mjs_val_t v);
+
+void mjs_fprintf(mjs_val_t v, struct mjs *mjs, FILE *fp);
+void mjs_sprintf(mjs_val_t v, struct mjs *mjs, char *buf, size_t buflen);
+
+#if MJS_ENABLE_DEBUG
+
+void mjs_disasm(const uint8_t *code, size_t len);
+void mjs_dump(struct mjs *mjs, int do_disasm);
+
+#endif
+
+/*
+ * Returns the filename corresponding to the given bcode offset.
+ */
+const char *mjs_get_bcode_filename_by_offset(struct mjs *mjs, int offset);
+
+/*
+ * Returns the line number corresponding to the given bcode offset.
+ */
+int mjs_get_lineno_by_offset(struct mjs *mjs, int offset);
+
+/*
+ * Returns bcode offset of the corresponding call frame cf_num, where 0 means
+ * the currently executing function, 1 means the first return address, etc.
+ *
+ * If given cf_num is too large, -1 is returned.
+ */
+int mjs_get_offset_by_call_frame_num(struct mjs *mjs, int cf_num);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_UTIL_PUBLIC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_util.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_UTIL_H_
+#define MJS_UTIL_H_
+
+/* Amalgamated: #include "frozen.h" */
+/* Amalgamated: #include "mjs/src/mjs_core.h" */
+/* Amalgamated: #include "mjs/src/mjs_util_public.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 struct mjs_bcode_part;
 
-static const char *opcodetostr(uint8_t opcode);
-static size_t mjs_disasm_single(const uint8_t *code, size_t i);
-static const char *mjs_stringify_type(enum mjs_type t);
-# 4480 "mjs_extra.h"
-static int mjs_check_arg(struct mjs *mjs, int arg_num,
+MJS_PRIVATE const char *opcodetostr(uint8_t opcode);
+MJS_PRIVATE size_t mjs_disasm_single(const uint8_t *code, size_t i);
+MJS_PRIVATE const char *mjs_stringify_type(enum mjs_type t);
+
+/*
+ * Checks that the given argument is provided, and checks its type. If check
+ * fails, sets error in the mjs context, and returns 0; otherwise returns 1.
+ *
+ * If `arg_num` >= 0, checks argument; otherwise (`arg_num` is negative) checks
+ * `this`. `arg_name` is used for the error message only. If `parg` is not
+ * NULL, writes resulting value at this location in case of success.
+ */
+MJS_PRIVATE int mjs_check_arg(struct mjs *mjs, int arg_num,
                               const char *arg_name, enum mjs_type expected_type,
                               mjs_val_t *parg);
 
+/*
+ * mjs_normalize_idx takes and index in the string and the string size, and
+ * returns the index which is >= 0 and <= size. Negative index is interpreted
+ * as size + index.
+ */
+MJS_PRIVATE int mjs_normalize_idx(int idx, int size);
 
-
-
-
-
-static int mjs_normalize_idx(int idx, int size);
-
-static const char *mjs_get_bcode_filename(struct mjs *mjs,
+MJS_PRIVATE const char *mjs_get_bcode_filename(struct mjs *mjs,
                                                struct mjs_bcode_part *bp);
 
-
+/* Print JS value `v` to the JSON stream `out`. */
 void mjs_jprintf(mjs_val_t v, struct mjs *mjs, struct json_out *out);
-# 4530 "mjs_extra.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 1 3
-# 4531 "mjs_extra.h" 2
 
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
+#endif /* MJS_UTIL_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/cs_varint.h"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+#ifndef CS_COMMON_CS_VARINT_H_
+#define CS_COMMON_CS_VARINT_H_
 
+#if defined(_WIN32) && _MSC_VER < 1700
+typedef unsigned char uint8_t;
+typedef unsigned __int64 uint64_t;
+#else
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
+#endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-
-
+/* Returns number of bytes required to encode `num`. */
 size_t cs_varint_llen(uint64_t num);
 
-
-
-
-
-
-
+/*
+ * Encodes `num` into `buf`.
+ * Returns number of bytes required to encode `num`.
+ * Note: return value may be greater than `buf_size` but the function will only
+ * write `buf_size` bytes.
+ */
 size_t cs_varint_encode(uint64_t num, uint8_t *buf, size_t buf_size);
 
-
-
-
-
-
-_Bool cs_varint_decode(const uint8_t *buf, size_t buf_size, uint64_t *num,
+/*
+ * Decodes varint stored in `buf`.
+ * Stores the number of bytes consumed into `llen`.
+ * If there aren't enough bytes in `buf` to decode a number, returns false.
+ */
+bool cs_varint_decode(const uint8_t *buf, size_t buf_size, uint64_t *num,
                       size_t *llen);
 
 uint64_t cs_varint_decode_unsafe(const uint8_t *buf, int *llen);
-# 4583 "mjs_extra.h"
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CS_COMMON_CS_VARINT_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_bcode.h"
+#endif
+/*
+ * Copyright (c) 2017 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_BCODE_H_
+#define MJS_BCODE_H_
+
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+
+/* Amalgamated: #include "mjs/src/mjs_core.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 enum mjs_opcode {
-  OP_NOP,
-  OP_DROP,
-  OP_DUP,
-  OP_SWAP,
-  OP_JMP,
-  OP_JMP_TRUE,
-  OP_JMP_NEUTRAL_TRUE,
-  OP_JMP_FALSE,
-  OP_JMP_NEUTRAL_FALSE,
-  OP_FIND_SCOPE,
-  OP_PUSH_SCOPE,
-  OP_PUSH_STR,
-  OP_PUSH_TRUE,
-  OP_PUSH_FALSE,
-  OP_PUSH_INT,
-  OP_PUSH_DBL,
-  OP_PUSH_NULL,
-  OP_PUSH_UNDEF,
-  OP_PUSH_OBJ,
-  OP_PUSH_ARRAY,
-  OP_PUSH_FUNC,
-  OP_PUSH_THIS,
-  OP_GET,
-  OP_CREATE,
-  OP_EXPR,
-  OP_APPEND,
-  OP_SET_ARG,
-  OP_NEW_SCOPE,
-  OP_DEL_SCOPE,
-  OP_CALL,
-  OP_RETURN,
-  OP_LOOP,
-  OP_BREAK,
-  OP_CONTINUE,
-  OP_SETRETVAL,
-  OP_EXIT,
-  OP_BCODE_HEADER,
-  OP_ARGS,
-  OP_FOR_IN_NEXT,
+  OP_NOP,               /* ( -- ) */
+  OP_DROP,              /* ( a -- ) */
+  OP_DUP,               /* ( a -- a a ) */
+  OP_SWAP,              /* ( a b -- b a ) */
+  OP_JMP,               /* ( -- ) */
+  OP_JMP_TRUE,          /* ( -- ) */
+  OP_JMP_NEUTRAL_TRUE,  /* ( -- ) */
+  OP_JMP_FALSE,         /* ( -- ) */
+  OP_JMP_NEUTRAL_FALSE, /* ( -- ) */
+  OP_FIND_SCOPE,        /* ( a -- a b ) */
+  OP_PUSH_SCOPE,        /* ( -- a ) */
+  OP_PUSH_STR,          /* ( -- a ) */
+  OP_PUSH_TRUE,         /* ( -- a ) */
+  OP_PUSH_FALSE,        /* ( -- a ) */
+  OP_PUSH_INT,          /* ( -- a ) */
+  OP_PUSH_DBL,          /* ( -- a ) */
+  OP_PUSH_NULL,         /* ( -- a ) */
+  OP_PUSH_UNDEF,        /* ( -- a ) */
+  OP_PUSH_OBJ,          /* ( -- a ) */
+  OP_PUSH_ARRAY,        /* ( -- a ) */
+  OP_PUSH_FUNC,         /* ( -- a ) */
+  OP_PUSH_THIS,         /* ( -- a ) */
+  OP_GET,               /* ( key obj  -- obj[key] ) */
+  OP_CREATE,            /* ( key obj -- ) */
+  OP_EXPR,              /* ( ... -- a ) */
+  OP_APPEND,            /* ( a b -- ) */
+  OP_SET_ARG,           /* ( a -- a ) */
+  OP_NEW_SCOPE,         /* ( -- ) */
+  OP_DEL_SCOPE,         /* ( -- ) */
+  OP_CALL,              /* ( func param1 param2 ... num_params -- result ) */
+  OP_RETURN,            /* ( -- ) */
+  OP_LOOP,         /* ( -- ) Push break & continue addresses to loop_labels */
+  OP_BREAK,        /* ( -- ) */
+  OP_CONTINUE,     /* ( -- ) */
+  OP_SETRETVAL,    /* ( a -- ) */
+  OP_EXIT,         /* ( -- ) */
+  OP_BCODE_HEADER, /* ( -- ) */
+  OP_ARGS,         /* ( -- ) Mark the beginning of function call arguments */
+  OP_FOR_IN_NEXT,  /* ( name obj iter_ptr -- name obj iter_ptr_next ) */
   OP_MAX
 };
 
 struct pstate;
 struct mjs;
 
-static void emit_byte(struct pstate *pstate, uint8_t byte);
-static void emit_int(struct pstate *pstate, int64_t n);
-static void emit_str(struct pstate *pstate, const char *ptr, size_t len);
+MJS_PRIVATE void emit_byte(struct pstate *pstate, uint8_t byte);
+MJS_PRIVATE void emit_int(struct pstate *pstate, int64_t n);
+MJS_PRIVATE void emit_str(struct pstate *pstate, const char *ptr, size_t len);
 
-
-
-
-
-
-
-static int mjs_bcode_insert_offset(struct pstate *p, struct mjs *mjs,
+/*
+ * Inserts provided offset `v` at the offset `offset`.
+ *
+ * Returns delta at which the code was moved; the delta can be any: 0 or
+ * positive or negative.
+ */
+MJS_PRIVATE int mjs_bcode_insert_offset(struct pstate *p, struct mjs *mjs,
                                         size_t offset, size_t v);
 
-
-
-
-static void mjs_bcode_part_add(struct mjs *mjs,
+/*
+ * Adds a new bcode part; does not retain `bp`.
+ */
+MJS_PRIVATE void mjs_bcode_part_add(struct mjs *mjs,
                                     const struct mjs_bcode_part *bp);
 
+/*
+ * Returns bcode part by the bcode number
+ */
+MJS_PRIVATE struct mjs_bcode_part *mjs_bcode_part_get(struct mjs *mjs, int num);
 
-
-
-static struct mjs_bcode_part *mjs_bcode_part_get(struct mjs *mjs, int num);
-
-
-
-
-static struct mjs_bcode_part *mjs_bcode_part_get_by_offset(struct mjs *mjs,
+/*
+ * Returns bcode part by the global bcode offset
+ */
+MJS_PRIVATE struct mjs_bcode_part *mjs_bcode_part_get_by_offset(struct mjs *mjs,
                                                                 size_t offset);
 
+/*
+ * Returns a number of bcode parts
+ */
+MJS_PRIVATE int mjs_bcode_parts_cnt(struct mjs *mjs);
 
+/*
+ * Adds the bcode being generated (mjs->bcode_gen) as a next bcode part
+ */
+MJS_PRIVATE void mjs_bcode_commit(struct mjs *mjs);
 
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
-static int mjs_bcode_parts_cnt(struct mjs *mjs);
+#endif /* MJS_BCODE_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_internal.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
 
+#ifndef MJS_INTERNAL_H_
+#define MJS_INTERNAL_H_
 
+#include <assert.h>
+#include <ctype.h>
+#include <math.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 
+#ifndef FAST
+#define FAST
+#endif
 
-static void mjs_bcode_commit(struct mjs *mjs);
-# 4784 "mjs_extra.h"
+#ifndef STATIC
+#define STATIC
+#endif
+
+#ifndef ENDL
+#define ENDL "\n"
+#endif
+
+#ifdef MJS_EXPOSE_PRIVATE
+#define MJS_PRIVATE
+#define MJS_EXTERN extern
+#else
+#define MJS_PRIVATE static
+#define MJS_EXTERN static
+#endif
+
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+#endif
+
+#if !defined(WEAK)
+#if (defined(__GNUC__) || defined(__TI_COMPILER_VERSION__)) && !defined(_WIN32)
+#define WEAK __attribute__((weak))
+#else
+#define WEAK
+#endif
+#endif
+
+#ifndef CS_ENABLE_STDIO
+#define CS_ENABLE_STDIO 1
+#endif
+
+/* Amalgamated: #include "common/cs_dbg.h" */
+/* Amalgamated: #include "common/cs_file.h" */
+/* Amalgamated: #include "common/mbuf.h" */
+
+#if defined(_WIN32) && _MSC_VER < 1700
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+typedef int int32_t;
+typedef unsigned int uint32_t;
+typedef short int16_t;
+typedef unsigned short uint16_t;
+typedef __int64 int64_t;
+typedef unsigned long uintptr_t;
+#define STRX(x) #x
+#define STR(x) STRX(x)
+#define __func__ __FILE__ ":" STR(__LINE__)
+// #define snprintf _snprintf
+#define vsnprintf _vsnprintf
+#define isnan(x) _isnan(x)
+#define va_copy(x, y) (x) = (y)
+#define CS_DEFINE_DIRENT
+#include <windows.h>
+#else
+#if defined(__unix__) || defined(__APPLE__)
+#include <dlfcn.h>
+#endif
+#endif
+
+/*
+ * Number of bytes reserved for the jump offset initially. The most practical
+ * value is 1, but for testing it's useful to set it to 0 and to some large
+ * value as well (like, 4), to make sure that the code behaves correctly under
+ * all circumstances.
+ */
+#ifndef MJS_INIT_OFFSET_SIZE
+#define MJS_INIT_OFFSET_SIZE 1
+#endif
+
+#endif /* MJS_INTERNAL_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_tok.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_TOK_H_
+#define MJS_TOK_H_
+
+/* Amalgamated: #include "mjs_internal.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 struct tok {
   int tok;
   int len;
@@ -8983,18 +4788,18 @@ struct tok {
 };
 
 struct pstate {
-  const char *file_name;
-  const char *buf;
-  const char *pos;
-  int line_no;
+  const char *file_name; /* Source code file name */
+  const char *buf;       /* Nul-terminated source code buffer */
+  const char *pos;       /* Current position */
+  int line_no;           /* Line number */
   int last_emitted_line_no;
   struct mbuf offset_lineno_map;
-  int prev_tok;
-  struct tok tok;
+  int prev_tok;   /* Previous token, for prefix increment / decrement */
+  struct tok tok; /* Parsed token */
   struct mjs *mjs;
-  int start_bcode_idx;
-  int cur_idx;
-
+  int start_bcode_idx; /* Index in mjs->bcode at which parsing was started */
+  int cur_idx; /* Index in mjs->bcode at which newly generated code is inserted
+                  */
   int depth;
 };
 
@@ -9056,7 +4861,7 @@ enum {
   TOK_POSTFIX_PLUS,
   TOK_POSTFIX_MINUS,
 
-  TOK_NUM = 200,
+  TOK_NUM = 200, /* Make sure they don't clash with ascii '+', '{', etc */
   TOK_STR,
   TOK_IDENT,
   TOK_KEYWORD_BREAK,
@@ -9093,11 +4898,36 @@ enum {
   TOK_MAX
 };
 
-static void pinit(const char *file_name, const char *buf, struct pstate *);
-static int pnext(struct pstate *);
-static int mjs_is_ident(int c);
-static int mjs_is_digit(int c);
-# 4931 "mjs_extra.h"
+MJS_PRIVATE void pinit(const char *file_name, const char *buf, struct pstate *);
+MJS_PRIVATE int pnext(struct pstate *);
+MJS_PRIVATE int mjs_is_ident(int c);
+MJS_PRIVATE int mjs_is_digit(int c);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_TOK_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_dataview.h"
+#endif
+/*
+ * Copyright (c) 2017 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_DATAVIEW_H_
+#define MJS_DATAVIEW_H_
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * Functions for memory introspection.
+ * These are supposed to be FFI-ed and used from the JS environment.
+ */
+
 void *mjs_mem_to_ptr(unsigned int val);
 void *mjs_mem_get_ptr(void *base, int offset);
 void mjs_mem_set_ptr(void *ptr, void *val);
@@ -9107,63 +4937,223 @@ double mjs_mem_get_uint(void *ptr, int size, int bigendian);
 double mjs_mem_get_int(void *ptr, int size, int bigendian);
 void mjs_mem_set_uint(void *ptr, unsigned int val, int size, int bigendian);
 void mjs_mem_set_int(void *ptr, int val, int size, int bigendian);
-# 5002 "mjs_extra.h"
-static mjs_err_t mjs_execute(struct mjs *mjs, size_t off, mjs_val_t *res);
-# 5024 "mjs_extra.h"
-static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_DATAVIEW_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_exec_public.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_EXEC_PUBLIC_H_
+#define MJS_EXEC_PUBLIC_H_
+
+/* Amalgamated: #include "mjs/src/mjs_core_public.h" */
+#include <stdio.h>
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+mjs_err_t mjs_exec(struct mjs *, const char *src, mjs_val_t *res);
+mjs_err_t mjs_exec_buf(struct mjs *, const char *src, size_t, mjs_val_t *res);
+
+mjs_err_t mjs_exec_file(struct mjs *mjs, const char *path, mjs_val_t *res);
+mjs_err_t mjs_apply(struct mjs *mjs, mjs_val_t *res, mjs_val_t func,
+                    mjs_val_t this_val, int nargs, mjs_val_t *args);
+mjs_err_t mjs_call(struct mjs *mjs, mjs_val_t *res, mjs_val_t func,
+                   mjs_val_t this_val, int nargs, ...);
+mjs_val_t mjs_get_this(struct mjs *mjs);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_EXEC_PUBLIC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_exec.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_EXEC_H_
+#define MJS_EXEC_H_
+
+/* Amalgamated: #include "mjs/src/mjs_exec_public.h" */
+
+/*
+ * A special bcode offset value which causes mjs_execute() to exit immediately;
+ * used in mjs_apply().
+ */
+#define MJS_BCODE_OFFSET_EXIT ((size_t) 0x7fffffff)
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+MJS_PRIVATE mjs_err_t mjs_execute(struct mjs *mjs, size_t off, mjs_val_t *res);
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_EXEC_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_json.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_JSON_H_
+#define MJS_JSON_H_
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+MJS_PRIVATE mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
                                        size_t size, size_t *res_len,
                                        uint8_t is_debug);
 
-static mjs_err_t mjs_json_stringify(struct mjs *mjs, mjs_val_t v,
+MJS_PRIVATE mjs_err_t mjs_json_stringify(struct mjs *mjs, mjs_val_t v,
                                          char *buf, size_t size, char **res);
-static void mjs_op_json_stringify(struct mjs *mjs);
-static void mjs_op_json_parse(struct mjs *mjs);
+MJS_PRIVATE void mjs_op_json_stringify(struct mjs *mjs);
+MJS_PRIVATE void mjs_op_json_parse(struct mjs *mjs);
 
-static mjs_err_t
+MJS_PRIVATE mjs_err_t
 mjs_json_parse(struct mjs *mjs, const char *str, size_t len, mjs_val_t *res);
-# 5059 "mjs_extra.h"
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_JSON_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_builtin.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_BUILTIN_H_
+#define MJS_BUILTIN_H_
+
+/* Amalgamated: #include "mjs/src/mjs_core_public.h" */
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 void mjs_init_builtin(struct mjs *mjs, mjs_val_t obj);
-# 5083 "mjs_extra.h"
-static mjs_err_t
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
+#endif /* MJS_BUILTIN_H_ */
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_parser.h"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#ifndef MJS_PARSER_H
+#define MJS_PARSER_H
+
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
+MJS_PRIVATE mjs_err_t
 mjs_parse(const char *path, const char *buf, struct mjs *);
-# 5120 "mjs_extra.h"
-enum cs_log_level cs_log_level __attribute__((weak)) =
 
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
+#endif /* MJS_PARSER_H */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/cs_dbg.c"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+/* Amalgamated: #include "common/cs_dbg.h" */
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+
+/* Amalgamated: #include "common/cs_time.h" */
+/* Amalgamated: #include "common/str_util.h" */
+
+enum cs_log_level cs_log_level WEAK =
+#if CS_ENABLE_DEBUG
+    LL_VERBOSE_DEBUG;
+#else
     LL_ERROR;
+#endif
 
+#if CS_ENABLE_STDIO
+static char *s_file_level = NULL;
 
+void cs_log_set_file_level(const char *file_level) WEAK;
 
-static char *s_file_level = ((void*)0);
+FILE *cs_log_file WEAK = NULL;
 
-void cs_log_set_file_level(const char *file_level) __attribute__((weak));
+#if CS_LOG_ENABLE_TS_DIFF
+double cs_log_ts WEAK;
+#endif
 
-FILE *cs_log_file __attribute__((weak)) = ((void*)0);
-
-
-
-
-
-enum cs_log_level cs_log_cur_msg_level __attribute__((weak)) = LL_NONE;
+enum cs_log_level cs_log_cur_msg_level WEAK = LL_NONE;
 
 void cs_log_set_file_level(const char *file_level) {
   char *fl = s_file_level;
-  if (file_level != ((void*)0)) {
+  if (file_level != NULL) {
     s_file_level = strdup(file_level);
   } else {
-    s_file_level = ((void*)0);
+    s_file_level = NULL;
   }
   free(fl);
 }
 
-int cs_log_print_prefix(enum cs_log_level level, const char *file, int ln) __attribute__((weak));
+int cs_log_print_prefix(enum cs_log_level level, const char *file, int ln) WEAK;
 int cs_log_print_prefix(enum cs_log_level level, const char *file, int ln) {
-  char prefix[24], *q;
+  char prefix[CS_LOG_PREFIX_LEN], *q;
   const char *p;
   size_t fl = 0, ll = 0, pl = 0;
 
-  if (level > cs_log_level && s_file_level == ((void*)0)) return 0;
+  if (level > cs_log_level && s_file_level == NULL) return 0;
 
   p = file + strlen(file);
 
@@ -9187,12 +5177,12 @@ int cs_log_print_prefix(enum cs_log_level level, const char *file, int ln) {
   } while (ln > 0);
   *(--q) = ':';
 
-  if (s_file_level != ((void*)0)) {
+  if (s_file_level != NULL) {
     enum cs_log_level pll = cs_log_level;
-    struct mg_str fl = mg_mk_str(s_file_level), ps = { prefix, pl };
+    struct mg_str fl = mg_mk_str(s_file_level), ps = MG_MK_STR_N(prefix, pl);
     struct mg_str k, v;
-    while ((fl = mg_next_comma_list_entry_n(fl, &k, &v)).p != ((void*)0)) {
-      _Bool yes = !(!mg_str_starts_with(ps, k) || v.len == 0);
+    while ((fl = mg_next_comma_list_entry_n(fl, &k, &v)).p != NULL) {
+      bool yes = !(!mg_str_starts_with(ps, k) || v.len == 0);
       if (!yes) continue;
       pll = (enum cs_log_level)(*v.p - '0');
       break;
@@ -9200,58 +5190,97 @@ int cs_log_print_prefix(enum cs_log_level level, const char *file, int ln) {
     if (level > pll) return 0;
   }
 
-  if (cs_log_file == ((void*)0)) cs_log_file = stderr;
+  if (cs_log_file == NULL) cs_log_file = stderr;
   cs_log_cur_msg_level = level;
   fwrite(prefix, 1, sizeof(prefix), cs_log_file);
-
-
-
-
-
-
-
+#if CS_LOG_ENABLE_TS_DIFF
+  {
+    double now = cs_time();
+    fprintf(cs_log_file, "%7u ", (unsigned int) ((now - cs_log_ts) * 1000000));
+    cs_log_ts = now;
+  }
+#endif
   return 1;
 }
 
-void cs_log_printf(const char *fmt, ...) __attribute__((weak));
+void cs_log_printf(const char *fmt, ...) WEAK;
 void cs_log_printf(const char *fmt, ...) {
   va_list ap;
-  __builtin_va_start(ap, fmt);
+  va_start(ap, fmt);
   vfprintf(cs_log_file, fmt, ap);
-  __builtin_va_end(ap);
+  va_end(ap);
   fputc('\n', cs_log_file);
   fflush(cs_log_file);
   cs_log_cur_msg_level = LL_NONE;
 }
 
-void cs_log_set_file(FILE *file) __attribute__((weak));
+void cs_log_set_file(FILE *file) WEAK;
 void cs_log_set_file(FILE *file) {
   cs_log_file = file;
 }
-# 5230 "mjs_extra.h"
-void cs_log_set_level(enum cs_log_level level) __attribute__((weak));
+
+#else
+
+void cs_log_set_file_level(const char *file_level) {
+  (void) file_level;
+}
+
+#endif /* CS_ENABLE_STDIO */
+
+void cs_log_set_level(enum cs_log_level level) WEAK;
 void cs_log_set_level(enum cs_log_level level) {
   cs_log_level = level;
-
-
-
+#if CS_LOG_ENABLE_TS_DIFF && CS_ENABLE_STDIO
+  cs_log_ts = cs_time();
+#endif
 }
-# 5269 "mjs_extra.h"
-char *cs_read_file(const char *path, size_t *size) __attribute__((weak));
+#ifdef MJS_MODULE_LINES
+#line 1 "common/cs_file.c"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Amalgamated: #include "common/cs_file.h" */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef CS_MMAP
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#endif
+
+#ifndef EXCLUDE_COMMON
+char *cs_read_file(const char *path, size_t *size) WEAK;
 char *cs_read_file(const char *path, size_t *size) {
   FILE *fp;
-  char *data = ((void*)0);
-  if ((fp = fopen(path, "rb")) == ((void*)0)) {
-  } else if (fseek(fp, 0, 2) != 0) {
+  char *data = NULL;
+  if ((fp = fopen(path, "rb")) == NULL) {
+  } else if (fseek(fp, 0, SEEK_END) != 0) {
     fclose(fp);
   } else {
     *size = ftell(fp);
     data = (char *) malloc(*size + 1);
-    if (data != ((void*)0)) {
-      fseek(fp, 0, 0);
+    if (data != NULL) {
+      fseek(fp, 0, SEEK_SET); /* Some platforms might not have rewind(), Oo */
       if (fread(data, 1, *size, fp) != *size) {
         free(data);
-        return ((void*)0);
+        return NULL;
       }
       data[*size] = '\0';
     }
@@ -9259,7 +5288,44 @@ char *cs_read_file(const char *path, size_t *size) {
   }
   return data;
 }
-# 5329 "mjs_extra.h"
+#endif /* EXCLUDE_COMMON */
+
+#ifdef CS_MMAP
+char *cs_mmap_file(const char *path, size_t *size) WEAK;
+char *cs_mmap_file(const char *path, size_t *size) {
+  char *r;
+  int fd = open(path, O_RDONLY, 0);
+  struct stat st;
+  if (fd < 0) return NULL;
+  fstat(fd, &st);
+  *size = (size_t) st.st_size;
+  r = (char *) mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+  if (r == MAP_FAILED) return NULL;
+  return r;
+}
+#endif
+#ifdef MJS_MODULE_LINES
+#line 1 "common/cs_varint.c"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Amalgamated: #include "cs_varint.h" */
+
 size_t cs_varint_llen(uint64_t num) {
   size_t llen = 0;
 
@@ -9284,22 +5350,22 @@ size_t cs_varint_encode(uint64_t num, uint8_t *buf, size_t buf_size) {
   return llen;
 }
 
-_Bool cs_varint_decode(const uint8_t *buf, size_t buf_size, uint64_t *num,
+bool cs_varint_decode(const uint8_t *buf, size_t buf_size, uint64_t *num,
                       size_t *llen) {
   size_t i = 0, shift = 0;
   uint64_t n = 0;
 
   do {
-    if (i == buf_size || i == (8 * sizeof(*num) / 7 + 1)) return 0;
-
-
-
-
+    if (i == buf_size || i == (8 * sizeof(*num) / 7 + 1)) return false;
+    /*
+     * Each byte of varint contains 7 bits, in little endian order.
+     * MSB is a continuation bit: it tells whether next byte is used.
+     */
     n |= ((uint64_t)(buf[i] & 0x7f)) << shift;
-
-
-
-
+    /*
+     * First we increment i, then check whether it is within boundary and
+     * whether decoded byte had continuation bit set.
+     */
     i++;
     shift += 7;
   } while (shift < sizeof(uint64_t) * 8 && (buf[i - 1] & 0x80));
@@ -9307,7 +5373,7 @@ _Bool cs_varint_decode(const uint8_t *buf, size_t buf_size, uint64_t *num,
   *num = n;
   *llen = i;
 
-  return 1;
+  return true;
 }
 
 uint64_t cs_varint_decode_unsafe(const uint8_t *buf, int *llen) {
@@ -9317,79 +5383,109 @@ uint64_t cs_varint_decode_unsafe(const uint8_t *buf, int *llen) {
   *llen = l;
   return v;
 }
-# 5408 "mjs_extra.h"
-# 1 "/usr/include/assert.h" 1 3 4
-# 5409 "mjs_extra.h" 2
-# 5420 "mjs_extra.h"
-void mbuf_init(struct mbuf *mbuf, size_t initial_size) __attribute__((weak));
+#ifdef MJS_MODULE_LINES
+#line 1 "common/mbuf.c"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef EXCLUDE_COMMON
+
+#include <assert.h>
+#include <string.h>
+/* Amalgamated: #include "common/mbuf.h" */
+
+#ifndef MBUF_REALLOC
+#define MBUF_REALLOC realloc
+#endif
+
+#ifndef MBUF_FREE
+#define MBUF_FREE free
+#endif
+
+void mbuf_init(struct mbuf *mbuf, size_t initial_size) WEAK;
 void mbuf_init(struct mbuf *mbuf, size_t initial_size) {
   mbuf->len = mbuf->size = 0;
-  mbuf->buf = ((void*)0);
+  mbuf->buf = NULL;
   mbuf_resize(mbuf, initial_size);
 }
 
-void mbuf_free(struct mbuf *mbuf) __attribute__((weak));
+void mbuf_free(struct mbuf *mbuf) WEAK;
 void mbuf_free(struct mbuf *mbuf) {
-  if (mbuf->buf != ((void*)0)) {
-    free(mbuf->buf);
+  if (mbuf->buf != NULL) {
+    MBUF_FREE(mbuf->buf);
     mbuf_init(mbuf, 0);
   }
 }
 
-void mbuf_resize(struct mbuf *a, size_t new_size) __attribute__((weak));
+void mbuf_resize(struct mbuf *a, size_t new_size) WEAK;
 void mbuf_resize(struct mbuf *a, size_t new_size) {
   if (new_size > a->size || (new_size < a->size && new_size >= a->len)) {
-    char *buf = (char *) realloc(a->buf, new_size);
-
-
-
-
-
-    if (buf == ((void*)0) && new_size != 0) return;
+    char *buf = (char *) MBUF_REALLOC(a->buf, new_size);
+    /*
+     * In case realloc fails, there's not much we can do, except keep things as
+     * they are. Note that NULL is a valid return value from realloc when
+     * size == 0, but that is covered too.
+     */
+    if (buf == NULL && new_size != 0) return;
     a->buf = buf;
     a->size = new_size;
   }
 }
 
-void mbuf_trim(struct mbuf *mbuf) __attribute__((weak));
+void mbuf_trim(struct mbuf *mbuf) WEAK;
 void mbuf_trim(struct mbuf *mbuf) {
   mbuf_resize(mbuf, mbuf->len);
 }
 
-size_t mbuf_insert(struct mbuf *a, size_t off, const void *buf, size_t) __attribute__((weak));
+size_t mbuf_insert(struct mbuf *a, size_t off, const void *buf, size_t) WEAK;
 size_t mbuf_insert(struct mbuf *a, size_t off, const void *buf, size_t len) {
-  char *p = ((void*)0);
+  char *p = NULL;
 
-  ((void) sizeof ((a != ((void*)0)) ? 1 : 0), __extension__ ({ if (a != ((void*)0)) ; else __assert_fail ("a != NULL", "mjs_extra.h", 5459, __extension__ __PRETTY_FUNCTION__); }));
-  ((void) sizeof ((a->len <= a->size) ? 1 : 0), __extension__ ({ if (a->len <= a->size) ; else __assert_fail ("a->len <= a->size", "mjs_extra.h", 5460, __extension__ __PRETTY_FUNCTION__); }));
-  ((void) sizeof ((off <= a->len) ? 1 : 0), __extension__ ({ if (off <= a->len) ; else __assert_fail ("off <= a->len", "mjs_extra.h", 5461, __extension__ __PRETTY_FUNCTION__); }));
+  assert(a != NULL);
+  assert(a->len <= a->size);
+  assert(off <= a->len);
 
-
+  /* check overflow */
   if (~(size_t) 0 - (size_t) a->buf < len) return 0;
 
   if (a->len + len <= a->size) {
     memmove(a->buf + off + len, a->buf + off, a->len - off);
-    if (buf != ((void*)0)) {
+    if (buf != NULL) {
       memcpy(a->buf + off, buf, len);
     }
     a->len += len;
   } else {
     size_t min_size = (a->len + len);
-    size_t new_size = (size_t)(min_size * 1.5);
-    if (new_size - min_size > 8192) {
-      new_size = min_size + 8192;
+    size_t new_size = (size_t)(min_size * MBUF_SIZE_MULTIPLIER);
+    if (new_size - min_size > MBUF_SIZE_MAX_HEADROOM) {
+      new_size = min_size + MBUF_SIZE_MAX_HEADROOM;
     }
-    p = (char *) realloc(a->buf, new_size);
-    if (p == ((void*)0) && new_size != min_size) {
+    p = (char *) MBUF_REALLOC(a->buf, new_size);
+    if (p == NULL && new_size != min_size) {
       new_size = min_size;
-      p = (char *) realloc(a->buf, new_size);
+      p = (char *) MBUF_REALLOC(a->buf, new_size);
     }
-    if (p != ((void*)0)) {
+    if (p != NULL) {
       a->buf = p;
       if (off != a->len) {
         memmove(a->buf + off + len, a->buf + off, a->len - off);
       }
-      if (buf != ((void*)0)) memcpy(a->buf + off, buf, len);
+      if (buf != NULL) memcpy(a->buf + off, buf, len);
       a->len += len;
       a->size = new_size;
     } else {
@@ -9400,18 +5496,18 @@ size_t mbuf_insert(struct mbuf *a, size_t off, const void *buf, size_t len) {
   return len;
 }
 
-size_t mbuf_append(struct mbuf *a, const void *buf, size_t len) __attribute__((weak));
+size_t mbuf_append(struct mbuf *a, const void *buf, size_t len) WEAK;
 size_t mbuf_append(struct mbuf *a, const void *buf, size_t len) {
   return mbuf_insert(a, a->len, buf, len);
 }
 
-size_t mbuf_append_and_free(struct mbuf *a, void *buf, size_t len) __attribute__((weak));
+size_t mbuf_append_and_free(struct mbuf *a, void *buf, size_t len) WEAK;
 size_t mbuf_append_and_free(struct mbuf *a, void *data, size_t len) {
   size_t ret;
-
-
+  /* Optimization: if the buffer is currently empty,
+   * take over the user-provided buffer. */
   if (a->len == 0) {
-    if (a->buf != ((void*)0)) free(a->buf);
+    if (a->buf != NULL) free(a->buf);
     a->buf = (char *) data;
     a->len = a->size = len;
     return len;
@@ -9421,7 +5517,7 @@ size_t mbuf_append_and_free(struct mbuf *a, void *data, size_t len) {
   return ret;
 }
 
-void mbuf_remove(struct mbuf *mb, size_t n) __attribute__((weak));
+void mbuf_remove(struct mbuf *mb, size_t n) WEAK;
 void mbuf_remove(struct mbuf *mb, size_t n) {
   if (n > 0 && n <= mb->len) {
     memmove(mb->buf, mb->buf + n, mb->len - n);
@@ -9429,33 +5525,62 @@ void mbuf_remove(struct mbuf *mb, size_t n) {
   }
 }
 
-void mbuf_clear(struct mbuf *mb) __attribute__((weak));
+void mbuf_clear(struct mbuf *mb) WEAK;
 void mbuf_clear(struct mbuf *mb) {
   mb->len = 0;
 }
 
-void mbuf_move(struct mbuf *from, struct mbuf *to) __attribute__((weak));
+void mbuf_move(struct mbuf *from, struct mbuf *to) WEAK;
 void mbuf_move(struct mbuf *from, struct mbuf *to) {
   memcpy(to, from, sizeof(*to));
   memset(from, 0, sizeof(*from));
 }
-# 5568 "mjs_extra.h"
-int mg_ncasecmp(const char *s1, const char *s2, size_t len) __attribute__((weak));
 
-struct mg_str mg_mk_str(const char *s) __attribute__((weak));
+#endif /* EXCLUDE_COMMON */
+#ifdef MJS_MODULE_LINES
+#line 1 "common/mg_str.c"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Amalgamated: #include "common/mg_mem.h" */
+/* Amalgamated: #include "common/mg_str.h" */
+/* Amalgamated: #include "common/platform.h" */
+
+#include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+
+int mg_ncasecmp(const char *s1, const char *s2, size_t len) WEAK;
+
+struct mg_str mg_mk_str(const char *s) WEAK;
 struct mg_str mg_mk_str(const char *s) {
   struct mg_str ret = {s, 0};
-  if (s != ((void*)0)) ret.len = strlen(s);
+  if (s != NULL) ret.len = strlen(s);
   return ret;
 }
 
-struct mg_str mg_mk_str_n(const char *s, size_t len) __attribute__((weak));
+struct mg_str mg_mk_str_n(const char *s, size_t len) WEAK;
 struct mg_str mg_mk_str_n(const char *s, size_t len) {
   struct mg_str ret = {s, len};
   return ret;
 }
 
-int mg_vcmp(const struct mg_str *str1, const char *str2) __attribute__((weak));
+int mg_vcmp(const struct mg_str *str1, const char *str2) WEAK;
 int mg_vcmp(const struct mg_str *str1, const char *str2) {
   size_t n2 = strlen(str2), n1 = str1->len;
   int r = strncmp(str1->p, str2, (n1 < n2) ? n1 : n2);
@@ -9465,7 +5590,7 @@ int mg_vcmp(const struct mg_str *str1, const char *str2) {
   return r;
 }
 
-int mg_vcasecmp(const struct mg_str *str1, const char *str2) __attribute__((weak));
+int mg_vcasecmp(const struct mg_str *str1, const char *str2) WEAK;
 int mg_vcasecmp(const struct mg_str *str1, const char *str2) {
   size_t n2 = strlen(str2), n1 = str1->len;
   int r = mg_ncasecmp(str1->p, str2, (n1 < n2) ? n1 : n2);
@@ -9477,10 +5602,10 @@ int mg_vcasecmp(const struct mg_str *str1, const char *str2) {
 
 static struct mg_str mg_strdup_common(const struct mg_str s,
                                       int nul_terminate) {
-  struct mg_str r = {((void*)0), 0};
-  if (s.len > 0 && s.p != ((void*)0)) {
-    char *sc = (char *) malloc(s.len + (nul_terminate ? 1 : 0));
-    if (sc != ((void*)0)) {
+  struct mg_str r = {NULL, 0};
+  if (s.len > 0 && s.p != NULL) {
+    char *sc = (char *) MG_MALLOC(s.len + (nul_terminate ? 1 : 0));
+    if (sc != NULL) {
       memcpy(sc, s.p, s.len);
       if (nul_terminate) sc[s.len] = '\0';
       r.p = sc;
@@ -9490,26 +5615,26 @@ static struct mg_str mg_strdup_common(const struct mg_str s,
   return r;
 }
 
-struct mg_str mg_strdup(const struct mg_str s) __attribute__((weak));
+struct mg_str mg_strdup(const struct mg_str s) WEAK;
 struct mg_str mg_strdup(const struct mg_str s) {
-  return mg_strdup_common(s, 0 );
+  return mg_strdup_common(s, 0 /* NUL-terminate */);
 }
 
-struct mg_str mg_strdup_nul(const struct mg_str s) __attribute__((weak));
+struct mg_str mg_strdup_nul(const struct mg_str s) WEAK;
 struct mg_str mg_strdup_nul(const struct mg_str s) {
-  return mg_strdup_common(s, 1 );
+  return mg_strdup_common(s, 1 /* NUL-terminate */);
 }
 
-const char *mg_strchr(const struct mg_str s, int c) __attribute__((weak));
+const char *mg_strchr(const struct mg_str s, int c) WEAK;
 const char *mg_strchr(const struct mg_str s, int c) {
   size_t i;
   for (i = 0; i < s.len; i++) {
     if (s.p[i] == c) return &s.p[i];
   }
-  return ((void*)0);
+  return NULL;
 }
 
-int mg_strcmp(const struct mg_str str1, const struct mg_str str2) __attribute__((weak));
+int mg_strcmp(const struct mg_str str1, const struct mg_str str2) WEAK;
 int mg_strcmp(const struct mg_str str1, const struct mg_str str2) {
   size_t i = 0;
   while (i < str1.len && i < str2.len) {
@@ -9522,7 +5647,7 @@ int mg_strcmp(const struct mg_str str1, const struct mg_str str2) {
   return 0;
 }
 
-int mg_strncmp(const struct mg_str, const struct mg_str, size_t n) __attribute__((weak));
+int mg_strncmp(const struct mg_str, const struct mg_str, size_t n) WEAK;
 int mg_strncmp(const struct mg_str str1, const struct mg_str str2, size_t n) {
   struct mg_str s1 = str1;
   struct mg_str s2 = str2;
@@ -9536,55 +5661,100 @@ int mg_strncmp(const struct mg_str str1, const struct mg_str str2, size_t n) {
   return mg_strcmp(s1, s2);
 }
 
-void mg_strfree(struct mg_str *s) __attribute__((weak));
+void mg_strfree(struct mg_str *s) WEAK;
 void mg_strfree(struct mg_str *s) {
   char *sp = (char *) s->p;
-  s->p = ((void*)0);
+  s->p = NULL;
   s->len = 0;
-  if (sp != ((void*)0)) free(sp);
+  if (sp != NULL) free(sp);
 }
 
 const char *mg_strstr(const struct mg_str haystack,
-                      const struct mg_str needle) __attribute__((weak));
+                      const struct mg_str needle) WEAK;
 const char *mg_strstr(const struct mg_str haystack,
                       const struct mg_str needle) {
   size_t i;
-  if (needle.len > haystack.len) return ((void*)0);
+  if (needle.len > haystack.len) return NULL;
   for (i = 0; i <= haystack.len - needle.len; i++) {
     if (memcmp(haystack.p + i, needle.p, needle.len) == 0) {
       return haystack.p + i;
     }
   }
-  return ((void*)0);
+  return NULL;
 }
 
-struct mg_str mg_strstrip(struct mg_str s) __attribute__((weak));
+struct mg_str mg_strstrip(struct mg_str s) WEAK;
 struct mg_str mg_strstrip(struct mg_str s) {
-  while (s.len > 0 && ((*__ctype_b_loc ())[(int) (((int) *s.p))] & (unsigned short int) _ISspace)) {
+  while (s.len > 0 && isspace((int) *s.p)) {
     s.p++;
     s.len--;
   }
-  while (s.len > 0 && ((*__ctype_b_loc ())[(int) (((int) *(s.p + s.len - 1)))] & (unsigned short int) _ISspace)) {
+  while (s.len > 0 && isspace((int) *(s.p + s.len - 1))) {
     s.len--;
   }
   return s;
 }
 
-int mg_str_starts_with(struct mg_str s, struct mg_str prefix) __attribute__((weak));
+int mg_str_starts_with(struct mg_str s, struct mg_str prefix) WEAK;
 int mg_str_starts_with(struct mg_str s, struct mg_str prefix) {
-  const struct mg_str sp = { s.p, prefix.len };
+  const struct mg_str sp = MG_MK_STR_N(s.p, prefix.len);
   if (s.len < prefix.len) return 0;
   return (mg_strcmp(sp, prefix) == 0);
 }
-# 5736 "mjs_extra.h"
-size_t c_strnlen(const char *s, size_t maxlen) __attribute__((weak));
+#ifdef MJS_MODULE_LINES
+#line 1 "common/str_util.c"
+#endif
+/*
+ * Copyright (c) 2014-2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef EXCLUDE_COMMON
+
+/* Amalgamated: #include "common/str_util.h" */
+/* Amalgamated: #include "common/mg_mem.h" */
+/* Amalgamated: #include "common/platform.h" */
+
+#ifndef C_DISABLE_BUILTIN_SNPRINTF
+#define C_DISABLE_BUILTIN_SNPRINTF 0
+#endif
+
+/* Amalgamated: #include "common/mg_mem.h" */
+
+size_t c_strnlen(const char *s, size_t maxlen) WEAK;
 size_t c_strnlen(const char *s, size_t maxlen) {
   size_t l = 0;
   for (; l < maxlen && s[l] != '\0'; l++) {
   }
   return l;
 }
-# 5758 "mjs_extra.h"
+
+#define C_SNPRINTF_APPEND_CHAR(ch)       \
+  do {                                   \
+    if (i < (int) buf_size) buf[i] = ch; \
+    i++;                                 \
+  } while (0)
+
+#define C_SNPRINTF_FLAG_ZERO 1
+
+#if C_DISABLE_BUILTIN_SNPRINTF
+int c_vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list ap) WEAK;
+int c_vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list ap) {
+  return vsnprintf(buf, buf_size, fmt, ap);
+}
+#else
 static int c_itoa(char *buf, size_t buf_size, int64_t num, int base, int flags,
                   int field_width) {
   char tmp[40];
@@ -9595,7 +5765,7 @@ static int c_itoa(char *buf, size_t buf_size, int64_t num, int base, int flags,
     num = -num;
   }
 
-
+  /* Print into temporary buffer - in reverse order */
   do {
     int rem = num % base;
     if (rem < 10) {
@@ -9606,58 +5776,65 @@ static int c_itoa(char *buf, size_t buf_size, int64_t num, int base, int flags,
     num /= base;
   } while (num > 0);
 
-
-  if (flags && 1) {
+  /* Zero padding */
+  if (flags && C_SNPRINTF_FLAG_ZERO) {
     while (k < field_width && k < (int) sizeof(tmp) - 1) {
       tmp[k++] = '0';
     }
   }
 
-
+  /* And sign */
   if (neg) {
     tmp[k++] = '-';
   }
 
-
+  /* Now output */
   while (--k >= 0) {
-    do { if (i < (int) buf_size) buf[i] = tmp[k]; i++; } while (0);
+    C_SNPRINTF_APPEND_CHAR(tmp[k]);
   }
 
   return i;
 }
 
-int c_vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list ap) __attribute__((weak));
+int c_vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list ap) WEAK;
 int c_vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list ap) {
   int ch, i = 0, len_mod, flags, precision, field_width;
 
   while ((ch = *fmt++) != '\0') {
     if (ch != '%') {
-      do { if (i < (int) buf_size) buf[i] = ch; i++; } while (0);
+      C_SNPRINTF_APPEND_CHAR(ch);
     } else {
-# 5815 "mjs_extra.h"
+      /*
+       * Conversion specification:
+       *   zero or more flags (one of: # 0 - <space> + ')
+       *   an optional minimum  field  width (digits)
+       *   an  optional precision (. followed by digits, or *)
+       *   an optional length modifier (one of: hh h l ll L q j z t)
+       *   conversion specifier (one of: d i o u x X e E f F g G a A c s p n)
+       */
       flags = field_width = precision = len_mod = 0;
 
-
+      /* Flags. only zero-pad flag is supported. */
       if (*fmt == '0') {
-        flags |= 1;
+        flags |= C_SNPRINTF_FLAG_ZERO;
       }
 
-
+      /* Field width */
       while (*fmt >= '0' && *fmt <= '9') {
         field_width *= 10;
         field_width += *fmt++ - '0';
       }
-
+      /* Dynamic field width */
       if (*fmt == '*') {
-        field_width = __builtin_va_arg(ap, int);
+        field_width = va_arg(ap, int);
         fmt++;
       }
 
-
+      /* Precision */
       if (*fmt == '.') {
         fmt++;
         if (*fmt == '*') {
-          precision = __builtin_va_arg(ap, int);
+          precision = va_arg(ap, int);
           fmt++;
         } else {
           while (*fmt >= '0' && *fmt <= '9') {
@@ -9667,7 +5844,7 @@ int c_vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list ap) {
         }
       }
 
-
+      /* Length modifier */
       switch (*fmt) {
         case 'h':
         case 'l':
@@ -9691,90 +5868,121 @@ int c_vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list ap) {
 
       ch = *fmt++;
       if (ch == 's') {
-        const char *s = __builtin_va_arg(ap, const char *);
+        const char *s = va_arg(ap, const char *); /* Always fetch parameter */
         int j;
         int pad = field_width - (precision >= 0 ? c_strnlen(s, precision) : 0);
         for (j = 0; j < pad; j++) {
-          do { if (i < (int) buf_size) buf[i] = ' '; i++; } while (0);
+          C_SNPRINTF_APPEND_CHAR(' ');
         }
 
-
-        if (s != ((void*)0)) {
-
+        /* `s` may be NULL in case of %.*s */
+        if (s != NULL) {
+          /* Ignore negative and 0 precisions */
           for (j = 0; (precision <= 0 || j < precision) && s[j] != '\0'; j++) {
-            do { if (i < (int) buf_size) buf[i] = s[j]; i++; } while (0);
+            C_SNPRINTF_APPEND_CHAR(s[j]);
           }
         }
       } else if (ch == 'c') {
-        ch = __builtin_va_arg(ap, int);
-        do { if (i < (int) buf_size) buf[i] = ch; i++; } while (0);
+        ch = va_arg(ap, int); /* Always fetch parameter */
+        C_SNPRINTF_APPEND_CHAR(ch);
       } else if (ch == 'd' && len_mod == 0) {
-        i += c_itoa(buf + i, buf_size - i, __builtin_va_arg(ap, int), 10, flags,
+        i += c_itoa(buf + i, buf_size - i, va_arg(ap, int), 10, flags,
                     field_width);
       } else if (ch == 'd' && len_mod == 'l') {
-        i += c_itoa(buf + i, buf_size - i, __builtin_va_arg(ap, long), 10, flags,
+        i += c_itoa(buf + i, buf_size - i, va_arg(ap, long), 10, flags,
                     field_width);
-
+#ifdef SSIZE_MAX
       } else if (ch == 'd' && len_mod == 'z') {
-        i += c_itoa(buf + i, buf_size - i, __builtin_va_arg(ap, ssize_t), 10, flags,
+        i += c_itoa(buf + i, buf_size - i, va_arg(ap, ssize_t), 10, flags,
                     field_width);
-
+#endif
       } else if (ch == 'd' && len_mod == 'q') {
-        i += c_itoa(buf + i, buf_size - i, __builtin_va_arg(ap, int64_t), 10, flags,
+        i += c_itoa(buf + i, buf_size - i, va_arg(ap, int64_t), 10, flags,
                     field_width);
       } else if ((ch == 'x' || ch == 'u') && len_mod == 0) {
-        i += c_itoa(buf + i, buf_size - i, __builtin_va_arg(ap, unsigned),
+        i += c_itoa(buf + i, buf_size - i, va_arg(ap, unsigned),
                     ch == 'x' ? 16 : 10, flags, field_width);
       } else if ((ch == 'x' || ch == 'u') && len_mod == 'l') {
-        i += c_itoa(buf + i, buf_size - i, __builtin_va_arg(ap, unsigned long),
+        i += c_itoa(buf + i, buf_size - i, va_arg(ap, unsigned long),
                     ch == 'x' ? 16 : 10, flags, field_width);
       } else if ((ch == 'x' || ch == 'u') && len_mod == 'z') {
-        i += c_itoa(buf + i, buf_size - i, __builtin_va_arg(ap, size_t),
+        i += c_itoa(buf + i, buf_size - i, va_arg(ap, size_t),
                     ch == 'x' ? 16 : 10, flags, field_width);
       } else if (ch == 'p') {
-        unsigned long num = (unsigned long) (uintptr_t) __builtin_va_arg(ap, void *);
-        do { if (i < (int) buf_size) buf[i] = '0'; i++; } while (0);
-        do { if (i < (int) buf_size) buf[i] = 'x'; i++; } while (0);
+        unsigned long num = (unsigned long) (uintptr_t) va_arg(ap, void *);
+        C_SNPRINTF_APPEND_CHAR('0');
+        C_SNPRINTF_APPEND_CHAR('x');
         i += c_itoa(buf + i, buf_size - i, num, 16, flags, 0);
       } else {
-
-
-
-
-
+#ifndef NO_LIBC
+        /*
+         * TODO(lsm): abort is not nice in a library, remove it
+         * Also, ESP8266 SDK doesn't have it
+         */
         abort();
-
+#endif
       }
     }
   }
 
-
+  /* Zero-terminate the result */
   if (buf_size > 0) {
     buf[i < (int) buf_size ? i : (int) buf_size - 1] = '\0';
   }
 
   return i;
 }
+#endif
 
-
-int c_snprintf(char *buf, size_t buf_size, const char *fmt, ...) __attribute__((weak));
+int c_snprintf(char *buf, size_t buf_size, const char *fmt, ...) WEAK;
 int c_snprintf(char *buf, size_t buf_size, const char *fmt, ...) {
   int result;
   va_list ap;
-  __builtin_va_start(ap, fmt);
+  va_start(ap, fmt);
   result = c_vsnprintf(buf, buf_size, fmt, ap);
-  __builtin_va_end(ap);
+  va_end(ap);
   return result;
 }
-# 5978 "mjs_extra.h"
-const char *c_strnstr(const char *s, const char *find, size_t slen) __attribute__((weak));
+
+#ifdef _WIN32
+int to_wchar(const char *path, wchar_t *wbuf, size_t wbuf_len) {
+  int ret;
+  char buf[MAX_PATH * 2], buf2[MAX_PATH * 2], *p;
+
+  strncpy(buf, path, sizeof(buf));
+  buf[sizeof(buf) - 1] = '\0';
+
+  /* Trim trailing slashes. Leave backslash for paths like "X:\" */
+  p = buf + strlen(buf) - 1;
+  while (p > buf && p[-1] != ':' && (p[0] == '\\' || p[0] == '/')) *p-- = '\0';
+
+  memset(wbuf, 0, wbuf_len * sizeof(wchar_t));
+  ret = MultiByteToWideChar(CP_UTF8, 0, buf, -1, wbuf, (int) wbuf_len);
+
+  /*
+   * Convert back to Unicode. If doubly-converted string does not match the
+   * original, something is fishy, reject.
+   */
+  WideCharToMultiByte(CP_UTF8, 0, wbuf, (int) wbuf_len, buf2, sizeof(buf2),
+                      NULL, NULL);
+  if (strcmp(buf, buf2) != 0) {
+    wbuf[0] = L'\0';
+    ret = 0;
+  }
+
+  return ret;
+}
+#endif /* _WIN32 */
+
+/* The simplest O(mn) algorithm. Better implementation are GPLed */
+const char *c_strnstr(const char *s, const char *find, size_t slen) WEAK;
 const char *c_strnstr(const char *s, const char *find, size_t slen) {
   size_t find_length = strlen(find);
   size_t i;
 
   for (i = 0; i < slen; i++) {
     if (i + find_length > slen) {
-      return ((void*)0);
+      return NULL;
     }
 
     if (strncmp(&s[i], find, find_length) == 0) {
@@ -9782,10 +5990,22 @@ const char *c_strnstr(const char *s, const char *find, size_t slen) {
     }
   }
 
-  return ((void*)0);
+  return NULL;
 }
-# 6008 "mjs_extra.h"
-void cs_to_hex(char *to, const unsigned char *p, size_t len) __attribute__((weak));
+
+#if CS_ENABLE_STRDUP
+char *strdup(const char *src) WEAK;
+char *strdup(const char *src) {
+  size_t len = strlen(src) + 1;
+  char *ret = MG_MALLOC(len);
+  if (ret != NULL) {
+    strcpy(ret, src);
+  }
+  return ret;
+}
+#endif
+
+void cs_to_hex(char *to, const unsigned char *p, size_t len) WEAK;
 void cs_to_hex(char *to, const unsigned char *p, size_t len) {
   static const char *hex = "0123456789abcdef";
 
@@ -9807,7 +6027,7 @@ static int fourbit(int ch) {
   return 0;
 }
 
-void cs_from_hex(char *to, const char *p, size_t len) __attribute__((weak));
+void cs_from_hex(char *to, const char *p, size_t len) WEAK;
 void cs_from_hex(char *to, const char *p, size_t len) {
   size_t i;
 
@@ -9816,12 +6036,31 @@ void cs_from_hex(char *to, const char *p, size_t len) {
   }
   *to = '\0';
 }
-# 6059 "mjs_extra.h"
+
+#if CS_ENABLE_TO64
+int64_t cs_to64(const char *s) WEAK;
+int64_t cs_to64(const char *s) {
+  int64_t result = 0;
+  int64_t neg = 1;
+  while (*s && isspace((unsigned char) *s)) s++;
+  if (*s == '-') {
+    neg = -1;
+    s++;
+  }
+  while (isdigit((unsigned char) *s)) {
+    result *= 10;
+    result += (*s - '0');
+    s++;
+  }
+  return result * neg;
+}
+#endif
+
 static int str_util_lowercase(const char *s) {
   return tolower(*(const unsigned char *) s);
 }
 
-int mg_ncasecmp(const char *s1, const char *s2, size_t len) __attribute__((weak));
+int mg_ncasecmp(const char *s1, const char *s2, size_t len) WEAK;
 int mg_ncasecmp(const char *s1, const char *s2, size_t len) {
   int diff = 0;
 
@@ -9832,64 +6071,64 @@ int mg_ncasecmp(const char *s1, const char *s2, size_t len) {
   return diff;
 }
 
-int mg_casecmp(const char *s1, const char *s2) __attribute__((weak));
+int mg_casecmp(const char *s1, const char *s2) WEAK;
 int mg_casecmp(const char *s1, const char *s2) {
   return mg_ncasecmp(s1, s2, (size_t) ~0);
 }
 
-int mg_asprintf(char **buf, size_t size, const char *fmt, ...) __attribute__((weak));
+int mg_asprintf(char **buf, size_t size, const char *fmt, ...) WEAK;
 int mg_asprintf(char **buf, size_t size, const char *fmt, ...) {
   int ret;
   va_list ap;
-  __builtin_va_start(ap, fmt);
+  va_start(ap, fmt);
   ret = mg_avprintf(buf, size, fmt, ap);
-  __builtin_va_end(ap);
+  va_end(ap);
   return ret;
 }
 
-int mg_avprintf(char **buf, size_t size, const char *fmt, va_list ap) __attribute__((weak));
+int mg_avprintf(char **buf, size_t size, const char *fmt, va_list ap) WEAK;
 int mg_avprintf(char **buf, size_t size, const char *fmt, va_list ap) {
   va_list ap_copy;
   int len;
 
-  __builtin_va_copy(ap_copy, ap);
+  va_copy(ap_copy, ap);
   len = vsnprintf(*buf, size, fmt, ap_copy);
-  __builtin_va_end(ap_copy);
+  va_end(ap_copy);
 
   if (len < 0) {
-
-
-
-    *buf = ((void*)0);
+    /* eCos and Windows are not standard-compliant and return -1 when
+     * the buffer is too small. Keep allocating larger buffers until we
+     * succeed or out of memory. */
+    *buf = NULL; /* LCOV_EXCL_START */
     while (len < 0) {
-      free(*buf);
+      MG_FREE(*buf);
       if (size == 0) {
         size = 5;
       }
       size *= 2;
-      if ((*buf = (char *) malloc(size)) == ((void*)0)) {
+      if ((*buf = (char *) MG_MALLOC(size)) == NULL) {
         len = -1;
         break;
       }
-      __builtin_va_copy(ap_copy, ap);
+      va_copy(ap_copy, ap);
       len = vsnprintf(*buf, size - 1, fmt, ap_copy);
-      __builtin_va_end(ap_copy);
+      va_end(ap_copy);
     }
 
-
-
-
-
+    /*
+     * Microsoft version of vsnprintf() is not always null-terminated, so put
+     * the terminator manually
+     */
     (*buf)[len] = 0;
-
+    /* LCOV_EXCL_STOP */
   } else if (len >= (int) size) {
-
-    if ((*buf = (char *) malloc(len + 1)) == ((void*)0)) {
-      len = -1;
-    } else {
-      __builtin_va_copy(ap_copy, ap);
+    /* Standard-compliant code path. Allocate a buffer that is large enough. */
+    if ((*buf = (char *) MG_MALLOC(len + 1)) == NULL) {
+      len = -1; /* LCOV_EXCL_LINE */
+    } else {    /* LCOV_EXCL_LINE */
+      va_copy(ap_copy, ap);
       len = vsnprintf(*buf, len + 1, fmt, ap_copy);
-      __builtin_va_end(ap_copy);
+      va_end(ap_copy);
     }
   }
 
@@ -9897,7 +6136,7 @@ int mg_avprintf(char **buf, size_t size, const char *fmt, va_list ap) {
 }
 
 const char *mg_next_comma_list_entry(const char *, struct mg_str *,
-                                     struct mg_str *) __attribute__((weak));
+                                     struct mg_str *) WEAK;
 const char *mg_next_comma_list_entry(const char *list, struct mg_str *val,
                                      struct mg_str *eq_val) {
   struct mg_str ret = mg_next_comma_list_entry_n(mg_mk_str(list), val, eq_val);
@@ -9905,34 +6144,34 @@ const char *mg_next_comma_list_entry(const char *list, struct mg_str *val,
 }
 
 struct mg_str mg_next_comma_list_entry_n(struct mg_str list, struct mg_str *val,
-                                         struct mg_str *eq_val) __attribute__((weak));
+                                         struct mg_str *eq_val) WEAK;
 struct mg_str mg_next_comma_list_entry_n(struct mg_str list, struct mg_str *val,
                                          struct mg_str *eq_val) {
   if (list.len == 0) {
-
-    list = mg_mk_str(((void*)0));
+    /* End of the list */
+    list = mg_mk_str(NULL);
   } else {
-    const char *chr = ((void*)0);
+    const char *chr = NULL;
     *val = list;
 
-    if ((chr = mg_strchr(*val, ',')) != ((void*)0)) {
-
+    if ((chr = mg_strchr(*val, ',')) != NULL) {
+      /* Comma found. Store length and shift the list ptr */
       val->len = chr - val->p;
       chr++;
       list.len -= (chr - list.p);
       list.p = chr;
     } else {
-
+      /* This value is the last one */
       list = mg_mk_str_n(list.p + list.len, 0);
     }
 
-    if (eq_val != ((void*)0)) {
-
-
+    if (eq_val != NULL) {
+      /* Value has form "x=y", adjust pointers and lengths */
+      /* so that val points to "x", and eq_val points to "y". */
       eq_val->len = 0;
       eq_val->p = (const char *) memchr(val->p, '=', val->len);
-      if (eq_val->p != ((void*)0)) {
-        eq_val->p++;
+      if (eq_val->p != NULL) {
+        eq_val->p++; /* Skip over '=' character */
         eq_val->len = val->p + val->len - eq_val->p;
         val->len = (eq_val->p - val->p) - 1;
       }
@@ -9942,13 +6181,13 @@ struct mg_str mg_next_comma_list_entry_n(struct mg_str list, struct mg_str *val,
   return list;
 }
 
-size_t mg_match_prefix_n(const struct mg_str, const struct mg_str) __attribute__((weak));
+size_t mg_match_prefix_n(const struct mg_str, const struct mg_str) WEAK;
 size_t mg_match_prefix_n(const struct mg_str pattern, const struct mg_str str) {
   const char *or_str;
   size_t res = 0, len = 0, i = 0, j = 0;
 
-  if ((or_str = (const char *) memchr(pattern.p, '|', pattern.len)) != ((void*)0) ||
-      (or_str = (const char *) memchr(pattern.p, ',', pattern.len)) != ((void*)0)) {
+  if ((or_str = (const char *) memchr(pattern.p, '|', pattern.len)) != NULL ||
+      (or_str = (const char *) memchr(pattern.p, ',', pattern.len)) != NULL) {
     struct mg_str pstr = {pattern.p, (size_t)(or_str - pattern.p)};
     res = mg_match_prefix_n(pstr, str);
     if (res > 0) return res;
@@ -9988,14 +6227,92 @@ size_t mg_match_prefix_n(const struct mg_str pattern, const struct mg_str str) {
   return i == pattern.len ? j : 0;
 }
 
-size_t mg_match_prefix(const char *, int, const char *) __attribute__((weak));
+size_t mg_match_prefix(const char *, int, const char *) WEAK;
 size_t mg_match_prefix(const char *pattern, int pattern_len, const char *str) {
   const struct mg_str pstr = {pattern, (size_t) pattern_len};
   struct mg_str s = {str, 0};
-  if (str != ((void*)0)) s.len = strlen(str);
+  if (str != NULL) s.len = strlen(str);
   return mg_match_prefix_n(pstr, s);
 }
-# 6316 "mjs_extra.h"
+
+#endif /* EXCLUDE_COMMON */
+#ifdef MJS_MODULE_LINES
+#line 1 "frozen/frozen.c"
+#endif
+/*
+ * Copyright (c) 2004-2013 Sergey Lyubka <valenok@gmail.com>
+ * Copyright (c) 2018 Cesanta Software Limited
+ * All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the ""License"");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an ""AS IS"" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#define _CRT_SECURE_NO_WARNINGS /* Disable deprecation warning in VS2005+ */
+
+/* Amalgamated: #include "frozen.h" */
+
+#include <ctype.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#if !defined(WEAK)
+#if (defined(__GNUC__) || defined(__TI_COMPILER_VERSION__)) && !defined(_WIN32)
+#define WEAK __attribute__((weak))
+#else
+#define WEAK
+#endif
+#endif
+
+#ifdef _WIN32
+#undef snprintf
+#undef vsnprintf
+#define snprintf cs_win_snprintf
+#define vsnprintf cs_win_vsnprintf
+int cs_win_snprintf(char *str, size_t size, const char *format, ...);
+int cs_win_vsnprintf(char *str, size_t size, const char *format, va_list ap);
+#if _MSC_VER >= 1700
+#include <stdint.h>
+#else
+typedef _int64 int64_t;
+typedef unsigned _int64 uint64_t;
+#endif
+#define PRId64 "I64d"
+#define PRIu64 "I64u"
+#else /* _WIN32 */
+/* <inttypes.h> wants this for C++ */
+#ifndef __STDC_FORMAT_MACROS
+#define __STDC_FORMAT_MACROS
+#endif
+#include <inttypes.h>
+#endif /* _WIN32 */
+
+#ifndef INT64_FMT
+#define INT64_FMT PRId64
+#endif
+#ifndef UINT64_FMT
+#define UINT64_FMT PRIu64
+#endif
+
+#ifndef va_copy
+#define va_copy(x, y) x = y
+#endif
+
+#ifndef JSON_ENABLE_ARRAY
+#define JSON_ENABLE_ARRAY 1
+#endif
+
 struct frozen {
   const char *end;
   const char *cur;
@@ -10003,8 +6320,8 @@ struct frozen {
   const char *cur_name;
   size_t cur_name_len;
 
-
-  char path[256];
+  /* For callback API */
+  char path[JSON_MAX_PATH_LEN];
   size_t path_len;
   void *callback_data;
   json_walk_callback_t callback;
@@ -10014,7 +6331,27 @@ struct fstate {
   const char *ptr;
   size_t path_len;
 };
-# 6355 "mjs_extra.h"
+
+#define SET_STATE(fr, ptr, str, len)              \
+  struct fstate fstate = {(ptr), (fr)->path_len}; \
+  json_append_to_path((fr), (str), (len));
+
+#define CALL_BACK(fr, tok, value, len)                                        \
+  do {                                                                        \
+    if ((fr)->callback &&                                                     \
+        ((fr)->path_len == 0 || (fr)->path[(fr)->path_len - 1] != '.')) {     \
+      struct json_token t = {(value), (int) (len), (tok)};                    \
+                                                                              \
+      /* Call the callback with the given value and current name */           \
+      (fr)->callback((fr)->callback_data, (fr)->cur_name, (fr)->cur_name_len, \
+                     (fr)->path, &t);                                         \
+                                                                              \
+      /* Reset the name */                                                    \
+      (fr)->cur_name = NULL;                                                  \
+      (fr)->cur_name_len = 0;                                                 \
+    }                                                                         \
+  } while (0)
+
 static int json_append_to_path(struct frozen *f, const char *str, int size) {
   int n = f->path_len;
   int left = sizeof(f->path) - n - 1;
@@ -10032,7 +6369,20 @@ static void json_truncate_path(struct frozen *f, size_t len) {
 
 static int json_parse_object(struct frozen *f);
 static int json_parse_value(struct frozen *f);
-# 6386 "mjs_extra.h"
+
+#define EXPECT(cond, err_code)      \
+  do {                              \
+    if (!(cond)) return (err_code); \
+  } while (0)
+
+#define TRY(expr)          \
+  do {                     \
+    int _n = expr;         \
+    if (_n < 0) return _n; \
+  } while (0)
+
+#define END_OF_STRING (-1)
+
 static int json_left(const struct frozen *f) {
   return f->end - f->cur;
 }
@@ -10047,7 +6397,7 @@ static void json_skip_whitespaces(struct frozen *f) {
 
 static int json_cur(struct frozen *f) {
   json_skip_whitespaces(f);
-  return f->cur >= f->end ? (-1) : *(unsigned char *) f->cur;
+  return f->cur >= f->end ? END_OF_STRING : *(unsigned char *) f->cur;
 }
 
 static int json_test_and_skip(struct frozen *f, int expected) {
@@ -10056,7 +6406,7 @@ static int json_test_and_skip(struct frozen *f, int expected) {
     f->cur++;
     return 0;
   }
-  return ch == (-1) ? -2 : -1;
+  return ch == END_OF_STRING ? JSON_STRING_INCOMPLETE : JSON_STRING_INVALID;
 }
 
 static int json_isalpha(int ch) {
@@ -10075,11 +6425,11 @@ static int json_isxdigit(int ch) {
 static int json_get_escape_len(const char *s, int len) {
   switch (*s) {
     case 'u':
-      return len < 6 ? -2
+      return len < 6 ? JSON_STRING_INCOMPLETE
                      : json_isxdigit(s[1]) && json_isxdigit(s[2]) &&
                                json_isxdigit(s[3]) && json_isxdigit(s[4])
                            ? 5
-                           : -1;
+                           : JSON_STRING_INVALID;
     case '"':
     case '\\':
     case '/':
@@ -10088,23 +6438,23 @@ static int json_get_escape_len(const char *s, int len) {
     case 'n':
     case 'r':
     case 't':
-      return len < 2 ? -2 : 1;
+      return len < 2 ? JSON_STRING_INCOMPLETE : 1;
     default:
-      return -1;
+      return JSON_STRING_INVALID;
   }
 }
 
-
+/* identifier = letter { letter | digit | '_' } */
 static int json_parse_identifier(struct frozen *f) {
-  do { if (!(json_isalpha(json_cur(f)))) return (-1); } while (0);
+  EXPECT(json_isalpha(json_cur(f)), JSON_STRING_INVALID);
   {
-    struct fstate fstate = {(f->cur), (f)->path_len}; json_append_to_path((f), (""), (0));;
+    SET_STATE(f, f->cur, "", 0);
     while (f->cur < f->end &&
            (*f->cur == '_' || json_isalpha(*f->cur) || json_isdigit(*f->cur))) {
       f->cur++;
     }
     json_truncate_path(f, fstate.path_len);
-    do { if ((f)->callback && ((f)->path_len == 0 || (f)->path[(f)->path_len - 1] != '.')) { struct json_token t = {(fstate.ptr), (int) (f->cur - fstate.ptr), (JSON_TYPE_STRING)}; (f)->callback((f)->callback_data, (f)->cur_name, (f)->cur_name_len, (f)->path, &t); (f)->cur_name = ((void*)0); (f)->cur_name_len = 0; } } while (0);
+    CALL_BACK(f, JSON_TYPE_STRING, fstate.ptr, f->cur - fstate.ptr);
   }
   return 0;
 }
@@ -10121,135 +6471,135 @@ static int json_get_utf8_char_len(unsigned char ch) {
   }
 }
 
-
+/* string = '"' { quoted_printable_chars } '"' */
 static int json_parse_string(struct frozen *f) {
   int n, ch = 0, len = 0;
-  do { int _n = json_test_and_skip(f, '"'); if (_n < 0) return _n; } while (0);
+  TRY(json_test_and_skip(f, '"'));
   {
-    struct fstate fstate = {(f->cur), (f)->path_len}; json_append_to_path((f), (""), (0));;
+    SET_STATE(f, f->cur, "", 0);
     for (; f->cur < f->end; f->cur += len) {
       ch = *(unsigned char *) f->cur;
       len = json_get_utf8_char_len((unsigned char) ch);
-      do { if (!(ch >= 32 && len > 0)) return (-1); } while (0);
-      do { if (!(len <= json_left(f))) return (-2); } while (0);
+      EXPECT(ch >= 32 && len > 0, JSON_STRING_INVALID); /* No control chars */
+      EXPECT(len <= json_left(f), JSON_STRING_INCOMPLETE);
       if (ch == '\\') {
-        do { if (!((n = json_get_escape_len(f->cur + 1, json_left(f))) > 0)) return (n); } while (0);
+        EXPECT((n = json_get_escape_len(f->cur + 1, json_left(f))) > 0, n);
         len += n;
       } else if (ch == '"') {
         json_truncate_path(f, fstate.path_len);
-        do { if ((f)->callback && ((f)->path_len == 0 || (f)->path[(f)->path_len - 1] != '.')) { struct json_token t = {(fstate.ptr), (int) (f->cur - fstate.ptr), (JSON_TYPE_STRING)}; (f)->callback((f)->callback_data, (f)->cur_name, (f)->cur_name_len, (f)->path, &t); (f)->cur_name = ((void*)0); (f)->cur_name_len = 0; } } while (0);
+        CALL_BACK(f, JSON_TYPE_STRING, fstate.ptr, f->cur - fstate.ptr);
         f->cur++;
         break;
       };
     }
   }
-  return ch == '"' ? 0 : -2;
+  return ch == '"' ? 0 : JSON_STRING_INCOMPLETE;
 }
 
-
+/* number = [ '-' ] digit+ [ '.' digit+ ] [ ['e'|'E'] ['+'|'-'] digit+ ] */
 static int json_parse_number(struct frozen *f) {
   int ch = json_cur(f);
-  struct fstate fstate = {(f->cur), (f)->path_len}; json_append_to_path((f), (""), (0));;
+  SET_STATE(f, f->cur, "", 0);
   if (ch == '-') f->cur++;
-  do { if (!(f->cur < f->end)) return (-2); } while (0);
+  EXPECT(f->cur < f->end, JSON_STRING_INCOMPLETE);
   if (f->cur + 1 < f->end && f->cur[0] == '0' && f->cur[1] == 'x') {
     f->cur += 2;
-    do { if (!(f->cur < f->end)) return (-2); } while (0);
-    do { if (!(json_isxdigit(f->cur[0]))) return (-1); } while (0);
+    EXPECT(f->cur < f->end, JSON_STRING_INCOMPLETE);
+    EXPECT(json_isxdigit(f->cur[0]), JSON_STRING_INVALID);
     while (f->cur < f->end && json_isxdigit(f->cur[0])) f->cur++;
   } else {
-    do { if (!(json_isdigit(f->cur[0]))) return (-1); } while (0);
+    EXPECT(json_isdigit(f->cur[0]), JSON_STRING_INVALID);
     while (f->cur < f->end && json_isdigit(f->cur[0])) f->cur++;
     if (f->cur < f->end && f->cur[0] == '.') {
       f->cur++;
-      do { if (!(f->cur < f->end)) return (-2); } while (0);
-      do { if (!(json_isdigit(f->cur[0]))) return (-1); } while (0);
+      EXPECT(f->cur < f->end, JSON_STRING_INCOMPLETE);
+      EXPECT(json_isdigit(f->cur[0]), JSON_STRING_INVALID);
       while (f->cur < f->end && json_isdigit(f->cur[0])) f->cur++;
     }
     if (f->cur < f->end && (f->cur[0] == 'e' || f->cur[0] == 'E')) {
       f->cur++;
-      do { if (!(f->cur < f->end)) return (-2); } while (0);
+      EXPECT(f->cur < f->end, JSON_STRING_INCOMPLETE);
       if ((f->cur[0] == '+' || f->cur[0] == '-')) f->cur++;
-      do { if (!(f->cur < f->end)) return (-2); } while (0);
-      do { if (!(json_isdigit(f->cur[0]))) return (-1); } while (0);
+      EXPECT(f->cur < f->end, JSON_STRING_INCOMPLETE);
+      EXPECT(json_isdigit(f->cur[0]), JSON_STRING_INVALID);
       while (f->cur < f->end && json_isdigit(f->cur[0])) f->cur++;
     }
   }
   json_truncate_path(f, fstate.path_len);
-  do { if ((f)->callback && ((f)->path_len == 0 || (f)->path[(f)->path_len - 1] != '.')) { struct json_token t = {(fstate.ptr), (int) (f->cur - fstate.ptr), (JSON_TYPE_NUMBER)}; (f)->callback((f)->callback_data, (f)->cur_name, (f)->cur_name_len, (f)->path, &t); (f)->cur_name = ((void*)0); (f)->cur_name_len = 0; } } while (0);
+  CALL_BACK(f, JSON_TYPE_NUMBER, fstate.ptr, f->cur - fstate.ptr);
   return 0;
 }
 
-
-
+#if JSON_ENABLE_ARRAY
+/* array = '[' [ value { ',' value } ] ']' */
 static int json_parse_array(struct frozen *f) {
   int i = 0, current_path_len;
   char buf[20];
-  do { if ((f)->callback && ((f)->path_len == 0 || (f)->path[(f)->path_len - 1] != '.')) { struct json_token t = {(((void*)0)), (int) (0), (JSON_TYPE_ARRAY_START)}; (f)->callback((f)->callback_data, (f)->cur_name, (f)->cur_name_len, (f)->path, &t); (f)->cur_name = ((void*)0); (f)->cur_name_len = 0; } } while (0);
-  do { int _n = json_test_and_skip(f, '['); if (_n < 0) return _n; } while (0);
+  CALL_BACK(f, JSON_TYPE_ARRAY_START, NULL, 0);
+  TRY(json_test_and_skip(f, '['));
   {
     {
-      struct fstate fstate = {(f->cur - 1), (f)->path_len}; json_append_to_path((f), (""), (0));;
+      SET_STATE(f, f->cur - 1, "", 0);
       while (json_cur(f) != ']') {
         snprintf(buf, sizeof(buf), "[%d]", i);
         i++;
         current_path_len = json_append_to_path(f, buf, strlen(buf));
         f->cur_name =
-            f->path + strlen(f->path) - strlen(buf) + 1 ;
-        f->cur_name_len = strlen(buf) - 2 ;
-        do { int _n = json_parse_value(f); if (_n < 0) return _n; } while (0);
+            f->path + strlen(f->path) - strlen(buf) + 1 /*opening brace*/;
+        f->cur_name_len = strlen(buf) - 2 /*braces*/;
+        TRY(json_parse_value(f));
         json_truncate_path(f, current_path_len);
         if (json_cur(f) == ',') f->cur++;
       }
-      do { int _n = json_test_and_skip(f, ']'); if (_n < 0) return _n; } while (0);
+      TRY(json_test_and_skip(f, ']'));
       json_truncate_path(f, fstate.path_len);
-      do { if ((f)->callback && ((f)->path_len == 0 || (f)->path[(f)->path_len - 1] != '.')) { struct json_token t = {(fstate.ptr), (int) (f->cur - fstate.ptr), (JSON_TYPE_ARRAY_END)}; (f)->callback((f)->callback_data, (f)->cur_name, (f)->cur_name_len, (f)->path, &t); (f)->cur_name = ((void*)0); (f)->cur_name_len = 0; } } while (0);
+      CALL_BACK(f, JSON_TYPE_ARRAY_END, fstate.ptr, f->cur - fstate.ptr);
     }
   }
   return 0;
 }
-
+#endif /* JSON_ENABLE_ARRAY */
 
 static int json_expect(struct frozen *f, const char *s, int len,
                        enum json_token_type tok_type) {
   int i, n = json_left(f);
-  struct fstate fstate = {(f->cur), (f)->path_len}; json_append_to_path((f), (""), (0));;
+  SET_STATE(f, f->cur, "", 0);
   for (i = 0; i < len; i++) {
-    if (i >= n) return -2;
-    if (f->cur[i] != s[i]) return -1;
+    if (i >= n) return JSON_STRING_INCOMPLETE;
+    if (f->cur[i] != s[i]) return JSON_STRING_INVALID;
   }
   f->cur += len;
   json_truncate_path(f, fstate.path_len);
 
-  do { if ((f)->callback && ((f)->path_len == 0 || (f)->path[(f)->path_len - 1] != '.')) { struct json_token t = {(fstate.ptr), (int) (f->cur - fstate.ptr), (tok_type)}; (f)->callback((f)->callback_data, (f)->cur_name, (f)->cur_name_len, (f)->path, &t); (f)->cur_name = ((void*)0); (f)->cur_name_len = 0; } } while (0);
+  CALL_BACK(f, tok_type, fstate.ptr, f->cur - fstate.ptr);
 
   return 0;
 }
 
-
+/* value = 'null' | 'true' | 'false' | number | string | array | object */
 static int json_parse_value(struct frozen *f) {
   int ch = json_cur(f);
 
   switch (ch) {
     case '"':
-      do { int _n = json_parse_string(f); if (_n < 0) return _n; } while (0);
+      TRY(json_parse_string(f));
       break;
     case '{':
-      do { int _n = json_parse_object(f); if (_n < 0) return _n; } while (0);
+      TRY(json_parse_object(f));
       break;
-
+#if JSON_ENABLE_ARRAY
     case '[':
-      do { int _n = json_parse_array(f); if (_n < 0) return _n; } while (0);
+      TRY(json_parse_array(f));
       break;
-
+#endif
     case 'n':
-      do { int _n = json_expect(f, "null", 4, JSON_TYPE_NULL); if (_n < 0) return _n; } while (0);
+      TRY(json_expect(f, "null", 4, JSON_TYPE_NULL));
       break;
     case 't':
-      do { int _n = json_expect(f, "true", 4, JSON_TYPE_TRUE); if (_n < 0) return _n; } while (0);
+      TRY(json_expect(f, "true", 4, JSON_TYPE_TRUE));
       break;
     case 'f':
-      do { int _n = json_expect(f, "false", 5, JSON_TYPE_FALSE); if (_n < 0) return _n; } while (0);
+      TRY(json_expect(f, "false", 5, JSON_TYPE_FALSE));
       break;
     case '-':
     case '0':
@@ -10262,70 +6612,70 @@ static int json_parse_value(struct frozen *f) {
     case '7':
     case '8':
     case '9':
-      do { int _n = json_parse_number(f); if (_n < 0) return _n; } while (0);
+      TRY(json_parse_number(f));
       break;
     default:
-      return ch == (-1) ? -2 : -1;
+      return ch == END_OF_STRING ? JSON_STRING_INCOMPLETE : JSON_STRING_INVALID;
   }
 
   return 0;
 }
 
-
+/* key = identifier | string */
 static int json_parse_key(struct frozen *f) {
   int ch = json_cur(f);
   if (json_isalpha(ch)) {
-    do { int _n = json_parse_identifier(f); if (_n < 0) return _n; } while (0);
+    TRY(json_parse_identifier(f));
   } else if (ch == '"') {
-    do { int _n = json_parse_string(f); if (_n < 0) return _n; } while (0);
+    TRY(json_parse_string(f));
   } else {
-    return ch == (-1) ? -2 : -1;
+    return ch == END_OF_STRING ? JSON_STRING_INCOMPLETE : JSON_STRING_INVALID;
   }
   return 0;
 }
 
-
+/* pair = key ':' value */
 static int json_parse_pair(struct frozen *f) {
   int current_path_len;
   const char *tok;
   json_skip_whitespaces(f);
   tok = f->cur;
-  do { int _n = json_parse_key(f); if (_n < 0) return _n; } while (0);
+  TRY(json_parse_key(f));
   {
     f->cur_name = *tok == '"' ? tok + 1 : tok;
     f->cur_name_len = *tok == '"' ? f->cur - tok - 2 : f->cur - tok;
     current_path_len = json_append_to_path(f, f->cur_name, f->cur_name_len);
   }
-  do { int _n = json_test_and_skip(f, ':'); if (_n < 0) return _n; } while (0);
-  do { int _n = json_parse_value(f); if (_n < 0) return _n; } while (0);
+  TRY(json_test_and_skip(f, ':'));
+  TRY(json_parse_value(f));
   json_truncate_path(f, current_path_len);
   return 0;
 }
 
-
+/* object = '{' pair { ',' pair } '}' */
 static int json_parse_object(struct frozen *f) {
-  do { if ((f)->callback && ((f)->path_len == 0 || (f)->path[(f)->path_len - 1] != '.')) { struct json_token t = {(((void*)0)), (int) (0), (JSON_TYPE_OBJECT_START)}; (f)->callback((f)->callback_data, (f)->cur_name, (f)->cur_name_len, (f)->path, &t); (f)->cur_name = ((void*)0); (f)->cur_name_len = 0; } } while (0);
-  do { int _n = json_test_and_skip(f, '{'); if (_n < 0) return _n; } while (0);
+  CALL_BACK(f, JSON_TYPE_OBJECT_START, NULL, 0);
+  TRY(json_test_and_skip(f, '{'));
   {
-    struct fstate fstate = {(f->cur - 1), (f)->path_len}; json_append_to_path((f), ("."), (1));;
+    SET_STATE(f, f->cur - 1, ".", 1);
     while (json_cur(f) != '}') {
-      do { int _n = json_parse_pair(f); if (_n < 0) return _n; } while (0);
+      TRY(json_parse_pair(f));
       if (json_cur(f) == ',') f->cur++;
     }
-    do { int _n = json_test_and_skip(f, '}'); if (_n < 0) return _n; } while (0);
+    TRY(json_test_and_skip(f, '}'));
     json_truncate_path(f, fstate.path_len);
-    do { if ((f)->callback && ((f)->path_len == 0 || (f)->path[(f)->path_len - 1] != '.')) { struct json_token t = {(fstate.ptr), (int) (f->cur - fstate.ptr), (JSON_TYPE_OBJECT_END)}; (f)->callback((f)->callback_data, (f)->cur_name, (f)->cur_name_len, (f)->path, &t); (f)->cur_name = ((void*)0); (f)->cur_name_len = 0; } } while (0);
+    CALL_BACK(f, JSON_TYPE_OBJECT_END, fstate.ptr, f->cur - fstate.ptr);
   }
   return 0;
 }
 
 static int json_doit(struct frozen *f) {
-  if (f->cur == 0 || f->end < f->cur) return -1;
-  if (f->end == f->cur) return -2;
+  if (f->cur == 0 || f->end < f->cur) return JSON_STRING_INVALID;
+  if (f->end == f->cur) return JSON_STRING_INCOMPLETE;
   return json_parse_value(f);
 }
 
-int json_escape(struct json_out *out, const char *p, size_t len) __attribute__((weak));
+int json_escape(struct json_out *out, const char *p, size_t len) WEAK;
 int json_escape(struct json_out *out, const char *p, size_t len) {
   size_t i, cl, n = 0;
   const char *hex_digits = "0123456789abcdef";
@@ -10339,7 +6689,7 @@ int json_escape(struct json_out *out, const char *p, size_t len) {
     } else if (ch >= '\b' && ch <= '\r') {
       n += out->printer(out, "\\", 1);
       n += out->printer(out, &specials[ch - '\b'], 1);
-    } else if (((*__ctype_b_loc ())[(int) ((ch))] & (unsigned short int) _ISprint)) {
+    } else if (isprint(ch)) {
       n += out->printer(out, p + i, 1);
     } else if ((cl = json_get_utf8_char_len(ch)) == 1) {
       n += out->printer(out, "\\u00", 4);
@@ -10354,7 +6704,7 @@ int json_escape(struct json_out *out, const char *p, size_t len) {
   return n;
 }
 
-int json_printer_buf(struct json_out *out, const char *buf, size_t len) __attribute__((weak));
+int json_printer_buf(struct json_out *out, const char *buf, size_t len) WEAK;
 int json_printer_buf(struct json_out *out, const char *buf, size_t len) {
   size_t avail = out->u.buf.size - out->u.buf.len;
   size_t n = len < avail ? len : avail;
@@ -10368,12 +6718,12 @@ int json_printer_buf(struct json_out *out, const char *buf, size_t len) {
   return len;
 }
 
-int json_printer_file(struct json_out *out, const char *buf, size_t len) __attribute__((weak));
+int json_printer_file(struct json_out *out, const char *buf, size_t len) WEAK;
 int json_printer_file(struct json_out *out, const char *buf, size_t len) {
   return fwrite(buf, 1, len, out->u.fp);
 }
 
-
+#if JSON_ENABLE_BASE64
 static int b64idx(int c) {
   if (c < 26) {
     return c + 'A';
@@ -10435,24 +6785,24 @@ static int b64dec(const char *src, int n, char *dst) {
   }
   return len;
 }
-
+#endif /* JSON_ENABLE_BASE64 */
 
 static unsigned char hexdec(const char *s) {
-
+#define HEXTOI(x) (x >= '0' && x <= '9' ? x - '0' : x - 'W')
   int a = tolower(*(const unsigned char *) s);
   int b = tolower(*(const unsigned char *) (s + 1));
-  return ((a >= '0' && a <= '9' ? a - '0' : a - 'W') << 4) | (b >= '0' && b <= '9' ? b - '0' : b - 'W');
+  return (HEXTOI(a) << 4) | HEXTOI(b);
 }
 
-int json_vprintf(struct json_out *out, const char *fmt, va_list xap) __attribute__((weak));
+int json_vprintf(struct json_out *out, const char *fmt, va_list xap) WEAK;
 int json_vprintf(struct json_out *out, const char *fmt, va_list xap) {
   int len = 0;
   const char *quote = "\"", *null = "null";
   va_list ap;
-  __builtin_va_copy(ap, xap);
+  va_copy(ap, xap);
 
   while (*fmt != '\0') {
-    if (strchr(":, \r\n\t[]{}\"", *fmt) != ((void*)0)) {
+    if (strchr(":, \r\n\t[]{}\"", *fmt) != NULL) {
       len += out->printer(out, fmt, 1);
       fmt++;
     } else if (fmt[0] == '%') {
@@ -10460,55 +6810,55 @@ int json_vprintf(struct json_out *out, const char *fmt, va_list xap) {
       size_t skip = 2;
 
       if (fmt[1] == 'l' && fmt[2] == 'l' && (fmt[3] == 'd' || fmt[3] == 'u')) {
-        int64_t val = __builtin_va_arg(ap, int64_t);
-        const char *fmt2 = fmt[3] == 'u' ? "%" "l" "u" : "%" "l" "d";
+        int64_t val = va_arg(ap, int64_t);
+        const char *fmt2 = fmt[3] == 'u' ? "%" UINT64_FMT : "%" INT64_FMT;
         snprintf(buf, sizeof(buf), fmt2, val);
         len += out->printer(out, buf, strlen(buf));
         skip += 2;
       } else if (fmt[1] == 'z' && fmt[2] == 'u') {
-        size_t val = __builtin_va_arg(ap, size_t);
+        size_t val = va_arg(ap, size_t);
         snprintf(buf, sizeof(buf), "%lu", (unsigned long) val);
         len += out->printer(out, buf, strlen(buf));
         skip += 1;
       } else if (fmt[1] == 'M') {
-        json_printf_callback_t f = __builtin_va_arg(ap, json_printf_callback_t);
+        json_printf_callback_t f = va_arg(ap, json_printf_callback_t);
         len += f(out, &ap);
       } else if (fmt[1] == 'B') {
-        int val = __builtin_va_arg(ap, int);
+        int val = va_arg(ap, int);
         const char *str = val ? "true" : "false";
         len += out->printer(out, str, strlen(str));
       } else if (fmt[1] == 'H') {
-
+#if JSON_ENABLE_HEX
         const char *hex = "0123456789abcdef";
-        int i, n = __builtin_va_arg(ap, int);
-        const unsigned char *p = __builtin_va_arg(ap, const unsigned char *);
+        int i, n = va_arg(ap, int);
+        const unsigned char *p = va_arg(ap, const unsigned char *);
         len += out->printer(out, quote, 1);
         for (i = 0; i < n; i++) {
           len += out->printer(out, &hex[(p[i] >> 4) & 0xf], 1);
           len += out->printer(out, &hex[p[i] & 0xf], 1);
         }
         len += out->printer(out, quote, 1);
-
+#endif /* JSON_ENABLE_HEX */
       } else if (fmt[1] == 'V') {
-
-        const unsigned char *p = __builtin_va_arg(ap, const unsigned char *);
-        int n = __builtin_va_arg(ap, int);
+#if JSON_ENABLE_BASE64
+        const unsigned char *p = va_arg(ap, const unsigned char *);
+        int n = va_arg(ap, int);
         len += out->printer(out, quote, 1);
         len += b64enc(out, p, n);
         len += out->printer(out, quote, 1);
-
+#endif /* JSON_ENABLE_BASE64 */
       } else if (fmt[1] == 'Q' ||
                  (fmt[1] == '.' && fmt[2] == '*' && fmt[3] == 'Q')) {
         size_t l = 0;
         const char *p;
 
         if (fmt[1] == '.') {
-          l = (size_t) __builtin_va_arg(ap, int);
+          l = (size_t) va_arg(ap, int);
           skip += 2;
         }
-        p = __builtin_va_arg(ap, char *);
+        p = va_arg(ap, char *);
 
-        if (p == ((void*)0)) {
+        if (p == NULL) {
           len += out->printer(out, null, 4);
         } else {
           if (fmt[1] == 'Q') {
@@ -10519,7 +6869,17 @@ int json_vprintf(struct json_out *out, const char *fmt, va_list xap) {
           len += out->printer(out, quote, 1);
         }
       } else {
-# 6883 "mjs_extra.h"
+        /*
+         * we delegate printing to the system printf.
+         * The goal here is to delegate all modifiers parsing to the system
+         * printf, as you can see below we still have to parse the format
+         * types.
+         *
+         * Currently, %s with strings longer than 20 chars will require
+         * double-buffering (an auxiliary buffer will be allocated from heap).
+         * TODO(dfrank): reimplement %s and %.*s in order to avoid that.
+         */
+
         const char *end_of_format_specifier = "sdfFeEgGlhuIcx.*-0123456789";
         int n = strspn(fmt + 1, end_of_format_specifier);
         char *pbuf = buf;
@@ -10530,78 +6890,78 @@ int json_vprintf(struct json_out *out, const char *fmt, va_list xap) {
                 n + 1 > (int) sizeof(fmt2) ? sizeof(fmt2) : (size_t) n + 1);
         fmt2[n + 1] = '\0';
 
-        __builtin_va_copy(ap_copy, ap);
+        va_copy(ap_copy, ap);
         need_len = vsnprintf(pbuf, size, fmt2, ap_copy);
-        __builtin_va_end(ap_copy);
+        va_end(ap_copy);
 
         if (need_len < 0) {
-
-
-
-
-          pbuf = ((void*)0);
+          /*
+           * Windows & eCos vsnprintf implementation return -1 on overflow
+           * instead of needed size.
+           */
+          pbuf = NULL;
           while (need_len < 0) {
             free(pbuf);
             size *= 2;
-            if ((pbuf = (char *) malloc(size)) == ((void*)0)) break;
-            __builtin_va_copy(ap_copy, ap);
+            if ((pbuf = (char *) malloc(size)) == NULL) break;
+            va_copy(ap_copy, ap);
             need_len = vsnprintf(pbuf, size, fmt2, ap_copy);
-            __builtin_va_end(ap_copy);
+            va_end(ap_copy);
           }
         } else if (need_len >= (int) sizeof(buf)) {
-
-
-
-
-          if ((pbuf = (char *) malloc(need_len + 1)) != ((void*)0)) {
-            __builtin_va_copy(ap_copy, ap);
+          /*
+           * resulting string doesn't fit into a stack-allocated buffer `buf`,
+           * so we need to allocate a new buffer from heap and use it
+           */
+          if ((pbuf = (char *) malloc(need_len + 1)) != NULL) {
+            va_copy(ap_copy, ap);
             vsnprintf(pbuf, need_len + 1, fmt2, ap_copy);
-            __builtin_va_end(ap_copy);
+            va_end(ap_copy);
           }
         }
-        if (pbuf == ((void*)0)) {
+        if (pbuf == NULL) {
           buf[0] = '\0';
           pbuf = buf;
         }
 
-
-
-
-
-
-
-        if ((n + 1 == strlen("%" "l" "d") && strcmp(fmt2, "%" "l" "d") == 0) ||
-            (n + 1 == strlen("%" "l" "u") && strcmp(fmt2, "%" "l" "u") == 0)) {
-          (void) __builtin_va_arg(ap, int64_t);
+        /*
+         * however we need to parse the type ourselves in order to advance
+         * the va_list by the correct amount; there is no portable way to
+         * inherit the advancement made by vprintf.
+         * 32-bit (linux or windows) passes va_list by value.
+         */
+        if ((n + 1 == strlen("%" PRId64) && strcmp(fmt2, "%" PRId64) == 0) ||
+            (n + 1 == strlen("%" PRIu64) && strcmp(fmt2, "%" PRIu64) == 0)) {
+          (void) va_arg(ap, int64_t);
         } else if (strcmp(fmt2, "%.*s") == 0) {
-          (void) __builtin_va_arg(ap, int);
-          (void) __builtin_va_arg(ap, char *);
+          (void) va_arg(ap, int);
+          (void) va_arg(ap, char *);
         } else {
           switch (fmt2[n]) {
             case 'u':
             case 'd':
-              (void) __builtin_va_arg(ap, int);
+              (void) va_arg(ap, int);
               break;
             case 'g':
             case 'f':
-              (void) __builtin_va_arg(ap, double);
+              (void) va_arg(ap, double);
               break;
             case 'p':
-              (void) __builtin_va_arg(ap, void *);
+              (void) va_arg(ap, void *);
               break;
             default:
-
-              (void) __builtin_va_arg(ap, int);
+              /* many types are promoted to int */
+              (void) va_arg(ap, int);
           }
         }
 
         len += out->printer(out, pbuf, strlen(pbuf));
         skip = n + 1;
 
-
+        /* If buffer was allocated from heap, free it */
         if (pbuf != buf) {
           free(pbuf);
-          pbuf = ((void*)0);
+          pbuf = NULL;
         }
       }
       fmt += skip;
@@ -10617,30 +6977,30 @@ int json_vprintf(struct json_out *out, const char *fmt, va_list xap) {
       fmt++;
     }
   }
-  __builtin_va_end(ap);
+  va_end(ap);
 
   return len;
 }
 
-int json_printf(struct json_out *out, const char *fmt, ...) __attribute__((weak));
+int json_printf(struct json_out *out, const char *fmt, ...) WEAK;
 int json_printf(struct json_out *out, const char *fmt, ...) {
   int n;
   va_list ap;
-  __builtin_va_start(ap, fmt);
+  va_start(ap, fmt);
   n = json_vprintf(out, fmt, ap);
-  __builtin_va_end(ap);
+  va_end(ap);
   return n;
 }
 
-int json_printf_array(struct json_out *out, va_list *ap) __attribute__((weak));
+int json_printf_array(struct json_out *out, va_list *ap) WEAK;
 int json_printf_array(struct json_out *out, va_list *ap) {
   int len = 0;
-  char *arr = __builtin_va_arg(*ap, char *);
-  size_t i, arr_size = __builtin_va_arg(*ap, size_t);
-  size_t elem_size = __builtin_va_arg(*ap, size_t);
-  const char *fmt = __builtin_va_arg(*ap, char *);
+  char *arr = va_arg(*ap, char *);
+  size_t i, arr_size = va_arg(*ap, size_t);
+  size_t elem_size = va_arg(*ap, size_t);
+  const char *fmt = va_arg(*ap, char *);
   len += json_printf(out, "[", 1);
-  for (i = 0; arr != ((void*)0) && i < arr_size / elem_size; i++) {
+  for (i = 0; arr != NULL && i < arr_size / elem_size; i++) {
     union {
       int64_t i;
       double d;
@@ -10648,7 +7008,7 @@ int json_printf_array(struct json_out *out, va_list *ap) {
     memcpy(&val, arr + i * elem_size,
            elem_size > sizeof(val) ? sizeof(val) : elem_size);
     if (i > 0) len += json_printf(out, ", ");
-    if (strpbrk(fmt, "efg") != ((void*)0)) {
+    if (strpbrk(fmt, "efg") != NULL) {
       len += json_printf(out, fmt, val.d);
     } else {
       len += json_printf(out, fmt, val.i);
@@ -10657,9 +7017,32 @@ int json_printf_array(struct json_out *out, va_list *ap) {
   len += json_printf(out, "]", 1);
   return len;
 }
-# 7044 "mjs_extra.h"
+
+#ifdef _WIN32
+int cs_win_vsnprintf(char *str, size_t size, const char *format,
+                     va_list ap) WEAK;
+int cs_win_vsnprintf(char *str, size_t size, const char *format, va_list ap) {
+  int res = _vsnprintf(str, size, format, ap);
+  va_end(ap);
+  if (res >= size) {
+    str[size - 1] = '\0';
+  }
+  return res;
+}
+
+int cs_win_snprintf(char *str, size_t size, const char *format, ...) WEAK;
+int cs_win_snprintf(char *str, size_t size, const char *format, ...) {
+  int res;
+  va_list ap;
+  va_start(ap, format);
+  res = vsnprintf(str, size, format, ap);
+  va_end(ap);
+  return res;
+}
+#endif /* _WIN32 */
+
 int json_walk(const char *json_string, int json_string_length,
-              json_walk_callback_t callback, void *callback_data) __attribute__((weak));
+              json_walk_callback_t callback, void *callback_data) WEAK;
 int json_walk(const char *json_string, int json_string_length,
               json_walk_callback_t callback, void *callback_data) {
   struct frozen frozen;
@@ -10670,14 +7053,14 @@ int json_walk(const char *json_string, int json_string_length,
   frozen.callback_data = callback_data;
   frozen.callback = callback;
 
-  do { int _n = json_doit(&frozen); if (_n < 0) return _n; } while (0);
+  TRY(json_doit(&frozen));
 
   return frozen.cur - json_string;
 }
 
 struct scan_array_info {
   int found;
-  char path[256];
+  char path[JSON_MAX_PATH_LEN];
   struct json_token *token;
 };
 
@@ -10696,7 +7079,7 @@ static void json_scanf_array_elem_cb(void *callback_data, const char *name,
 }
 
 int json_scanf_array_elem(const char *s, int len, const char *path, int idx,
-                          struct json_token *token) __attribute__((weak));
+                          struct json_token *token) WEAK;
 int json_scanf_array_elem(const char *s, int len, const char *path, int idx,
                           struct json_token *token) {
   struct scan_array_info info;
@@ -10717,29 +7100,29 @@ struct json_scanf_info {
   int type;
 };
 
-int json_unescape(const char *src, int slen, char *dst, int dlen) __attribute__((weak));
+int json_unescape(const char *src, int slen, char *dst, int dlen) WEAK;
 int json_unescape(const char *src, int slen, char *dst, int dlen) {
   char *send = (char *) src + slen, *dend = dst + dlen, *orig_dst = dst, *p;
   const char *esc1 = "\"\\/bfnrt", *esc2 = "\"\\/\b\f\n\r\t";
 
   while (src < send) {
     if (*src == '\\') {
-      if (++src >= send) return -2;
+      if (++src >= send) return JSON_STRING_INCOMPLETE;
       if (*src == 'u') {
-        if (send - src < 5) return -2;
-
+        if (send - src < 5) return JSON_STRING_INCOMPLETE;
+        /* Here we go: this is a \u.... escape. Process simple one-byte chars */
         if (src[1] == '0' && src[2] == '0') {
-
+          /* This is \u00xx character from the ASCII range */
           if (dst < dend) *dst = hexdec(src + 3);
           src += 4;
         } else {
-
-          return -1;
+          /* Complex \uXXXX escapes drag utf8 lib... Do it at some stage */
+          return JSON_STRING_INVALID;
         }
-      } else if ((p = (char *) strchr(esc1, *src)) != ((void*)0)) {
+      } else if ((p = (char *) strchr(esc1, *src)) != NULL) {
         if (dst < dend) *dst = esc2[p - esc1];
       } else {
-        return -1;
+        return JSON_STRING_INVALID;
       }
     } else {
       if (dst < dend) *dst = *src;
@@ -10755,28 +7138,28 @@ static void json_scanf_cb(void *callback_data, const char *name,
                           size_t name_len, const char *path,
                           const struct json_token *token) {
   struct json_scanf_info *info = (struct json_scanf_info *) callback_data;
-  char buf[32];
+  char buf[32]; /* Must be enough to hold numbers */
 
   (void) name;
   (void) name_len;
 
-  if (token->ptr == ((void*)0)) {
-
-
-
-
+  if (token->ptr == NULL) {
+    /*
+     * We're not interested here in the events for which we have no value;
+     * namely, JSON_TYPE_OBJECT_START and JSON_TYPE_ARRAY_START
+     */
     return;
   }
 
   if (strcmp(path, info->path) != 0) {
-
+    /* It's not the path we're looking for, so, just ignore this callback */
     return;
   }
 
   switch (info->type) {
     case 'B':
       info->num_conversions++;
-      switch (sizeof(_Bool)) {
+      switch (sizeof(bool)) {
         case sizeof(char):
           *(char *) info->target = (token->type == JSON_TYPE_TRUE ? 1 : 0);
           break;
@@ -10784,7 +7167,7 @@ static void json_scanf_cb(void *callback_data, const char *name,
           *(int *) info->target = (token->type == JSON_TYPE_TRUE ? 1 : 0);
           break;
         default:
-
+          /* should never be here */
           abort();
       }
       break;
@@ -10800,49 +7183,49 @@ static void json_scanf_cb(void *callback_data, const char *name,
     case 'Q': {
       char **dst = (char **) info->target;
       if (token->type == JSON_TYPE_NULL) {
-        *dst = ((void*)0);
+        *dst = NULL;
       } else {
-        int unescaped_len = json_unescape(token->ptr, token->len, ((void*)0), 0);
+        int unescaped_len = json_unescape(token->ptr, token->len, NULL, 0);
         if (unescaped_len >= 0 &&
-            (*dst = (char *) malloc(unescaped_len + 1)) != ((void*)0)) {
+            (*dst = (char *) malloc(unescaped_len + 1)) != NULL) {
           info->num_conversions++;
           if (json_unescape(token->ptr, token->len, *dst, unescaped_len) ==
               unescaped_len) {
             (*dst)[unescaped_len] = '\0';
           } else {
             free(*dst);
-            *dst = ((void*)0);
+            *dst = NULL;
           }
         }
       }
       break;
     }
     case 'H': {
-
+#if JSON_ENABLE_HEX
       char **dst = (char **) info->user_data;
       int i, len = token->len / 2;
       *(int *) info->target = len;
-      if ((*dst = (char *) malloc(len + 1)) != ((void*)0)) {
+      if ((*dst = (char *) malloc(len + 1)) != NULL) {
         for (i = 0; i < len; i++) {
           (*dst)[i] = hexdec(token->ptr + 2 * i);
         }
         (*dst)[len] = '\0';
         info->num_conversions++;
       }
-
+#endif /* JSON_ENABLE_HEX */
       break;
     }
     case 'V': {
-
+#if JSON_ENABLE_BASE64
       char **dst = (char **) info->target;
       int len = token->len * 4 / 3 + 2;
-      if ((*dst = (char *) malloc(len + 1)) != ((void*)0)) {
+      if ((*dst = (char *) malloc(len + 1)) != NULL) {
         int n = b64dec(token->ptr, token->len, *dst);
         (*dst)[n] = '\0';
         *(int *) info->user_data = n;
         info->num_conversions++;
       }
-
+#endif /* JSON_ENABLE_BASE64 */
       break;
     }
     case 'T':
@@ -10851,14 +7234,14 @@ static void json_scanf_cb(void *callback_data, const char *name,
       break;
     default:
       if (token->len >= (int) sizeof(buf)) break;
-
+      /* Before converting, copy into tmp buffer in order to 0-terminate it */
       memcpy(buf, token->ptr, token->len);
       buf[token->len] = '\0';
-
+      /* NB: Use of base 0 for %d, %ld, %u and %lu is intentional. */
       if (info->fmt[1] == 'd' || (info->fmt[1] == 'l' && info->fmt[2] == 'd') ||
           info->fmt[1] == 'i') {
-        char *endptr = ((void*)0);
-        long r = strtol(buf, &endptr, 0 );
+        char *endptr = NULL;
+        long r = strtol(buf, &endptr, 0 /* base */);
         if (*endptr == '\0') {
           if (info->fmt[1] == 'l') {
             *((long *) info->target) = r;
@@ -10869,8 +7252,8 @@ static void json_scanf_cb(void *callback_data, const char *name,
         }
       } else if (info->fmt[1] == 'u' ||
                  (info->fmt[1] == 'l' && info->fmt[2] == 'u')) {
-        char *endptr = ((void*)0);
-        unsigned long r = strtoul(buf, &endptr, 0 );
+        char *endptr = NULL;
+        unsigned long r = strtoul(buf, &endptr, 0 /* base */);
         if (*endptr == '\0') {
           if (info->fmt[1] == 'l') {
             *((unsigned long *) info->target) = r;
@@ -10880,37 +7263,37 @@ static void json_scanf_cb(void *callback_data, const char *name,
           info->num_conversions++;
         }
       } else {
-
+#if !JSON_MINIMAL
         info->num_conversions += sscanf(buf, info->fmt, info->target);
-
+#endif
       }
       break;
   }
 }
 
-int json_vscanf(const char *s, int len, const char *fmt, va_list ap) __attribute__((weak));
+int json_vscanf(const char *s, int len, const char *fmt, va_list ap) WEAK;
 int json_vscanf(const char *s, int len, const char *fmt, va_list ap) {
-  char path[256] = "", fmtbuf[20];
+  char path[JSON_MAX_PATH_LEN] = "", fmtbuf[20];
   int i = 0;
-  char *p = ((void*)0);
-  struct json_scanf_info info = {0, path, fmtbuf, ((void*)0), ((void*)0), 0};
+  char *p = NULL;
+  struct json_scanf_info info = {0, path, fmtbuf, NULL, NULL, 0};
 
   while (fmt[i] != '\0') {
     if (fmt[i] == '{') {
       strcat(path, ".");
       i++;
     } else if (fmt[i] == '}') {
-      if ((p = strrchr(path, '.')) != ((void*)0)) *p = '\0';
+      if ((p = strrchr(path, '.')) != NULL) *p = '\0';
       i++;
     } else if (fmt[i] == '%') {
-      info.target = __builtin_va_arg(ap, void *);
+      info.target = va_arg(ap, void *);
       info.type = fmt[i + 1];
       switch (fmt[i + 1]) {
         case 'M':
         case 'V':
         case 'H':
-          info.user_data = __builtin_va_arg(ap, void *);
-
+          info.user_data = va_arg(ap, void *);
+        /* FALLTHROUGH */
         case 'B':
         case 'Q':
         case 'T':
@@ -10931,7 +7314,7 @@ int json_vscanf(const char *s, int len, const char *fmt, va_list ap) {
       char *pe;
       const char *delims = ": \r\n\t";
       int key_len = strcspn(&fmt[i], delims);
-      if ((p = strrchr(path, '.')) != ((void*)0)) p[1] = '\0';
+      if ((p = strrchr(path, '.')) != NULL) p[1] = '\0';
       pe = path + strlen(path);
       memcpy(pe, fmt + i, key_len);
       pe[key_len] = '\0';
@@ -10943,22 +7326,22 @@ int json_vscanf(const char *s, int len, const char *fmt, va_list ap) {
   return info.num_conversions;
 }
 
-int json_scanf(const char *str, int len, const char *fmt, ...) __attribute__((weak));
+int json_scanf(const char *str, int len, const char *fmt, ...) WEAK;
 int json_scanf(const char *str, int len, const char *fmt, ...) {
   int result;
   va_list ap;
-  __builtin_va_start(ap, fmt);
+  va_start(ap, fmt);
   result = json_vscanf(str, len, fmt, ap);
-  __builtin_va_end(ap);
+  va_end(ap);
   return result;
 }
 
-int json_vfprintf(const char *file_name, const char *fmt, va_list ap) __attribute__((weak));
+int json_vfprintf(const char *file_name, const char *fmt, va_list ap) WEAK;
 int json_vfprintf(const char *file_name, const char *fmt, va_list ap) {
   int res = -1;
   FILE *fp = fopen(file_name, "wb");
-  if (fp != ((void*)0)) {
-    struct json_out out = { json_printer_file, { { (char *) fp, 0, 0 } } };
+  if (fp != NULL) {
+    struct json_out out = JSON_OUT_FILE(fp);
     res = json_vprintf(&out, fmt, ap);
     fputc('\n', fp);
     fclose(fp);
@@ -10966,30 +7349,30 @@ int json_vfprintf(const char *file_name, const char *fmt, va_list ap) {
   return res;
 }
 
-int json_fprintf(const char *file_name, const char *fmt, ...) __attribute__((weak));
+int json_fprintf(const char *file_name, const char *fmt, ...) WEAK;
 int json_fprintf(const char *file_name, const char *fmt, ...) {
   int result;
   va_list ap;
-  __builtin_va_start(ap, fmt);
+  va_start(ap, fmt);
   result = json_vfprintf(file_name, fmt, ap);
-  __builtin_va_end(ap);
+  va_end(ap);
   return result;
 }
 
-char *json_fread(const char *path) __attribute__((weak));
+char *json_fread(const char *path) WEAK;
 char *json_fread(const char *path) {
   FILE *fp;
-  char *data = ((void*)0);
-  if ((fp = fopen(path, "rb")) == ((void*)0)) {
-  } else if (fseek(fp, 0, 2) != 0) {
+  char *data = NULL;
+  if ((fp = fopen(path, "rb")) == NULL) {
+  } else if (fseek(fp, 0, SEEK_END) != 0) {
     fclose(fp);
   } else {
     long size = ftell(fp);
-    if (size > 0 && (data = (char *) malloc(size + 1)) != ((void*)0)) {
-      fseek(fp, 0, 0);
+    if (size > 0 && (data = (char *) malloc(size + 1)) != NULL) {
+      fseek(fp, 0, SEEK_SET); /* Some platforms might not have rewind(), Oo */
       if (fread(data, 1, size, fp) != (size_t) size) {
         free(data);
-        data = ((void*)0);
+        data = NULL;
       } else {
         data[size] = '\0';
       }
@@ -11001,11 +7384,11 @@ char *json_fread(const char *path) {
 
 struct json_setf_data {
   const char *json_path;
-  const char *base;
-  int matched;
-  int pos;
-  int end;
-  int prev;
+  const char *base; /* Pointer to the source JSON string */
+  int matched;      /* Matched part of json_path */
+  int pos;          /* Offset of the mutated value begin */
+  int end;          /* Offset of the mutated value end */
+  int prev;         /* Offset of the previous token end */
 };
 
 static int get_matched_prefix_len(const char *s1, const char *s2) {
@@ -11018,28 +7401,36 @@ static void json_vsetf_cb(void *userdata, const char *name, size_t name_len,
                           const char *path, const struct json_token *t) {
   struct json_setf_data *data = (struct json_setf_data *) userdata;
   int off, len = get_matched_prefix_len(path, data->json_path);
-  if (t->ptr == ((void*)0)) return;
+  if (t->ptr == NULL) return;
   off = t->ptr - data->base;
   if (len > data->matched) data->matched = len;
 
-
-
-
-
+  /*
+   * If there is no exact path match, set the mutation position to tbe end
+   * of the object or array
+   */
   if (len < data->matched && data->pos == 0 &&
       (t->type == JSON_TYPE_OBJECT_END || t->type == JSON_TYPE_ARRAY_END)) {
     data->pos = data->end = data->prev;
   }
 
-
+  /* Exact path match. Set mutation position to the value of this token */
   if (strcmp(path, data->json_path) == 0 && t->type != JSON_TYPE_OBJECT_START &&
       t->type != JSON_TYPE_ARRAY_START) {
     data->pos = off;
     data->end = off + t->len;
   }
-# 7432 "mjs_extra.h"
+
+  /*
+   * For deletion, we need to know where the previous value ends, because
+   * we don't know where matched value key starts.
+   * When the mutation position is not yet set, remember each value end.
+   * When the mutation position is already set, but it is at the beginning
+   * of the object/array, we catch the end of the object/array and see
+   * whether the object/array start is closer then previously stored prev.
+   */
   if (data->pos == 0) {
-    data->prev = off + t->len;
+    data->prev = off + t->len; /* pos is not yet set */
   } else if ((t->ptr[0] == '[' || t->ptr[0] == '{') && off + 1 < data->pos &&
              off + 1 > data->prev) {
     data->prev = off + 1;
@@ -11049,7 +7440,7 @@ static void json_vsetf_cb(void *userdata, const char *name, size_t name_len,
 }
 
 int json_vsetf(const char *s, int len, struct json_out *out,
-               const char *json_path, const char *json_fmt, va_list ap) __attribute__((weak));
+               const char *json_path, const char *json_fmt, va_list ap) WEAK;
 int json_vsetf(const char *s, int len, struct json_out *out,
                const char *json_path, const char *json_fmt, va_list ap) {
   struct json_setf_data data;
@@ -11058,24 +7449,24 @@ int json_vsetf(const char *s, int len, struct json_out *out,
   data.base = s;
   data.end = len;
   json_walk(s, len, json_vsetf_cb, &data);
-  if (json_fmt == ((void*)0)) {
-
+  if (json_fmt == NULL) {
+    /* Deletion codepath */
     json_printf(out, "%.*s", data.prev, s);
-
+    /* Trim comma after the value that begins at object/array start */
     if (s[data.prev - 1] == '{' || s[data.prev - 1] == '[') {
       int i = data.end;
       while (i < len && json_isspace(s[i])) i++;
-      if (s[i] == ',') data.end = i + 1;
+      if (s[i] == ',') data.end = i + 1; /* Point after comma */
     }
     json_printf(out, "%.*s", len - data.end, s + data.end);
   } else {
-
+    /* Modification codepath */
     int n, off = data.matched, depth = 0;
 
-
+    /* Print the unchanged beginning */
     json_printf(out, "%.*s", data.pos, s);
 
-
+    /* Add missing keys */
     while ((n = strcspn(&json_path[off], ".[")) > 0) {
       if (s[data.prev - 1] != '{' && s[data.prev - 1] != '[' && depth == 0) {
         json_printf(out, ",");
@@ -11089,31 +7480,31 @@ int json_vsetf(const char *s, int len, struct json_out *out,
         off++;
       }
     }
-
+    /* Print the new value */
     json_vprintf(out, json_fmt, ap);
 
-
+    /* Close brackets/braces of the added missing keys */
     for (; off > data.matched; off--) {
       int ch = json_path[off];
       const char *p = ch == '.' ? "}" : ch == '[' ? "]" : "";
       json_printf(out, "%s", p);
     }
 
-
+    /* Print the rest of the unchanged string */
     json_printf(out, "%.*s", len - data.end, s + data.end);
   }
   return data.end > data.pos ? 1 : 0;
 }
 
 int json_setf(const char *s, int len, struct json_out *out,
-              const char *json_path, const char *json_fmt, ...) __attribute__((weak));
+              const char *json_path, const char *json_fmt, ...) WEAK;
 int json_setf(const char *s, int len, struct json_out *out,
               const char *json_path, const char *json_fmt, ...) {
   int result;
   va_list ap;
-  __builtin_va_start(ap, json_fmt);
+  va_start(ap, json_fmt);
   result = json_vsetf(s, len, out, json_path, json_fmt, ap);
-  __builtin_va_end(ap);
+  va_end(ap);
   return result;
 }
 
@@ -11182,25 +7573,25 @@ static void prettify_cb(void *userdata, const char *name, size_t name_len,
   pd->last_token = t->type;
 }
 
-int json_prettify(const char *s, int len, struct json_out *out) __attribute__((weak));
+int json_prettify(const char *s, int len, struct json_out *out) WEAK;
 int json_prettify(const char *s, int len, struct json_out *out) {
   struct prettify_data pd = {out, 0, JSON_TYPE_INVALID};
   return json_walk(s, len, prettify_cb, &pd);
 }
 
-int json_prettify_file(const char *file_name) __attribute__((weak));
+int json_prettify_file(const char *file_name) WEAK;
 int json_prettify_file(const char *file_name) {
   int res = -1;
   char *s = json_fread(file_name);
   FILE *fp;
-  if (s != ((void*)0) && (fp = fopen(file_name, "wb")) != ((void*)0)) {
-    struct json_out out = { json_printer_file, { { (char *) fp, 0, 0 } } };
+  if (s != NULL && (fp = fopen(file_name, "wb")) != NULL) {
+    struct json_out out = JSON_OUT_FILE(fp);
     res = json_prettify(s, strlen(s), &out);
     if (res < 0) {
-
+      /* On error, restore the old content */
       fclose(fp);
       fp = fopen(file_name, "wb");
-      fseek(fp, 0, 0);
+      fseek(fp, 0, SEEK_SET);
       fwrite(s, 1, strlen(s), fp);
     } else {
       fputc('\n', fp);
@@ -11212,31 +7603,31 @@ int json_prettify_file(const char *file_name) {
 }
 
 struct next_data {
-  void *handle;
-  const char *path;
-  int path_len;
-  int found;
-  struct json_token *key;
-  struct json_token *val;
-  int *idx;
+  void *handle;            // Passed handle. Changed if a next entry is found
+  const char *path;        // Path to the iterated object/array
+  int path_len;            // Path length - optimisation
+  int found;               // Non-0 if found the next entry
+  struct json_token *key;  // Object's key
+  struct json_token *val;  // Object's value
+  int *idx;                // Array index
 };
 
 static void next_set_key(struct next_data *d, const char *name, int name_len,
                          int is_array) {
   if (is_array) {
-
-    if (d->key != ((void*)0)) {
+    /* Array. Set index and reset key  */
+    if (d->key != NULL) {
       d->key->len = 0;
-      d->key->ptr = ((void*)0);
+      d->key->ptr = NULL;
     }
-    if (d->idx != ((void*)0)) *d->idx = atoi(name);
+    if (d->idx != NULL) *d->idx = atoi(name);
   } else {
-
-    if (d->key != ((void*)0)) {
+    /* Object. Set key and make index -1 */
+    if (d->key != NULL) {
       d->key->ptr = name;
       d->key->len = name_len;
     }
-    if (d->idx != ((void*)0)) *d->idx = -1;
+    if (d->idx != NULL) *d->idx = -1;
   }
 }
 
@@ -11247,16 +7638,16 @@ static void json_next_cb(void *userdata, const char *name, size_t name_len,
   if (d->found) return;
   if (d->path_len >= (int) strlen(path)) return;
   if (strncmp(d->path, path, d->path_len) != 0) return;
-  if (strchr(p + 1, '.') != ((void*)0)) return;
-  if (strchr(p + 1, '[') != ((void*)0)) return;
-
+  if (strchr(p + 1, '.') != NULL) return; /* More nested objects - skip */
+  if (strchr(p + 1, '[') != NULL) return; /* Ditto for arrays */
+  // {OBJECT,ARRAY}_END types do not pass name, _START does. Save key.
   if (t->type == JSON_TYPE_OBJECT_START || t->type == JSON_TYPE_ARRAY_START) {
     next_set_key(d, name, name_len, p[0] == '[');
-  } else if (d->handle == ((void*)0) || d->handle < (void *) t->ptr) {
+  } else if (d->handle == NULL || d->handle < (void *) t->ptr) {
     if (t->type != JSON_TYPE_OBJECT_END && t->type != JSON_TYPE_ARRAY_END) {
       next_set_key(d, name, name_len, p[0] == '[');
     }
-    if (d->val != ((void*)0)) *d->val = *t;
+    if (d->val != NULL) *d->val = *t;
     d->handle = (void *) t->ptr;
     d->found = 1;
   }
@@ -11264,33 +7655,33 @@ static void json_next_cb(void *userdata, const char *name, size_t name_len,
 
 static void *json_next(const char *s, int len, void *handle, const char *path,
                        struct json_token *key, struct json_token *val, int *i) {
-  struct json_token tmpval, *v = val == ((void*)0) ? &tmpval : val;
-  struct json_token tmpkey, *k = key == ((void*)0) ? &tmpkey : key;
-  int tmpidx, *pidx = i == ((void*)0) ? &tmpidx : i;
+  struct json_token tmpval, *v = val == NULL ? &tmpval : val;
+  struct json_token tmpkey, *k = key == NULL ? &tmpkey : key;
+  int tmpidx, *pidx = i == NULL ? &tmpidx : i;
   struct next_data data = {handle, path, (int) strlen(path), 0, k, v, pidx};
   json_walk(s, len, json_next_cb, &data);
-  return data.found ? data.handle : ((void*)0);
+  return data.found ? data.handle : NULL;
 }
 
 void *json_next_key(const char *s, int len, void *handle, const char *path,
-                    struct json_token *key, struct json_token *val) __attribute__((weak));
+                    struct json_token *key, struct json_token *val) WEAK;
 void *json_next_key(const char *s, int len, void *handle, const char *path,
                     struct json_token *key, struct json_token *val) {
-  return json_next(s, len, handle, path, key, val, ((void*)0));
+  return json_next(s, len, handle, path, key, val, NULL);
 }
 
 void *json_next_elem(const char *s, int len, void *handle, const char *path,
-                     int *idx, struct json_token *val) __attribute__((weak));
+                     int *idx, struct json_token *val) WEAK;
 void *json_next_elem(const char *s, int len, void *handle, const char *path,
                      int *idx, struct json_token *val) {
-  return json_next(s, len, handle, path, ((void*)0), val, idx);
+  return json_next(s, len, handle, path, NULL, val, idx);
 }
 
 static int json_sprinter(struct json_out *out, const char *str, size_t len) {
-  size_t old_len = out->u.buf.buf == ((void*)0) ? 0 : strlen(out->u.buf.buf);
+  size_t old_len = out->u.buf.buf == NULL ? 0 : strlen(out->u.buf.buf);
   size_t new_len = len + old_len;
   char *p = (char *) realloc(out->u.buf.buf, new_len + 1);
-  if (p != ((void*)0)) {
+  if (p != NULL) {
     memcpy(p + old_len, str, len);
     p[new_len] = '\0';
     out->u.buf.buf = p;
@@ -11298,7 +7689,7 @@ static int json_sprinter(struct json_out *out, const char *str, size_t len) {
   return len;
 }
 
-char *json_vasprintf(const char *fmt, va_list ap) __attribute__((weak));
+char *json_vasprintf(const char *fmt, va_list ap) WEAK;
 char *json_vasprintf(const char *fmt, va_list ap) {
   struct json_out out;
   memset(&out, 0, sizeof(out));
@@ -11307,22 +7698,39 @@ char *json_vasprintf(const char *fmt, va_list ap) {
   return out.u.buf.buf;
 }
 
-char *json_asprintf(const char *fmt, ...) __attribute__((weak));
+char *json_asprintf(const char *fmt, ...) WEAK;
 char *json_asprintf(const char *fmt, ...) {
-  char *result = ((void*)0);
+  char *result = NULL;
   va_list ap;
-  __builtin_va_start(ap, fmt);
+  va_start(ap, fmt);
   result = json_vasprintf(fmt, ap);
-  __builtin_va_end(ap);
+  va_end(ap);
   return result;
 }
-# 7728 "mjs_extra.h"
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/ffi/ffi.c"
+#endif
+/*
+ * Copyright (c) 2016 Cesanta Software Limited
+ * All rights reserved
+ */
+
+/* Amalgamated: #include "mjs/src/ffi/ffi.h" */
+
+#define IS_W(arg) ((arg).ctype == FFI_CTYPE_WORD)
+#define IS_D(arg) ((arg).ctype == FFI_CTYPE_DOUBLE)
+#define IS_F(arg) ((arg).ctype == FFI_CTYPE_FLOAT)
+
+#define W(arg) ((ffi_word_t)(arg).v.i)
+#define D(arg) ((arg).v.d)
+#define F(arg) ((arg).v.f)
+
 void ffi_set_word(struct ffi_arg *arg, ffi_word_t v) {
   arg->ctype = FFI_CTYPE_WORD;
   arg->v.i = v;
 }
 
-void ffi_set_bool(struct ffi_arg *arg, _Bool v) {
+void ffi_set_bool(struct ffi_arg *arg, bool v) {
   arg->ctype = FFI_CTYPE_BOOL;
   arg->v.i = v;
 }
@@ -11340,7 +7748,42 @@ void ffi_set_float(struct ffi_arg *arg, float v) {
   arg->ctype = FFI_CTYPE_FLOAT;
   arg->v.f = v;
 }
-# 7787 "mjs_extra.h"
+
+/*
+ * The ARM ABI uses only 4 32-bit registers for paramter passing.
+ * Xtensa call0 calling-convention (as used by Espressif) has 6.
+ *
+ * Focusing only on implementing FFI with registers means we can simplify a lot.
+ *
+ * ARM has some quasi-alignment rules when mixing double and integers as
+ * arguments. Only:
+ *   a) double, int32_t, int32_t
+ *   b) int32_t, double
+ * would fit in 4 registers. (the same goes for uint64_t).
+ *
+ * In order to simplify further, when a double-width argument is present, we
+ * allow only two arguments.
+ */
+
+/*
+ * We need to support x86_64 in order to support local tests.
+ * x86_64 has more and wider registers, but unlike the two main
+ * embedded platforms we target it has a separate register file for
+ * integer values and for floating point values (both for passing args and
+ * return values). E.g. if a double value is passed as a second argument
+ * it gets passed in the first available floating point register.
+ *
+ * I.e, the compiler generates exactly the same code for:
+ *
+ * void foo(int a, double b) {...}
+ *
+ * and
+ *
+ * void foo(double b, int a) {...}
+ *
+ *
+ */
+
 typedef ffi_word_t (*w4w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t);
 typedef ffi_word_t (*w5w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t,
                             ffi_word_t);
@@ -11371,34 +7814,34 @@ typedef ffi_word_t (*wfwf_t)(float, ffi_word_t, float);
 typedef ffi_word_t (*wffw_t)(float, float, ffi_word_t);
 typedef ffi_word_t (*wfff_t)(float, float, float);
 
-typedef _Bool (*b4w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t);
-typedef _Bool (*b5w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t,
+typedef bool (*b4w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t);
+typedef bool (*b5w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t,
                       ffi_word_t);
-typedef _Bool (*b6w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t,
+typedef bool (*b6w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t,
                       ffi_word_t, ffi_word_t);
-typedef _Bool (*bdw_t)(double, ffi_word_t);
-typedef _Bool (*bwd_t)(ffi_word_t, double);
-typedef _Bool (*bdd_t)(double, double);
+typedef bool (*bdw_t)(double, ffi_word_t);
+typedef bool (*bwd_t)(ffi_word_t, double);
+typedef bool (*bdd_t)(double, double);
 
-typedef _Bool (*bwwd_t)(ffi_word_t, ffi_word_t, double);
-typedef _Bool (*bwdw_t)(ffi_word_t, double, ffi_word_t);
-typedef _Bool (*bwdd_t)(ffi_word_t, double, double);
-typedef _Bool (*bdww_t)(double, ffi_word_t, ffi_word_t);
-typedef _Bool (*bdwd_t)(double, ffi_word_t, double);
-typedef _Bool (*bddw_t)(double, double, ffi_word_t);
-typedef _Bool (*bddd_t)(double, double, double);
+typedef bool (*bwwd_t)(ffi_word_t, ffi_word_t, double);
+typedef bool (*bwdw_t)(ffi_word_t, double, ffi_word_t);
+typedef bool (*bwdd_t)(ffi_word_t, double, double);
+typedef bool (*bdww_t)(double, ffi_word_t, ffi_word_t);
+typedef bool (*bdwd_t)(double, ffi_word_t, double);
+typedef bool (*bddw_t)(double, double, ffi_word_t);
+typedef bool (*bddd_t)(double, double, double);
 
-typedef _Bool (*bfw_t)(float, ffi_word_t);
-typedef _Bool (*bwf_t)(ffi_word_t, float);
-typedef _Bool (*bff_t)(float, float);
+typedef bool (*bfw_t)(float, ffi_word_t);
+typedef bool (*bwf_t)(ffi_word_t, float);
+typedef bool (*bff_t)(float, float);
 
-typedef _Bool (*bwwf_t)(ffi_word_t, ffi_word_t, float);
-typedef _Bool (*bwfw_t)(ffi_word_t, float, ffi_word_t);
-typedef _Bool (*bwff_t)(ffi_word_t, float, float);
-typedef _Bool (*bfww_t)(float, ffi_word_t, ffi_word_t);
-typedef _Bool (*bfwf_t)(float, ffi_word_t, float);
-typedef _Bool (*bffw_t)(float, float, ffi_word_t);
-typedef _Bool (*bfff_t)(float, float, float);
+typedef bool (*bwwf_t)(ffi_word_t, ffi_word_t, float);
+typedef bool (*bwfw_t)(ffi_word_t, float, ffi_word_t);
+typedef bool (*bwff_t)(ffi_word_t, float, float);
+typedef bool (*bfww_t)(float, ffi_word_t, ffi_word_t);
+typedef bool (*bfwf_t)(float, ffi_word_t, float);
+typedef bool (*bffw_t)(float, float, ffi_word_t);
+typedef bool (*bfff_t)(float, float, float);
 
 typedef double (*d4w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t);
 typedef double (*d5w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t,
@@ -11440,79 +7883,79 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
 
   if (nargs > 6) return -1;
   for (i = 0; i < nargs; i++) {
-    doubles += (((args[i]).ctype == FFI_CTYPE_DOUBLE));
-    floats += (((args[i]).ctype == FFI_CTYPE_FLOAT));
+    doubles += (IS_D(args[i]));
+    floats += (IS_F(args[i]));
   }
 
-
+  /* Doubles and floats are not supported together atm */
   if (doubles > 0 && floats > 0) {
     return -1;
   }
 
   switch (res->ctype) {
-    case FFI_CTYPE_WORD: {
+    case FFI_CTYPE_WORD: { /* {{{ */
       ffi_word_t r;
       if (doubles == 0) {
         if (floats == 0) {
-
-
-
-
+          /*
+           * No double and no float args: we currently support up to 6
+           * word-sized arguments
+           */
           if (nargs <= 4) {
             w4w_t f = (w4w_t) func;
-            r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i));
+            r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]));
           } else if (nargs == 5) {
             w5w_t f = (w5w_t) func;
-            r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i), ((ffi_word_t)(args[4]).v.i));
+            r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]), W(args[4]));
           } else if (nargs == 6) {
             w6w_t f = (w6w_t) func;
-            r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i), ((ffi_word_t)(args[4]).v.i),
-                  ((ffi_word_t)(args[5]).v.i));
+            r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]), W(args[4]),
+                  W(args[5]));
           } else {
             abort();
           }
         } else {
-
+          /* There are some floats */
           switch (nargs) {
             case 0:
             case 1:
             case 2:
-              if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT)) {
+              if (IS_F(args[0]) && IS_F(args[1])) {
                 wff_t f = (wff_t) func;
-                r = f(((args[0]).v.f), ((args[1]).v.f));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT)) {
+                r = f(F(args[0]), F(args[1]));
+              } else if (IS_F(args[0])) {
                 wfw_t f = (wfw_t) func;
-                r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i));
+                r = f(F(args[0]), W(args[1]));
               } else {
                 wwf_t f = (wwf_t) func;
-                r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f));
+                r = f(W(args[0]), F(args[1]));
               }
               break;
 
             case 3:
-              if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+              if (IS_W(args[0]) && IS_W(args[1]) && IS_F(args[2])) {
                 wwwf_t f = (wwwf_t) func;
-                r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.f));
-              } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+                r = f(W(args[0]), W(args[1]), F(args[2]));
+              } else if (IS_W(args[0]) && IS_F(args[1]) && IS_W(args[2])) {
                 wwfw_t f = (wwfw_t) func;
-                r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f), ((ffi_word_t)(args[2]).v.i));
-              } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+                r = f(W(args[0]), F(args[1]), W(args[2]));
+              } else if (IS_W(args[0]) && IS_F(args[1]) && IS_F(args[2])) {
                 wwff_t f = (wwff_t) func;
-                r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f), ((args[2]).v.f));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+                r = f(W(args[0]), F(args[1]), F(args[2]));
+              } else if (IS_F(args[0]) && IS_W(args[1]) && IS_W(args[2])) {
                 wfww_t f = (wfww_t) func;
-                r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+                r = f(F(args[0]), W(args[1]), W(args[2]));
+              } else if (IS_F(args[0]) && IS_W(args[1]) && IS_F(args[2])) {
                 wfwf_t f = (wfwf_t) func;
-                r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.f));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+                r = f(F(args[0]), W(args[1]), F(args[2]));
+              } else if (IS_F(args[0]) && IS_F(args[1]) && IS_W(args[2])) {
                 wffw_t f = (wffw_t) func;
-                r = f(((args[0]).v.f), ((args[1]).v.f), ((ffi_word_t)(args[2]).v.i));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+                r = f(F(args[0]), F(args[1]), W(args[2]));
+              } else if (IS_F(args[0]) && IS_F(args[1]) && IS_F(args[2])) {
                 wfff_t f = (wfff_t) func;
-                r = f(((args[0]).v.f), ((args[1]).v.f), ((args[2]).v.f));
+                r = f(F(args[0]), F(args[1]), F(args[2]));
               } else {
-
+                // The above checks should be exhaustive
                 abort();
               }
               break;
@@ -11521,47 +7964,47 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
           }
         }
       } else {
-
+        /* There are some doubles */
         switch (nargs) {
           case 0:
           case 1:
           case 2:
-            if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE)) {
+            if (IS_D(args[0]) && IS_D(args[1])) {
               wdd_t f = (wdd_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), D(args[1]));
+            } else if (IS_D(args[0])) {
               wdw_t f = (wdw_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i));
+              r = f(D(args[0]), W(args[1]));
             } else {
               wwd_t f = (wwd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d));
+              r = f(W(args[0]), D(args[1]));
             }
             break;
 
           case 3:
-            if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+            if (IS_W(args[0]) && IS_W(args[1]) && IS_D(args[2])) {
               wwwd_t f = (wwwd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(W(args[0]), W(args[1]), D(args[2]));
+            } else if (IS_W(args[0]) && IS_D(args[1]) && IS_W(args[2])) {
               wwdw_t f = (wwdw_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(W(args[0]), D(args[1]), W(args[2]));
+            } else if (IS_W(args[0]) && IS_D(args[1]) && IS_D(args[2])) {
               wwdd_t f = (wwdd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(W(args[0]), D(args[1]), D(args[2]));
+            } else if (IS_D(args[0]) && IS_W(args[1]) && IS_W(args[2])) {
               wdww_t f = (wdww_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), W(args[1]), W(args[2]));
+            } else if (IS_D(args[0]) && IS_W(args[1]) && IS_D(args[2])) {
               wdwd_t f = (wdwd_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(D(args[0]), W(args[1]), D(args[2]));
+            } else if (IS_D(args[0]) && IS_D(args[1]) && IS_W(args[2])) {
               wddw_t f = (wddw_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), D(args[1]), W(args[2]));
+            } else if (IS_D(args[0]) && IS_D(args[1]) && IS_D(args[2])) {
               wddd_t f = (wddd_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d), ((args[2]).v.d));
+              r = f(D(args[0]), D(args[1]), D(args[2]));
             } else {
-
+              // The above checks should be exhaustive
               abort();
             }
             break;
@@ -11570,70 +8013,70 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
         }
       }
       res->v.i = (uint64_t) r;
-    } break;
-    case FFI_CTYPE_BOOL: {
+    } break;               /* }}} */
+    case FFI_CTYPE_BOOL: { /* {{{ */
       ffi_word_t r;
       if (doubles == 0) {
         if (floats == 0) {
-
-
-
-
+          /*
+           * No double and no float args: we currently support up to 6
+           * word-sized arguments
+           */
           if (nargs <= 4) {
             b4w_t f = (b4w_t) func;
-            r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i));
+            r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]));
           } else if (nargs == 5) {
             b5w_t f = (b5w_t) func;
-            r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i), ((ffi_word_t)(args[4]).v.i));
+            r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]), W(args[4]));
           } else if (nargs == 6) {
             b6w_t f = (b6w_t) func;
-            r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i), ((ffi_word_t)(args[4]).v.i),
-                  ((ffi_word_t)(args[5]).v.i));
+            r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]), W(args[4]),
+                  W(args[5]));
           } else {
             abort();
           }
         } else {
-
+          /* There are some floats */
           switch (nargs) {
             case 0:
             case 1:
             case 2:
-              if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT)) {
+              if (IS_F(args[0]) && IS_F(args[1])) {
                 bff_t f = (bff_t) func;
-                r = f(((args[0]).v.f), ((args[1]).v.f));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT)) {
+                r = f(F(args[0]), F(args[1]));
+              } else if (IS_F(args[0])) {
                 bfw_t f = (bfw_t) func;
-                r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i));
+                r = f(F(args[0]), W(args[1]));
               } else {
                 bwf_t f = (bwf_t) func;
-                r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f));
+                r = f(W(args[0]), F(args[1]));
               }
               break;
 
             case 3:
-              if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+              if (IS_W(args[0]) && IS_W(args[1]) && IS_F(args[2])) {
                 bwwf_t f = (bwwf_t) func;
-                r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.f));
-              } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+                r = f(W(args[0]), W(args[1]), F(args[2]));
+              } else if (IS_W(args[0]) && IS_F(args[1]) && IS_W(args[2])) {
                 bwfw_t f = (bwfw_t) func;
-                r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f), ((ffi_word_t)(args[2]).v.i));
-              } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+                r = f(W(args[0]), F(args[1]), W(args[2]));
+              } else if (IS_W(args[0]) && IS_F(args[1]) && IS_F(args[2])) {
                 bwff_t f = (bwff_t) func;
-                r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f), ((args[2]).v.f));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+                r = f(W(args[0]), F(args[1]), F(args[2]));
+              } else if (IS_F(args[0]) && IS_W(args[1]) && IS_W(args[2])) {
                 bfww_t f = (bfww_t) func;
-                r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+                r = f(F(args[0]), W(args[1]), W(args[2]));
+              } else if (IS_F(args[0]) && IS_W(args[1]) && IS_F(args[2])) {
                 bfwf_t f = (bfwf_t) func;
-                r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.f));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+                r = f(F(args[0]), W(args[1]), F(args[2]));
+              } else if (IS_F(args[0]) && IS_F(args[1]) && IS_W(args[2])) {
                 bffw_t f = (bffw_t) func;
-                r = f(((args[0]).v.f), ((args[1]).v.f), ((ffi_word_t)(args[2]).v.i));
-              } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+                r = f(F(args[0]), F(args[1]), W(args[2]));
+              } else if (IS_F(args[0]) && IS_F(args[1]) && IS_F(args[2])) {
                 bfff_t f = (bfff_t) func;
-                r = f(((args[0]).v.f), ((args[1]).v.f), ((args[2]).v.f));
+                r = f(F(args[0]), F(args[1]), F(args[2]));
               } else {
-
+                // The above checks should be exhaustive
                 abort();
               }
               break;
@@ -11642,47 +8085,47 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
           }
         }
       } else {
-
+        /* There are some doubles */
         switch (nargs) {
           case 0:
           case 1:
           case 2:
-            if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE)) {
+            if (IS_D(args[0]) && IS_D(args[1])) {
               bdd_t f = (bdd_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), D(args[1]));
+            } else if (IS_D(args[0])) {
               bdw_t f = (bdw_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i));
+              r = f(D(args[0]), W(args[1]));
             } else {
               bwd_t f = (bwd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d));
+              r = f(W(args[0]), D(args[1]));
             }
             break;
 
           case 3:
-            if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+            if (IS_W(args[0]) && IS_W(args[1]) && IS_D(args[2])) {
               bwwd_t f = (bwwd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(W(args[0]), W(args[1]), D(args[2]));
+            } else if (IS_W(args[0]) && IS_D(args[1]) && IS_W(args[2])) {
               bwdw_t f = (bwdw_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(W(args[0]), D(args[1]), W(args[2]));
+            } else if (IS_W(args[0]) && IS_D(args[1]) && IS_D(args[2])) {
               bwdd_t f = (bwdd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(W(args[0]), D(args[1]), D(args[2]));
+            } else if (IS_D(args[0]) && IS_W(args[1]) && IS_W(args[2])) {
               bdww_t f = (bdww_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), W(args[1]), W(args[2]));
+            } else if (IS_D(args[0]) && IS_W(args[1]) && IS_D(args[2])) {
               bdwd_t f = (bdwd_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(D(args[0]), W(args[1]), D(args[2]));
+            } else if (IS_D(args[0]) && IS_D(args[1]) && IS_W(args[2])) {
               bddw_t f = (bddw_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), D(args[1]), W(args[2]));
+            } else if (IS_D(args[0]) && IS_D(args[1]) && IS_D(args[2])) {
               bddd_t f = (bddd_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d), ((args[2]).v.d));
+              r = f(D(args[0]), D(args[1]), D(args[2]));
             } else {
-
+              // The above checks should be exhaustive
               abort();
             }
             break;
@@ -11691,22 +8134,22 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
         }
       }
       res->v.i = (uint64_t) r;
-    } break;
-    case FFI_CTYPE_DOUBLE: {
+    } break;                 /* }}} */
+    case FFI_CTYPE_DOUBLE: { /* {{{ */
       double r;
       if (doubles == 0) {
-
-
+        /* No double args: we currently support up to 6 word-sized arguments
+         */
         if (nargs <= 4) {
           d4w_t f = (d4w_t) func;
-          r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i));
+          r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]));
         } else if (nargs == 5) {
           d5w_t f = (d5w_t) func;
-          r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i), ((ffi_word_t)(args[4]).v.i));
+          r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]), W(args[4]));
         } else if (nargs == 6) {
           d6w_t f = (d6w_t) func;
-          r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i), ((ffi_word_t)(args[4]).v.i),
-                ((ffi_word_t)(args[5]).v.i));
+          r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]), W(args[4]),
+                W(args[5]));
         } else {
           abort();
         }
@@ -11715,42 +8158,42 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
           case 0:
           case 1:
           case 2:
-            if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE)) {
+            if (IS_D(args[0]) && IS_D(args[1])) {
               ddd_t f = (ddd_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), D(args[1]));
+            } else if (IS_D(args[0])) {
               ddw_t f = (ddw_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i));
+              r = f(D(args[0]), W(args[1]));
             } else {
               dwd_t f = (dwd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d));
+              r = f(W(args[0]), D(args[1]));
             }
             break;
 
           case 3:
-            if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+            if (IS_W(args[0]) && IS_W(args[1]) && IS_D(args[2])) {
               dwwd_t f = (dwwd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(W(args[0]), W(args[1]), D(args[2]));
+            } else if (IS_W(args[0]) && IS_D(args[1]) && IS_W(args[2])) {
               dwdw_t f = (dwdw_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(W(args[0]), D(args[1]), W(args[2]));
+            } else if (IS_W(args[0]) && IS_D(args[1]) && IS_D(args[2])) {
               dwdd_t f = (dwdd_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.d), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(W(args[0]), D(args[1]), D(args[2]));
+            } else if (IS_D(args[0]) && IS_W(args[1]) && IS_W(args[2])) {
               ddww_t f = (ddww_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), W(args[1]), W(args[2]));
+            } else if (IS_D(args[0]) && IS_W(args[1]) && IS_D(args[2])) {
               ddwd_t f = (ddwd_t) func;
-              r = f(((args[0]).v.d), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.d));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(D(args[0]), W(args[1]), D(args[2]));
+            } else if (IS_D(args[0]) && IS_D(args[1]) && IS_W(args[2])) {
               dddw_t f = (dddw_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_DOUBLE) && ((args[1]).ctype == FFI_CTYPE_DOUBLE) && ((args[2]).ctype == FFI_CTYPE_DOUBLE)) {
+              r = f(D(args[0]), D(args[1]), W(args[2]));
+            } else if (IS_D(args[0]) && IS_D(args[1]) && IS_D(args[2])) {
               dddd_t f = (dddd_t) func;
-              r = f(((args[0]).v.d), ((args[1]).v.d), ((args[2]).v.d));
+              r = f(D(args[0]), D(args[1]), D(args[2]));
             } else {
-
+              // The above checks should be exhaustive
               abort();
             }
             break;
@@ -11759,67 +8202,67 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
         }
       }
       res->v.d = r;
-    } break;
-    case FFI_CTYPE_FLOAT: {
+    } break;                /* }}} */
+    case FFI_CTYPE_FLOAT: { /* {{{ */
       double r;
       if (floats == 0) {
-
-
+        /* No float args: we currently support up to 6 word-sized arguments
+         */
         if (nargs <= 4) {
           f4w_t f = (f4w_t) func;
-          r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i));
+          r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]));
         } else if (nargs == 5) {
           f5w_t f = (f5w_t) func;
-          r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i), ((ffi_word_t)(args[4]).v.i));
+          r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]), W(args[4]));
         } else if (nargs == 6) {
           f6w_t f = (f6w_t) func;
-          r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i), ((ffi_word_t)(args[3]).v.i), ((ffi_word_t)(args[4]).v.i),
-                ((ffi_word_t)(args[5]).v.i));
+          r = f(W(args[0]), W(args[1]), W(args[2]), W(args[3]), W(args[4]),
+                W(args[5]));
         } else {
           abort();
         }
       } else {
-
+        /* There are some float args */
         switch (nargs) {
           case 0:
           case 1:
           case 2:
-            if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT)) {
+            if (IS_F(args[0]) && IS_F(args[1])) {
               fff_t f = (fff_t) func;
-              r = f(((args[0]).v.f), ((args[1]).v.f));
-            } else if (((args[0]).ctype == FFI_CTYPE_FLOAT)) {
+              r = f(F(args[0]), F(args[1]));
+            } else if (IS_F(args[0])) {
               ffw_t f = (ffw_t) func;
-              r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i));
+              r = f(F(args[0]), W(args[1]));
             } else {
               fwf_t f = (fwf_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f));
+              r = f(W(args[0]), F(args[1]));
             }
             break;
 
           case 3:
-            if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+            if (IS_W(args[0]) && IS_W(args[1]) && IS_F(args[2])) {
               fwwf_t f = (fwwf_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.f));
-            } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(W(args[0]), W(args[1]), F(args[2]));
+            } else if (IS_W(args[0]) && IS_F(args[1]) && IS_W(args[2])) {
               fwfw_t f = (fwfw_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_WORD) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+              r = f(W(args[0]), F(args[1]), W(args[2]));
+            } else if (IS_W(args[0]) && IS_F(args[1]) && IS_F(args[2])) {
               fwff_t f = (fwff_t) func;
-              r = f(((ffi_word_t)(args[0]).v.i), ((args[1]).v.f), ((args[2]).v.f));
-            } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(W(args[0]), F(args[1]), F(args[2]));
+            } else if (IS_F(args[0]) && IS_W(args[1]) && IS_W(args[2])) {
               ffww_t f = (ffww_t) func;
-              r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_WORD) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+              r = f(F(args[0]), W(args[1]), W(args[2]));
+            } else if (IS_F(args[0]) && IS_W(args[1]) && IS_F(args[2])) {
               ffwf_t f = (ffwf_t) func;
-              r = f(((args[0]).v.f), ((ffi_word_t)(args[1]).v.i), ((args[2]).v.f));
-            } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_WORD)) {
+              r = f(F(args[0]), W(args[1]), F(args[2]));
+            } else if (IS_F(args[0]) && IS_F(args[1]) && IS_W(args[2])) {
               fffw_t f = (fffw_t) func;
-              r = f(((args[0]).v.f), ((args[1]).v.f), ((ffi_word_t)(args[2]).v.i));
-            } else if (((args[0]).ctype == FFI_CTYPE_FLOAT) && ((args[1]).ctype == FFI_CTYPE_FLOAT) && ((args[2]).ctype == FFI_CTYPE_FLOAT)) {
+              r = f(F(args[0]), F(args[1]), W(args[2]));
+            } else if (IS_F(args[0]) && IS_F(args[1]) && IS_F(args[2])) {
               ffff_t f = (ffff_t) func;
-              r = f(((args[0]).v.f), ((args[1]).v.f), ((args[2]).v.f));
+              r = f(F(args[0]), F(args[1]), F(args[2]));
             } else {
-
+              // The above checks should be exhaustive
               abort();
             }
             break;
@@ -11828,16 +8271,37 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
         }
       }
       res->v.f = r;
-    } break;
+    } break; /* }}} */
   }
 
   return 0;
 }
-# 8301 "mjs_extra.h"
+#ifdef MJS_MODULE_LINES
+#line 1 "mjs/src/mjs_array.c"
+#endif
+/*
+ * Copyright (c) 2017 Cesanta Software Limited
+ * All rights reserved
+ */
+
+#include <stdio.h>
+/* Amalgamated: #include "common/str_util.h" */
+/* Amalgamated: #include "mjs/src/mjs_array.h" */
+/* Amalgamated: #include "mjs/src/mjs_conversion.h" */
+/* Amalgamated: #include "mjs/src/mjs_core.h" */
+/* Amalgamated: #include "mjs/src/mjs_internal.h" */
+/* Amalgamated: #include "mjs/src/mjs_object.h" */
+/* Amalgamated: #include "mjs/src/mjs_primitive.h" */
+/* Amalgamated: #include "mjs/src/mjs_string.h" */
+/* Amalgamated: #include "mjs/src/mjs_util.h" */
+
+#define SPLICE_NEW_ITEM_IDX 2
+
+/* like c_snprintf but returns `size` if write is truncated */
 static int v_sprintf_s(char *buf, size_t size, const char *fmt, ...) {
   size_t n;
   va_list ap;
-  __builtin_va_start(ap, fmt);
+  va_start(ap, fmt);
   n = c_vsnprintf(buf, size, fmt, ap);
   if (n > size) {
     return size;

@@ -5,17 +5,10 @@
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
 # 1 "mjs/mjs_extra.h" 2
-# 1 "mjs_extra.h"
-# 1 "<built-in>" 1
-# 1 "<built-in>" 3
-# 349 "<built-in>" 3
-# 1 "<command line>" 1
-# 1 "<built-in>" 2
-# 1 "mjs_extra.h" 2
-# 1 "./mjs.h" 1
-# 69 "./mjs.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 1 3
-# 61 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 3
+# 1 "mjs/mjs.h" 1
+# 69 "mjs/mjs.h"
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stdint.h" 1 3
+# 63 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stdint.h" 3
 # 1 "/usr/include/stdint.h" 1 3 4
 # 26 "/usr/include/stdint.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
@@ -220,8 +213,8 @@ typedef unsigned long int uintptr_t;
 # 111 "/usr/include/stdint.h" 3 4
 typedef __intmax_t intmax_t;
 typedef __uintmax_t uintmax_t;
-# 62 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 2 3
-# 70 "./mjs.h" 2
+# 64 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stdint.h" 2 3
+# 70 "mjs/mjs.h" 2
 
 
 
@@ -236,8 +229,8 @@ typedef __uintmax_t uintmax_t;
 
 
 
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
-# 62 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
+# 62 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 3 4
 typedef long unsigned int size_t;
 # 34 "/usr/include/stdio.h" 2 3 4
 
@@ -265,7 +258,7 @@ typedef struct _IO_FILE FILE;
 # 35 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/_G_config.h" 1 3 4
 # 19 "/usr/include/x86_64-linux-gnu/bits/_G_config.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 20 "/usr/include/x86_64-linux-gnu/bits/_G_config.h" 2 3 4
 
 # 1 "/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h" 1 3 4
@@ -296,10 +289,10 @@ typedef struct
 } _G_fpos64_t;
 # 36 "/usr/include/x86_64-linux-gnu/bits/libio.h" 2 3 4
 # 53 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdarg.h" 1 3 4
-# 30 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdarg.h" 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stdarg.h" 1 3 4
+# 30 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stdarg.h" 3 4
 typedef __builtin_va_list va_list;
-# 48 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdarg.h" 3 4
+# 50 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stdarg.h" 3 4
 typedef __builtin_va_list __gnuc_va_list;
 # 54 "/usr/include/x86_64-linux-gnu/bits/libio.h" 2 3 4
 # 149 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
@@ -374,7 +367,7 @@ struct _IO_FILE {
 
   _IO_lock_t *_lock;
 # 293 "/usr/include/x86_64-linux-gnu/bits/libio.h" 3 4
- __off64_t _offset;
+  __off64_t _offset;
 
 
 
@@ -839,7 +832,6 @@ extern void perror (const char *__s);
 
 
 
-
 # 1 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h" 1 3 4
 # 26 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h" 3 4
 extern int sys_nerr;
@@ -878,26 +870,26 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ )) ;
 
 
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ ));
-# 76 "./mjs.h" 2
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3
-# 51 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 3
+# 76 "mjs/mjs.h" 2
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3
+# 51 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 3
 typedef long int ptrdiff_t;
-# 90 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 3
+# 90 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 3
 typedef int wchar_t;
-# 118 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 3
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/__stddef_max_align_t.h" 1 3
-# 35 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/__stddef_max_align_t.h" 3
+# 118 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 3
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/__stddef_max_align_t.h" 1 3
+# 35 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/__stddef_max_align_t.h" 3
 typedef struct {
   long long __clang_max_align_nonce1
       __attribute__((__aligned__(__alignof__(long long))));
   long double __clang_max_align_nonce2
       __attribute__((__aligned__(__alignof__(long double))));
 } max_align_t;
-# 119 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 2 3
-# 77 "./mjs.h" 2
-# 114 "./mjs.h"
+# 119 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 2 3
+# 77 "mjs/mjs.h" 2
+# 114 "mjs/mjs.h"
 typedef uint64_t mjs_val_t;
-# 124 "./mjs.h"
+# 124 "mjs/mjs.h"
 struct mjs;
 
 typedef enum mjs_err {
@@ -933,7 +925,7 @@ struct mjs *mjs_create_opt(struct mjs_create_opts opts);
 void mjs_destroy(struct mjs *mjs);
 
 mjs_val_t mjs_get_global(struct mjs *mjs);
-# 227 "./mjs.h"
+# 227 "mjs/mjs.h"
 void mjs_own(struct mjs *mjs, mjs_val_t *v);
 
 
@@ -944,7 +936,7 @@ void mjs_own(struct mjs *mjs, mjs_val_t *v);
 int mjs_disown(struct mjs *mjs, mjs_val_t *v);
 
 mjs_err_t mjs_set_errorf(struct mjs *mjs, mjs_err_t err, const char *fmt, ...);
-# 245 "./mjs.h"
+# 245 "mjs/mjs.h"
 mjs_err_t mjs_prepend_errorf(struct mjs *mjs, mjs_err_t err, const char *fmt,
                              ...);
 
@@ -961,7 +953,7 @@ void mjs_print_error(struct mjs *mjs, FILE *fp, const char *msg,
 
 
 const char *mjs_strerror(struct mjs *mjs, enum mjs_err err);
-# 269 "./mjs.h"
+# 269 "mjs/mjs.h"
 void mjs_set_generate_jsc(struct mjs *mjs, int generate_jsc);
 
 
@@ -980,7 +972,7 @@ mjs_val_t mjs_arg(struct mjs *mjs, int n);
 
 
 void mjs_return(struct mjs *mjs, mjs_val_t v);
-# 310 "./mjs.h"
+# 310 "mjs/mjs.h"
 enum mjs_ffi_ctype {
   MJS_FFI_CTYPE_NONE,
   MJS_FFI_CTYPE_USERDATA,
@@ -999,7 +991,7 @@ enum mjs_ffi_ctype {
 typedef void *(mjs_ffi_resolver_t)(void *handle, const char *symbol);
 
 void mjs_set_ffi_resolver(struct mjs *mjs, mjs_ffi_resolver_t *dlsym);
-# 357 "./mjs.h"
+# 357 "mjs/mjs.h"
 mjs_val_t mjs_mk_array(struct mjs *mjs);
 
 
@@ -1023,7 +1015,7 @@ int mjs_is_array(mjs_val_t v);
 
 
 void mjs_array_del(struct mjs *mjs, mjs_val_t arr, unsigned long index);
-# 640 "./mjs.h"
+# 640 "mjs/mjs.h"
 mjs_err_t mjs_exec(struct mjs *, const char *src, mjs_val_t *res);
 mjs_err_t mjs_exec_buf(struct mjs *, const char *src, size_t, mjs_val_t *res);
 
@@ -1033,10 +1025,10 @@ mjs_err_t mjs_apply(struct mjs *mjs, mjs_val_t *res, mjs_val_t func,
 mjs_err_t mjs_call(struct mjs *mjs, mjs_val_t *res, mjs_val_t func,
                    mjs_val_t this_val, int nargs, ...);
 mjs_val_t mjs_get_this(struct mjs *mjs);
-# 707 "./mjs.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3
-# 708 "./mjs.h" 2
-# 718 "./mjs.h"
+# 707 "mjs/mjs.h"
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3
+# 708 "mjs/mjs.h" 2
+# 718 "mjs/mjs.h"
 int mjs_is_object(mjs_val_t v);
 
 
@@ -1079,7 +1071,7 @@ struct mjs_c_struct_member {
 
 mjs_val_t mjs_struct_to_obj(struct mjs *mjs, const void *base,
                             const struct mjs_c_struct_member *members);
-# 768 "./mjs.h"
+# 768 "mjs/mjs.h"
 mjs_val_t mjs_get(struct mjs *mjs, mjs_val_t obj, const char *name,
                   size_t name_len);
 
@@ -1104,11 +1096,11 @@ mjs_err_t mjs_set(struct mjs *mjs, mjs_val_t obj, const char *name, size_t len,
 
 mjs_err_t mjs_set_v(struct mjs *mjs, mjs_val_t obj, mjs_val_t name,
                     mjs_val_t val);
-# 802 "./mjs.h"
+# 802 "mjs/mjs.h"
 int mjs_del(struct mjs *mjs, mjs_val_t obj, const char *name, size_t len);
-# 816 "./mjs.h"
+# 816 "mjs/mjs.h"
 mjs_val_t mjs_next(struct mjs *mjs, mjs_val_t obj, mjs_val_t *iterator);
-# 847 "./mjs.h"
+# 847 "mjs/mjs.h"
 typedef void (*mjs_func_ptr_t)(void);
 
 
@@ -1159,7 +1151,7 @@ int32_t mjs_get_int32(struct mjs *mjs, mjs_val_t v);
 
 
 int mjs_is_number(mjs_val_t v);
-# 917 "./mjs.h"
+# 917 "mjs/mjs.h"
 mjs_val_t mjs_mk_foreign(struct mjs *mjs, void *ptr);
 
 
@@ -1184,14 +1176,14 @@ int mjs_is_boolean(mjs_val_t v);
 
 mjs_val_t mjs_mk_function(struct mjs *mjs, size_t off);
 int mjs_is_function(mjs_val_t v);
-# 977 "./mjs.h"
+# 977 "mjs/mjs.h"
 mjs_val_t mjs_mk_string(struct mjs *mjs, const char *str, size_t len, int copy);
 
 
 int mjs_is_string(mjs_val_t v);
-# 999 "./mjs.h"
+# 999 "mjs/mjs.h"
 const char *mjs_get_string(struct mjs *mjs, mjs_val_t *v, size_t *len);
-# 1013 "./mjs.h"
+# 1013 "mjs/mjs.h"
 const char *mjs_get_cstring(struct mjs *mjs, mjs_val_t *v);
 
 
@@ -1201,7 +1193,7 @@ const char *mjs_get_cstring(struct mjs *mjs, mjs_val_t *v);
 
 
 int mjs_strcmp(struct mjs *mjs, mjs_val_t *a, const char *b, size_t len);
-# 1046 "./mjs.h"
+# 1046 "mjs/mjs.h"
 const char *mjs_typeof(mjs_val_t v);
 
 void mjs_fprintf(mjs_val_t v, struct mjs *mjs, FILE *fp);
@@ -1231,8 +1223,8 @@ int mjs_get_lineno_by_offset(struct mjs *mjs, int offset);
 
 
 int mjs_get_offset_by_call_frame_num(struct mjs *mjs, int cf_num);
-# 2 "mjs_extra.h" 2
-# 361 "mjs_extra.h"
+# 2 "mjs/mjs_extra.h" 2
+# 360 "mjs/mjs_extra.h"
 # 1 "/usr/include/arpa/inet.h" 1 3 4
 # 22 "/usr/include/arpa/inet.h" 3 4
 # 1 "/usr/include/netinet/in.h" 1 3 4
@@ -1241,7 +1233,7 @@ int mjs_get_offset_by_call_frame_num(struct mjs *mjs, int cf_num);
 # 26 "/usr/include/x86_64-linux-gnu/sys/socket.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h" 1 3 4
 # 23 "/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 24 "/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h" 2 3 4
 
 
@@ -1252,7 +1244,7 @@ struct iovec
   };
 # 27 "/usr/include/x86_64-linux-gnu/sys/socket.h" 2 3 4
 
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 29 "/usr/include/x86_64-linux-gnu/sys/socket.h" 2 3 4
 
 
@@ -1260,7 +1252,7 @@ struct iovec
 
 # 1 "/usr/include/x86_64-linux-gnu/bits/socket.h" 1 3 4
 # 27 "/usr/include/x86_64-linux-gnu/bits/socket.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 28 "/usr/include/x86_64-linux-gnu/bits/socket.h" 2 3 4
 
 # 1 "/usr/include/x86_64-linux-gnu/sys/types.h" 1 3 4
@@ -1325,7 +1317,6 @@ typedef __key_t key_t;
 
 
 
-
 # 1 "/usr/include/x86_64-linux-gnu/bits/types/clock_t.h" 1 3 4
 
 
@@ -1364,7 +1355,7 @@ typedef __time_t time_t;
 typedef __timer_t timer_t;
 # 132 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
 # 145 "/usr/include/x86_64-linux-gnu/sys/types.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 146 "/usr/include/x86_64-linux-gnu/sys/types.h" 2 3 4
 
 
@@ -1763,7 +1754,6 @@ typedef __socklen_t socklen_t;
 
 
 
-
 # 1 "/usr/include/x86_64-linux-gnu/bits/socket_type.h" 1 3 4
 # 24 "/usr/include/x86_64-linux-gnu/bits/socket_type.h" 3 4
 enum __socket_type
@@ -2080,7 +2070,6 @@ struct in_addr
 
 
 
-
 # 1 "/usr/include/x86_64-linux-gnu/bits/in.h" 1 3 4
 # 142 "/usr/include/x86_64-linux-gnu/bits/in.h" 3 4
 struct ip_opts
@@ -2383,7 +2372,6 @@ extern uint16_t htons (uint16_t __hostshort)
 
 
 
-
 # 1 "/usr/include/x86_64-linux-gnu/bits/byteswap.h" 1 3 4
 # 386 "/usr/include/netinet/in.h" 2 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/uintn-identity.h" 1 3 4
@@ -2463,7 +2451,7 @@ extern unsigned int inet_nsap_addr (const char *__cp,
 
 extern char *inet_nsap_ntoa (int __len, const unsigned char *__cp,
         char *__buf) __attribute__ ((__nothrow__ ));
-# 362 "mjs_extra.h" 2
+# 361 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/assert.h" 1 3 4
 # 69 "/usr/include/assert.h" 3 4
 extern void __assert_fail (const char *__assertion, const char *__file,
@@ -2480,7 +2468,7 @@ extern void __assert_perror_fail (int __errnum, const char *__file,
 
 extern void __assert (const char *__assertion, const char *__file, int __line)
      __attribute__ ((__nothrow__ )) __attribute__ ((__noreturn__));
-# 363 "mjs_extra.h" 2
+# 362 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/ctype.h" 1 3 4
 # 46 "/usr/include/ctype.h" 3 4
 enum
@@ -2587,7 +2575,7 @@ extern int tolower_l (int __c, locale_t __l) __attribute__ ((__nothrow__ ));
 
 extern int __toupper_l (int __c, locale_t __l) __attribute__ ((__nothrow__ ));
 extern int toupper_l (int __c, locale_t __l) __attribute__ ((__nothrow__ ));
-# 364 "mjs_extra.h" 2
+# 363 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/dirent.h" 1 3 4
 # 61 "/usr/include/dirent.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/dirent.h" 1 3 4
@@ -2686,7 +2674,7 @@ extern int dirfd (DIR *__dirp) __attribute__ ((__nothrow__ )) __attribute__ ((__
 # 161 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 2 3 4
 # 234 "/usr/include/dirent.h" 2 3 4
 # 245 "/usr/include/dirent.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 246 "/usr/include/dirent.h" 2 3 4
 # 255 "/usr/include/dirent.h" 3 4
 extern int scandir (const char *__restrict __dir,
@@ -2704,7 +2692,7 @@ extern __ssize_t getdirentries (int __fd, char *__restrict __buf,
     size_t __nbytes,
     __off_t *__restrict __basep)
      __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2, 4)));
-# 365 "mjs_extra.h" 2
+# 364 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/errno.h" 1 3 4
 # 28 "/usr/include/errno.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/errno.h" 1 3 4
@@ -2731,7 +2719,7 @@ extern __ssize_t getdirentries (int __fd, char *__restrict __buf,
 
 
 extern int *__errno_location (void) __attribute__ ((__nothrow__ )) __attribute__ ((__const__));
-# 366 "mjs_extra.h" 2
+# 365 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/fcntl.h" 1 3 4
 # 35 "/usr/include/fcntl.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/fcntl.h" 1 3 4
@@ -2792,13 +2780,13 @@ struct stat
 
     __blkcnt_t st_blocks;
 # 91 "/usr/include/x86_64-linux-gnu/bits/stat.h" 3 4
- struct timespec st_atim;
+    struct timespec st_atim;
     struct timespec st_mtim;
     struct timespec st_ctim;
 # 106 "/usr/include/x86_64-linux-gnu/bits/stat.h" 3 4
- __syscall_slong_t __glibc_reserved[3];
+    __syscall_slong_t __glibc_reserved[3];
 # 115 "/usr/include/x86_64-linux-gnu/bits/stat.h" 3 4
- };
+  };
 # 79 "/usr/include/fcntl.h" 2 3 4
 # 147 "/usr/include/fcntl.h" 3 4
 extern int fcntl (int __fd, int __cmd, ...);
@@ -2816,19 +2804,11 @@ extern int posix_fadvise (int __fd, off_t __offset, off_t __len,
      int __advise) __attribute__ ((__nothrow__ ));
 # 271 "/usr/include/fcntl.h" 3 4
 extern int posix_fallocate (int __fd, off_t __offset, off_t __len);
-# 367 "mjs_extra.h" 2
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/inttypes.h" 1 3
-# 30 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/inttypes.h" 3
+# 366 "mjs/mjs_extra.h" 2
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/inttypes.h" 1 3
+# 30 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/inttypes.h" 3
 # 1 "/usr/include/inttypes.h" 1 3 4
-# 27 "/usr/include/inttypes.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 1 3 4
-# 28 "/usr/include/inttypes.h" 2 3 4
-
-
-
-
-
-
+# 34 "/usr/include/inttypes.h" 3 4
 typedef int __gwchar_t;
 # 271 "/usr/include/inttypes.h" 3 4
 typedef struct
@@ -2860,12 +2840,11 @@ extern intmax_t wcstoimax (const __gwchar_t *__restrict __nptr,
 extern uintmax_t wcstoumax (const __gwchar_t *__restrict __nptr,
        __gwchar_t ** __restrict __endptr, int __base)
      __attribute__ ((__nothrow__ ));
-# 31 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/inttypes.h" 2 3
-# 368 "mjs_extra.h" 2
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 1 3
-# 369 "mjs_extra.h" 2
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/limits.h" 1 3
-# 37 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/limits.h" 3
+# 31 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/inttypes.h" 2 3
+# 367 "mjs/mjs_extra.h" 2
+
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/limits.h" 1 3
+# 37 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/limits.h" 3
 # 1 "/usr/include/limits.h" 1 3 4
 # 26 "/usr/include/limits.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
@@ -2873,8 +2852,8 @@ extern uintmax_t wcstoumax (const __gwchar_t *__restrict __nptr,
 # 187 "/usr/include/limits.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/posix2_lim.h" 1 3 4
 # 188 "/usr/include/limits.h" 2 3 4
-# 38 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/limits.h" 2 3
-# 370 "mjs_extra.h" 2
+# 38 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/limits.h" 2 3
+# 369 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/math.h" 1 3 4
 # 27 "/usr/include/math.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
@@ -3740,12 +3719,12 @@ enum
 
       4
   };
-# 371 "mjs_extra.h" 2
+# 370 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/netdb.h" 1 3 4
 # 32 "/usr/include/netdb.h" 3 4
 # 1 "/usr/include/rpc/netdb.h" 1 3 4
 # 42 "/usr/include/rpc/netdb.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 43 "/usr/include/rpc/netdb.h" 2 3 4
 
 
@@ -4140,13 +4119,13 @@ extern int getnameinfo (const struct sockaddr *__restrict __sa,
    socklen_t __salen, char *__restrict __host,
    socklen_t __hostlen, char *__restrict __serv,
    socklen_t __servlen, int __flags);
-# 372 "mjs_extra.h" 2
+# 371 "mjs/mjs_extra.h" 2
 
 # 1 "/usr/include/pthread.h" 1 3 4
 # 23 "/usr/include/pthread.h" 3 4
 # 1 "/usr/include/sched.h" 1 3 4
 # 29 "/usr/include/sched.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 30 "/usr/include/sched.h" 2 3 4
 # 43 "/usr/include/sched.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/sched.h" 1 3 4
@@ -4203,7 +4182,7 @@ extern int sched_rr_get_interval (__pid_t __pid, struct timespec *__t) __attribu
 # 24 "/usr/include/pthread.h" 2 3 4
 # 1 "/usr/include/time.h" 1 3 4
 # 29 "/usr/include/time.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 30 "/usr/include/time.h" 2 3 4
 
 
@@ -5102,7 +5081,7 @@ extern int pthread_getcpuclockid (pthread_t __thread_id,
 extern int pthread_atfork (void (*__prepare) (void),
       void (*__parent) (void),
       void (*__child) (void)) __attribute__ ((__nothrow__ ));
-# 374 "mjs_extra.h" 2
+# 373 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/signal.h" 1 3 4
 # 30 "/usr/include/signal.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/signum.h" 1 3 4
@@ -5574,7 +5553,6 @@ extern const char *const sys_siglist[(64 + 1)];
 
 
 
-
 # 1 "/usr/include/x86_64-linux-gnu/bits/sigcontext.h" 1 3 4
 # 31 "/usr/include/x86_64-linux-gnu/bits/sigcontext.h" 3 4
 struct _fpx_sw_bytes
@@ -5687,13 +5665,12 @@ extern int sigreturn (struct sigcontext *__scp) __attribute__ ((__nothrow__ ));
 
 
 
-
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 302 "/usr/include/signal.h" 2 3 4
 
 # 1 "/usr/include/x86_64-linux-gnu/bits/types/stack_t.h" 1 3 4
 # 23 "/usr/include/x86_64-linux-gnu/bits/types/stack_t.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 24 "/usr/include/x86_64-linux-gnu/bits/types/stack_t.h" 2 3 4
 
 
@@ -5773,7 +5750,6 @@ typedef struct ucontext_t
 extern int siginterrupt (int __sig, int __interrupt) __attribute__ ((__nothrow__ ));
 
 
-
 # 1 "/usr/include/x86_64-linux-gnu/bits/sigstack.h" 1 3 4
 # 317 "/usr/include/signal.h" 2 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/ss_flags.h" 1 3 4
@@ -5791,7 +5767,6 @@ enum
 
 extern int sigaltstack (const stack_t *__restrict __ss,
    stack_t *__restrict __oss) __attribute__ ((__nothrow__ ));
-
 
 
 
@@ -5833,11 +5808,10 @@ extern int pthread_kill (pthread_t __threadid, int __signo) __attribute__ ((__no
 extern int __libc_current_sigrtmin (void) __attribute__ ((__nothrow__ ));
 
 extern int __libc_current_sigrtmax (void) __attribute__ ((__nothrow__ ));
-# 375 "mjs_extra.h" 2
+# 374 "mjs/mjs_extra.h" 2
 
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdbool.h" 1 3
-# 377 "mjs_extra.h" 2
-
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stdbool.h" 1 3
+# 376 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/stdlib.h" 1 3 4
 # 25 "/usr/include/stdlib.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
@@ -5847,7 +5821,7 @@ extern int __libc_current_sigrtmax (void) __attribute__ ((__nothrow__ ));
 
 
 
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 32 "/usr/include/stdlib.h" 2 3 4
 
 
@@ -6119,10 +6093,9 @@ extern void free (void *__ptr) __attribute__ ((__nothrow__ ));
 
 
 
-
 # 1 "/usr/include/alloca.h" 1 3 4
 # 24 "/usr/include/alloca.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 25 "/usr/include/alloca.h" 2 3 4
 
 
@@ -6359,7 +6332,7 @@ extern int getloadavg (double __loadavg[], int __nelem)
 # 1016 "/usr/include/stdlib.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/stdlib-float.h" 1 3 4
 # 1017 "/usr/include/stdlib.h" 2 3 4
-# 379 "mjs_extra.h" 2
+# 377 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/string.h" 1 3 4
 # 26 "/usr/include/string.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
@@ -6370,7 +6343,7 @@ extern int getloadavg (double __loadavg[], int __nelem)
 
 
 
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 34 "/usr/include/string.h" 2 3 4
 
 
@@ -6520,10 +6493,9 @@ extern char *strerror_l (int __errnum, locale_t __l) __attribute__ ((__nothrow__
 
 
 
-
 # 1 "/usr/include/strings.h" 1 3 4
 # 23 "/usr/include/strings.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 24 "/usr/include/strings.h" 2 3 4
 # 34 "/usr/include/strings.h" 3 4
 extern int bcmp (const void *__s1, const void *__s2, size_t __n)
@@ -6610,10 +6582,10 @@ extern char *__stpncpy (char *__restrict __dest,
 extern char *stpncpy (char *__restrict __dest,
         const char *__restrict __src, size_t __n)
      __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1, 2)));
-# 380 "mjs_extra.h" 2
+# 378 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/x86_64-linux-gnu/sys/param.h" 1 3 4
 # 23 "/usr/include/x86_64-linux-gnu/sys/param.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 24 "/usr/include/x86_64-linux-gnu/sys/param.h" 2 3 4
 
 
@@ -6635,7 +6607,7 @@ extern char *stpncpy (char *__restrict __dest,
 # 6 "/usr/include/linux/param.h" 2 3 4
 # 29 "/usr/include/x86_64-linux-gnu/bits/param.h" 2 3 4
 # 32 "/usr/include/x86_64-linux-gnu/sys/param.h" 2 3 4
-# 381 "mjs_extra.h" 2
+# 379 "mjs/mjs_extra.h" 2
 
 
 # 1 "/usr/include/x86_64-linux-gnu/sys/stat.h" 1 3 4
@@ -6756,7 +6728,7 @@ extern int __xmknod (int __ver, const char *__path, __mode_t __mode,
 extern int __xmknodat (int __ver, int __fd, const char *__path,
          __mode_t __mode, __dev_t *__dev)
      __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (3, 5)));
-# 384 "mjs_extra.h" 2
+# 382 "mjs/mjs_extra.h" 2
 # 1 "/usr/include/x86_64-linux-gnu/sys/time.h" 1 3 4
 # 52 "/usr/include/x86_64-linux-gnu/sys/time.h" 3 4
 struct timezone
@@ -6844,7 +6816,7 @@ extern int lutimes (const char *__file, const struct timeval __tvp[2])
 
 
 extern int futimes (int __fd, const struct timeval __tvp[2]) __attribute__ ((__nothrow__ ));
-# 385 "mjs_extra.h" 2
+# 383 "mjs/mjs_extra.h" 2
 
 # 1 "/usr/include/unistd.h" 1 3 4
 # 205 "/usr/include/unistd.h" 3 4
@@ -6859,7 +6831,7 @@ extern int futimes (int __fd, const struct timeval __tvp[2]) __attribute__ ((__n
 # 23 "/usr/include/x86_64-linux-gnu/bits/environments.h" 2 3 4
 # 210 "/usr/include/unistd.h" 2 3 4
 # 229 "/usr/include/unistd.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 230 "/usr/include/unistd.h" 2 3 4
 # 258 "/usr/include/unistd.h" 3 4
 typedef __useconds_t useconds_t;
@@ -7016,7 +6988,6 @@ extern int nice (int __inc) __attribute__ ((__nothrow__ )) ;
 
 
 extern void _exit (int __status) __attribute__ ((__noreturn__));
-
 
 
 
@@ -7882,7 +7853,14 @@ extern int getlogin_r (char *__name, size_t __name_len) __attribute__ ((__nonnul
 
 
 extern int setlogin (const char *__name) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (1)));
-# 873 "/usr/include/unistd.h" 3 4
+
+
+
+
+
+
+
+
 # 1 "/usr/include/x86_64-linux-gnu/bits/getopt_posix.h" 1 3 4
 # 27 "/usr/include/x86_64-linux-gnu/bits/getopt_posix.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/getopt_core.h" 1 3 4
@@ -8024,8 +8002,8 @@ extern long int syscall (long int __sysno, ...) __attribute__ ((__nothrow__ ));
 extern int fdatasync (int __fildes);
 # 1167 "/usr/include/unistd.h" 3 4
 int getentropy (void *__buffer, size_t __length) ;
-# 387 "mjs_extra.h" 2
-# 406 "mjs_extra.h"
+# 385 "mjs/mjs_extra.h" 2
+# 404 "mjs/mjs_extra.h"
 long long strtoll(const char *, char **, int);
 
 
@@ -8033,7 +8011,7 @@ typedef int sock_t;
 
 
 typedef struct stat cs_stat_t;
-# 1858 "mjs_extra.h"
+# 1849 "mjs/mjs_extra.h"
 enum cs_log_level {
   LL_NONE = -1,
   LL_ERROR = 0,
@@ -8051,9 +8029,9 @@ enum cs_log_level {
 
 
 void cs_log_set_level(enum cs_log_level level);
-# 1887 "mjs_extra.h"
+# 1878 "mjs/mjs_extra.h"
 void cs_log_set_file_level(const char *file_level);
-# 1896 "mjs_extra.h"
+# 1887 "mjs/mjs_extra.h"
 int cs_log_print_prefix(enum cs_log_level level, const char *fname, int line);
 
 extern enum cs_log_level cs_log_level;
@@ -8070,7 +8048,7 @@ void cs_log_set_file(FILE *file);
 
 
 void cs_log_printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-# 1993 "mjs_extra.h"
+# 1984 "mjs/mjs_extra.h"
 double cs_time(void);
 
 
@@ -8078,9 +8056,9 @@ double cs_time(void);
 
 
 double cs_timegm(const struct tm *tm);
-# 2029 "mjs_extra.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3
-# 2030 "mjs_extra.h" 2
+# 2020 "mjs/mjs_extra.h"
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3
+# 2021 "mjs/mjs_extra.h" 2
 
 
 
@@ -8102,7 +8080,7 @@ struct mg_str mg_mk_str(const char *s);
 
 
 struct mg_str mg_mk_str_n(const char *s, size_t len);
-# 2064 "mjs_extra.h"
+# 2055 "mjs/mjs_extra.h"
 int mg_vcmp(const struct mg_str *str2, const char *str1);
 
 
@@ -8150,7 +8128,7 @@ struct mg_str mg_strstrip(struct mg_str s);
 
 
 int mg_str_starts_with(struct mg_str s, struct mg_str prefix);
-# 2182 "mjs_extra.h"
+# 2173 "mjs/mjs_extra.h"
 size_t c_strnlen(const char *s, size_t maxlen);
 
 
@@ -8182,20 +8160,20 @@ void cs_to_hex(char *to, const unsigned char *p, size_t len);
 
 
 void cs_from_hex(char *to, const char *p, size_t len);
-# 2232 "mjs_extra.h"
+# 2223 "mjs/mjs_extra.h"
 int mg_ncasecmp(const char *s1, const char *s2, size_t len);
 
 
 
 
 int mg_casecmp(const char *s1, const char *s2);
-# 2256 "mjs_extra.h"
+# 2247 "mjs/mjs_extra.h"
 int mg_asprintf(char **buf, size_t size, const char *fmt, ...)
     __attribute__((format(printf, 3, 4)));
 
 
 int mg_avprintf(char **buf, size_t size, const char *fmt, va_list ap);
-# 2275 "mjs_extra.h"
+# 2266 "mjs/mjs_extra.h"
 const char *mg_next_comma_list_entry(const char *list, struct mg_str *val,
                                      struct mg_str *eq_val);
 
@@ -8206,16 +8184,16 @@ const char *mg_next_comma_list_entry(const char *list, struct mg_str *val,
 
 struct mg_str mg_next_comma_list_entry_n(struct mg_str list, struct mg_str *val,
                                          struct mg_str *eq_val);
-# 2306 "mjs_extra.h"
+# 2297 "mjs/mjs_extra.h"
 size_t mg_match_prefix(const char *pattern, int pattern_len, const char *str);
 
 
 
 
 size_t mg_match_prefix_n(const struct mg_str pattern, const struct mg_str str);
-# 2354 "mjs_extra.h"
+# 2345 "mjs/mjs_extra.h"
 char *cs_read_file(const char *path, size_t *size);
-# 2419 "mjs_extra.h"
+# 2410 "mjs/mjs_extra.h"
 struct mbuf {
   char *buf;
   size_t len;
@@ -8245,7 +8223,7 @@ size_t mbuf_append(struct mbuf *, const void *data, size_t data_size);
 
 
 size_t mbuf_append_and_free(struct mbuf *, void *data, size_t data_size);
-# 2456 "mjs_extra.h"
+# 2447 "mjs/mjs_extra.h"
 size_t mbuf_insert(struct mbuf *, size_t, const void *, size_t);
 
 
@@ -8267,10 +8245,10 @@ void mbuf_clear(struct mbuf *);
 
 
 void mbuf_trim(struct mbuf *);
-# 2560 "mjs_extra.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3
-# 2561 "mjs_extra.h" 2
-# 2571 "mjs_extra.h"
+# 2551 "mjs/mjs_extra.h"
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3
+# 2552 "mjs/mjs_extra.h" 2
+# 2561 "mjs/mjs_extra.h"
 enum json_token_type {
   JSON_TYPE_INVALID = 0,
   JSON_TYPE_STRING,
@@ -8295,7 +8273,7 @@ struct json_token {
   int len;
   enum json_token_type type;
 };
-# 2629 "mjs_extra.h"
+# 2619 "mjs/mjs_extra.h"
 typedef void (*json_walk_callback_t)(void *callback_data, const char *name,
                                      size_t name_len, const char *path,
                                      const struct json_token *token);
@@ -8327,9 +8305,9 @@ struct json_out {
 
 extern int json_printer_buf(struct json_out *, const char *, size_t);
 extern int json_printer_file(struct json_out *, const char *, size_t);
-# 2674 "mjs_extra.h"
+# 2664 "mjs/mjs_extra.h"
 typedef int (*json_printf_callback_t)(struct json_out *, va_list *ap);
-# 2691 "mjs_extra.h"
+# 2681 "mjs/mjs_extra.h"
 int json_printf(struct json_out *, const char *fmt, ...);
 int json_vprintf(struct json_out *, const char *fmt, va_list ap);
 
@@ -8339,7 +8317,7 @@ int json_vprintf(struct json_out *, const char *fmt, va_list ap);
 
 int json_fprintf(const char *file_name, const char *fmt, ...);
 int json_vfprintf(const char *file_name, const char *fmt, va_list ap);
-# 2712 "mjs_extra.h"
+# 2702 "mjs/mjs_extra.h"
 char *json_asprintf(const char *fmt, ...);
 char *json_vasprintf(const char *fmt, va_list ap);
 
@@ -8349,7 +8327,7 @@ char *json_vasprintf(const char *fmt, va_list ap);
 
 
 int json_printf_array(struct json_out *, va_list *ap);
-# 2749 "mjs_extra.h"
+# 2739 "mjs/mjs_extra.h"
 int json_scanf(const char *str, int str_len, const char *fmt, ...);
 int json_vscanf(const char *str, int str_len, const char *fmt, va_list ap);
 
@@ -8363,7 +8341,7 @@ typedef void (*json_scanner_t)(const char *str, int len, void *user_data);
 
 int json_scanf_array_elem(const char *s, int len, const char *path, int index,
                           struct json_token *token);
-# 2770 "mjs_extra.h"
+# 2760 "mjs/mjs_extra.h"
 int json_unescape(const char *src, int slen, char *dst, int dlen);
 
 
@@ -8377,7 +8355,7 @@ int json_escape(struct json_out *out, const char *str, size_t str_len);
 
 
 char *json_fread(const char *file_name);
-# 2797 "mjs_extra.h"
+# 2787 "mjs/mjs_extra.h"
 int json_setf(const char *s, int len, struct json_out *out,
               const char *json_path, const char *json_fmt, ...);
 
@@ -8396,7 +8374,7 @@ int json_prettify(const char *s, int len, struct json_out *out);
 
 
 int json_prettify_file(const char *file_name);
-# 2832 "mjs_extra.h"
+# 2822 "mjs/mjs_extra.h"
 void *json_next_key(const char *s, int len, void *handle, const char *path,
                     struct json_token *key, struct json_token *val);
 
@@ -8406,7 +8384,7 @@ void *json_next_key(const char *s, int len, void *handle, const char *path,
 
 void *json_next_elem(const char *s, int len, void *handle, const char *path,
                      int *idx, struct json_token *val);
-# 2886 "mjs_extra.h"
+# 2876 "mjs/mjs_extra.h"
 typedef void(ffi_fn_t)(void);
 
 typedef intptr_t ffi_word_t;
@@ -8435,13 +8413,13 @@ void ffi_set_bool(struct ffi_arg *arg, _Bool v);
 void ffi_set_ptr(struct ffi_arg *arg, void *v);
 void ffi_set_double(struct ffi_arg *arg, double v);
 void ffi_set_float(struct ffi_arg *arg, float v);
-# 2931 "mjs_extra.h"
+# 2921 "mjs/mjs_extra.h"
 # 1 "/usr/include/assert.h" 1 3 4
-# 2932 "mjs_extra.h" 2
-# 2998 "mjs_extra.h"
+# 2922 "mjs/mjs_extra.h" 2
+# 2987 "mjs/mjs_extra.h"
 # 1 "/usr/include/dlfcn.h" 1 3 4
 # 24 "/usr/include/dlfcn.h" 3 4
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stddef.h" 1 3 4
+# 1 "/home/rahul.gopinath/toolchains/llvm+clang-401-x86_64-linux-gnu/bin/../lib/clang/4.0.1/include/stddef.h" 1 3 4
 # 25 "/usr/include/dlfcn.h" 2 3 4
 
 
@@ -8460,15 +8438,15 @@ extern void *dlsym (void *__restrict __handle,
       const char *__restrict __name) __attribute__ ((__nothrow__ )) __attribute__ ((__nonnull__ (2)));
 # 82 "/usr/include/dlfcn.h" 3 4
 extern char *dlerror (void) __attribute__ ((__nothrow__ ));
-# 2999 "mjs_extra.h" 2
-# 3374 "mjs_extra.h"
+# 2988 "mjs/mjs_extra.h" 2
+# 3362 "mjs/mjs_extra.h"
 static mjs_val_t
 mjs_array_get2(struct mjs *mjs, mjs_val_t arr, unsigned long index, int *has);
 
 static void mjs_array_splice(struct mjs *mjs);
 
 static void mjs_array_push_internal(struct mjs *mjs);
-# 3446 "mjs_extra.h"
+# 3434 "mjs/mjs_extra.h"
 mjs_ffi_resolver_t dlsym;
 
 
@@ -8485,8 +8463,8 @@ enum ffi_sig_type {
 
 
 struct mjs_ffi_sig {
-# 3471 "mjs_extra.h"
- struct mjs_ffi_sig *cb_sig;
+# 3459 "mjs/mjs_extra.h"
+  struct mjs_ffi_sig *cb_sig;
 
 
 
@@ -8577,7 +8555,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs);
 
 static void mjs_ffi_cb_free(struct mjs *);
 static void mjs_ffi_args_free_list(struct mjs *mjs);
-# 3585 "mjs_extra.h"
+# 3573 "mjs/mjs_extra.h"
 struct mjs;
 
 typedef void (*gc_cell_destructor_t)(struct mjs *mjs, void *);
@@ -8602,7 +8580,7 @@ struct gc_arena {
 
   gc_cell_destructor_t destructor;
 };
-# 3641 "mjs_extra.h"
+# 3629 "mjs/mjs_extra.h"
 struct gc_cell {
   union {
     struct gc_cell *link;
@@ -8639,7 +8617,7 @@ static int gc_check_val(struct mjs *mjs, mjs_val_t v);
 
 
 static int gc_check_ptr(const struct gc_arena *a, const void *p);
-# 3704 "mjs_extra.h"
+# 3692 "mjs/mjs_extra.h"
 enum mjs_type {
 
   MJS_TYPE_UNDEFINED,
@@ -8669,7 +8647,7 @@ enum mjs_call_stack_frame_item {
 
   CALL_STACK_FRAME_ITEMS_CNT
 };
-# 3762 "mjs_extra.h"
+# 3750 "mjs/mjs_extra.h"
 struct mjs_vals {
 
   mjs_val_t this_obj;
@@ -8769,7 +8747,7 @@ static mjs_val_t mjs_pop_val(struct mbuf *m);
 static mjs_val_t mjs_pop(struct mjs *mjs);
 static void mjs_push(struct mjs *mjs, mjs_val_t v);
 static void mjs_die(struct mjs *mjs);
-# 3895 "mjs_extra.h"
+# 3883 "mjs/mjs_extra.h"
 static mjs_err_t mjs_to_string(struct mjs *mjs, mjs_val_t *v, char **p,
                                     size_t *sizep, int *need_free);
 
@@ -8779,7 +8757,7 @@ static mjs_err_t mjs_to_string(struct mjs *mjs, mjs_val_t *v, char **p,
 static mjs_val_t mjs_to_boolean_v(struct mjs *mjs, mjs_val_t v);
 
 static int mjs_is_truthy(struct mjs *mjs, mjs_val_t v);
-# 4055 "mjs_extra.h"
+# 4043 "mjs/mjs_extra.h"
 struct mjs;
 
 struct mjs_property {
@@ -8815,7 +8793,7 @@ static mjs_err_t mjs_set_internal(struct mjs *mjs, mjs_val_t obj,
 
 
 static void mjs_op_create_object(struct mjs *mjs);
-# 4243 "mjs_extra.h"
+# 4231 "mjs/mjs_extra.h"
 static mjs_val_t mjs_legit_pointer_to_value(void *p);
 
 
@@ -8833,7 +8811,7 @@ static void *get_ptr(mjs_val_t v);
 
 
 static void mjs_op_isnan(struct mjs *mjs);
-# 4371 "mjs_extra.h"
+# 4359 "mjs/mjs_extra.h"
 static unsigned long cstr_to_ulong(const char *s, size_t len, int *ok);
 static mjs_err_t
 str_to_ulong(struct mjs *mjs, mjs_val_t v, int *ok, unsigned long *res);
@@ -8848,13 +8826,13 @@ static void mjs_mkstr(struct mjs *mjs);
 static void mjs_string_slice(struct mjs *mjs);
 static void mjs_string_index_of(struct mjs *mjs);
 static void mjs_string_char_code_at(struct mjs *mjs);
-# 4466 "mjs_extra.h"
+# 4453 "mjs/mjs_extra.h"
 struct mjs_bcode_part;
 
 static const char *opcodetostr(uint8_t opcode);
 static size_t mjs_disasm_single(const uint8_t *code, size_t i);
 static const char *mjs_stringify_type(enum mjs_type t);
-# 4480 "mjs_extra.h"
+# 4467 "mjs/mjs_extra.h"
 static int mjs_check_arg(struct mjs *mjs, int arg_num,
                               const char *arg_name, enum mjs_type expected_type,
                               mjs_val_t *parg);
@@ -8871,17 +8849,7 @@ static const char *mjs_get_bcode_filename(struct mjs *mjs,
 
 
 void mjs_jprintf(mjs_val_t v, struct mjs *mjs, struct json_out *out);
-# 4530 "mjs_extra.h"
-# 1 "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/stdint.h" 1 3
-# 4531 "mjs_extra.h" 2
-
-
-
-
-
-
-
-
+# 4526 "mjs/mjs_extra.h"
 size_t cs_varint_llen(uint64_t num);
 
 
@@ -8901,7 +8869,7 @@ _Bool cs_varint_decode(const uint8_t *buf, size_t buf_size, uint64_t *num,
                       size_t *llen);
 
 uint64_t cs_varint_decode_unsafe(const uint8_t *buf, int *llen);
-# 4583 "mjs_extra.h"
+# 4570 "mjs/mjs_extra.h"
 enum mjs_opcode {
   OP_NOP,
   OP_DROP,
@@ -8987,7 +8955,7 @@ static int mjs_bcode_parts_cnt(struct mjs *mjs);
 
 
 static void mjs_bcode_commit(struct mjs *mjs);
-# 4784 "mjs_extra.h"
+# 4770 "mjs/mjs_extra.h"
 struct tok {
   int tok;
   int len;
@@ -9109,7 +9077,7 @@ static void pinit(const char *file_name, const char *buf, struct pstate *);
 static int pnext(struct pstate *);
 static int mjs_is_ident(int c);
 static int mjs_is_digit(int c);
-# 4931 "mjs_extra.h"
+# 4917 "mjs/mjs_extra.h"
 void *mjs_mem_to_ptr(unsigned int val);
 void *mjs_mem_get_ptr(void *base, int offset);
 void mjs_mem_set_ptr(void *ptr, void *val);
@@ -9119,9 +9087,9 @@ double mjs_mem_get_uint(void *ptr, int size, int bigendian);
 double mjs_mem_get_int(void *ptr, int size, int bigendian);
 void mjs_mem_set_uint(void *ptr, unsigned int val, int size, int bigendian);
 void mjs_mem_set_int(void *ptr, int val, int size, int bigendian);
-# 5002 "mjs_extra.h"
+# 4987 "mjs/mjs_extra.h"
 static mjs_err_t mjs_execute(struct mjs *mjs, size_t off, mjs_val_t *res);
-# 5024 "mjs_extra.h"
+# 5009 "mjs/mjs_extra.h"
 static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
                                        size_t size, size_t *res_len,
                                        uint8_t is_debug);
@@ -9133,12 +9101,12 @@ static void mjs_op_json_parse(struct mjs *mjs);
 
 static mjs_err_t
 mjs_json_parse(struct mjs *mjs, const char *str, size_t len, mjs_val_t *res);
-# 5059 "mjs_extra.h"
+# 5044 "mjs/mjs_extra.h"
 void mjs_init_builtin(struct mjs *mjs, mjs_val_t obj);
-# 5083 "mjs_extra.h"
+# 5068 "mjs/mjs_extra.h"
 static mjs_err_t
 mjs_parse(const char *path, const char *buf, struct mjs *);
-# 5120 "mjs_extra.h"
+# 5104 "mjs/mjs_extra.h"
 enum cs_log_level cs_log_level __attribute__((weak)) =
 
 
@@ -9240,7 +9208,7 @@ void cs_log_set_file(FILE *file) __attribute__((weak));
 void cs_log_set_file(FILE *file) {
   cs_log_file = file;
 }
-# 5230 "mjs_extra.h"
+# 5214 "mjs/mjs_extra.h"
 void cs_log_set_level(enum cs_log_level level) __attribute__((weak));
 void cs_log_set_level(enum cs_log_level level) {
   cs_log_level = level;
@@ -9248,7 +9216,7 @@ void cs_log_set_level(enum cs_log_level level) {
 
 
 }
-# 5269 "mjs_extra.h"
+# 5252 "mjs/mjs_extra.h"
 char *cs_read_file(const char *path, size_t *size) __attribute__((weak));
 char *cs_read_file(const char *path, size_t *size) {
   FILE *fp;
@@ -9271,7 +9239,7 @@ char *cs_read_file(const char *path, size_t *size) {
   }
   return data;
 }
-# 5329 "mjs_extra.h"
+# 5312 "mjs/mjs_extra.h"
 size_t cs_varint_llen(uint64_t num) {
   size_t llen = 0;
 
@@ -9329,10 +9297,10 @@ uint64_t cs_varint_decode_unsafe(const uint8_t *buf, int *llen) {
   *llen = l;
   return v;
 }
-# 5408 "mjs_extra.h"
+# 5391 "mjs/mjs_extra.h"
 # 1 "/usr/include/assert.h" 1 3 4
-# 5409 "mjs_extra.h" 2
-# 5420 "mjs_extra.h"
+# 5392 "mjs/mjs_extra.h" 2
+# 5403 "mjs/mjs_extra.h"
 void mbuf_init(struct mbuf *mbuf, size_t initial_size) __attribute__((weak));
 void mbuf_init(struct mbuf *mbuf, size_t initial_size) {
   mbuf->len = mbuf->size = 0;
@@ -9372,9 +9340,9 @@ size_t mbuf_insert(struct mbuf *a, size_t off, const void *buf, size_t) __attrib
 size_t mbuf_insert(struct mbuf *a, size_t off, const void *buf, size_t len) {
   char *p = ((void*)0);
 
-  ((void) sizeof ((a != ((void*)0)) ? 1 : 0), __extension__ ({ if (a != ((void*)0)) ; else __assert_fail ("a != NULL", "mjs_extra.h", 5459, __extension__ __PRETTY_FUNCTION__); }));
-  ((void) sizeof ((a->len <= a->size) ? 1 : 0), __extension__ ({ if (a->len <= a->size) ; else __assert_fail ("a->len <= a->size", "mjs_extra.h", 5460, __extension__ __PRETTY_FUNCTION__); }));
-  ((void) sizeof ((off <= a->len) ? 1 : 0), __extension__ ({ if (off <= a->len) ; else __assert_fail ("off <= a->len", "mjs_extra.h", 5461, __extension__ __PRETTY_FUNCTION__); }));
+  ((void) sizeof ((a != ((void*)0)) ? 1 : 0), __extension__ ({ if (a != ((void*)0)) ; else __assert_fail ("a != NULL", "mjs/mjs_extra.h", 5442, __extension__ __PRETTY_FUNCTION__); }));
+  ((void) sizeof ((a->len <= a->size) ? 1 : 0), __extension__ ({ if (a->len <= a->size) ; else __assert_fail ("a->len <= a->size", "mjs/mjs_extra.h", 5443, __extension__ __PRETTY_FUNCTION__); }));
+  ((void) sizeof ((off <= a->len) ? 1 : 0), __extension__ ({ if (off <= a->len) ; else __assert_fail ("off <= a->len", "mjs/mjs_extra.h", 5444, __extension__ __PRETTY_FUNCTION__); }));
 
 
   if (~(size_t) 0 - (size_t) a->buf < len) return 0;
@@ -9451,7 +9419,7 @@ void mbuf_move(struct mbuf *from, struct mbuf *to) {
   memcpy(to, from, sizeof(*to));
   memset(from, 0, sizeof(*from));
 }
-# 5568 "mjs_extra.h"
+# 5551 "mjs/mjs_extra.h"
 int mg_ncasecmp(const char *s1, const char *s2, size_t len) __attribute__((weak));
 
 struct mg_str mg_mk_str(const char *s) __attribute__((weak));
@@ -9588,7 +9556,7 @@ int mg_str_starts_with(struct mg_str s, struct mg_str prefix) {
   if (s.len < prefix.len) return 0;
   return (mg_strcmp(sp, prefix) == 0);
 }
-# 5736 "mjs_extra.h"
+# 5719 "mjs/mjs_extra.h"
 size_t c_strnlen(const char *s, size_t maxlen) __attribute__((weak));
 size_t c_strnlen(const char *s, size_t maxlen) {
   size_t l = 0;
@@ -9596,7 +9564,7 @@ size_t c_strnlen(const char *s, size_t maxlen) {
   }
   return l;
 }
-# 5758 "mjs_extra.h"
+# 5741 "mjs/mjs_extra.h"
 static int c_itoa(char *buf, size_t buf_size, int64_t num, int base, int flags,
                   int field_width) {
   char tmp[40];
@@ -9646,8 +9614,8 @@ int c_vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list ap) {
     if (ch != '%') {
       do { if (i < (int) buf_size) buf[i] = ch; i++; } while (0);
     } else {
-# 5815 "mjs_extra.h"
- flags = field_width = precision = len_mod = 0;
+# 5798 "mjs/mjs_extra.h"
+      flags = field_width = precision = len_mod = 0;
 
 
       if (*fmt == '0') {
@@ -9778,7 +9746,7 @@ int c_snprintf(char *buf, size_t buf_size, const char *fmt, ...) {
   __builtin_va_end(ap);
   return result;
 }
-# 5978 "mjs_extra.h"
+# 5961 "mjs/mjs_extra.h"
 const char *c_strnstr(const char *s, const char *find, size_t slen) __attribute__((weak));
 const char *c_strnstr(const char *s, const char *find, size_t slen) {
   size_t find_length = strlen(find);
@@ -9796,7 +9764,7 @@ const char *c_strnstr(const char *s, const char *find, size_t slen) {
 
   return ((void*)0);
 }
-# 6008 "mjs_extra.h"
+# 5991 "mjs/mjs_extra.h"
 void cs_to_hex(char *to, const unsigned char *p, size_t len) __attribute__((weak));
 void cs_to_hex(char *to, const unsigned char *p, size_t len) {
   static const char *hex = "0123456789abcdef";
@@ -9828,7 +9796,7 @@ void cs_from_hex(char *to, const char *p, size_t len) {
   }
   *to = '\0';
 }
-# 6059 "mjs_extra.h"
+# 6042 "mjs/mjs_extra.h"
 static int str_util_lowercase(const char *s) {
   return tolower(*(const unsigned char *) s);
 }
@@ -10007,7 +9975,7 @@ size_t mg_match_prefix(const char *pattern, int pattern_len, const char *str) {
   if (str != ((void*)0)) s.len = strlen(str);
   return mg_match_prefix_n(pstr, s);
 }
-# 6316 "mjs_extra.h"
+# 6298 "mjs/mjs_extra.h"
 struct frozen {
   const char *end;
   const char *cur;
@@ -10026,7 +9994,7 @@ struct fstate {
   const char *ptr;
   size_t path_len;
 };
-# 6355 "mjs_extra.h"
+# 6337 "mjs/mjs_extra.h"
 static int json_append_to_path(struct frozen *f, const char *str, int size) {
   int n = f->path_len;
   int left = sizeof(f->path) - n - 1;
@@ -10044,7 +10012,7 @@ static void json_truncate_path(struct frozen *f, size_t len) {
 
 static int json_parse_object(struct frozen *f);
 static int json_parse_value(struct frozen *f);
-# 6386 "mjs_extra.h"
+# 6368 "mjs/mjs_extra.h"
 static int json_left(const struct frozen *f) {
   return f->end - f->cur;
 }
@@ -10531,8 +10499,8 @@ int json_vprintf(struct json_out *out, const char *fmt, va_list xap) {
           len += out->printer(out, quote, 1);
         }
       } else {
-# 6883 "mjs_extra.h"
- const char *end_of_format_specifier = "sdfFeEgGlhuIcx.*-0123456789";
+# 6865 "mjs/mjs_extra.h"
+        const char *end_of_format_specifier = "sdfFeEgGlhuIcx.*-0123456789";
         int n = strspn(fmt + 1, end_of_format_specifier);
         char *pbuf = buf;
         int need_len, size = sizeof(buf);
@@ -10669,7 +10637,7 @@ int json_printf_array(struct json_out *out, va_list *ap) {
   len += json_printf(out, "]", 1);
   return len;
 }
-# 7044 "mjs_extra.h"
+# 7026 "mjs/mjs_extra.h"
 int json_walk(const char *json_string, int json_string_length,
               json_walk_callback_t callback, void *callback_data) __attribute__((weak));
 int json_walk(const char *json_string, int json_string_length,
@@ -11049,8 +11017,8 @@ static void json_vsetf_cb(void *userdata, const char *name, size_t name_len,
     data->pos = off;
     data->end = off + t->len;
   }
-# 7432 "mjs_extra.h"
- if (data->pos == 0) {
+# 7414 "mjs/mjs_extra.h"
+  if (data->pos == 0) {
     data->prev = off + t->len;
   } else if ((t->ptr[0] == '[' || t->ptr[0] == '{') && off + 1 < data->pos &&
              off + 1 > data->prev) {
@@ -11328,7 +11296,7 @@ char *json_asprintf(const char *fmt, ...) {
   __builtin_va_end(ap);
   return result;
 }
-# 7728 "mjs_extra.h"
+# 7710 "mjs/mjs_extra.h"
 void ffi_set_word(struct ffi_arg *arg, ffi_word_t v) {
   arg->ctype = FFI_CTYPE_WORD;
   arg->v.i = v;
@@ -11352,7 +11320,7 @@ void ffi_set_float(struct ffi_arg *arg, float v) {
   arg->ctype = FFI_CTYPE_FLOAT;
   arg->v.f = v;
 }
-# 7787 "mjs_extra.h"
+# 7769 "mjs/mjs_extra.h"
 typedef ffi_word_t (*w4w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t);
 typedef ffi_word_t (*w5w_t)(ffi_word_t, ffi_word_t, ffi_word_t, ffi_word_t,
                             ffi_word_t);
@@ -11845,7 +11813,7 @@ int ffi_call(ffi_fn_t *func, int nargs, struct ffi_arg *res,
 
   return 0;
 }
-# 8301 "mjs_extra.h"
+# 8282 "mjs/mjs_extra.h"
 static int v_sprintf_s(char *buf, size_t size, const char *fmt, ...) {
   size_t n;
   va_list ap;
