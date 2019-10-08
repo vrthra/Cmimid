@@ -2066,9 +2066,7 @@ MJS_PRIVATE mjs_err_t mjs_execute(struct mjs *mjs, size_t off, mjs_val_t *res) {
         i = bp.data.len;
         break;
       default:
-#if MJS_ENABLE_DEBUG
         mjs_dump(mjs, 1);
-#endif
         mjs_set_errorf(mjs, MJS_INTERNAL_ERROR, "Unknown opcode: %d, off %d+%d",
                        (int) opcode, (int) bp.start_idx, (int) i);
         i = bp.data.len;
@@ -7077,7 +7075,6 @@ void mjs_fprintf(mjs_val_t v, struct mjs *mjs, FILE *fp) {
   mjs_jprintf(v, mjs, &out);
 }
 
-#if MJS_ENABLE_DEBUG
 
 MJS_PRIVATE const char *opcodetostr(uint8_t opcode) {
   static const char *names[] = {
@@ -7412,7 +7409,6 @@ int mjs_get_offset_by_call_frame_num(struct mjs *mjs, int cf_num) {
   return ret;
 }
 
-#endif
 
 int main(int argc, char *argv[]) {
   char my_string[10240];
