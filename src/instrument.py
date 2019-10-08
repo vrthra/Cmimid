@@ -486,7 +486,8 @@ def display_till(last):
 def parse(arg):
     global displayed_till
     idx = Index.create()
-    translation_unit = idx.parse(arg, args = ['-xc++', '-std=c++14'] )
+    CFLAGS = os.environ.get('CFLAGS', '-xc++ std=c++14')
+    translation_unit = idx.parse(arg, args =  CFLAGS.split(' '))
     print('''\
 #define CMIMID_EXIT 0
 #define CMIMID_BREAK 1
