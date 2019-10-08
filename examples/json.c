@@ -155,7 +155,7 @@ static int json_parse_value(const char **cursor, json_value *parent) {
   case '"': {
     ++*cursor;
     const char *start = *cursor;
-    char *end = strchr(*cursor, '"');
+    char *end = (char*) strchr(*cursor, '"');
     if (end) {
       size_t len = end - start;
       char *new_string = (char*) malloc((len + 1) * sizeof(char));
