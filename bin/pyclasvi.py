@@ -11,6 +11,7 @@ PyClASVi is distributed under the MIT License, see LICENSE file.
 """
 
 import sys
+import os
 
 import tkinter.ttk as ttk
 import tkinter as tk
@@ -1734,10 +1735,8 @@ class Application(ttk.Frame):
             self.inputFrame.load_filename(file)
         else:
             self.inputFrame.set_filename('select file to parse =>')
-            self.inputFrame.set_args(['-xc++',
-                                      '-std=c++14',
-                                      '-I/your/include/path',
-                                      '-I/more/include/path'])
+            CFLAGS=os.environ.get('CFLAGS','').split(' ')
+            self.inputFrame.set_args(CFLAGS) #'-xc++', '-std=c++14', '-I/your/include/path', '-I/more/include/path'])
 
 
     def _create_widgets(self):

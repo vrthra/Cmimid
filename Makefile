@@ -2,8 +2,10 @@
 
 PYTHON=python3
 pfuzzer=../checksum-repair
+CC=clang
 
 CFLAGS=-xc++ -std=c++14
+CFLAGS=-I/usr/lib/llvm-6.0/lib/clang/6.0.0/include/
 
 EXAMPLE_C_SOURCE=example3.c
 
@@ -14,26 +16,26 @@ CLANG_FORMAT=/usr/local/Cellar/llvm/8.0.1/bin/clang-format
 CLANG_FORMAT=/usr/lib/llvm-8/bin/clang-format
 
 instrument: | build
-	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py examples/$(EXAMPLE_C_SOURCE) | $(CLANG_FORMAT) > build/$(EXAMPLE_C_SOURCE)
+	CFLAGS=$(CFLAGS) LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py examples/$(EXAMPLE_C_SOURCE) | $(CLANG_FORMAT) > build/$(EXAMPLE_C_SOURCE)
 
 build/%.out: examples/%.c
-	gcc $(CFLAGS) -g -o $@ $< -I ./examples
+	$(CC) $(CFLAGS) -g -o $@ $< -I ./examples
 
 build/json.out: examples/json.c | build
-	gcc $(CFLAGS) -g -o $@ $^ -I ./examples
+	$(CC) $(CFLAGS) -g -o $@ $^ -I ./examples
 
 build: ; mkdir -p $@
 
 build/%.c: examples/%.c build/%.out src/instrument.py | build
-	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $< > $@_.tmp
+	CFLAGS=$(CFLAGS) LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $< > $@_.tmp
 	cat $@_.tmp | $(CLANG_FORMAT) > $@_
 	mv $@_ $@
 
 build/%.x: build/%.c
-	gcc $(CFLAGS) -g -o $@ $^ -I ./examples
+	$(CC) $(CFLAGS) -g -o $@ $^ -I ./examples
 
 build/%.d: examples/%.c src/instrument.py | build
-	LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
+	CFLAGS=$(CFLAGS) LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
 
 build/%.input: examples/%.input
 	cat $< > $@
@@ -64,7 +66,7 @@ build/%.grammar: build/%.events
 
 
 view:
-	${PYTHON} ./bin/pyclasvi.py -l $(LIBCLANG_PATH)
+	CFLAGS=$(CFLAGS) ${PYTHON} ./bin/pyclasvi.py -l $(LIBCLANG_PATH)
 
 clean:
 	rm -rf build/*
