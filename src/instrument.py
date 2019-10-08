@@ -378,7 +378,10 @@ class FunctionDecl(AstNode):
         c = get_id()
         cparams = [p for p in children if p.kind == CursorKind.PARM_DECL]
         params = ", ".join([to_string(c) for c in cparams])
-        if children and children[-1].kind == CursorKind.COMPOUND_STMT:
+        if '...' in self.node.type.spelling:
+            params = params + ", ..."
+        if self.node.is_definition():
+        #if children and children[-1].kind == CursorKind.COMPOUND_STMT:
             body = to_string(children[-1])
             return '''\
 %s
@@ -483,7 +486,7 @@ def display_till(last):
 def parse(arg):
     global displayed_till
     idx = Index.create()
-    translation_unit = idx.parse(arg, args = ['-xc++', '-std=c++14', '-I/your/include/path', '-I/more/include/path'] )
+    translation_unit = idx.parse(arg, args = ['-xc++', '-std=c++14'] )
     print('''\
 #define CMIMID_EXIT 0
 #define CMIMID_BREAK 1
@@ -508,13 +511,13 @@ void cmimid__scope_exit(int i) {}
 void cmimid__break(int i) {}
 void cmimid__continue(int i) {}
 void cmimid__goto(int i) {}
-void cmimid__label(int i) {}
+void cmimid__label(int i, int j, int k) {}
 void cmimid__return(int i) {}
 
 ''')
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
-            display_till(i.location.line-1)
+            display_till(i.extent.start.line-1)
             print(to_string(i), file=sys.stdout)
             displayed_till = i.extent.end.line
         else:
