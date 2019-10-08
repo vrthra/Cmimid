@@ -4084,7 +4084,18 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
             (((size_t)(b - buf) < (size)) ? ((size) - (b - buf)) : 0), &tmp,
             is_debug);
         if (rcode != MJS_OK) {
-          goto clean_iter;
+          {
+            len = b - buf;
+            {
+              if (rcode != MJS_OK) {
+                len = 0;
+              }
+              if (res_len != ((void *)0)) {
+                *res_len = len;
+              }
+              return rcode;
+            }
+          }
         }
         b += tmp;
       }
@@ -4094,7 +4105,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
         b, (((size_t)(b - buf) < (size)) ? ((size) - (b - buf)) : 0), "}");
     mjs->json_visited_stack.len -= sizeof(v);
 
-  clean_iter:
+  clean_iter : {
     len = b - buf;
     {
       if (rcode != MJS_OK) {
@@ -4105,6 +4116,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
       }
       return rcode;
     }
+  }
   }
   case MJS_TYPE_OBJECT_ARRAY: {
     int has;
