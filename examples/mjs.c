@@ -8685,36 +8685,39 @@ int mjs_get_offset_by_call_frame_num(struct mjs *mjs, int cf_num) {
   return ret;
 }
 
+int parse_mjs(char* my_string) {
+   struct mjs *mjs = mjs_create();
+   mjs_val_t res = MJS_UNDEFINED;
+   mjs_err_t err = MJS_OK;
+   err = mjs_exec(mjs, my_string, &res);
+   if (err == MJS_OK) {
+     return 0;
+   }
+   return 1;
+}
+
+
+void strip_input(char* my_string) {
+    int read = strlen(my_string);
+    if (my_string[read-1] ==  '\n'){
+        my_string[read-1] = '\0';
+    }
+}
+
 int main(int argc, char *argv[]) {
-  char my_string[10240];
-  if (argc == 1) {
-    char *v = fgets(my_string, 10240, stdin);
-    if (!v) {
-      exit(1);
+    char my_string[10240];
+    int ret;
+    if (argc == 1) {
+        char *v = fgets(my_string, 10240, stdin);
+        if (!v) {
+          exit(1);
+        }
+        strip_input(my_string);
+    } else {
+        strcpy(my_string, argv[1]);
+        strip_input(my_string);
     }
-    int read = strlen(my_string);
-    if (my_string[read - 1] == '\n') {
-      my_string[read - 1] = '\0';
-    }
-  } else {
-    strcpy(my_string, argv[1]);
-    int read = strlen(my_string);
-    if (my_string[read - 1] == '\n') {
-      my_string[read - 1] = '\0';
-    }
-  }
-  printf("val: <%s>\n", my_string);
-
-  struct mjs *mjs = mjs_create();
-  mjs_val_t res =
-      ((uint64_t)(1) << 63 | (uint64_t)0x7ff0 << 48 | (uint64_t)(3) << 48);
-  mjs_err_t err = MJS_OK;
-  int i;
-
-  err = mjs_exec(mjs, my_string, &res);
-
-  if (err != MJS_OK) {
-
-    return 1;
-  }
+    printf("val: <%s>\n", my_string);
+    ret = parse_mjs(my_string);
+    return ret;
 }
