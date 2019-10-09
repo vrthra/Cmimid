@@ -2,10 +2,10 @@
 
 PYTHON=python3
 pfuzzer=../checksum-repair
-CC=clang
+CC=clang-8
 
 CFLAGS=-xc++ -std=c++14
-CFLAGS=-I/usr/lib/llvm-6.0/lib/clang/6.0.0/include/
+CFLAGS=-I/usr/lib/llvm-8/lib/clang/8.0.0/include
 
 EXAMPLE_C_SOURCE=example3.c
 
