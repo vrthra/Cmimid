@@ -33,7 +33,7 @@ def main(args):
         f = Fuzzer(s)
     for i in range(100):
         try:
-            v = f.fuzz_key()
+            v = f.fuzz_key(args[2] if len(args)> 2 else '<START>')
             print(repr(v))
             p = subprocess.Popen(args[1], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             data, err = p.communicate(input=v.encode())
