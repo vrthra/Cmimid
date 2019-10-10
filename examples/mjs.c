@@ -60,7 +60,6 @@ unsigned long mjs_array_length(struct mjs *mjs, mjs_val_t v) {
     }
   }
 
-clean:
   return len;
 }
 
@@ -116,7 +115,7 @@ static void mjs_array_push_internal(struct mjs *mjs) {
 
   ret = mjs_mk_number(mjs, mjs_array_length(mjs, mjs->vals.this_obj));
 
-clean : {
+{
   mjs_return(mjs, ret);
   return;
 }
@@ -214,7 +213,7 @@ static void mjs_array_splice(struct mjs *mjs) {
     mjs_array_set(mjs, mjs->vals.this_obj, start + i, mjs_arg(mjs, 2 + i));
   }
 
-clean : {
+{
   mjs_return(mjs, ret);
   return;
 }
@@ -430,7 +429,7 @@ static void mjs_load(struct mjs *mjs) {
       }
     }
 
-  clean : {
+  {
     if (custom_global) {
       mjs_pop_val(&mjs->scopes);
     };
@@ -559,7 +558,6 @@ static mjs_err_t mjs_to_string(struct mjs *mjs, mjs_val_t *v, char **p,
     mjs_set_errorf(mjs, ret, "unknown type to convert to string");
   }
 
-clean:
   return ret;
 }
 
@@ -728,7 +726,7 @@ static void mjs_die(struct mjs *mjs) {
 
   mjs_prepend_errorf(mjs, MJS_TYPE_ERROR, "%.*s", (int)msg_len, msg);
 
-clean : {
+{
   mjs_return(mjs, ((uint64_t)(1) << 63 | (uint64_t)0x7ff0 << 48 |
                    (uint64_t)(3) << 48));
   return;
@@ -1991,7 +1989,7 @@ static mjs_err_t mjs_execute(struct mjs *mjs, size_t off, mjs_val_t *res) {
     }
   }
 
-clean :
+
 
 {
   mjs_bcode_part_get_by_offset(mjs, start_off)->exec_res = mjs->error;
@@ -2047,7 +2045,7 @@ mjs_err_t mjs_exec_file(struct mjs *mjs, const char *path, mjs_val_t *res) {
   error = mjs_exec_internal(mjs, path, source_code, -1, &r);
   free(source_code);
 
-clean : {
+{
   if (res != ((void *)0))
     *res = r;
   return error;
@@ -2482,7 +2480,7 @@ static mjs_err_t mjs_parse_ffi_signature(struct mjs *mjs, const char *s,
     }
   }
 
-clean : {
+{
   if (ret != MJS_OK) {
     mjs_prepend_errorf(mjs, ret, "bad ffi signature: \"%.*s\"", sig_len, s);
     sig->is_valid = 0;
@@ -2624,7 +2622,7 @@ static union ffi_cb_data_val ffi_cb_impl_generic(void *param,
     abort();
   }
 
-clean : {
+{
   free(args);
   mjs_disown(mjs, &res);
   return ret;
@@ -2860,7 +2858,7 @@ static mjs_err_t mjs_ffi_call(struct mjs *mjs) {
   }
   ret_v = mjs_ffi_sig_to_value(psig);
 
-clean : {
+{
   mjs_return(mjs, ret_v);
   return e;
 }
@@ -3188,7 +3186,7 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
     break;
   }
 
-clean :
+
 
 {
   if (ret != MJS_OK) {
@@ -3405,7 +3403,6 @@ static int mjs_ffi_sig_validate(struct mjs *mjs, mjs_ffi_sig_t *sig,
 
     sig->args_cnt++;
   }
-args_over :
 
 {
   switch (sig_type) {
@@ -3439,7 +3436,7 @@ args_over :
 
   ret = 1;
 
-clean : {
+{
   if (ret) {
     sig->is_valid = 1;
   }
@@ -4106,7 +4103,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
         b, (((size_t)(b - buf) < (size)) ? ((size) - (b - buf)) : 0), "}");
     mjs->json_visited_stack.len -= sizeof(v);
 
-  clean_iter : {
+  {
     len = b - buf;
     {
       if (rcode != MJS_OK) {
@@ -4194,7 +4191,7 @@ static mjs_err_t to_json_or_debug(struct mjs *mjs, mjs_val_t v, char *buf,
     return rcode;
   }
 
-clean : {
+{
   if (rcode != MJS_OK) {
     len = 0;
   }
@@ -4240,7 +4237,7 @@ static mjs_err_t mjs_json_stringify(struct mjs *mjs, mjs_val_t v, char *buf,
     }
   }
 
-clean :
+
 
 {
   if (rcode != MJS_OK && p != buf) {
@@ -4682,7 +4679,7 @@ static mjs_err_t mjs_set_internal(struct mjs *mjs, mjs_val_t obj,
 
   p->value = val;
 
-clean : {
+{
   if (need_free) {
     free(name);
     name = ((void *)0);
@@ -4758,7 +4755,7 @@ static void mjs_op_create_object(struct mjs *mjs) {
   ret = mjs_mk_object(mjs);
   mjs_set(mjs, ret, "__p", ~0, proto_v);
 
-clean : {
+{
   mjs_return(mjs, ret);
   return;
 }
@@ -5581,7 +5578,7 @@ static mjs_err_t parse_mul_div_rem(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -5635,7 +5632,7 @@ static mjs_err_t parse_plus_minus(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -5689,7 +5686,7 @@ static mjs_err_t parse_shifts(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -5743,7 +5740,7 @@ static mjs_err_t parse_comparison(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -5797,7 +5794,7 @@ static mjs_err_t parse_equality(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -5851,7 +5848,7 @@ static mjs_err_t parse_bitwise_and(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -5905,7 +5902,7 @@ static mjs_err_t parse_bitwise_xor(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -5959,7 +5956,7 @@ static mjs_err_t parse_bitwise_or(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -6013,7 +6010,7 @@ static mjs_err_t parse_logical_and(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -6067,7 +6064,7 @@ static mjs_err_t parse_logical_or(struct pstate *p, int prev_op) {
         mjs_bcode_insert_offset(p, p->mjs, off_if, p->cur_idx - off_if - 1);
       }
     }
-  binop_clean : {
+  {
     p->depth--;
     return res;
   }
@@ -7353,7 +7350,7 @@ const char *mjs_get_string(struct mjs *mjs, mjs_val_t *v, size_t *sizep) {
      }));
   }
 
-clean : {
+{
   if (sizep != ((void *)0)) {
     *sizep = size;
   }
@@ -7488,7 +7485,7 @@ static void mjs_string_slice(struct mjs *mjs) {
 
   ret = mjs_mk_string(mjs, s + beginSlice, endSlice - beginSlice, 1);
 
-clean : {
+{
   mjs_return(mjs, ret);
   return;
 }
@@ -7545,7 +7542,7 @@ static void mjs_string_index_of(struct mjs *mjs) {
     }
   }
 
-clean : {
+{
   mjs_return(mjs, ret);
   return;
 }
@@ -7579,7 +7576,7 @@ static void mjs_string_char_code_at(struct mjs *mjs) {
     ret = mjs_mk_number(mjs, ((unsigned char *)s)[idx]);
   }
 
-clean : {
+{
   mjs_return(mjs, ret);
   return;
 }
@@ -7663,7 +7660,7 @@ static void mjs_mkstr(struct mjs *mjs) {
 
   ret = mjs_mk_string(mjs, ptr + offset, len, copy);
 
-clean : {
+{
   mjs_return(mjs, ret);
   return;
 }

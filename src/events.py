@@ -2,6 +2,8 @@
 import sys
 import glob
 import json
+import pudb
+bp = pudb.set_trace
 
 import mimid_context
 import taints
@@ -33,23 +35,27 @@ def read_json(json_file):
 cmimid_stack =  []
 pseudo_method_stack = []
 non_empty_methods = set()
+popped_stack = []
 
 def to_key(method, name, num): return '%s:%s_%s' % (method, name, num)
 
 def track_stack(e, gen_events):
+    if e.info[0] == 7340: bp()
     if e.fun in {'cmimid__method_enter'}:
-        _mid, *args = e.info
+        line, _mid, *args = e.info
         mname = METHOD_PREFIX[-1]
         cmimid_stack.append(('method', mname))
         gen_events.append(('method_enter', mname))
 
     elif e.fun in {'cmimid__method_exit'}:
-        method, mname = cmimid_stack.pop()
+        x = cmimid_stack.pop()
+        popped_stack.append(x)
+        method, mname = x
         assert method == 'method'
         gen_events.append(('method_exit', mname))
 
     elif e.fun in {'cmimid__stack_enter'}:
-        stack_kind, stack_id, *_args = e.info
+        line, stack_kind, stack_id, *_args = e.info
         str_skind = kind_map[stack_kind]
 
         key = to_key(METHOD_PREFIX[-1], str_skind, stack_id)
@@ -59,20 +65,24 @@ def track_stack(e, gen_events):
         gen_events.append(('stack_enter', str_skind, stack_id))
 
     elif e.fun in {'cmimid__stack_exit'}:
-        stack, stack_id, str_skind = cmimid_stack.pop()
+        x = cmimid_stack.pop()
+        popped_stack.append(x)
+        stack, stack_id, str_skind = x
         assert stack == 'stack'
         gen_events.append(('stack_exit', stack_id))
         pseudo_method_stack.pop()
 
     elif e.fun in {'cmimid__scope_enter'}:
-        scope_alt, is_default_or_else, *args = e.info
+        line, scope_alt, is_default_or_else, *args = e.info
         if is_default_or_else == '1':
             non_empty_methods.add(pseudo_method_stack[-1])
         cmimid_stack.append(('scope', scope_alt, args))
         gen_events.append(('scope_enter', scope_alt))
 
     elif e.fun in {'cmimid__scope_exit'}:
-        scope, scope_alt, args = cmimid_stack.pop()
+        x = cmimid_stack.pop()
+        popped_stack.append(x)
+        scope, scope_alt, args = x
         assert scope == 'scope'
         gen_events.append(('scope_exit', scope_alt))
 
@@ -82,6 +92,7 @@ def track_stack(e, gen_events):
         assert cmimid_stack
         while True:
             t = cmimid_stack.pop()
+            popped_stack.append(t)
             if t[0] == 'method':
                 method, mid = t
                 gen_events.append(('method_exit', mid))
@@ -100,6 +111,7 @@ def track_stack(e, gen_events):
         assert cmimid_stack
         while True:
             t = cmimid_stack.pop()
+            popped_stack.append(t)
             if t[0] == 'method':
                 # this should never happen.
                 assert False
@@ -122,6 +134,7 @@ def track_stack(e, gen_events):
         assert cmimid_stack
         while True:
             t = cmimid_stack.pop()
+            popped_stack.append(t)
             if t[0] == 'method':
                 # this should never happen.
                 assert False

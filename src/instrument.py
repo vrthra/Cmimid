@@ -15,11 +15,12 @@ import os
 # 5. Braces initialization of struct members does not work as expected in many places
 # 6. Defaults in switch should not contain breaks.
 # 7. Really no macros, even for things like isdigit or strncmp
+# 8. No labels. If labels are necessary, remember to ensure processing on statement.
 
 LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
 
-CURRENT_STACK = [(-1, '-1')]
+CURRENT_STACK = [(0, '0')]
 
 counter = 0;
 def get_id():
@@ -43,9 +44,9 @@ def compound_body_with_cb(node, alt):
 
     return '''\
 {
-cmimid__scope_enter(%s, %s);
+cmimid__scope_enter(__LINE__, %s, %s);
 %s
-cmimid__scope_exit(CMIMID_EXIT);
+cmimid__scope_exit(__LINE__, CMIMID_EXIT);
 }''' % (salt, '0' if alt == '0' else '1 /*else*/', rep)
 
 
@@ -122,19 +123,19 @@ class NullStmt(AstNode):
 class ReturnStmt(AstNode):
     def __repr__(self):
         return '''\
-cmimid__return(CMIMID_RETURN);
+cmimid__return(__LINE__, CMIMID_RETURN);
 %s ;''' % super().__repr__()
 
 class BreakStmt(AstNode):
     def __repr__(self):
         return '''\
-cmimid__break(CMIMID_BREAK);
+cmimid__break(__LINE__, CMIMID_BREAK);
 %s ;''' % super().__repr__()
 
 class ContinueStmt(AstNode):
     def __repr__(self):
         return '''\
-cmimid__continue(CMIMID_CONTINUE);
+cmimid__continue(__LINE__, CMIMID_CONTINUE);
 %s ;''' % super().__repr__()
 
 class GotoStmt(AstNode):
@@ -142,7 +143,7 @@ class GotoStmt(AstNode):
         # it is not clear how exactly we should handle this.
         assert False
         return '''\
-cmimid__goto(CMIMID_GOTO);
+cmimid__goto(__LINE__, CMIMID_GOTO);
 %s ;''' % super().__repr__()
 
 
@@ -153,8 +154,9 @@ def extent(node):
 
 class LabelStmt(AstNode):
     def __repr__(self):
+        assert False
         return '''\
-cmimid__label(CMIMID_LABEL, %s, %s);
+cmimid__label(__LINE__, CMIMID_LABEL, %s, %s);
 %s ;''' % (CURRENT_STACK[-1][0], CURRENT_STACK[-1][1], super().__repr__())
 
 
@@ -194,9 +196,9 @@ class ForStmt(AstNode):
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
         return '''\
-cmimid__stack_enter(CMIMID_FOR, %s);
+cmimid__stack_enter(__LINE__, CMIMID_FOR, %s);
 %s %s
-cmimid__stack_exit(CMIMID_EXIT);''' % (c, for_part, body)
+cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, for_part, body)
 
 
 class DoStmt(AstNode):
@@ -215,9 +217,9 @@ class DoStmt(AstNode):
         assert len(CURRENT_STACK) > 0
 
         return '''\
-cmimid__stack_enter(CMIMID_WHILE, %s);
+cmimid__stack_enter(__LINE__, CMIMID_WHILE, %s);
 do %s while (%s);
-cmimid__stack_exit(CMIMID_EXIT);''' % (c, body, cond)
+cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, body, cond)
 
 
 class WhileStmt(AstNode):
@@ -236,9 +238,9 @@ class WhileStmt(AstNode):
         assert len(CURRENT_STACK) > 0
 
         return '''\
-cmimid__stack_enter(CMIMID_WHILE, %s);
+cmimid__stack_enter(__LINE__, CMIMID_WHILE, %s);
 while (%s) %s
-cmimid__stack_exit(CMIMID_EXIT);''' % (c, cond, body)
+cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, cond, body)
 
 
 class IfStmt(AstNode):
@@ -278,9 +280,9 @@ class IfStmt(AstNode):
 
         if self.with_cb:
             return '''\
-cmimid__stack_enter(CMIMID_IF, %s);
+cmimid__stack_enter(__LINE__, CMIMID_IF, %s);
 %s
-cmimid__stack_exit(CMIMID_EXIT);''' % (c, block)
+cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, block)
 
         return block
 
@@ -298,9 +300,9 @@ class SwitchStmt(AstNode):
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
         return '''\
-cmimid__stack_enter(CMIMID_SWITCH, %s);
+cmimid__stack_enter(__LINE__, CMIMID_SWITCH, %s);
 switch (%s) %s
-cmimid__stack_exit(CMIMID_EXIT)''' % (c, switch_expr, body)
+cmimid__stack_exit(__LINE__, CMIMID_EXIT)''' % (c, switch_expr, body)
 
 
 class CompoundStmt(AstNode):
@@ -335,7 +337,7 @@ class CompoundStmt(AstNode):
                 body = to_string(gchildren[1])
                 rep = '''\
 %s
-cmimid__scope_enter(%d, 0);
+cmimid__scope_enter(__LINE__, %d, 0);
 %s
 ''' % ("\n".join(["case %s:" % c for c in fall_through]), ilabel, body)
 
@@ -347,7 +349,7 @@ cmimid__scope_enter(%d, 0);
                 ilabel += 1 # We dont expect any more after default
                 rep = '''\
 default:
-cmimid__scope_enter(%d, 1/*default*/);
+cmimid__scope_enter(__LINE__, %d, 1/*default*/);
 %s;
 ''' % (ilabel, body.strip())
             if not rep:
@@ -360,7 +362,7 @@ cmimid__scope_enter(%d, 1/*default*/);
 
             stmts.append(rep)
         if seen_default:
-            stmts.append("cmimid__scope_exit(CMIMID_EXIT/*case default*/);")
+            stmts.append("cmimid__scope_exit(__LINE__, CMIMID_EXIT/*case default*/);")
 
         body = "\n".join(stmts)
         return '''\
@@ -386,9 +388,9 @@ class FunctionDecl(AstNode):
             return '''\
 %s
 %s(%s) {
-cmimid__method_enter(%s);
+cmimid__method_enter(__LINE__, %s);
 %s
-cmimid__method_exit();
+cmimid__method_exit(__LINE__);
 }''' % (return_type, function_name, params, c, body)
         else:
             # function declaration.
@@ -489,31 +491,32 @@ def parse(arg):
     CFLAGS = os.environ.get('CFLAGS', '') #'-xc++ std=c++14')
     translation_unit = idx.parse(arg, args =  CFLAGS.split(' '))
     print('''\
-#define CMIMID_EXIT 0
-#define CMIMID_BREAK 1
-#define CMIMID_CONTINUE 2
-#define CMIMID_FOR 3
-#define CMIMID_WHILE 4
-#define CMIMID_IF 5
-#define CMIMID_SWITCH 6
-#define CMIMID_RETURN 7
-#define CMIMID_GOTO 8
-#define CMIMID_LABEL 9
-#define CMIMID_DO 10
+#define CMIMID_METHOD 0
+#define CMIMID_EXIT 1
+#define CMIMID_BREAK 2
+#define CMIMID_CONTINUE 3
+#define CMIMID_FOR 4
+#define CMIMID_WHILE 5
+#define CMIMID_IF 6
+#define CMIMID_SWITCH 7
+#define CMIMID_RETURN 8
+#define CMIMID_DO 9
+#define CMIMID_GOTO 10
+#define CMIMID_LABEL 11
 
-void cmimid__line(int i) {}
+void cmimid__line(int i, int l) {}
 
-void cmimid__method_enter(int i) {}
-void cmimid__method_exit() {}
-void cmimid__stack_enter(int i, int j) {}
-void cmimid__stack_exit(int i) {}
-void cmimid__scope_enter(int i, int j) {}
-void cmimid__scope_exit(int i) {}
-void cmimid__break(int i) {}
-void cmimid__continue(int i) {}
-void cmimid__goto(int i) {}
-void cmimid__label(int i, int j, int k) {}
-void cmimid__return(int i) {}
+void cmimid__method_enter(int l, int i) {}
+void cmimid__method_exit(int l) {}
+void cmimid__stack_enter(int l, int i, int j) {}
+void cmimid__stack_exit(int l, int i) {}
+void cmimid__scope_enter(int l, int i, int j) {}
+void cmimid__scope_exit(int l, int i) {}
+void cmimid__break(int l, int i) {}
+void cmimid__continue(int l, int i) {}
+void cmimid__goto(int l, int i) {}
+void cmimid__label(int l, int i, int j, int k) {}
+void cmimid__return(int l, int i) {}
 
 ''')
     for i in translation_unit.cursor.get_children():
