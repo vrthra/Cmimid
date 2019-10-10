@@ -25,7 +25,8 @@ class Fuzzer:
         fuzzed = [self.fuzz_key(token) for token in rule]
         return ''.join(fuzzed)
 
-
+import subprocess
+errors = []
 def main(args):
     with open(args[0]) as f:
         s = json.load(f)
@@ -33,8 +34,18 @@ def main(args):
     for i in range(100):
         try:
             v = f.fuzz_key()
-            print(v)
+            print(repr(v))
+            p = subprocess.Popen(args[1], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            data, err = p.communicate(input=v.encode())
+            #print(p.returncode)
+            if p.returncode != 0:
+                errors.append(v)
         except RecursionError:
             pass
 
 main(sys.argv[1:])
+print()
+for e in errors:
+    print(repr(e))
+
+print(len(e))
