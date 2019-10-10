@@ -505,8 +505,10 @@ def generalize(tree, module):
         else:
             if last_while != while_name:
                 # a new while! Generalize the last
+                generalize_loop(idxs, register[last_while], module)
                 last_while = while_name
-                generalize_loop(idxs, register[last_while])
+                if last_while  not in register:
+                    register[last_while] = [{}, 0]
         idxs[i] = child
     if last_while is not None:
         generalize_loop(idxs, register[last_while], module)
