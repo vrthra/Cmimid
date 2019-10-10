@@ -230,6 +230,13 @@ int json_parse(const char *input, json_value *result) {
   return json_parse_value(&input, result);
 }
 
+void strip_input(char* my_string) {
+    int read = strlen(my_string);
+    if (my_string[read-1] ==  '\n'){
+        my_string[read-1] = '\0';
+    }
+}
+
 int main(int argc, char *argv[]) {
   char my_string[10240];
   json_value result;
@@ -240,16 +247,10 @@ int main(int argc, char *argv[]) {
     if (!v) {
       exit(1);
     }
-    int read = strlen(my_string);
-    if (my_string[read - 1] == '\n') {
-      my_string[read - 1] = '\0';
-    }
+    strip_input(my_string);
   } else {
     strcpy(my_string, argv[1]);
-    int read = strlen(my_string);
-    if (my_string[read - 1] == '\n') {
-      my_string[read - 1] = '\0';
-    }
+    strip_input(my_string);
   }
   printf("val: <%s>\n", my_string);
   ret = json_parse(my_string, &result);
