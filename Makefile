@@ -74,3 +74,6 @@ clean:
 
 dump:
 	clang -Xclang -ast-dump -fsyntax-only $(src) -I examples
+
+build/%.fuzz: build/%.grammar
+	$(PYTHON) ./bin/fuzz.py $^
