@@ -48,4 +48,4 @@ print()
 for e in errors:
     print(repr(e))
 
-print(len(e))
+print(len(errors))
