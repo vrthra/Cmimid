@@ -18,7 +18,10 @@ class Fuzzer:
         #print(":", key)
         if key not in self.grammar: return key
         choice = random.choice(self.grammar[key])
-        return self.fuzz_rule(list(re.split(RE_NONTERMINAL, choice)))
+        if isinstance(choice, list):
+            return self.fuzz_rule(choice)
+        else:
+            return self.fuzz_rule(list(re.split(RE_NONTERMINAL, choice)))
 
     def fuzz_rule(self, rule):
         #print("\t",rule)
