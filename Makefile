@@ -21,12 +21,18 @@ instrument: | build
 build/%.out: examples/%.c
 	$(CC) $(CFLAGS) -g -o $@ $< -I ./examples
 
+build/%.orig.c: examples/%.c
+	CFLAGS=$(CFLAGS) LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/simplify.py $< > $@_.tmp
+	cat $@_.tmp | $(CLANG_FORMAT) > $@_
+	mv $@_ $@
+
 build/json.out: examples/json.c | build
 	$(CC) $(CFLAGS) -g -o $@ $^ -I ./examples
 
 build: ; mkdir -p $@
 
-build/%.c: examples/%.c build/%.out src/instrument.py | build
+build/%.c: build/%.orig.c build/%.out src/instrument.py | build
+	cp examples/*.h build/
 	CFLAGS=$(CFLAGS) LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $< > $@_.tmp
 	cat $@_.tmp | $(CLANG_FORMAT) > $@_
 	mv $@_ $@
@@ -35,6 +41,7 @@ build/%.x: build/%.c
 	$(CC) $(CFLAGS) -g -o $@ $^ -I ./examples
 
 build/%.d: examples/%.c src/instrument.py | build
+	cp examples/*.h build/
 	CFLAGS=$(CFLAGS) LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $<
 
 build/%.input: examples/%.input

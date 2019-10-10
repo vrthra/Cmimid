@@ -23,14 +23,8 @@ Config.set_library_file(LIBCLANG_PATH)
 CURRENT_STACK = [(0, '0')]
 
 counter = 0;
-def get_id():
-    global counter
-    counter += 1
-    return str(counter)
-
-def compound_body_with_cb(node, alt):
+def compound_body_with_cb(node):
     #assert node.extent.start.line != node.extent.end.line
-    salt = str(alt) #get_id()
     rep = ""
     if node.kind == CursorKind.COMPOUND_STMT:
         src = to_string(node)
@@ -44,10 +38,8 @@ def compound_body_with_cb(node, alt):
 
     return '''\
 {
-cmimid__scope_enter(__LINE__, %s, %s);
 %s
-cmimid__scope_exit(__LINE__, CMIMID_EXIT);
-}''' % (salt, '0' if alt == '0' else '1 /*else*/', rep)
+}''' % (rep)
 
 
 class AstNode:
@@ -120,44 +112,18 @@ class NullStmt(AstNode):
     def __repr__(self):
         return ';'
 
-class ReturnStmt(AstNode):
-    def __repr__(self):
-        return '''\
-cmimid__return(__LINE__, CMIMID_RETURN);
-%s ;''' % super().__repr__()
-
-class BreakStmt(AstNode):
-    def __repr__(self):
-        return '''\
-cmimid__break(__LINE__, CMIMID_BREAK);
-%s ;''' % super().__repr__()
-
-class ContinueStmt(AstNode):
-    def __repr__(self):
-        return '''\
-cmimid__continue(__LINE__, CMIMID_CONTINUE);
-%s ;''' % super().__repr__()
+class ReturnStmt(StmtNode): pass
+class BreakStmt(StmtNode): pass
+class ContinueStmt(StmtNode): pass
 
 class GotoStmt(AstNode):
-    def __repr__(self):
-        # it is not clear how exactly we should handle this.
-        assert False
-        return '''\
-cmimid__goto(__LINE__, CMIMID_GOTO);
-%s ;''' % super().__repr__()
-
+    def __repr__(self): assert False
+class LabelStmt(AstNode):
+    def __repr__(self): assert False
 
 
 def extent(node):
     return range(node.extent.start.line,node.extent.end.line+1)
-
-
-class LabelStmt(AstNode):
-    def __repr__(self):
-        assert False
-        return '''\
-cmimid__label(__LINE__, CMIMID_LABEL, %s, %s);
-%s ;''' % (CURRENT_STACK[-1][0], CURRENT_STACK[-1][1], super().__repr__())
 
 
 class CaseStmt(AstNode):
@@ -165,7 +131,7 @@ class CaseStmt(AstNode):
        children = list(self.node.get_children())
        if len(children) == 2:
            label = to_string(children[0])
-           body = compound_body_with_cb(children[1], label)
+           body = compound_body_with_cb(children[1])
            return '''case %s: %s;''' % (label, body)
        src = []
        for child in children:
@@ -178,27 +144,53 @@ class ForStmt(AstNode):
     def __repr__(self):
         outer_range = extent(self.node)
         tokens = [t for t in self.node.get_tokens()]
-        children = list(self.node.get_children()) # this is OK because of assert
+        lst = list(self.node.get_children()) # this is OK because of assert
+        decl, cond, incr, body = None, None, None, None
+        assert len(lst) != 0
+        body = lst[-1]
+        lst.pop()
+        assert len(lst) <= 3
+        if lst:
+            semicolons = [t for t in self.node.get_tokens() if t.spelling == ';']
+            pos1, pos2, *_ = [t for t in semicolons]
+            if lst[-1].extent.begin_int_data > pos2.extent.begin_int_data:
+                incr = lst.pop()
+            else:
+                incr = None
+            assert len(lst) <= 2
+
+            if lst:
+                if lst[-1].extent.begin_int_data > pos1.extent.begin_int_data:
+                    cond = lst.pop()
+                else:
+                    cond = None
+                assert len(lst) <= 1
+
+                if lst:
+                    decl = lst[-1]
+
         # now, ensure that all children are within the range.
         self.check_children_not_macro()
 
-        body_child = children[-1]
-        #assert body_child.kind is CursorKind.COMPOUND_STMT
-
-        for_part_tokens = [t for t in tokens if
-                t.extent.end_int_data <= body_child.extent.begin_int_data]
-        for_part = ' '.join([t.spelling for t in for_part_tokens])
-
-        c = get_id()
         assert len(CURRENT_STACK) > 0
-        CURRENT_STACK.append(('CMIMID_FOR', c))
-        body = compound_body_with_cb(children[-1], '0')
+        CURRENT_STACK.append(('CMIMID_FOR'))
+        sdecl = to_string(decl) if decl is not None else ''
+        scond = to_string(cond) if cond is not None else ''
+        sincr = to_string(incr) if incr is not None else ''
+        sbody = compound_body_with_cb(body) if body is not None else ''
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
         return '''\
-cmimid__stack_enter(__LINE__, CMIMID_FOR, %s);
-%s %s
-cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, for_part, body)
+{
+%s;
+while(1) {
+__cmimid__res = (%s);
+if (!__cmimid__res) break;
+%s
+%s;
+}
+}
+''' % (sdecl,scond, sbody, sincr)
 
 
 class DoStmt(AstNode):
@@ -209,17 +201,19 @@ class DoStmt(AstNode):
         assert(len(children) == 2)
 
         cond = to_string(children[1])
-        c = get_id()
         assert len(CURRENT_STACK) > 0
-        CURRENT_STACK.append(('CMIMID_WHILE', c))
-        body = compound_body_with_cb(children[0], '0')
+        CURRENT_STACK.append(('CMIMID_WHILE'))
+        body = compound_body_with_cb(children[0])
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
 
         return '''\
-cmimid__stack_enter(__LINE__, CMIMID_WHILE, %s);
-do %s while (%s);
-cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, body, cond)
+while (1) {
+    %s
+__cmimid__res = (%s);
+if (!__cmimid__res) break;
+}
+''' % (body, cond)
 
 
 class WhileStmt(AstNode):
@@ -230,27 +224,27 @@ class WhileStmt(AstNode):
         assert(len(children) == 2)
 
         cond = to_string(children[0])
-        c = get_id()
         assert len(CURRENT_STACK) > 0
-        CURRENT_STACK.append(('CMIMID_WHILE', c))
-        body = compound_body_with_cb(children[1], '0')
+        CURRENT_STACK.append(('CMIMID_WHILE'))
+        body = compound_body_with_cb(children[1])
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
 
         return '''\
-cmimid__stack_enter(__LINE__, CMIMID_WHILE, %s);
-while (%s) %s
-cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, cond, body)
+while (1) {
+__cmimid__res = (%s);
+if (!__cmimid__res) break;
+%s
+}
+''' % (cond, body)
 
 
 class IfStmt(AstNode):
-    def __init__(self, node, with_cb=True, my_id=None):
+    def __init__(self, node, with_cb=True):
         super().__init__(node)
         self.with_cb = with_cb
-        self.my_id = my_id if my_id is not None else get_id()
 
     def __repr__(self):
-        c = self.my_id
         cond =  ""
         if_body = ""
         else_body = ""
@@ -260,49 +254,51 @@ class IfStmt(AstNode):
                 cond = "%s" % to_string(child)
             elif i == 1: # if body
                 assert len(CURRENT_STACK) > 0
-                CURRENT_STACK.append(('CMIMID_IF', c))
-                if_body = compound_body_with_cb(child, '0')
+                CURRENT_STACK.append(('CMIMID_IF'))
+                if_body = compound_body_with_cb(child)
                 CURRENT_STACK.pop()
                 assert len(CURRENT_STACK) > 0
             elif i == 2: # else body (exists if there is an else)
                 if child.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
-                    else_body = "%s" % repr(IfStmt(child, with_cb=False, my_id=c))
+                    else_body = "%s" % repr(IfStmt(child, with_cb=False))
                 else:
-                    CURRENT_STACK.append(('CMIMID_IF', c))
-                    else_body = compound_body_with_cb(child, '1')
+                    CURRENT_STACK.append(('CMIMID_IF'))
+                    else_body = compound_body_with_cb(child)
                     CURRENT_STACK.pop()
                     assert len(CURRENT_STACK) > 0
 
-        block = "if ( %s ) %s" % (cond, if_body)
+        block = '''
+__cmimid__res = (%s);
+if ( __cmimid__res )
+%s
+''' % (cond, if_body)
         if else_body != "":
             block += " else %s" % else_body
 
         if self.with_cb:
             return '''\
-cmimid__stack_enter(__LINE__, CMIMID_IF, %s);
 %s
-cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, block)
+''' % (block)
 
         return block
 
 
 class SwitchStmt(AstNode):
     def __repr__(self):
-        c = get_id()
         children = list(self.node.get_children())
         assert(len(children) == 2)
         assert(children[1].kind == CursorKind.COMPOUND_STMT)
         assert len(CURRENT_STACK) > 0
-        CURRENT_STACK.append(('CMIMID_SWITCH', c))
+        CURRENT_STACK.append(('CMIMID_SWITCH'))
         switch_expr = to_string(children[0])
         body = to_string(children[1])
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
         return '''\
-cmimid__stack_enter(__LINE__, CMIMID_SWITCH, %s);
-switch (%s) %s
-cmimid__stack_exit(__LINE__, CMIMID_EXIT)''' % (c, switch_expr, body)
+__cmimid__res = (%s);
+switch (__cmimid__res) %s
+''' % (switch_expr, body)
 
 
 class CompoundStmt(AstNode):
@@ -337,9 +333,8 @@ class CompoundStmt(AstNode):
                 body = to_string(gchildren[1])
                 rep = '''\
 %s
-cmimid__scope_enter(__LINE__, %d, 0);
 %s
-''' % ("\n".join(["case %s:" % c for c in fall_through]), ilabel, body)
+''' % ("\n".join(["case %s:" % c for c in fall_through]), body)
 
             elif child.kind == CursorKind.DEFAULT_STMT:
                 seen_default = True
@@ -349,9 +344,8 @@ cmimid__scope_enter(__LINE__, %d, 0);
                 ilabel += 1 # We dont expect any more after default
                 rep = '''\
 default:
-cmimid__scope_enter(__LINE__, %d, 1/*default*/);
 %s;
-''' % (ilabel, body.strip())
+''' % (body.strip())
             if not rep:
                print(child.kind, child.extent, file=sys.stderr)
                continue
@@ -361,56 +355,31 @@ cmimid__scope_enter(__LINE__, %d, 1/*default*/);
                 rep += ";"
 
             stmts.append(rep)
-        if seen_default:
-            stmts.append("cmimid__scope_exit(__LINE__, CMIMID_EXIT/*case default*/);")
-
         body = "\n".join(stmts)
         return '''\
 {
+int __cmimid__res = 0;
 %s
 }''' % body
 
 
 class FunctionDecl(AstNode):
-    def type_info(self, v, i):
-        tres = CMIMID_TYPE_UNKNOWN
-        res = str(CMIMID_VALUE_UNKNOWN) # we need an int to be passed.
-        if v.type.spelling == 'char':
-            tres = CMIMID_TYPE_CHAR
-            res = v.spelling
-        elif v.type.spelling == 'int':
-            tres = CMIMID_TYPE_INT
-            res = v.spelling
-        else:
-            tres = CMIMID_TYPE_UNKNOWN
-            res = '0'
-        return "cmimid__method_arg(__LINE__,%d, %s, %s)" % (i, tres, res)
-
     # method context wrapper
     def __repr__(self):
         children = list(self.node.get_children())
         return_type = self.node.result_type.spelling
         function_name = self.node.spelling
-        c = get_id()
         cparams = [p for p in children if p.kind == CursorKind.PARM_DECL]
         params = ", ".join([to_string(c) for c in cparams])
-
-        type_params = [self.type_info(v, i) for i,v in enumerate(cparams)]
 
         if '...' in self.node.type.spelling:
             params = params + ", ..."
         if self.node.is_definition():
-            param_info = ';'.join(type_params) + ';'
         #if children and children[-1].kind == CursorKind.COMPOUND_STMT:
             body = to_string(children[-1])
             return '''\
 %s
-%s(%s) {
-%s
-cmimid__method_enter(__LINE__, %s);
-%s
-cmimid__method_exit(__LINE__);
-}''' % (return_type, function_name, params, param_info, c, body)
+%s(%s) %s''' % (return_type, function_name, params, body)
         else:
             # function declaration.
             return '''\
@@ -504,11 +473,6 @@ def display_till(last):
     for i in range(displayed_till, last):
         print(SRC[i], end='')
 
-CMIMID_TYPE_UNKNOWN=1000
-CMIMID_VALUE_UNKNOWN=0
-CMIMID_TYPE_INT=1001
-CMIMID_TYPE_CHAR=1002
-
 def parse(arg):
     global displayed_till
     idx = Index.create()
@@ -516,40 +480,6 @@ def parse(arg):
     translation_unit = idx.parse(arg, args =  CFLAGS.split(' '))
     # IMPORTANT: If you change values here, remember to change in src/events.py too
     print('''\
-#define CMIMID_METHOD 0
-#define CMIMID_EXIT 1
-#define CMIMID_BREAK 2
-#define CMIMID_CONTINUE 3
-#define CMIMID_FOR 4
-#define CMIMID_WHILE 5
-#define CMIMID_IF 6
-#define CMIMID_SWITCH 7
-#define CMIMID_RETURN 8
-#define CMIMID_DO 9
-#define CMIMID_GOTO 10
-#define CMIMID_LABEL 11
-
-#define CMIMID_VALUE_UNKNOWN 0
-#define CMIMID_TYPE_UNKNOWN 1000
-#define CMIMID_TYPE_INT 1001
-#define CMIMID_TYPE_CHAR 1002
-
-void cmimid__line(int i, int l) {}
-
-void cmimid__method_arg(int l, int i, int type, int val) {}
-
-void cmimid__method_enter(int l, int i) {}
-void cmimid__method_exit(int l) {}
-void cmimid__stack_enter(int l, int i, int j) {}
-void cmimid__stack_exit(int l, int i) {}
-void cmimid__scope_enter(int l, int i, int j) {}
-void cmimid__scope_exit(int l, int i) {}
-void cmimid__break(int l, int i) {}
-void cmimid__continue(int l, int i) {}
-void cmimid__goto(int l, int i) {}
-void cmimid__label(int l, int i, int j, int k) {}
-void cmimid__return(int l, int i) {}
-
 ''')
     for i in translation_unit.cursor.get_children():
         if i.location.file.name == sys.argv[1]:
