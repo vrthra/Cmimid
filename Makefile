@@ -77,3 +77,6 @@ dump:
 
 build/%.fuzz: build/%.grammar build/%.out
 	$(PYTHON) ./src/fuzz.py $^
+
+build/%.tree: build/%.grammar
+	$(PYTHON) ./src/ftree.py build/t1.json $(trees)

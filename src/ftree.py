@@ -117,4 +117,8 @@ if __name__ == '__main__':
     jsonfn = sys.argv[1]
     with open(jsonfn) as f:
         jsont = json.load(f)
-    print_tree(jsont[int(sys.argv[2])]['tree'], format_node=lambda x: x[0], get_children=lambda x: x[1])
+    trees = range(len(jsont))
+    if len(sys.argv) > 2:
+        trees = [int(v) for v in sys.argv[2:]]
+    for tree in trees:
+        print_tree(jsont[tree]['tree'], format_node=lambda x: x[0], get_children=lambda x: x[1])
