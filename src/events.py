@@ -21,6 +21,12 @@ CMIMID_DO=9
 CMIMID_GOTO=10
 CMIMID_LABEL=11
 
+CMIMID_VALUE_UNKNOWN=0
+CMIMID_TYPE_UNKNOWN=1000
+CMIMID_TYPE_INT=1001
+CMIMID_TYPE_CHAR=1002
+
+
 
 kind_map={CMIMID_FOR:'for', CMIMID_WHILE:'while', CMIMID_IF:'if', CMIMID_SWITCH:'switch'}
 
@@ -45,13 +51,26 @@ popped_stack = []
 
 def to_key(method, name, num): return '%s:%s_%s' % (method, name, num)
 
+method_specialization = []
+
 def track_stack(e, gen_events):
-    if e.info[0] == 7340: bp()
-    if e.fun in {'cmimid__method_enter'}:
+    global method_specialization
+    if e.fun in {'cmimid__method_arg'}:
+        line, ith, typ, val = e.info
+        if typ == CMIMID_TYPE_CHAR:
+            method_specialization.append(chr(val))
+        elif typ == CMIMID_TYPE_INT:
+            method_specialization.append(val)
+        else:
+            # ignore unknowns
+            pass
+
+    elif e.fun in {'cmimid__method_enter'}:
         line, _mid, *args = e.info
         mname = METHOD_PREFIX[-1]
         cmimid_stack.append(('method', mname))
-        gen_events.append(('method_enter', mname))
+        gen_events.append(('method_enter', mname, method_specialization))
+        method_specialization = []
 
     elif e.fun in {'cmimid__method_exit'}:
         x = cmimid_stack.pop()
@@ -187,8 +206,8 @@ def fire_events(gen_events, inputstring):
     method = []
     for e in gen_events:
         if 'method_enter' == e[0]:
-            _, mname = e
-            method.append(mimid_context.method__(name=mname, args=[]))
+            _, mname, args = e
+            method.append(mimid_context.method__(name=mname, args=args))
             method[-1].__enter__()
         elif 'method_exit' == e[0]:
             method[-1].__exit__()

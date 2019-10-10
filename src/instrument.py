@@ -372,6 +372,20 @@ cmimid__scope_enter(__LINE__, %d, 1/*default*/);
 
 
 class FunctionDecl(AstNode):
+    def type_info(self, v, i):
+        tres = CMIMID_TYPE_UNKNOWN
+        res = str(CMIMID_VALUE_UNKNOWN) # we need an int to be passed.
+        if v.type.spelling == 'char':
+            tres = CMIMID_TYPE_CHAR
+            res = v.spelling
+        elif v.type.spelling == 'int':
+            tres = CMIMID_TYPE_INT
+            res = v.spelling
+        else:
+            tres = CMIMID_TYPE_UNKNOWN
+            res = '0'
+        return "cmimid__method_arg(__LINE__,%d, %s, %s)" % (i, tres, res)
+
     # method context wrapper
     def __repr__(self):
         children = list(self.node.get_children())
@@ -380,18 +394,23 @@ class FunctionDecl(AstNode):
         c = get_id()
         cparams = [p for p in children if p.kind == CursorKind.PARM_DECL]
         params = ", ".join([to_string(c) for c in cparams])
+
+        type_params = [self.type_info(v, i) for i,v in enumerate(cparams)]
+
         if '...' in self.node.type.spelling:
             params = params + ", ..."
         if self.node.is_definition():
+            param_info = ';'.join(type_params) + ';'
         #if children and children[-1].kind == CursorKind.COMPOUND_STMT:
             body = to_string(children[-1])
             return '''\
 %s
 %s(%s) {
+%s
 cmimid__method_enter(__LINE__, %s);
 %s
 cmimid__method_exit(__LINE__);
-}''' % (return_type, function_name, params, c, body)
+}''' % (return_type, function_name, params, param_info, c, body)
         else:
             # function declaration.
             return '''\
@@ -485,11 +504,17 @@ def display_till(last):
     for i in range(displayed_till, last):
         print(SRC[i], end='')
 
+CMIMID_TYPE_UNKNOWN=1000
+CMIMID_VALUE_UNKNOWN=0
+CMIMID_TYPE_INT=1001
+CMIMID_TYPE_CHAR=1002
+
 def parse(arg):
     global displayed_till
     idx = Index.create()
     CFLAGS = os.environ.get('CFLAGS', '') #'-xc++ std=c++14')
     translation_unit = idx.parse(arg, args =  CFLAGS.split(' '))
+    # IMPORTANT: If you change values here, remember to change in src/events.py too
     print('''\
 #define CMIMID_METHOD 0
 #define CMIMID_EXIT 1
@@ -504,7 +529,14 @@ def parse(arg):
 #define CMIMID_GOTO 10
 #define CMIMID_LABEL 11
 
+#define CMIMID_VALUE_UNKNOWN 0
+#define CMIMID_TYPE_UNKNOWN 1000
+#define CMIMID_TYPE_INT 1001
+#define CMIMID_TYPE_CHAR 1002
+
 void cmimid__line(int i, int l) {}
+
+void cmimid__method_arg(int l, int i, int type, int val) {}
 
 void cmimid__method_enter(int l, int i) {}
 void cmimid__method_exit(int l) {}
