@@ -246,7 +246,7 @@ def is_compatible(a1, a2, module):
     if tree_to_string(a1[0]) == tree_to_string(a2[0]):
         return True
     my_string = replace_nodes(a1, a2)
-    return check(my_string, module)
+    return check(my_string, module, tree_to_string(a1[0]), tree_to_string(a2[0]))
 
 EXEC_MAP = {}
 NODE_REGISTER = {}
@@ -260,12 +260,15 @@ def reset_generalizer():
     EXEC_MAP = {}
 
 
-def check(s, module):
+def check(s, module, sa1, sa2):
     if s in EXEC_MAP: return EXEC_MAP[s]
     result = do([module, s])
     with open('%s.log' % module, 'a+') as f:
         print(s, file=f)
-        print(' '.join([module, '"%s"' % s]), file=f)
+        print('Checking:', file=f)
+        print('1:', repr(sa1), file=f)
+        print('2:', repr(sa2), file=f)
+        print(' '.join([module, repr(s)]), file=f)
         print(":=", result.returncode, file=f)
         print("\n", file=f)
     v = (result.returncode == 0)

@@ -76,4 +76,4 @@ dump:
 	clang -Xclang -ast-dump -fsyntax-only $(src) -I examples
 
 build/%.fuzz: build/%.grammar build/%.out
-	$(PYTHON) ./bin/fuzz.py $^
+	$(PYTHON) ./src/fuzz.py $^
