@@ -63,6 +63,10 @@ def update_method_name(k_m, my_id, seen):
     name = unparse_method_name(method, my_id)
     seen[k_m[0]] = name
     k_m[0] = name
+
+    for c in k_m[1]:
+        update_method_stack(c, original[1:-1], name[1:-1])
+
     return name, k_m
 
 def register_new_methods(idx_map, method_register):
@@ -174,6 +178,10 @@ def generalize_method_node(tree, module):
     if node not in NODE_REGISTER:
         NODE_REGISTER[node] = {}
     register = NODE_REGISTER[node]
+
+    for child in children:
+        generalize_method_node(child, module)
+
     # Generalize methods
     idxs = {}
     for i,child in enumerate(children):
@@ -188,9 +196,6 @@ def generalize_method_node(tree, module):
             # a new method! Generalize the last
             idxs[i] = child
             generalize_method(idxs, register[method_name], module)
-
-    for child in children:
-        generalize_method_node(child, module)
 
 def generalize_method_trees(jtrees, log=False):
     global TREE, FILE
