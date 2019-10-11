@@ -74,7 +74,7 @@ def register_new_methods(idx_map, method_register):
     seen = {}
     for k in idx_keys:
         k_m = idx_map[k]
-        if ".0" not in k_m[0]:
+        if "." not in k_m[0]:
             if k_m[0] in seen:
                 k_m[0] = seen[k_m[0]]
                 # and update
@@ -86,42 +86,13 @@ def register_new_methods(idx_map, method_register):
             my_id = method_register[1]
 
             original_name = k_m[0]
-            #assert '?' not in original_name
             name, new_km = update_method_name(k_m, my_id, seen)
-            #assert '?' not in name
             method_register[0][(name, FILE)] = [(new_km, FILE, TREE)]
         else:
             name = k_m[0]
             if (name, FILE) not in method_register[0]:
                 method_register[0][(name, FILE)] = []
             method_register[0][(name, FILE)].append((k_m, FILE, TREE))
-
-def check_current_methods_for_compatibility(idx_map, method_register, module):
-    to_replace = []
-    rkeys = sorted(idx_map.keys(), reverse=True)
-    for i in rkeys: # <- nodes to check for replacement -- started from the back
-        i_m = idx_map[i]
-        # assert '?' not in i_m[0]
-        if '.0' in i_m[0]: continue
-        j_keys = sorted([j for j in idx_map.keys() if j < i])
-        for j in j_keys: # <- nodes that we can replace i_m with -- starting from front.
-            j_m = idx_map[j]
-            # assert '?' not in j_m[0]
-            if i_m[0] == j_m[0]: break
-            # previous methods worked.
-            replace = False
-            if not util.node_include(j_m, i_m):
-                a = util.is_compatible((i_m, FILE, TREE), (j_m, FILE, TREE), module)
-                if not a: continue
-                replace = True
-            if not util.node_include(i_m, j_m):
-                b = util.is_compatible((j_m, FILE, TREE), (i_m, FILE, TREE), module)
-                if not b: continue
-                replace = True
-            if replace:
-                to_replace.append((i_m, j_m)) # <- replace i_m by j_m
-            break
-    method_replace_stack(to_replace)
 
 
 def check_registered_methods_for_compatibility(idx_map, method_register, module):
