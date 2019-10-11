@@ -1023,6 +1023,7 @@ def main(tracefile):
     mined_trees = miner(my_trace)
     with open('build/t1.json', 'w+') as f: json.dump(mined_trees, f)
     generalized_trees = generalize_iter(mined_trees)
+    with open('build/t2.json', 'w+') as f: json.dump(generalized_trees, f)
     g = convert_to_grammar(generalized_trees)
     with open('build/g1_.json', 'w+') as f: json.dump(g, f)
     g = check_empty_rules(g)
