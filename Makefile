@@ -72,7 +72,10 @@ build/%.events: build/%.json.done
 
 
 build/%.grammar: build/%.events
-	$(PYTHON) ./src/grammar-miner.py $<
+	$(PYTHON) ./src/treeminer.py $< > build/t1.json
+	$(PYTHON) ./src/generalizemethod.py build/t1.json > build/t2.json
+	$(PYTHON) ./src/generalizeloop.py build/t2.json > build/t3.json
+	$(PYTHON) ./src/grammar-miner.py build/t3.json
 	cp build/g.json $@
 
 
