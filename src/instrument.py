@@ -47,7 +47,7 @@ def compound_body_with_cb(node, alt):
 cmimid__scope_enter(__LINE__, %s, %s);
 %s
 cmimid__scope_exit(__LINE__, CMIMID_EXIT);
-}''' % (salt, '0' if alt == '0' else '1 /*else*/', rep)
+}''' % (salt, '0' if alt == 0 else '1 /*else*/', rep)
 
 
 class AstNode:
@@ -244,13 +244,13 @@ cmimid__stack_exit(__LINE__, CMIMID_EXIT);''' % (c, cond, body)
 
 
 class IfStmt(AstNode):
-    def __init__(self, node, with_cb=True, my_id=None):
+    def __init__(self, node, with_cb=True, my_id=0):
         super().__init__(node)
         self.with_cb = with_cb
-        self.my_id = my_id if my_id is not None else get_id()
+        self.my_id = my_id
 
     def __repr__(self):
-        c = self.my_id
+        c = get_id()
         cond =  ""
         if_body = ""
         else_body = ""
@@ -261,16 +261,16 @@ class IfStmt(AstNode):
             elif i == 1: # if body
                 assert len(CURRENT_STACK) > 0
                 CURRENT_STACK.append(('CMIMID_IF', c))
-                if_body = compound_body_with_cb(child, c)
+                if_body = compound_body_with_cb(child, self.my_id)
                 CURRENT_STACK.pop()
                 assert len(CURRENT_STACK) > 0
             elif i == 2: # else body (exists if there is an else)
                 if child.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
-                    else_body = "%s" % repr(IfStmt(child, with_cb=False, my_id=c+1))
+                    else_body = "%s" % repr(IfStmt(child, with_cb=False, my_id=self.my_id+1))
                 else:
                     CURRENT_STACK.append(('CMIMID_IF', c))
-                    else_body = compound_body_with_cb(child, c)
+                    else_body = compound_body_with_cb(child, self.my_id+1)
                     CURRENT_STACK.pop()
                     assert len(CURRENT_STACK) > 0
 
