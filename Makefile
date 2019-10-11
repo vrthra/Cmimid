@@ -21,6 +21,10 @@ instrument: | build
 build/%.out: examples/%.c
 	$(CC) $(CFLAGS) -g -o $@ $< -I ./examples
 
+build/%.o.x: build/%.orig.c
+	$(CC) $(CFLAGS) -g -o $@ $< -I ./examples
+
+
 build/%.orig.c: examples/%.c
 	CFLAGS=$(CFLAGS) LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/simplify.py $< > $@_.tmp
 	cat $@_.tmp | $(CLANG_FORMAT) > $@_
