@@ -26,11 +26,11 @@ counter = 0;
 def get_id():
     global counter
     counter += 1
-    return str(counter)
+    return counter
 
 def compound_body_with_cb(node, alt):
     #assert node.extent.start.line != node.extent.end.line
-    salt = str(alt) #get_id()
+    salt = str(alt)
     rep = ""
     if node.kind == CursorKind.COMPOUND_STMT:
         src = to_string(node)
@@ -192,7 +192,7 @@ class ForStmt(AstNode):
         c = get_id()
         assert len(CURRENT_STACK) > 0
         CURRENT_STACK.append(('CMIMID_FOR', c))
-        body = compound_body_with_cb(children[-1], '0')
+        body = compound_body_with_cb(children[-1], 0)
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
         return '''\
@@ -212,7 +212,7 @@ class DoStmt(AstNode):
         c = get_id()
         assert len(CURRENT_STACK) > 0
         CURRENT_STACK.append(('CMIMID_WHILE', c))
-        body = compound_body_with_cb(children[0], '0')
+        body = compound_body_with_cb(children[0], 0)
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
 
@@ -233,7 +233,7 @@ class WhileStmt(AstNode):
         c = get_id()
         assert len(CURRENT_STACK) > 0
         CURRENT_STACK.append(('CMIMID_WHILE', c))
-        body = compound_body_with_cb(children[1], '0')
+        body = compound_body_with_cb(children[1], 0)
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
 
@@ -261,16 +261,16 @@ class IfStmt(AstNode):
             elif i == 1: # if body
                 assert len(CURRENT_STACK) > 0
                 CURRENT_STACK.append(('CMIMID_IF', c))
-                if_body = compound_body_with_cb(child, '0')
+                if_body = compound_body_with_cb(child, c)
                 CURRENT_STACK.pop()
                 assert len(CURRENT_STACK) > 0
             elif i == 2: # else body (exists if there is an else)
                 if child.kind == CursorKind.IF_STMT:
                     # else if -> no before/after if callbacks
-                    else_body = "%s" % repr(IfStmt(child, with_cb=False, my_id=c))
+                    else_body = "%s" % repr(IfStmt(child, with_cb=False, my_id=c+1))
                 else:
                     CURRENT_STACK.append(('CMIMID_IF', c))
-                    else_body = compound_body_with_cb(child, '1')
+                    else_body = compound_body_with_cb(child, c)
                     CURRENT_STACK.pop()
                     assert len(CURRENT_STACK) > 0
 
