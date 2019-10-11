@@ -94,6 +94,14 @@ def register_new_methods(idx_map, method_register):
                 method_register[0][(name, FILE)] = []
             method_register[0][(name, FILE)].append((k_m, FILE, TREE))
 
+def num_tokens(v, s):
+    name, child, *rest = v
+    s.add(name)
+    [num_tokens(i, s) for i in child]
+    return len(s)
+
+def s_fn(v):
+    return num_tokens(v[0], set())
 
 def check_registered_methods_for_compatibility(idx_map, method_register, module):
     seen = {}
