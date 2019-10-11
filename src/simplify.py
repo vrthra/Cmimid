@@ -182,12 +182,12 @@ class ForStmt(AstNode):
         assert len(CURRENT_STACK) > 0
         return '''\
 {
-%s;
+%s /*decl*/
 while(1) {
-__cmimid__res = (%s);
+__cmimid__res = (%s); /*cond*/
 if (!__cmimid__res) break;
 %s
-%s;
+%s; /*incr*/
 }
 }
 ''' % (sdecl,scond, sbody, sincr)
@@ -209,7 +209,7 @@ class DoStmt(AstNode):
 
         return '''\
 while (1) {
-    %s
+%s
 __cmimid__res = (%s);
 if (!__cmimid__res) break;
 }
@@ -274,7 +274,7 @@ if ( __cmimid__res )
 %s
 ''' % (cond, if_body)
         if else_body != "":
-            block += " else %s" % else_body
+            block += " else {%s}" % else_body
 
         if self.with_cb:
             return '''\
@@ -358,7 +358,6 @@ default:
         body = "\n".join(stmts)
         return '''\
 {
-int __cmimid__res = 0;
 %s
 }''' % body
 
@@ -379,7 +378,10 @@ class FunctionDecl(AstNode):
             body = to_string(children[-1])
             return '''\
 %s
-%s(%s) %s''' % (return_type, function_name, params, body)
+%s(%s) {
+int __cmimid__res = 0;
+%s
+}''' % (return_type, function_name, params, body)
         else:
             # function declaration.
             return '''\
