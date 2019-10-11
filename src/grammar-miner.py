@@ -286,16 +286,19 @@ def parse_name(name):
     ctrl_name, space, rest = rest.partition(' ')
     can_empty, space, stack = rest.partition(' ')
     ctrl, cname = ctrl_name.split('_')
-    if ':while_' in name or ':for_' in name:
+    assert ':for_' not in name
+    assert ':switch_' not in name
+    if ':while_' in name:
         method_stack = json.loads(stack)
         return method, ctrl, int(cname), 0, can_empty, method_stack
-    elif ':if_' in name or ':switch_' in name:
+    elif ':if_' in name:
         num, mstack = stack.split('#')
         method_stack = json.loads(mstack)
         return method, ctrl, int(cname), num, can_empty, method_stack
 
 def unparse_name(method, ctrl, name, num, can_empty, cstack):
-    if ctrl == 'while' or ctrl == 'for':
+    assert ctrl != 'for'  and ctrl != 'switch'
+    if ctrl == 'while':
         return "<%s:%s_%s %s %s>" % (method, ctrl, name, can_empty, json.dumps(cstack))
     else:
         return "<%s:%s_%s %s %s#%s>" % (method, ctrl, name, can_empty, num, json.dumps(cstack))
@@ -304,7 +307,9 @@ def unparse_name(method, ctrl, name, num, can_empty, cstack):
 
 def update_stack(node, at, new_name):
     nname, children, *rest = node
-    if not (':if_' in nname or ':switch_' in nname or ':while_' in nname or ':for_' in nname):
+    assert ':for_' not in nname
+    assert ':switch_' not in nname
+    if not (':if_' in nname or ':while_' in nname):
         return
     method, ctrl, cname, num, can_empty, cstack = parse_name(nname)
     cstack[at] = new_name
@@ -471,7 +476,7 @@ def register_new_loops(idx_map, while_register):
                 while_register[0][(name, FILE)] = []
             while_register[0][(name, FILE)].append((k_m, FILE, TREE))
 
-def generalize_loop(idx_map, while_register, module):
+def generalize_while(idx_map, while_register, module):
     # First we check the previous while loops
     check_registered_loops_for_compatibility(idx_map, while_register, module)
 
@@ -484,21 +489,23 @@ def generalize_loop(idx_map, while_register, module):
     # lastly, update all while names.
     register_new_loops(idx_map, while_register)
 
-def generalize(tree, module):
+def generalize_node(tree, module):
     node, children, *_rest = tree
     if node not in NODE_REGISTER:
         NODE_REGISTER[node] = {}
     register = NODE_REGISTER[node]
 
     for child in children:
-        generalize(child, module)
+        generalize_node(child, module)
 
+    # Generalize while
     idxs = {}
     last_while = None
     for i,child in enumerate(children):
         # now we need to map the while_name here to the ones in node
         # register. Essentially, we try to replace each.
-        if ':while_' not in child[0] and ':for_' not in child[0]:
+        if ':while_' not in child[0]:
+            assert ':for_' not in child[0]
             continue
         while_name = child[0].split(' ')[0]
         if last_while is None:
@@ -508,15 +515,15 @@ def generalize(tree, module):
         else:
             if last_while != while_name:
                 # a new while! Generalize the last
-                generalize_loop(idxs, register[last_while], module)
+                generalize_while(idxs, register[last_while], module)
                 last_while = while_name
                 if last_while  not in register:
                     register[last_while] = [{}, 0]
         idxs[i] = child
     if last_while is not None:
-        generalize_loop(idxs, register[last_while], module)
+        generalize_while(idxs, register[last_while], module)
 
-def generalize_iter(jtrees, log=False):
+def generalize_trees(jtrees, log=False):
     global TREE, FILE
     new_trees = []
     for j in jtrees:
@@ -524,7 +531,7 @@ def generalize_iter(jtrees, log=False):
         if log: print(FILE, file=sys.stderr)
         sys.stderr.flush()
         TREE = to_modifiable(j['tree'])
-        generalize(TREE, j['original'])
+        generalize_node(TREE, j['original'])
         j['tree'] = TREE
         new_trees.append(copy.deepcopy(j))
     return new_trees
@@ -604,13 +611,13 @@ def to_fuzzable_grammar(grammar):
 def check_empty_rules(grammar):
     new_grammar = {}
     for k in grammar:
-        if k in ':if_' or k in ':switch_':
+        if ':if_' in k:
             name, marker = k.split('#')
             if name.endswith(' *'):
                 new_grammar[k] = grammar[k].add(('',))
             else:
                 new_grammar[k] = grammar[k]
-        elif k in ':while_' or k in ':for_':
+        elif k in ':while_': # or k in ':for_':
             # TODO -- we have to check the rules for sequences of whiles.
             # for now, ignore.
             new_grammar[k] = grammar[k]
@@ -1022,7 +1029,7 @@ def main(tracefile):
         my_trace = json.load(f)
     mined_trees = miner(my_trace)
     with open('build/t1.json', 'w+') as f: json.dump(mined_trees, f)
-    generalized_trees = generalize_iter(mined_trees)
+    generalized_trees = generalize_trees(mined_trees)
     with open('build/t2.json', 'w+') as f: json.dump(generalized_trees, f)
     g = convert_to_grammar(generalized_trees)
     with open('build/g1_.json', 'w+') as f: json.dump(g, f)
