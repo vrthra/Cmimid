@@ -83,6 +83,11 @@ class SrcNode(AstNode):
 class StmtNode(AstNode):
     def __repr__(self): return "%s;" % super().__repr__()
 
+class NullStmt(AstNode):
+    def __repr__(self): return ';'
+
+class FalseNode(AstNode):
+    def __repr__(self): assert False
 
 
 class EnumDecl(StmtNode): pass
@@ -107,24 +112,15 @@ class CompoundAssignmentOperator(AstNode): pass
 class TypeRef(AstNode): pass
 class UnaryOperator(AstNode): pass
 class BinaryOperator(AstNode): pass
-class DefaultStmt(AstNode): pass
-class NullStmt(AstNode):
-    def __repr__(self):
-        return ';'
 
 class ReturnStmt(StmtNode): pass
 class BreakStmt(StmtNode): pass
 class ContinueStmt(StmtNode): pass
 
-class GotoStmt(AstNode):
-    def __repr__(self): assert False
-class LabelStmt(AstNode):
-    def __repr__(self): assert False
+class GotoStmt(FalseNode): pass
+class LabelStmt(FalseNode): pass
 
-
-def extent(node):
-    return range(node.extent.start.line,node.extent.end.line+1)
-
+class DefaultStmt(AstNode): pass
 
 class CaseStmt(AstNode):
     def __repr__(self):
@@ -139,6 +135,9 @@ class CaseStmt(AstNode):
            src.append(c)
        return '\n'.join(src)
 
+
+def extent(node):
+    return range(node.extent.start.line,node.extent.end.line+1)
 
 class ForStmt(AstNode):
     def __repr__(self):
@@ -296,8 +295,12 @@ class SwitchStmt(AstNode):
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
         return '''\
-__cmimid__res = (%s);
-switch (__cmimid__res) %s
+{
+/*start switch*/
+int __cmimid__case_val = (%s);
+%s
+/*end switch*/
+}
 ''' % (switch_expr, body)
 
 
@@ -310,6 +313,7 @@ class CompoundStmt(AstNode):
         label = None
         ilabel = 0
         seen_default = False
+        seen_first = False
         for i,child in enumerate(children):
             rep = to_string(child)
             if child.kind == CursorKind.LABEL_STMT:
@@ -331,10 +335,13 @@ class CompoundStmt(AstNode):
                     assert len(gchildren) == 2
                 ilabel += 1
                 body = to_string(gchildren[1])
+                pre = 'if' if not seen_first else '}} else if'
+                if not seen_first: seen_first = True
+                cond = " || ".join(["(__cmimid__case_val == %s)" % c for c in fall_through])
                 rep = '''\
+%s (%s) {while(1){
 %s
-%s
-''' % ("\n".join(["case %s:" % c for c in fall_through]), body)
+''' % (pre, cond, body)
 
             elif child.kind == CursorKind.DEFAULT_STMT:
                 seen_default = True
@@ -342,10 +349,11 @@ class CompoundStmt(AstNode):
                 assert len(gchildren) == 1
                 body = to_string(gchildren[0])
                 ilabel += 1 # We dont expect any more after default
+                pre = '{{' if not seen_first else '}} else {{'
                 rep = '''\
-default:
+%s
 %s;
-''' % (body.strip())
+''' % (pre, body.strip())
             if not rep:
                print(child.kind, child.extent, file=sys.stderr)
                continue
@@ -355,6 +363,8 @@ default:
                 rep += ";"
 
             stmts.append(rep)
+        if seen_first or seen_default:
+            stmts.append('}}') # this is a case statement.
         body = "\n".join(stmts)
         return '''\
 {
