@@ -22,7 +22,7 @@ def extract_key(jgrammar, key, new_grammar):
 
 def main(args):
     json_file = args[0]
-    key = args[1]
+    key = (args[1] if len(args) > 1 else '<START>')
     with open(json_file) as f:
         jval = json.load(f)
     new_grammar = {}
