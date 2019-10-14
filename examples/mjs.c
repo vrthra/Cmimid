@@ -1450,7 +1450,6 @@ static void exec_expr(struct mjs *mjs, int op) {
         cs_log_printf("Unknown expr: %d", op);
       }
     } while (0);
-    break;
   }
 }
 
@@ -1972,7 +1971,6 @@ static mjs_err_t mjs_execute(struct mjs *mjs, size_t off, mjs_val_t *res) {
       mjs_set_errorf(mjs, MJS_INTERNAL_ERROR, "Unknown opcode: %d, off %d+%d",
                      (int)opcode, (int)bp.start_idx, (int)i);
       i = bp.data.len;
-      break;
     }
     if (mjs->error != MJS_OK) {
       mjs_gen_stack_trace(mjs, bp.start_idx + i - 1);
@@ -2741,7 +2739,7 @@ static ffi_fn_t *get_cb_impl_by_signature(const mjs_ffi_sig_t *sig) {
         userdata_idx = i;
         break;
       default:
-        break;
+        ;
       }
     }
 
@@ -3116,7 +3114,6 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
       }
     default:
       abort();
-      break;
     }
   }
 
@@ -3183,7 +3180,6 @@ static mjs_err_t mjs_ffi_call2(struct mjs *mjs) {
     break;
   default:
     resv = mjs_mk_undefined();
-    break;
   }
 
 
@@ -3900,7 +3896,6 @@ static int should_skip_for_json(enum mjs_type type) {
     break;
   default:
     ret = 1;
-    break;
   }
   return ret;
 }
@@ -4334,7 +4329,6 @@ static void frozen_cb(void *data, const char *name, size_t name_len,
         cs_log_printf("Wrong token type %d\n", token->type);
       }
     } while (0);
-    break;
   }
 
   if (!mjs_is_undefined(v)) {
@@ -4871,7 +4865,6 @@ mjs_val_t mjs_struct_to_obj(struct mjs *mjs, const void *base,
       v = fptr(mjs, ptr);
     }
     default: {
-      break;
     }
     }
     mjs_set(mjs, obj, def->name, ~0, v);
@@ -7754,7 +7747,7 @@ static size_t unescape(const char *s, size_t len, char *to) {
           n += runetochar(to == ((void *)0) ? tmp : to + n, &r);
           s += chartorune(&r, s);
           break;
-        case -SLRE_INVALID_HEX_DIGIT:
+        /*case -SLRE_INVALID_HEX_DIGIT:*/
         default:
           r = i;
         }
@@ -8481,7 +8474,6 @@ static size_t mjs_disasm_single(const uint8_t *code, size_t i) {
         cs_log_printf("%s", buf);
       }
     } while (0);
-    break;
   }
   return i - start_i;
 }
