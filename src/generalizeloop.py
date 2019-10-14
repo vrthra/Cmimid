@@ -215,7 +215,10 @@ def generalize_while_node(tree, module):
     for child in children:
         generalize_while_node(child, module)
 
-    # Generalize while
+    # Generalize while.
+    # IMPORTANT: If there are multiple loops, split out the idxs
+    # correspondingly so that only those idxs belonging to a particular loop are
+    # sent to generalize_while
     idxs = {}
     last_while = None
     for i,child in enumerate(children):
@@ -234,6 +237,7 @@ def generalize_while_node(tree, module):
                 # a new while! Generalize the last
                 generalize_while(idxs, register[last_while], module)
                 last_while = while_name
+                idxs = {}
                 if last_while  not in register:
                     register[last_while] = [{}, 0]
         idxs[i] = child

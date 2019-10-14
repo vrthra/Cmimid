@@ -69,30 +69,28 @@ def update_method_name(k_m, my_id, seen):
 
     return name, k_m
 
-def register_new_methods(idx_map, method_register):
-    idx_keys = sorted(idx_map.keys())
+def register_new_methods(child, method_register):
     seen = {}
-    for k in idx_keys:
-        k_m = idx_map[k]
-        if "." not in k_m[0]:
-            if k_m[0] in seen:
-                k_m[0] = seen[k_m[0]]
-                # and update
-                method1, my_id = parse_method_name(k_m[0])
-                update_method_name(k_m, my_id, seen)
-                continue
-            # new! get a brand new name!
-            method_register[1] += 1
-            my_id = method_register[1]
+    k_m = child
+    if "." not in k_m[0]:
+        if k_m[0] in seen:
+            k_m[0] = seen[k_m[0]]
+            # and update
+            method1, my_id = parse_method_name(k_m[0])
+            update_method_name(k_m, my_id, seen)
+            return
+        # new! get a brand new name!
+        method_register[1] += 1
+        my_id = method_register[1]
 
-            original_name = k_m[0]
-            name, new_km = update_method_name(k_m, my_id, seen)
-            method_register[0][(name, FILE)] = [(new_km, FILE, TREE)]
-        else:
-            name = k_m[0]
-            if (name, FILE) not in method_register[0]:
-                method_register[0][(name, FILE)] = []
-            method_register[0][(name, FILE)].append((k_m, FILE, TREE))
+        original_name = k_m[0]
+        name, new_km = update_method_name(k_m, my_id, seen)
+        method_register[0][(name, FILE)] = [(new_km, FILE, TREE)]
+    else:
+        name = k_m[0]
+        if (name, FILE) not in method_register[0]:
+            method_register[0][(name, FILE)] = []
+        method_register[0][(name, FILE)].append((k_m, FILE, TREE))
 
 def num_tokens(v, s):
     name, child, *rest = v
@@ -103,54 +101,53 @@ def num_tokens(v, s):
 def s_fn(v):
     return num_tokens(v[0], set())
 
-def check_registered_methods_for_compatibility(idx_map, method_register, module):
+def check_registered_methods_for_compatibility(child, method_register, module):
     seen = {}
     to_replace = []
-    idx_keys = sorted(idx_map.keys())
     for method_key, f in method_register[0]:
         # try sampling here.
         my_values = method_register[0][(method_key, f)]
         v_ = random.choice(my_values)
-        for k in idx_keys:
-            k_m = idx_map[k]
-            if k_m[0] in seen: continue
-            if len(my_values) > util.MAX_SAMPLES:
-                lst = [v for v in my_values if not util.node_include(v[0], k_m)]
-                values = sorted(lst, key=s_fn, reverse=True)[0:util.MAX_SAMPLES]
-            else:
-                values = my_values
 
-            # all values in v should be tried.
-            replace = 0
-            for v in values:
-                assert v[0][0] == v_[0][0]
-                if f != FILE or not util.node_include(v[0], k_m): # if not k_m includes v
-                    a = util.is_compatible((k_m, FILE, TREE), v, module)
-                    if not a:
-                        replace = 0
-                        break
-                    else:
-                        replace += 1
-                if f != FILE or not util.node_include(k_m, v[0]):
-                    b = util.is_compatible(v, (k_m, FILE, TREE), module)
-                    if not b:
-                        replace = 0
-                        break
-                    else:
-                        replace += 1
-            # at least one needs to vouch, and all capable needs to agree.
-            if replace:
-                to_replace.append((k_m, v_[0])) # <- replace k_m by v
-                seen[k_m[0]] = True
+        k_m = child
+        if k_m[0] in seen: continue
+        if len(my_values) > util.MAX_SAMPLES:
+            lst = [v for v in my_values if not util.node_include(v[0], k_m)]
+            values = sorted(lst, key=s_fn, reverse=True)[0:util.MAX_SAMPLES]
+        else:
+            values = my_values
+
+        # all values in v should be tried.
+        replace = 0
+        for v in values:
+            assert v[0][0] == v_[0][0]
+            if f != FILE or not util.node_include(v[0], k_m): # if not k_m includes v
+                a = util.is_compatible((k_m, FILE, TREE), v, module)
+                if not a:
+                    replace = 0
+                    break
+                else:
+                    replace += 1
+            if f != FILE or not util.node_include(k_m, v[0]):
+                b = util.is_compatible(v, (k_m, FILE, TREE), module)
+                if not b:
+                    replace = 0
+                    break
+                else:
+                    replace += 1
+        # at least one needs to vouch, and all capable needs to agree.
+        if replace:
+            to_replace.append((k_m, v_[0])) # <- replace k_m by v
+            seen[k_m[0]] = True
     method_replace_stack(to_replace)
 
 
-def generalize_method(idx_map, method_register, module):
+def generalize_method(child, method_register, module):
     # First we check the previous methods
-    check_registered_methods_for_compatibility(idx_map, method_register, module)
+    check_registered_methods_for_compatibility(child, method_register, module)
 
     # lastly, update all method names.
-    register_new_methods(idx_map, method_register)
+    register_new_methods(child, method_register)
 
 def generalize_method_node(tree, module):
     node, children, *_rest = tree
@@ -158,23 +155,20 @@ def generalize_method_node(tree, module):
         NODE_REGISTER[node] = {}
     register = NODE_REGISTER[node]
 
-    for child in children:
+    for i,child in enumerate(children):
         generalize_method_node(child, module)
 
     # Generalize methods
-    idxs = {}
     for i,child in enumerate(children):
         if (child[0][0], child[0][-1]) != ('<','>'): continue
         if ':while_' in child[0] or ':if' in child[0]: continue
         method_name = child[0]
         if method_name not in register:
             register[method_name] = [{}, 0]
-            idxs[i] = child
-            generalize_method(idxs, register[method_name], module)
+            generalize_method(child, register[method_name], module)
         else:
             # a new method! Generalize the last
-            idxs[i] = child
-            generalize_method(idxs, register[method_name], module)
+            generalize_method(child, register[method_name], module)
 
 def generalize_method_trees(jtrees, log=False):
     global TREE, FILE
