@@ -267,12 +267,16 @@ def process_events(events, inputstring):
     assert not cmimid_stack
     for i,e in enumerate(events):
         if e['type'] == 'CMIMID_EVENT':
-            if e['fun'] == 'load': continue
             track_stack(O(**e), gen_events)
         elif e['type'] == 'INPUT_COMPARISON':
             if e['operator'] in IGNORE_OPS:
                 continue
             track_comparison(e, inputstring, gen_events)
+        elif e['type'] == 'CMIMID_ACCESS':
+            if e['fun'] == 'load':
+                track_comparison(e, inputstring, gen_events)
+            elif e['fun'] == 'mem_access':
+                track_comparison(e, inputstring, gen_events)
         elif e['type'] == 'STACK_EVENT':
             # this only gets us the top level methods
             # i.e no pseudo methods.
