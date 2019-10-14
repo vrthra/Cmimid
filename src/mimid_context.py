@@ -13,14 +13,16 @@ class method__:
         self.method_name = self.name
         taints.trace_call(self.name)
 
+    def __repr__(self): return self.name
+
     def __enter__(self):
-        taints.trace_set_method(self.name)
+        self._old_name = taints.trace_set_method(self.name)
         self.stack = []
         return self
 
     def __exit__(self, *args):
         taints.trace_return()
-        taints.trace_set_method(self.name)
+        taints.trace_set_method(self._old_name)
 
 class stack__:
     def __init__(self, name, num, method_i, can_empty):
@@ -28,6 +30,8 @@ class stack__:
         self.method_name = method_i.method_name
         self.can_empty = can_empty # * means yes. + means no, ? means to be determined
         self.name, self.num = name, num
+
+    def __repr__(self): return self.name
 
     def __enter__(self):
         if self.name in {'while', 'for'}:
@@ -49,6 +53,8 @@ class scope__:
         self.method_name = stack_i.method_name
         self.can_empty = stack_i.can_empty
 
+    def __repr__(self): return self.name
+
     def __enter__(self):
         if self.name in {'while', 'for'}:
             self.stack[-1] += 1
@@ -61,9 +67,9 @@ class scope__:
             taints.trace_call('%s:%s_%s %s %s' % (self.method_name, self.name, self.num, self.can_empty, uid))
         else:
             taints.trace_call('%s:%s_%s %s %s#%s' % (self.method_name, self.name, self.num, self.can_empty, self.alt, uid))
-        taints.trace_set_method(self.name)
+        self._old_name = taints.trace_set_method(self.name)
         return self
 
     def __exit__(self, *args):
         taints.trace_return()
-        taints.trace_set_method(self.name)
+        taints.trace_set_method(self._old_name)
