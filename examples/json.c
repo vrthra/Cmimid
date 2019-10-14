@@ -135,7 +135,7 @@ void json_free_value(json_value *val) {
 
 int json_is_literal(const char **cursor, const char *literal) {
   size_t cnt = strlen(literal);
-  if (strcmp(*cursor, literal) == 0) {
+  if (strncmp(*cursor, literal, cnt) == 0) {
     *cursor += cnt;
     return 1;
   }
