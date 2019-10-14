@@ -35,7 +35,7 @@ build/json.out: examples/json.c | build
 
 build: ; mkdir -p $@
 
-build/%.c: build/%.orig.c build/%.out src/instrument.py | build
+build/%.c: build/%.orig.c build/%.out build/%.o.x src/instrument.py | build
 	cp examples/*.h build/
 	CFLAGS=$(CFLAGS) LIBCLANG_PATH=$(LIBCLANG_PATH) $(PYTHON) ./src/instrument.py $< > $@_.tmp
 	cat $@_.tmp | $(CLANG_FORMAT) > $@_
