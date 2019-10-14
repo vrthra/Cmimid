@@ -40,15 +40,7 @@ int cgi_decode(char *s, char *t) {
       *t++ = ' ';
     } else if (*s == '%') {
       int digit_high = *++s;
-      /* Spurious comparisons so that we get the taints*/
-      if (digit_high < '0') return -1;
-      if (digit_high > 'f') return -1;
-      /*end spurious comparisons*/
       int digit_low = *++s;
-      /* Spurious comparisons so that we get the taints*/
-      if (digit_low < '0') return -1;
-      if (digit_low > 'f') return -1;
-      /*end spurious comparisons*/
       if (hex_values[digit_high] >= 0 && hex_values[digit_low] >= 0) {
         *t++ = hex_values[digit_high] * 16 + hex_values[digit_low];
       } else {
