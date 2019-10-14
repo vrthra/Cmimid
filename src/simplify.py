@@ -16,6 +16,9 @@ import os
 # 6. Defaults in switch should not contain breaks.
 # 7. Really no macros, even for things like isdigit or strncmp
 # 8. No labels. If labels are necessary, remember to ensure processing on statement.
+# 9. In switch case statements, other labels should not fallthrough to default.
+# 10. Absolutely no fall through midway to another case label. If it is fall
+#     through, the top label should be completely empty.
 
 LIBCLANG_PATH = os.environ['LIBCLANG_PATH']
 Config.set_library_file(LIBCLANG_PATH)
@@ -174,14 +177,15 @@ class ForStmt(AstNode):
         assert len(CURRENT_STACK) > 0
         CURRENT_STACK.append(('CMIMID_FOR'))
         sdecl = to_string(decl) if decl is not None else ''
-        scond = to_string(cond) if cond is not None else ''
+        if sdecl: assert sdecl.strip()[-1] != '!', self.node.extent
+        scond = to_string(cond) if cond is not None else '1'
         sincr = to_string(incr) if incr is not None else ''
         sbody = compound_body_with_cb(body) if body is not None else ''
         CURRENT_STACK.pop()
         assert len(CURRENT_STACK) > 0
         return '''\
 {
-%s /*decl*/
+%s; /*decl*/
 while(1) {
 __cmimid__res = (%s); /*cond*/
 if (!__cmimid__res) break;
