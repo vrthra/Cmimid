@@ -47,7 +47,11 @@ def trace_return():
     METHOD_NUM_STACK.pop()
 
 def trace_set_method(method):
+    cm = None
+    if CURRENT_METHOD is not None:
+        cm = CURRENT_METHOD[0]
     set_current_method(method, len(METHOD_NUM_STACK), METHOD_NUM_STACK[-1][0])
+    return cm
 
 def convert_comparisons(comparisons, inputstr):
     light_comparisons = []

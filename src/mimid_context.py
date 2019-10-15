@@ -1,5 +1,16 @@
 import taints
 import urllib.parse
+import sys
+
+indent = 0
+def log(i, var, line):
+    global indent
+    if i > 0:
+        indent += i
+    s = '-->' if i > 0 else '<--'
+    print('|', ' ' * indent,s, var, "\t\t", line, file=sys.stderr)
+    if i < 0:
+        indent += i
 
 class method__:
     def __init__(self, name, args):
@@ -15,14 +26,16 @@ class method__:
 
     def __repr__(self): return self.name
 
-    def __enter__(self):
+    def __enter__(self, line):
         self._old_name = taints.trace_set_method(self.name)
+        log(1, self.name, line)
         self.stack = []
         return self
 
-    def __exit__(self, *args):
+    def __exit__(self, line, *args):
         taints.trace_return()
         taints.trace_set_method(self._old_name)
+        log(-1, self.name, line)
 
 class stack__:
     def __init__(self, name, num, method_i, can_empty):
@@ -33,7 +46,7 @@ class stack__:
 
     def __repr__(self): return self.name
 
-    def __enter__(self):
+    def __enter__(self, line):
         if self.name in {'while', 'for'}:
             self.stack.append(0)
         elif self.name in {'if', 'switch'}:
@@ -55,7 +68,7 @@ class scope__:
 
     def __repr__(self): return self.name
 
-    def __enter__(self):
+    def __enter__(self, line):
         if self.name in {'while', 'for'}:
             self.stack[-1] += 1
         elif self.name in {'if', 'switch'}:
@@ -68,8 +81,10 @@ class scope__:
         else:
             taints.trace_call('%s:%s_%s %s %s#%s' % (self.method_name, self.name, self.num, self.can_empty, self.alt, uid))
         self._old_name = taints.trace_set_method(self.name)
+        log(1, self.name + ' ' + str(self.num) + ' ' + str(self.alt), line)
         return self
 
-    def __exit__(self, *args):
+    def __exit__(self, line, *args):
+        log(-1, self.name, line)
         taints.trace_return()
         taints.trace_set_method(self._old_name)

@@ -39,6 +39,8 @@ def last_comparisons(comparisons):
     last_idx = {}
 
     # get the last indexes compared in methods.
+    # first, for each method, find the index that
+    # was accessed in that method invocation last.
     for idx, char, mid in comparisons:
         if mid in last_idx:
             if idx > last_idx[mid]:
@@ -46,6 +48,8 @@ def last_comparisons(comparisons):
         else:
             last_idx[mid] = idx
 
+    # next, for each index, find the method that
+    # accessed it last.
     for idx, char, mid in comparisons:
         if HEURISTIC:
             if idx in last_cmp_only:
