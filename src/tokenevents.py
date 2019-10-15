@@ -79,7 +79,7 @@ def track_stack(e, gen_events):
         popped_stack.append(x)
         method, mname, line = x
         assert method == 'method'
-        gen_events.append((line, ('method_exit', mname)))
+        gen_events.append((e.info[0], ('method_exit', mname)))
 
     elif e.fun in {'cmimid__stack_enter'}:
         line, stack_kind, stack_id, *_args = e.info
@@ -96,7 +96,7 @@ def track_stack(e, gen_events):
         popped_stack.append(x)
         stack, stack_id, str_skind, line = x
         assert stack == 'stack'
-        gen_events.append((line,('stack_exit', stack_id)))
+        gen_events.append((e.info[0],('stack_exit', stack_id)))
         pseudo_method_stack.pop()
 
     elif e.fun in {'cmimid__scope_enter'}:
@@ -111,7 +111,7 @@ def track_stack(e, gen_events):
         popped_stack.append(x)
         scope, scope_alt, args, line = x
         assert scope == 'scope'
-        gen_events.append((line, ('scope_exit', scope_alt)))
+        gen_events.append((e.info[0], ('scope_exit', scope_alt)))
 
 
     elif e.fun in {'cmimid__return'}:
@@ -122,15 +122,15 @@ def track_stack(e, gen_events):
             popped_stack.append(t)
             if t[0] == 'method':
                 method, mid, line = t
-                gen_events.append((line, ('method_exit', mid)))
+                gen_events.append((e.info[0], ('method_exit', mid)))
                 # stop unwinding
                 break
             elif t[0] == 'stack':
                 stack, stack_id, stack_kind, line = t
-                gen_events.append((line, ('stack_exit', stack_id)))
+                gen_events.append((e.info[0], ('stack_exit', stack_id)))
             elif t[0] == 'scope':
                 scope, scope_kind, args, line = t
-                gen_events.append((line, ('scope_exit', scope_kind)))
+                gen_events.append((e.info[0], ('scope_exit', scope_kind)))
 
     elif e.fun in {'cmimid__break'}:
         # break is a little return. Unwind until the next
@@ -144,13 +144,13 @@ def track_stack(e, gen_events):
                 assert False
             elif t[0] == 'stack':
                 stack, stack_id, str_skind, line = t
-                gen_events.append((line, ('stack_exit', stack_id)))
+                gen_events.append((e.info[0], ('stack_exit', stack_id)))
                 if str_skind in {'for', 'while', 'switch'}:
                     # this should not happen.
                     assert False
             elif t[0] == 'scope':
                 scope, scope_kind, args, line = t
-                gen_events.append((line, ('scope_exit', scope_kind)))
+                gen_events.append((e.info[0], ('scope_exit', scope_kind)))
                 stack, stack_id, str_skind, line = cmimid_stack[-1]
                 if str_skind in {'for', 'while', 'switch'}:
                     # stop unwinding. The stack would get popped next.
@@ -170,11 +170,11 @@ def track_stack(e, gen_events):
                 # we should exit before the first _loop_ or _switch_
                 # which is the parent for _continue_
                 assert str_skind not in {'for', 'while', 'switch'}
-                gen_events.append((line, ('stack_exit', stack_id)))
+                gen_events.append((e.info[0], ('stack_exit', stack_id)))
             elif t[0] == 'scope':
                 scope, scope_kind, args, line = t
-                gen_events.append((line, ('scope_exit', scope_kind)))
-                stack, stack_id, skind = cmimid_stack[-1]
+                gen_events.append((e.info[0], ('scope_exit', scope_kind)))
+                stack, stack_id, skind, line = cmimid_stack[-1]
                 if skind in {'for', 'while', 'switch'}:
                     # stop unwinding
                     break
@@ -212,7 +212,7 @@ def fire_events(gen_events, inputstring):
             method.append(mimid_context.method__(name=mname, args=args))
             method[-1].__enter__(line)
         elif 'method_exit' == e[0]:
-            method[-1].__exit__()
+            method[-1].__exit__(line)
             x = method.pop()
             assert x.method_name == e[1]
 
@@ -233,7 +233,7 @@ def fire_events(gen_events, inputstring):
             method.append(mimid_context.stack__(name=name, num=num, method_i=method[-1], can_empty=can_empty))
             method[-1].__enter__(line)
         elif 'stack_exit' == e[0]:
-            method[-1].__exit__()
+            method[-1].__exit__(line)
             method.pop()
 
         elif 'scope_enter' == e[0]:
@@ -241,7 +241,7 @@ def fire_events(gen_events, inputstring):
             method[-1].__enter__(line)
 
         elif 'scope_exit' == e[0]:
-            method[-1].__exit__()
+            method[-1].__exit__(line)
             method.pop()
 
         elif 'comparison' == e[0]:
