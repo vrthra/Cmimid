@@ -121,4 +121,4 @@ if __name__ == '__main__':
     if len(sys.argv) > 2:
         trees = [int(v) for v in sys.argv[2:]]
     for tree in trees:
-        print_tree(jsont[tree]['tree'], format_node=lambda x: x[0], get_children=lambda x: x[1])
+        print_tree(jsont[tree]['tree'], format_node=lambda x: repr(x[0]), get_children=lambda x: x[1])
