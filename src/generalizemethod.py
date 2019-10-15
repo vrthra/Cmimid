@@ -111,9 +111,9 @@ def check_registered_methods_for_compatibility(child, method_register, module):
 
         k_m = child
         if k_m[0] in seen: continue
-        if len(my_values) > util.MAX_SAMPLES:
+        if len(my_values) > util.MAX_PROC_SAMPLES:
             lst = [v for v in my_values if not util.node_include(v[0], k_m)]
-            values = sorted(lst, key=s_fn, reverse=True)[0:util.MAX_SAMPLES]
+            values = sorted(lst, key=s_fn, reverse=True)[0:util.MAX_PROC_SAMPLES]
         else:
             values = my_values
 
@@ -151,9 +151,8 @@ def generalize_method(child, method_register, module):
 
 def generalize_method_node(tree, module):
     node, children, *_rest = tree
-    if node not in NODE_REGISTER:
-        NODE_REGISTER[node] = {}
-    register = NODE_REGISTER[node]
+    global NODE_REGISTER
+    register = NODE_REGISTER
 
     for i,child in enumerate(children):
         generalize_method_node(child, module)
@@ -165,10 +164,7 @@ def generalize_method_node(tree, module):
         method_name = child[0]
         if method_name not in register:
             register[method_name] = [{}, 0]
-            generalize_method(child, register[method_name], module)
-        else:
-            # a new method! Generalize the last
-            generalize_method(child, register[method_name], module)
+        generalize_method(child, register[method_name], module)
 
 def generalize_method_trees(jtrees, log=False):
     global TREE, FILE
