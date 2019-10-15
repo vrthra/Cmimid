@@ -4,6 +4,7 @@ import subprocess
 from fuzzingbook.GrammarFuzzer import tree_to_string
 PARSE_SUCCEEDED = 10
 MAX_SAMPLES = 1
+MAX_PROC_SAMPLES = 1
 
 Epsilon = '-'
 NoEpsilon = '='
@@ -55,6 +56,7 @@ def node_include(i, j):
     name_j, children_j, s_j, e_j = j
     return s_i <= s_j and e_i >= e_j
 
+# replace the given node in a2 by the node in a1
 def replace_nodes(a2, a1):
     node2, _, t2 = a2
     node1, _, t1 = a1

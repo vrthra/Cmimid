@@ -353,7 +353,7 @@ cmimid__scope_enter(__LINE__, %d, 1/*default*/);
 %s;
 ''' % (ilabel, body.strip())
             if not rep:
-               print(child.kind, child.extent, file=sys.stderr)
+               print("REP:", child.kind, child.extent, file=sys.stderr)
                continue
 
             # handle missing semicolons
@@ -463,7 +463,8 @@ def to_ast(node):
     if node.kind in FN_HASH:
         return FN_HASH[node.kind](node)
     else:
-        print(node.kind, file=sys.stderr)
+        print("ToAST:", node.kind, file=sys.stderr)
+        assert False
         return AstNode(node)
 
 STOPPED = False

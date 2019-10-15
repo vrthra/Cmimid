@@ -108,6 +108,8 @@ class DeclRefExpr(SrcNode): pass
 class CharacterLiteral(SrcNode): pass
 class CXXUnaryExpr(SrcNode): pass
 class CStyleCastexpr(SrcNode): pass
+class ConditionalOperator(SrcNode): pass
+class MemberRefExpr(SrcNode): pass
 
 class ParmDecl(AstNode): pass
 class DeclStmt(AstNode): pass
@@ -371,7 +373,7 @@ class CompoundStmt(AstNode):
 %s;
 ''' % (pre, body.strip())
             if not rep:
-               print(child.kind, child.extent, file=sys.stderr)
+               print("No REP", child.kind, child.extent, file=sys.stderr)
                continue
 
             # handle missing semicolons
@@ -455,6 +457,8 @@ FN_HASH = {
         CursorKind.UNEXPOSED_EXPR: UnexposedExpr,
         CursorKind.CHARACTER_LITERAL: CharacterLiteral,
         CursorKind.GOTO_STMT: GotoStmt,
+        CursorKind.CONDITIONAL_OPERATOR: ConditionalOperator,
+        CursorKind.MEMBER_REF_EXPR: MemberRefExpr,
         }
 
 
@@ -462,7 +466,8 @@ def to_ast(node):
     if node.kind in FN_HASH:
         return FN_HASH[node.kind](node)
     else:
-        print(node.kind, file=sys.stderr)
+        print("ToAST", node.kind, node.extent, file=sys.stderr)
+        assert False
         return AstNode(node)
 
 STOPPED = False
