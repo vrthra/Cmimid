@@ -116,7 +116,6 @@ class TypeRef(AstNode): pass
 class UnaryOperator(AstNode): pass
 class BinaryOperator(AstNode): pass
 
-class ReturnStmt(StmtNode): pass
 class BreakStmt(StmtNode): pass
 class ContinueStmt(StmtNode): pass
 
@@ -124,6 +123,19 @@ class GotoStmt(FalseNode): pass
 class LabelStmt(FalseNode): pass
 
 class DefaultStmt(AstNode): pass
+
+class ReturnStmt(AstNode):
+    def __repr__(self):
+        c = list(self.node.get_children())
+        if not c:
+            return 'return;'
+        v = to_string(c[0])
+        return '''
+{
+%s __cmimid__ret = %s;
+return __cmimid__ret;
+}
+''' % (RET_TYPE, v)
 
 class CaseStmt(AstNode):
     def __repr__(self):
@@ -375,12 +387,14 @@ class CompoundStmt(AstNode):
 %s
 }''' % body
 
-
+RET_TYPE = None
 class FunctionDecl(AstNode):
     # method context wrapper
     def __repr__(self):
+        global RET_TYPE
         children = list(self.node.get_children())
         return_type = self.node.result_type.spelling
+        RET_TYPE = return_type
         function_name = self.node.spelling
         cparams = [p for p in children if p.kind == CursorKind.PARM_DECL]
         params = ", ".join([to_string(c) for c in cparams])
