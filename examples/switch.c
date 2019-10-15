@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
       default:
             i = 0;
             i = 1;
-        break;
+        /*break; Not allowed in default*/
     }
     return 0;
 }
