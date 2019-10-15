@@ -66,6 +66,15 @@ build/%.json.done: build/%.x
 		cp $$i build/$*/ ; \
 	done
 
+build/tiny.events: build/tiny.json.done
+	$(PYTHON) ./src/tokenevents.py build/tiny/ > $@_
+	mv $@_ $@
+
+build/mjs.events: build/mjs.json.done
+	$(PYTHON) ./src/tokenevents.py build/mjs/ > $@_
+	mv $@_ $@
+
+
 build/%.events: build/%.json.done
 	$(PYTHON) ./src/events.py build/$* > $@_
 	mv $@_ $@
