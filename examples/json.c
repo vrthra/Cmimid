@@ -80,7 +80,6 @@ static int json_parse_object(const char **cursor, json_value *parent) {
   }
 
   return success;
-  return 1;
 }
 
 static int json_parse_array(const char **cursor, json_value *parent) {
