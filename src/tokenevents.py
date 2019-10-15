@@ -214,7 +214,7 @@ def fire_events(gen_events, inputstring):
         elif 'method_exit' == e[0]:
             method[-1].__exit__(line)
             x = method.pop()
-            assert x.method_name == e[1]
+            assert x.method_name.startswith(e[1])
 
         elif 'stack_enter' == e[0]:
             stack, str_skind, stack_id = e
