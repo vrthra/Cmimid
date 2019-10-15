@@ -9,6 +9,8 @@ MAX_PROC_SAMPLES = 1
 Epsilon = '-'
 NoEpsilon = '='
 
+def tree_to_str(tree):
+    return tree_to_string(tree)
 
 class O:
     def __init__(self, **keys): self.__dict__.update(keys)
@@ -55,31 +57,47 @@ def node_include(i, j):
     name_i, children_i, s_i, e_i = i
     name_j, children_j, s_j, e_j = j
     return s_i <= s_j and e_i >= e_j
+#------
+
+
+def get_ref(node, node_name):
+    name, children, *rest = node
+    if name == node_name:
+        return node
+    for child in children:
+        res = get_ref(child, node_name)
+        if res is not None: return res
+    return None
+
 
 # replace the given node in a2 by the node in a1
 def replace_nodes(a2, a1):
     node2, _, t2 = a2
     node1, _, t1 = a1
-    str2_old = tree_to_string(t2)
-    old = copy.copy(node2)
+    str2_old = tree_to_str(t2)
+
+    # first change the name of the node, then copy the tree.
+    tmpl_name = '___cmimid___'
+    old_name = node2[0]
+    node2[0] = tmpl_name
+    t2_new = copy.deepcopy(t2)
+    node2[0] = old_name
+
+    # now find the reference to tmpl_name in t2_new
+    node2 = get_ref(t2_new, tmpl_name)
     node2.clear()
     for n in node1:
         node2.append(n)
-    str2_new = tree_to_string(t2)
+    str2_new = tree_to_str(t2_new)
     assert str2_old != str2_new
-    node2.clear()
-    for n in old:
-        node2.append(n)
-    str2_last = tree_to_string(t2)
-    assert str2_old == str2_last
     return str2_new
 
 def is_compatible(a1, a2, module):
-    if tree_to_string(a1[0]) == tree_to_string(a2[0]):
-        return True
+    if tree_to_str(a1[0]) == tree_to_str(a2[0]): return True
     my_string = replace_nodes(a1, a2)
-    return check(my_string, module, tree_to_string(a1[0]), tree_to_string(a2[0]))
+    return check(my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
 
+#------
 
 
 def parse_pseudo_name(name):

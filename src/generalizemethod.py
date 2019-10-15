@@ -1,4 +1,6 @@
 import sys
+import pudb
+bp = pudb.set_trace
 import util
 import json
 import os.path, copy, random
@@ -112,8 +114,7 @@ def check_registered_methods_for_compatibility(child, method_register, module):
         k_m = child
         if k_m[0] in seen: continue
         if len(my_values) > util.MAX_PROC_SAMPLES:
-            lst = [v for v in my_values if not util.node_include(v[0], k_m)]
-            values = sorted(lst, key=s_fn, reverse=True)[0:util.MAX_PROC_SAMPLES]
+            values = sorted(my_values, key=s_fn, reverse=True)[0:util.MAX_PROC_SAMPLES]
         else:
             values = my_values
 
@@ -121,22 +122,21 @@ def check_registered_methods_for_compatibility(child, method_register, module):
         replace = 0
         for v in values:
             assert v[0][0] == v_[0][0]
-            if f != FILE or not util.node_include(v[0], k_m): # if not k_m includes v
-                a = util.is_compatible((k_m, FILE, TREE), v, module)
-                if not a:
-                    replace = 0
-                    break
-                else:
-                    replace += 1
-            if f != FILE or not util.node_include(k_m, v[0]):
-                b = util.is_compatible(v, (k_m, FILE, TREE), module)
-                if not b:
-                    replace = 0
-                    break
-                else:
-                    replace += 1
+            a = util.is_compatible((k_m, FILE, TREE), v, module)
+            if not a:
+                replace = 0
+                break
+            else:
+                replace += 1
+
+            b = util.is_compatible(v, (k_m, FILE, TREE), module)
+            if not b:
+                replace = 0
+                break
+            else:
+                replace += 1
         # at least one needs to vouch, and all capable needs to agree.
-        if replace:
+        if replace >= 2:
             to_replace.append((k_m, v_[0])) # <- replace k_m by v
             seen[k_m[0]] = True
     method_replace_stack(to_replace)

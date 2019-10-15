@@ -98,8 +98,7 @@ def check_registered_loops_for_compatibility(idx_map, while_register, module):
             k_m = idx_map[k]
             if k_m[0] in seen: continue
             if len(my_values) > util.MAX_SAMPLES:
-                lst = [v for v in my_values if not util.node_include(v[0], k_m)]
-                values = sorted(lst, key=s_fn, reverse=True)[0:util.MAX_SAMPLES]
+                values = sorted(my_values, key=s_fn, reverse=True)[0:util.MAX_SAMPLES]
             else:
                 values = my_values
 
@@ -107,22 +106,21 @@ def check_registered_loops_for_compatibility(idx_map, while_register, module):
             replace = 0
             for v in values:
                 #assert v[0][0] == v_[0][0]
-                if f != FILE or not util.node_include(v[0], k_m): # if not k_m includes v
-                    a = util.is_compatible((k_m, FILE, TREE), v, module)
-                    if not a:
-                        replace = 0
-                        break
-                    else:
-                        replace += 1
-                if f != FILE or not util.node_include(k_m, v[0]):
-                    b = util.is_compatible(v, (k_m, FILE, TREE), module)
-                    if not b:
-                        replace = 0
-                        break
-                    else:
-                        replace += 1
+                a = util.is_compatible((k_m, FILE, TREE), v, module)
+                if not a:
+                    replace = 0
+                    break
+                else:
+                    replace += 1
+
+                b = util.is_compatible(v, (k_m, FILE, TREE), module)
+                if not b:
+                    replace = 0
+                    break
+                else:
+                    replace += 1
             # at least one needs to vouch, and all capable needs to agree.
-            if replace:
+            if replace >= 2:
                 to_replace.append((k_m, v_[0])) # <- replace k_m by v
                 seen[k_m[0]] = True
     replace_stack_and_mark_star(to_replace)
@@ -152,17 +150,11 @@ def check_current_loops_for_compatibility(idx_map, while_register, module):
             # assert '?' not in j_m[0]
             if i_m[0] == j_m[0]: break
             # previous whiles worked.
-            replace = False
-            if not util.node_include(j_m, i_m):
-                a = util.is_compatible((i_m, FILE, TREE), (j_m, FILE, TREE), module)
-                if not a: continue
-                replace = True
-            if not util.node_include(i_m, j_m):
-                b = util.is_compatible((j_m, FILE, TREE), (i_m, FILE, TREE), module)
-                if not b: continue
-                replace = True
-            if replace:
-                to_replace.append((i_m, j_m)) # <- replace i_m by j_m
+            a = util.is_compatible((i_m, FILE, TREE), (j_m, FILE, TREE), module)
+            if not a: continue
+            b = util.is_compatible((j_m, FILE, TREE), (i_m, FILE, TREE), module)
+            if not b: continue
+            to_replace.append((i_m, j_m)) # <- replace i_m by j_m
             break
     replace_stack_and_mark_star(to_replace)
 
