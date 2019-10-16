@@ -33,11 +33,13 @@ def do(command, env=None, shell=False, log=False, **args):
 #    return result
 EXEC_MAP = {}
 
-def check(s, module, sa1, sa2):
+def check(o, s, module, sa1, sa2):
     if s in EXEC_MAP: return EXEC_MAP[s]
     result = do([module, s])
     with open('%s.log' % module, 'a+') as f:
-        print(s, file=f)
+        print('------------------', file=f)
+        print('original:', repr(o), file=f)
+        print('updated:', repr(s), file=f)
         print('Checking:', file=f)
         print('1:', repr(sa1), file=f)
         print('2:', repr(sa2), file=f)
@@ -93,9 +95,12 @@ def replace_nodes(a2, a1):
     return str2_new
 
 def is_compatible(a1, a2, module):
-    if tree_to_str(a1[0]) == tree_to_str(a2[0]): return True
+    n1, f1, t1 = a1
+    n2, f2, t2 = a2
+    if tree_to_str(n1) == tree_to_str(n2): return True
     my_string = replace_nodes(a1, a2)
-    return check(my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
+    o = tree_to_str(t2)
+    return check(o, my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
 
 #------
 
