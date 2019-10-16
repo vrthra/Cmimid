@@ -95,6 +95,12 @@ def replace_nodes(a2, a1):
     return str2_new
 
 def is_compatible(a1, a2, module):
+    t1 = is_a_replaceable_with_b(a1, a2, module)
+    if not t1: return False
+    t2 = is_a_replaceable_with_b(a2, a1, module)
+    return t2
+
+def is_a_replaceable_with_b(a1, a2, module):
     n1, f1, t1 = a1
     n2, f2, t2 = a2
     if tree_to_str(n1) == tree_to_str(n2): return True

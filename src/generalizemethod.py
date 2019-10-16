@@ -123,22 +123,13 @@ def check_registered_methods_for_compatibility(child, method_register, module):
         for v in values:
             assert v[0][0] == v_[0][0]
             a = util.is_compatible((k_m, FILE, TREE), v, module)
-            if not a:
-                replace = 0
-                break
-            else:
+            if a:
                 replace += 1
+        if replace == 0: continue
+        assert len(values) == replace, 'Not all values agreed'
+        to_replace.append((k_m, v_[0])) # <- replace k_m by v
+        seen[k_m[0]] = True
 
-            b = util.is_compatible(v, (k_m, FILE, TREE), module)
-            if not b:
-                replace = 0
-                break
-            else:
-                replace += 1
-        # at least one needs to vouch, and all capable needs to agree.
-        if replace >= 2:
-            to_replace.append((k_m, v_[0])) # <- replace k_m by v
-            seen[k_m[0]] = True
     method_replace_stack(to_replace)
 
 

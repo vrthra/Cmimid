@@ -107,22 +107,12 @@ def check_registered_loops_for_compatibility(idx_map, while_register, module):
             for v in values:
                 #assert v[0][0] == v_[0][0]
                 a = util.is_compatible((k_m, FILE, TREE), v, module)
-                if not a:
-                    replace = 0
-                    break
-                else:
+                if a:
                     replace += 1
-
-                b = util.is_compatible(v, (k_m, FILE, TREE), module)
-                if not b:
-                    replace = 0
-                    break
-                else:
-                    replace += 1
-            # at least one needs to vouch, and all capable needs to agree.
-            if replace >= 2:
-                to_replace.append((k_m, v_[0])) # <- replace k_m by v
-                seen[k_m[0]] = True
+            if not replace: continue
+            assert len(values) == replace
+            to_replace.append((k_m, v_[0])) # <- replace k_m by v
+            seen[k_m[0]] = True
     replace_stack_and_mark_star(to_replace)
 
 def can_the_loop_be_deleted(idx_map, while_register, module):
@@ -132,7 +122,7 @@ def can_the_loop_be_deleted(idx_map, while_register, module):
         if '.0' in i_m[0]:
             # assert '?' not in i_m[0]
             continue
-        a = util.is_compatible((i_m, FILE, TREE), (['', [], 0, 0], FILE, TREE), module)
+        a = util.is_a_replaceable_with_b((i_m, FILE, TREE), (['', [], 0, 0], FILE, TREE), module)
         method1, ctrl1, cname1, num1, can_empty, cstack1 = util.parse_pseudo_name(i_m[0])
         name = util.unparse_pseudo_name(method1, ctrl1, cname1, num1, util.Epsilon if a else util.NoEpsilon, cstack1)
         i_m[0] = name
@@ -152,8 +142,6 @@ def check_current_loops_for_compatibility(idx_map, while_register, module):
             # previous whiles worked.
             a = util.is_compatible((i_m, FILE, TREE), (j_m, FILE, TREE), module)
             if not a: continue
-            b = util.is_compatible((j_m, FILE, TREE), (i_m, FILE, TREE), module)
-            if not b: continue
             to_replace.append((i_m, j_m)) # <- replace i_m by j_m
             break
     replace_stack_and_mark_star(to_replace)
