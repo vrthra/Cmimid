@@ -213,6 +213,7 @@ def generalize_while_trees(jtrees, log=False):
     for j in jtrees:
         FILE = j['arg']
         if log: print(FILE, file=sys.stderr)
+        util.init_log('generalize_loops', FILE, j['original'])
         sys.stderr.flush()
         TREE = util.to_modifiable(j['tree'])
         generalize_while_node(TREE, j['original'])

@@ -17,6 +17,10 @@ class O:
     def __init__(self, **keys): self.__dict__.update(keys)
     def __repr__(self): return str(self.__dict__)
 
+def init_log(prefix, var, module):
+    with open('%s.log' % module, 'a+') as f:
+        print(prefix, ':==============',var, file=f)
+
 def do(command, env=None, shell=False, log=False, **args):
     result = subprocess.Popen(command,
         stdout = subprocess.PIPE,
@@ -104,7 +108,7 @@ def is_a_replaceable_with_b(a1, a2, module):
     n2, f2, t2 = a2
     if tree_to_str(n1) == tree_to_str(n2): return True
     my_string = replace_nodes(a1, a2)
-    o = tree_to_str(t2)
+    o = tree_to_str(t1)
     return check(o, my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
 
 def parse_pseudo_name(node_name):
