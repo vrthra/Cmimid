@@ -77,7 +77,7 @@ class AstNode:
 class SpellingNode(AstNode):
     def __repr__(self): return self.node.spelling
 
-class SrcNode(AstNode):
+class ExprNode(AstNode):
     def __repr__(self):
         s = self.to_src()
         if not s: bp()
@@ -90,7 +90,9 @@ class NullStmt(AstNode):
     def __repr__(self): return ';'
 
 class FalseNode(AstNode):
-    def __repr__(self): assert False
+    def __repr__(self):
+        print('FalseNode:', self.node.kind, self.node.extent)
+        assert False
 
 
 class EnumDecl(StmtNode): pass
@@ -101,15 +103,14 @@ class VarDecl(StmtNode): pass
 class UnionDecl(StmtNode): pass
 class TypeDecl(StmtNode): pass
 
-class CallExpr(SrcNode): pass
-class ParenExpr(SrcNode): pass
-class UnexposedExpr(SrcNode): pass
-class DeclRefExpr(SrcNode): pass
-class CharacterLiteral(SrcNode): pass
-class CXXUnaryExpr(SrcNode): pass
-class CStyleCastexpr(SrcNode): pass
-class ConditionalOperator(SrcNode): pass
-class MemberRefExpr(SrcNode): pass
+class CallExpr(ExprNode): pass
+class ParenExpr(ExprNode): pass
+class UnexposedExpr(ExprNode): pass
+class DeclRefExpr(ExprNode): pass
+class CharacterLiteral(ExprNode): pass
+class CXXUnaryExpr(ExprNode): pass
+class CStyleCastexpr(ExprNode): pass
+class MemberRefExpr(ExprNode): pass
 
 class ParmDecl(AstNode): pass
 class DeclStmt(AstNode): pass
@@ -126,37 +127,68 @@ class LabelStmt(FalseNode): pass
 
 class DefaultStmt(AstNode): pass
 
-class ReturnStmt(AstNode):
+class TernaryStmt(BaseException):
+    def __init__(self, vals):
+        self.vals = vals
+
+class ConditionalOperator(ExprNode):
+    def __repr__(self):
+        cond, true_child, false_child = [to_string(c) for c in self.node.get_children()]
+        raise TernaryStmt((cond, true_child, false_child))
+#        s = '''
+#if (%(cond)s) {
+#    %(true_child)s;
+#} else {
+#    %(false_child)s;
+#}''' % {"cond":cond, "true_child":true_child, "false_child":false_child}
+#        return s
+
+class ReturnStmt(StmtNode):
     def __repr__(self):
         c = list(self.node.get_children())
         if not c:
             return 'return;'
-        v = to_string(c[0])
-        return '''
+        try:
+            v = to_string(c[0])
+            return '''
 {
 %s __cmimid__ret = %s;
 return __cmimid__ret;
 }
 ''' % (RET_TYPE, v)
+        except TernaryStmt as ts:
+            cond, if_child, else_child = ts.vals
+            return '''
+{
+%(ret_type)s __cmimid__ret;
+if (%(cond)s) {
+__cmimid__ret = %(if_child)s;
+} else {
+__cmimid__ret = %(else_child)s;
+}
+return __cmimid__ret;
+}
+''' % {'ret_type': RET_TYPE, 'cond': cond, 'if_child': if_child, 'else_child': else_child}
 
-class CaseStmt(AstNode):
-    def __repr__(self):
-       children = list(self.node.get_children())
-       if len(children) == 2:
-           label = to_string(children[0])
-           body = compound_body_with_cb(children[1])
-           return '''case %s: %s;''' % (label, body)
-       src = []
-       for child in children:
-           c = to_string(child)
-           src.append(c)
-       return '\n'.join(src)
+class CaseStmt(FalseNode): pass
+    # Not directly used, but in Compound Statement to evaluate src.
+#   def __repr__(self):
+#      children = list(self.node.get_children())
+#      if len(children) == 2:
+#          label = to_string(children[0])
+#          body = compound_body_with_cb(children[1])
+#          return '''case %s: %s;''' % (label, body)
+#      src = []
+#      for child in children:
+#          c = to_string(child)
+#          src.append(c)
+#      return '\n'.join(src)
 
 
 def extent(node):
     return range(node.extent.start.line,node.extent.end.line+1)
 
-class ForStmt(AstNode):
+class ForStmt(StmtNode):
     def __repr__(self):
         outer_range = extent(self.node)
         tokens = [t for t in self.node.get_tokens()]
@@ -210,7 +242,7 @@ if (!__cmimid__res) break;
 ''' % (sdecl,scond, sbody, sincr)
 
 
-class DoStmt(AstNode):
+class DoStmt(StmtNode):
     def __repr__(self):
         outer_range = extent(self.node)
         children = list(self.node.get_children())
@@ -233,7 +265,7 @@ if (!__cmimid__res) break;
 ''' % (body, cond)
 
 
-class WhileStmt(AstNode):
+class WhileStmt(StmtNode):
     def __repr__(self):
         outer_range = extent(self.node)
         children = list(self.node.get_children())
@@ -256,7 +288,7 @@ if (!__cmimid__res) break;
 ''' % (cond, body)
 
 
-class IfStmt(AstNode):
+class IfStmt(StmtNode):
     def __init__(self, node, with_cb=True):
         super().__init__(node)
         self.with_cb = with_cb
@@ -301,7 +333,7 @@ if ( __cmimid__res )
         return block
 
 
-class SwitchStmt(AstNode):
+class SwitchStmt(StmtNode):
     def __repr__(self):
         children = list(self.node.get_children())
         assert(len(children) == 2)
@@ -322,7 +354,7 @@ int __cmimid__case_val = (%s);
 ''' % (switch_expr, body)
 
 
-class CompoundStmt(AstNode):
+class CompoundStmt(StmtNode):
     def __repr__(self):
         outer_range = extent(self.node)
         stmts = []
@@ -333,7 +365,6 @@ class CompoundStmt(AstNode):
         seen_default = False
         seen_first = False
         for i,child in enumerate(children):
-            rep = to_string(child)
             if child.kind == CursorKind.LABEL_STMT:
                 # what is the outer scope here? Hopefully it is
                 # in CURRENT_STACK[-1]
@@ -372,6 +403,8 @@ class CompoundStmt(AstNode):
 %s
 %s;
 ''' % (pre, body.strip())
+            else:
+                rep = to_string(child)
             if not rep:
                print("No REP", child.kind, child.extent, file=sys.stderr)
                continue
