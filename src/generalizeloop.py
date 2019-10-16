@@ -81,6 +81,7 @@ def check_registered_loops_for_compatibility(idx_map, while_register, module):
             k_m = idx_map[k]
             if k_m[0] in seen: continue
             if len(my_values) > util.MAX_SAMPLES:
+                assert False
                 values = sorted(my_values, key=s_fn, reverse=True)[0:util.MAX_SAMPLES]
             else:
                 values = my_values
@@ -94,7 +95,8 @@ def check_registered_loops_for_compatibility(idx_map, while_register, module):
                     replace += 1
             if not replace: continue
             assert len(values) == replace
-            to_replace.append((k_m, v_[0])) # <- replace k_m by v
+            if len(values) == replace:
+                to_replace.append((k_m, v_[0])) # <- replace k_m by v
             seen[k_m[0]] = True
     replace_stack_and_mark_star(to_replace)
 

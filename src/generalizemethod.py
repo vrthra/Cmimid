@@ -100,6 +100,7 @@ def check_registered_methods_for_compatibility(child, method_register, module):
         k_m = child
         if k_m[0] in seen: continue
         if len(my_values) > util.MAX_PROC_SAMPLES:
+            assert False
             values = sorted(my_values, key=s_fn, reverse=True)[0:util.MAX_PROC_SAMPLES]
         else:
             values = my_values
@@ -112,8 +113,9 @@ def check_registered_methods_for_compatibility(child, method_register, module):
             if a:
                 replace += 1
         if replace == 0: continue
-        assert len(values) == replace, 'Not all values agreed'
-        to_replace.append((k_m, v_[0])) # <- replace k_m by v
+        #assert len(values) == replace, 'Not all values agreed' <- TODO
+        if len(values) == replace:
+            to_replace.append((k_m, v_[0])) # <- replace k_m by v
         seen[k_m[0]] = True
 
     method_replace_stack(to_replace)

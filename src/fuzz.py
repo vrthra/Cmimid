@@ -14,18 +14,19 @@ class Fuzzer:
             for rule in self.grammar[k]:
                 print("\t", rule)
 
-    def fuzz_key(self, key='<START>'):
+    def fuzz_key(self, key='<START>', path=[]):
+        path.append(key)
         #print(":", key)
         if key not in self.grammar: return key
         choice = random.choice(self.grammar[key])
         if isinstance(choice, list):
-            return self.fuzz_rule(choice)
+            return self.fuzz_rule(choice, path)
         else:
-            return self.fuzz_rule(list(re.split(RE_NONTERMINAL, choice)))
+            return self.fuzz_rule(list(re.split(RE_NONTERMINAL, choice)), path)
 
-    def fuzz_rule(self, rule):
+    def fuzz_rule(self, rule, path):
         #print("\t",rule)
-        fuzzed = [self.fuzz_key(token) for token in rule]
+        fuzzed = [self.fuzz_key(token, path) for token in rule]
         return ''.join(fuzzed)
 
 import subprocess
@@ -36,19 +37,22 @@ def main(args):
         f = Fuzzer(s)
     for i in range(100):
         try:
-            v = f.fuzz_key(args[2] if len(args)> 2 else '<START>')
+            path = []
+            v = f.fuzz_key(args[2] if len(args)> 2 else '<START>', path=path)
             print(repr(v))
             p = subprocess.Popen(args[1], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             data, err = p.communicate(input=v.encode())
             #print(p.returncode)
             if p.returncode != 0:
-                errors.append(v)
+                errors.append((v, path))
         except RecursionError:
             pass
 
 main(sys.argv[1:])
 print()
-for e in errors:
+for e,p in errors:
     print(repr(e))
+    #print(' '.join([i.split(' ')[0] + '>' if i[0] == '<' and ' ' in  i else repr(i) for i in p]))
+    #print()
 
 print(len(errors))

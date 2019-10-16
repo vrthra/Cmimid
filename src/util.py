@@ -4,8 +4,8 @@ import json
 import subprocess
 from fuzzingbook.GrammarFuzzer import tree_to_string
 PARSE_SUCCEEDED = 10
-MAX_SAMPLES = 1
-MAX_PROC_SAMPLES = 1
+MAX_SAMPLES = 100
+MAX_PROC_SAMPLES = 100
 
 Epsilon = '-'
 NoEpsilon = '='
@@ -38,14 +38,14 @@ def do(command, env=None, shell=False, log=False, **args):
 #    return result
 EXEC_MAP = {}
 
-def check(o, s, module, sa1, sa2):
+def check(o, e, s, module, sa1, sa2):
     if s in EXEC_MAP: return EXEC_MAP[s]
     result = do([module, s])
     with open('%s.log' % module, 'a+') as f:
         print('------------------', file=f)
         print('original:', repr(o), file=f)
         print('updated:', repr(s), file=f)
-        print('Checking:', file=f)
+        print('Checking:',e, file=f)
         print('1:', repr(sa1), file=f)
         print('2:', repr(sa2), file=f)
         print(' '.join([module, repr(s)]), file=f)
@@ -109,7 +109,7 @@ def is_a_replaceable_with_b(a1, a2, module):
     if tree_to_str(n1) == tree_to_str(n2): return True
     my_string = replace_nodes(a1, a2)
     o = tree_to_str(t1)
-    return check(o, my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
+    return check(o, n1[0], my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
 
 def parse_pseudo_name(node_name):
     assert (node_name[0], node_name[-1]) == ('<','>')
