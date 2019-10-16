@@ -1,5 +1,5 @@
 import taints
-import urllib.parse
+import util
 import sys
 
 indent = 0
@@ -14,13 +14,7 @@ def log(i, var, line):
 
 class method__:
     def __init__(self, name, args):
-        self.args = '_'.join([urllib.parse.quote(i) for i in args if type(i) == str])
-        if not self.args:
-            self.name = name
-        else:
-            self.name = "%s__%s" % (name, self.args) # <- not for now #TODO
-        if args and hasattr(args[0], 'tag'):
-            self.name = "%s:%s" % (args[0].tag, self.name)
+        self.name = util.encode_method_name(name, args)
         self.method_name = self.name
         taints.trace_call(self.name)
 
@@ -75,11 +69,8 @@ class scope__:
             pass
         else:
             assert False, self.name
-        uid = json.dumps(self.stack)
-        if self.name in {'while', 'for'}:
-            taints.trace_call('%s:%s_%s %s %s' % (self.method_name, self.name, self.num, self.can_empty, uid))
-        else:
-            taints.trace_call('%s:%s_%s %s %s#%s' % (self.method_name, self.name, self.num, self.can_empty, self.alt, uid))
+        encoded_name = util.encode_name(self.method_name, self.name, self.num, self.alt, self.can_empty, self.stack)
+        taints.trace_call(encoded_name)
         self._old_name = taints.trace_set_method(self.name)
         log(1, self.name + ' ' + str(self.num) + ' ' + str(self.alt), line)
         return self

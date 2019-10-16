@@ -1,3 +1,4 @@
+import urllib.parse
 import copy
 import json
 import subprocess
@@ -59,8 +60,6 @@ def node_include(i, j):
     name_i, children_i, s_i, e_i = i
     name_j, children_j, s_j, e_j = j
     return s_i <= s_j and e_i >= e_j
-#------
-
 
 def get_ref(node, node_name):
     name, children, *rest = node
@@ -108,30 +107,48 @@ def is_a_replaceable_with_b(a1, a2, module):
     o = tree_to_str(t2)
     return check(o, my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
 
-#------
+def parse_pseudo_name(node_name):
+    assert (node_name[0], node_name[-1]) == ('<','>')
+    return decode_name(node_name[1:-1])
 
+def decode_name(node_name_stack):
+    node_name, mstack = node_name_stack.split('#')
+    method_stack = json.loads(mstack)
+    method_ctrl_alt_name, can_empty = node_name.split(' ')
+    method, ctrl_cid_altid = method_ctrl_alt_name.split(':')
+    ctrl, cid_altid = ctrl_cid_altid.split('_')
+    assert ctrl in {'while', 'if'}
+    cid, altid = cid_altid.split(',')
 
-def parse_pseudo_name(name):
-    assert name[0] + name[-1] == '<>'
-    name = name[1:-1]
-    method, rest = name.split(':')
-    ctrl_name, space, rest = rest.partition(' ')
-    can_empty, space, stack = rest.partition(' ')
-    ctrl, cname = ctrl_name.split('_')
-    assert ':for_' not in name
-    assert ':switch_' not in name
-    if ':while_' in name:
-        method_stack = json.loads(stack)
-        return method, ctrl, int(cname), 0, can_empty, method_stack
-    elif ':if_' in name:
-        num, mstack = stack.split('#')
-        method_stack = json.loads(mstack)
-        return method, ctrl, int(cname), num, can_empty, method_stack
+    if 'while' == ctrl:
+        assert altid == '0'
+    return method, ctrl, int(cid), altid, can_empty, method_stack
 
-def unparse_pseudo_name(method, ctrl, name, num, can_empty, cstack):
-    assert ctrl != 'for'  and ctrl != 'switch'
-    if ctrl == 'while':
-        return "<%s:%s_%s %s %s>" % (method, ctrl, name, can_empty, json.dumps(cstack))
+def unparse_pseudo_name(method, ctrl, ctrl_id, alt_num, can_empty, cstack):
+    return "<%s>" % encode_name(method, ctrl, ctrl_id, alt_num, can_empty, cstack)
+
+def encode_name(method, ctrl, ctrl_id, alt_num, can_empty, stack):
+    assert ctrl in {'while', 'if'}
+    return '%s:%s_%s,%s %s#%s' % (method, ctrl, ctrl_id, alt_num, can_empty, json.dumps(stack))
+
+def encode_method_name(name, my_args):
+    # trick to convert args that are not of type str for later.
+    #if args and hasattr(args[0], 'tag'):
+    #    self.name = "%s:%s" % (args[0].tag, self.name)
+
+    if not my_args:
+        return name
     else:
-        return "<%s:%s_%s %s %s#%s>" % (method, ctrl, name, can_empty, num, json.dumps(cstack))
+        return "%s(%s)" % (name, urllib.parse.quote('_'.join([str(i) for i in my_args])))
 
+def parse_method_name(mname):
+    assert (mname[0], mname[-1]) == ('<', '>')
+    name = mname[1:-1]
+    if '.' in name:
+        nname, my_id = name.split('.')
+        return nname, my_id
+    else:
+        return name, '0'
+
+def unparse_method_name(mname, my_id):
+    return '<%s.%s>' % (mname, my_id)

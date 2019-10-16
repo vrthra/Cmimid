@@ -28,30 +28,16 @@ def update_method_stack(node, old_name, new_name):
     for c in node[1]:
         update_method_stack(c, old_name, new_name)
 
-
-def parse_method_name(mname):
-    assert (mname[0], mname[-1]) == ('<', '>')
-    name = mname[1:-1]
-    if '.' in name:
-        nname, my_id = name.split('.')
-        return nname, my_id
-    else:
-        return name, '0'
-
-def unparse_method_name(mname, my_id):
-    return '<%s.%s>' % (mname, my_id)
-
-
 def method_replace_stack(to_replace):
     # remember, we only replace methods.
     for (i, j) in to_replace:
         old_name = i[0]
-        method1, my_id1 = parse_method_name(i[0])
-        method2, my_id2 = parse_method_name(j[0])
+        method1, my_id1 = util.parse_method_name(i[0])
+        method2, my_id2 = util.parse_method_name(j[0])
         assert method1 == method2
         #assert can_empty2 != '?'
 
-        new_name = unparse_method_name(method1, my_id2)
+        new_name = util.unparse_method_name(method1, my_id2)
         i[0] = new_name
 
         for c in i[1]:
@@ -61,8 +47,8 @@ def method_replace_stack(to_replace):
 def update_method_name(k_m, my_id, seen):
     # fixup k_m with what is in my_id, and update seen.
     original = k_m[0]
-    method, old_id = parse_method_name(original)
-    name = unparse_method_name(method, my_id)
+    method, old_id = util.parse_method_name(original)
+    name = util.unparse_method_name(method, my_id)
     seen[k_m[0]] = name
     k_m[0] = name
 
@@ -78,7 +64,7 @@ def register_new_methods(child, method_register):
         if k_m[0] in seen:
             k_m[0] = seen[k_m[0]]
             # and update
-            method1, my_id = parse_method_name(k_m[0])
+            method1, my_id = util.parse_method_name(k_m[0])
             update_method_name(k_m, my_id, seen)
             return
         # new! get a brand new name!

@@ -12,23 +12,6 @@ def reset_generalizer():
     FILE = None
     util.EXEC_MAP.clear()
 
-def parse_name(name):
-    assert name[0] + name[-1] == '<>'
-    name = name[1:-1]
-    method, rest = name.split(':')
-    ctrl_name, space, rest = rest.partition(' ')
-    can_empty, space, stack = rest.partition(' ')
-    ctrl, cname = ctrl_name.split('_')
-    assert ':for_' not in name
-    assert ':switch_' not in name
-    if ':while_' in name:
-        method_stack = json.loads(stack)
-        return method, ctrl, int(cname), 0, can_empty, method_stack
-    elif ':if_' in name:
-        num, mstack = stack.split('#')
-        method_stack = json.loads(mstack)
-        return method, ctrl, int(cname), num, can_empty, method_stack
-
 def update_stack(node, at, new_name):
     nname, children, *rest = node
     assert ':for_' not in nname
