@@ -50,9 +50,16 @@ def main(args):
 
 main(sys.argv[1:])
 print()
+def process_token(i):
+    if i and i[0] == '<' and ' ' in  i:
+        return i.split(' ')[0] + '>'
+    elif i and i[0] == '<':
+        return i
+    else:
+        return repr(i)
 for e,p in errors:
     print(repr(e))
-    #print(' '.join([i.split(' ')[0] + '>' if i[0] == '<' and ' ' in  i else repr(i) for i in p]))
-    #print()
+    print(' '.join([process_token(i) for i in p]))
+    print()
 
 print(len(errors))

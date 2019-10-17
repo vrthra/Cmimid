@@ -1,5 +1,6 @@
 import urllib.parse
 import copy
+import random
 import json
 import subprocess
 from fuzzingbook.GrammarFuzzer import tree_to_string
@@ -111,6 +112,18 @@ def is_a_replaceable_with_b(a1, a2, module):
     o = tree_to_str(t1)
     return check(o, n1[0], my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
 
+def is_node_method(node):
+    node_name = node[0]
+    if (node_name[0], node_name[-1]) != ('<', '>'): return False
+    return not is_node_pseudo(node)
+
+def is_node_pseudo(node):
+    node_name = node[0]
+    if (node_name[0], node_name[-1]) != ('<', '>'): return False
+    if ':if_' in node_name: return True
+    if ':while_' in node_name: return True
+    return False
+
 def parse_pseudo_name(node_name):
     assert (node_name[0], node_name[-1]) == ('<','>')
     return decode_name(node_name[1:-1])
@@ -156,3 +169,11 @@ def parse_method_name(mname):
 
 def unparse_method_name(mname, my_id):
     return '<%s.%s>' % (mname, my_id)
+
+
+def sample(elts, pop_len):
+    if len(elts) < pop_len:
+        pop_len = len(elts)
+    if pop_len == -1:
+        return elts
+    return random.sample(elts, pop_len)

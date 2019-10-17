@@ -7,14 +7,6 @@ import os.path, copy, random
 random.seed(0)
 
 NODE_REGISTER = {}
-TREE = None
-FILE = None
-def reset_generalizer():
-    global NODE_REGISTER, TREE, FILE
-    NODE_REGISTER={}
-    TREE = None
-    FILE = None
-    util.EXEC_MAP.clear()
 
 def update_method_stack(node, old_name, new_name):
     nname, children, *rest = node
@@ -28,28 +20,11 @@ def update_method_stack(node, old_name, new_name):
     for c in node[1]:
         update_method_stack(c, old_name, new_name)
 
-def method_replace_stack(to_replace):
-    # remember, we only replace methods.
-    for (i, j) in to_replace:
-        old_name = i[0]
-        method1, my_id1 = util.parse_method_name(i[0])
-        method2, my_id2 = util.parse_method_name(j[0])
-        assert method1 == method2
-        #assert can_empty2 != '?'
-
-        new_name = util.unparse_method_name(method1, my_id2)
-        i[0] = new_name
-
-        for c in i[1]:
-            update_method_stack(c, old_name[1:-1], new_name[1:-1])
-    to_replace.clear()
-
-def update_method_name(k_m, my_id, seen):
-    # fixup k_m with what is in my_id, and update seen.
+def update_method_name(k_m, my_id):
+    # fixup k_m with what is in my_id
     original = k_m[0]
     method, old_id = util.parse_method_name(original)
     name = util.unparse_method_name(method, my_id)
-    seen[k_m[0]] = name
     k_m[0] = name
 
     for c in k_m[1]:
@@ -57,108 +32,89 @@ def update_method_name(k_m, my_id, seen):
 
     return name, k_m
 
-def register_new_methods(child, method_register):
-    seen = {}
-    k_m = child
-    if "." not in k_m[0]:
-        if k_m[0] in seen:
-            k_m[0] = seen[k_m[0]]
-            # and update
-            method1, my_id = util.parse_method_name(k_m[0])
-            update_method_name(k_m, my_id, seen)
-            return
-        # new! get a brand new name!
-        method_register[1] += 1
-        my_id = method_register[1]
+def register_node(node, tree, executable, input_file):
+    # we want to save a copy of the tree so we can modify it later. 
+    node_name = node[0]
+    template_name = '__CMIMID__NODE__'
+    node[0] = template_name
+    new_tree = copy.deepcopy(tree)
+    node[0] = node_name
+    new_node = util.get_ref(new_tree, template_name)
+    new_node[0] = node_name
+    if node_name not in NODE_REGISTER: NODE_REGISTER[node_name] = []
+    new_elt = (new_node, new_tree, executable, input_file,
+            {'inputstr': util.tree_to_str(new_tree), 'node':node, 'tree':tree})
+    NODE_REGISTER[node_name].append(new_elt)
+    return new_elt
 
-        original_name = k_m[0]
-        name, new_km = update_method_name(k_m, my_id, seen)
-        method_register[0][(name, FILE)] = [(new_km, FILE, TREE)]
-    else:
-        name = k_m[0]
-        if (name, FILE) not in method_register[0]:
-            method_register[0][(name, FILE)] = []
-        method_register[0][(name, FILE)].append((k_m, FILE, TREE))
+def collect_nodes(node, tree, executable, inputfile):
+    node_name, children, si, ei = node
+    if util.is_node_method(node):
+        register_node(node, tree, executable, inputfile)
 
-def num_tokens(v, s):
-    name, child, *rest = v
-    s.add(name)
-    [num_tokens(i, s) for i in child]
-    return len(s)
+    for child in children:
+        collect_nodes(child, tree, executable, inputfile)
 
-def s_fn(v):
-    return num_tokens(v[0], set())
+def get_compatibility_pattern(xnode, sampled_nodes):
+    node0, tree0, executable0, inputfile0, _info = xnode
+    results = []
+    a0 = node0, inputfile0, tree0
+    for snode in sampled_nodes:
+        nodeX, treeX, executableX, inputfileX, _info = snode
+        aX = nodeX, inputfileX, treeX
+        result = util.is_compatible(a0, aX, executable0)
+        results.append(result)
+    return ''.join(['1' if i else '0' for i in results])
 
-def check_registered_methods_for_compatibility(child, method_register, module):
-    seen = {}
-    to_replace = []
-    for method_key, f in method_register[0]:
-        # try sampling here.
-        my_values = method_register[0][(method_key, f)]
-        v_ = random.choice(my_values)
+def identify_compatibility_patterns(node_name):
+    registered_xnodes = NODE_REGISTER[node_name]
+    sampled_xnodes = util.sample(registered_xnodes, util.MAX_PROC_SAMPLES)
+    my_patterns = {}
+    count = 0
+    for xnode in registered_xnodes:
+        pattern = get_compatibility_pattern(xnode, sampled_xnodes)
+        if pattern not in my_patterns:
+            my_patterns[pattern] = count
+            count += 1
+        _nodeX, _treeX, _executableX, _inputfileX, infoX = xnode
+        infoX['pattern'] = my_patterns[pattern]
+    return my_patterns
 
-        k_m = child
-        if k_m[0] in seen: continue
-        if len(my_values) > util.MAX_PROC_SAMPLES:
-            assert False
-            values = sorted(my_values, key=s_fn, reverse=True)[0:util.MAX_PROC_SAMPLES]
-        else:
-            values = my_values
+def update_original_names(node_name):
+    registered_xnodes = NODE_REGISTER[node_name]
+    for xnode in registered_xnodes:
+        # name it according to its pattern
+        nodeX, treeX, executableX, inputfileX, infoX = xnode
+        pattern = infoX['pattern']
+        update_method_name(infoX['node'], pattern)
 
-        # all values in v should be tried.
-        replace = 0
-        for v in values:
-            assert v[0][0] == v_[0][0]
-            a = util.is_compatible((k_m, FILE, TREE), v, module)
-            if a:
-                replace += 1
-        if replace == 0: continue
-        #assert len(values) == replace, 'Not all values agreed' <- TODO
-        if len(values) == replace:
-            to_replace.append((k_m, v_[0])) # <- replace k_m by v
-        seen[k_m[0]] = True
-
-    method_replace_stack(to_replace)
-
-
-def generalize_method(child, method_register, module):
-    # First we check the previous methods
-    check_registered_methods_for_compatibility(child, method_register, module)
-
-    # lastly, update all method names.
-    register_new_methods(child, method_register)
-
-def generalize_method_node(tree, module):
-    node, children, *_rest = tree
-    global NODE_REGISTER
-    register = NODE_REGISTER
-
-    for i,child in enumerate(children):
-        generalize_method_node(child, module)
-
-    # Generalize methods
-    for i,child in enumerate(children):
-        if (child[0][0], child[0][-1]) != ('<','>'): continue
-        if ':while_' in child[0] or ':if' in child[0]: continue
-        method_name = child[0]
-        if method_name not in register:
-            register[method_name] = [{}, 0]
-        generalize_method(child, register[method_name], module)
-
+# The idea is to first collect and register all nodes by their names.
+# Next, we sample N of these, and use the pattern of matches
+# (Todo: Do we simply use the pattern of compatibility or the pattern
+# of left to right replaceability -- that is, a is replaceable with b
+# but b is not replaceable with a is 10 while full compatibility would
+# be 11 -> 1)
 def generalize_method_trees(jtrees, log=False):
-    global TREE, FILE
-    new_trees = []
+    my_trees = []
     for j in jtrees:
-        FILE = j['arg']
-        util.init_log('generalize_method', FILE, j['original'])
-        if log:
-            print(FILE, file=sys.stderr)
-        sys.stderr.flush()
-        TREE = util.to_modifiable(j['tree'])
-        generalize_method_node(TREE, j['original'])
-        j['tree'] = TREE
-        new_trees.append(copy.deepcopy(j))
-    return new_trees
+        tree = util.to_modifiable(j['tree']) # The tree ds.
+        executable = j['original']
+        inputfile = j['arg']
+        # we skip START
+        node_name, children, *rest = tree
+        assert node_name == '<START>'
+        for child in children:
+            collect_nodes(tree, tree, executable, inputfile)
+        my_trees.append({'tree':tree, 'original': executable, 'arg': inputfile})
+
+    for k in NODE_REGISTER:
+        identify_compatibility_patterns(k)
+
+    # finally, update the original names.
+    for k in NODE_REGISTER:
+        if k == '<START>': continue
+        update_original_names(k)
+    return my_trees
 
 def main(tracefile):
     with open(tracefile) as f:
@@ -166,6 +122,5 @@ def main(tracefile):
     gmethod_trees = generalize_method_trees(mined_trees)
     json.dump(gmethod_trees, sys.stdout)
 
-main(sys.argv[1])
-
-
+if __name__ == '__main__':
+    main(sys.argv[1])
