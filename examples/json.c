@@ -226,7 +226,12 @@ static int json_parse_value(const char **cursor, json_value *parent) {
 }
 
 int json_parse(const char *input, json_value *result) {
-  return json_parse_value(&input, result);
+  char** cursor = &input;
+  int val = json_parse_value(cursor, result);
+  if (strlen(*cursor) != 0){
+    return 0;
+  }
+  return val;
 }
 
 void strip_input(char* my_string) {
