@@ -56,19 +56,18 @@ line = None
 
 def track_stack(e, gen_events):
     global method_specialization, line
-    line = e.info[0]
+    line = int(e.info[0])
     if e.fun in {'cmimid__method_arg'}:
-        line, ith, typ, val = e.info
-        if typ == CMIMID_TYPE_CHAR:
-            method_specialization.append(chr(val))
-        elif typ == CMIMID_TYPE_INT:
-            method_specialization.append(val)
+        _line, _ith, typ, val = e.info
+        if int(typ) == CMIMID_TYPE_CHAR:
+            method_specialization.append(chr(int(val)))
+        elif int(typ) == CMIMID_TYPE_INT:
+            method_specialization.append(int(val))
         else:
             # ignore unknowns
             pass
 
     elif e.fun in {'cmimid__method_enter'}:
-        line, _mid, *args = e.info
         mname = METHOD_PREFIX[-1]
         cmimid_stack.append(('method', mname, line))
         gen_events.append((line, ('method_enter', mname, method_specialization)))
@@ -79,10 +78,10 @@ def track_stack(e, gen_events):
         popped_stack.append(x)
         method, mname, line = x
         assert method == 'method'
-        gen_events.append((e.info[0], ('method_exit', mname)))
+        gen_events.append((line, ('method_exit', mname)))
 
     elif e.fun in {'cmimid__stack_enter'}:
-        line, stack_kind, stack_id, *_args = e.info
+        _line, stack_kind, stack_id, *_args = [int(i) for i in e.info]
         str_skind = kind_map[stack_kind]
 
         key = to_key(METHOD_PREFIX[-1], str_skind, stack_id)
@@ -96,11 +95,11 @@ def track_stack(e, gen_events):
         popped_stack.append(x)
         stack, stack_id, str_skind, line = x
         assert stack == 'stack'
-        gen_events.append((e.info[0],('stack_exit', stack_id)))
+        gen_events.append((line,('stack_exit', stack_id)))
         pseudo_method_stack.pop()
 
     elif e.fun in {'cmimid__scope_enter'}:
-        line, scope_alt, is_default_or_else, *args = e.info
+        _line, scope_alt, is_default_or_else, *args = [int(i) for i in e.info]
         if is_default_or_else == '1':
             non_empty_methods.add(pseudo_method_stack[-1])
         cmimid_stack.append(('scope', scope_alt, args, line))
@@ -111,7 +110,7 @@ def track_stack(e, gen_events):
         popped_stack.append(x)
         scope, scope_alt, args, line = x
         assert scope == 'scope'
-        gen_events.append((e.info[0], ('scope_exit', scope_alt)))
+        gen_events.append((line, ('scope_exit', scope_alt)))
 
 
     elif e.fun in {'cmimid__return'}:
@@ -122,15 +121,15 @@ def track_stack(e, gen_events):
             popped_stack.append(t)
             if t[0] == 'method':
                 method, mid, line = t
-                gen_events.append((e.info[0], ('method_exit', mid)))
+                gen_events.append((line, ('method_exit', mid)))
                 # stop unwinding
                 break
             elif t[0] == 'stack':
                 stack, stack_id, stack_kind, line = t
-                gen_events.append((e.info[0], ('stack_exit', stack_id)))
+                gen_events.append((line, ('stack_exit', stack_id)))
             elif t[0] == 'scope':
                 scope, scope_kind, args, line = t
-                gen_events.append((e.info[0], ('scope_exit', scope_kind)))
+                gen_events.append((line, ('scope_exit', scope_kind)))
 
     elif e.fun in {'cmimid__break'}:
         # break is a little return. Unwind until the next
@@ -144,13 +143,13 @@ def track_stack(e, gen_events):
                 assert False
             elif t[0] == 'stack':
                 stack, stack_id, str_skind, line = t
-                gen_events.append((e.info[0], ('stack_exit', stack_id)))
+                gen_events.append((line, ('stack_exit', stack_id)))
                 if str_skind in {'for', 'while', 'switch'}:
                     # this should not happen.
                     assert False
             elif t[0] == 'scope':
                 scope, scope_kind, args, line = t
-                gen_events.append((e.info[0], ('scope_exit', scope_kind)))
+                gen_events.append((line, ('scope_exit', scope_kind)))
                 stack, stack_id, str_skind, line = cmimid_stack[-1]
                 if str_skind in {'for', 'while', 'switch'}:
                     # stop unwinding. The stack would get popped next.
@@ -170,10 +169,10 @@ def track_stack(e, gen_events):
                 # we should exit before the first _loop_ or _switch_
                 # which is the parent for _continue_
                 assert str_skind not in {'for', 'while', 'switch'}
-                gen_events.append((e.info[0], ('stack_exit', stack_id)))
+                gen_events.append((line, ('stack_exit', stack_id)))
             elif t[0] == 'scope':
                 scope, scope_kind, args, line = t
-                gen_events.append((e.info[0], ('scope_exit', scope_kind)))
+                gen_events.append((line, ('scope_exit', scope_kind)))
                 stack, stack_id, skind, line = cmimid_stack[-1]
                 if skind in {'for', 'while', 'switch'}:
                     # stop unwinding
@@ -188,7 +187,7 @@ def track_comparison(e, inputstring, gen_events):
     # 'operator': 'strcmp',
     # 'operand': ['\n'],
     # 'id': 1, 'stack': ['_real_program_main']}
-    indexes = e['index']
+    indexes = [int(i) for i in e['index']]
     for i in indexes:
         # we need only the accessed indexes
         gen_events.append(('_', ('comparison', i, inputstring)))
