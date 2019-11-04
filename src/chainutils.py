@@ -1,6 +1,10 @@
 import subprocess
 import json
+import os
+import os.path
 import config
+import pudb
+brk = pudb.set_trace
 
 def compile_src(executable):
     with open('build/exec_file', 'w+') as f:
@@ -49,6 +53,11 @@ def do(command, env=None, shell=False, log=False,input=None, **args):
     stdout, stderr = result.communicate(timeout=config.TIMEOUT, input=input.encode('ascii'))
     return O(returncode=result.returncode, stdout=stdout, stderr=stderr)
 
+def check_debug():
+    if os.path.exists('/tmp/.debug'):
+        os.remove('/tmp/.debug')
+        brk()
+
 def execute(executable, my_input):
     # first write the input in checksum-repair build
     with open('../checksum-repair/build/%s.input' % executable, 'w+') as f:
@@ -89,10 +98,15 @@ def get_comparisons():
             if line['operator'] == 'switch':
                 assert len(line['index']) == 1
                 for k in line['operand']:
-                    input_comparisons.append(O(**{'x': line['index'][0], 'op': '==', 'op_B': k, 'op_A': line['value']}))
+                    input_comparisons.append(O(**{
+                        'x': line['index'][0], 'op': '==', 'op_B': k, 'op_A': line['value'], 'stack': line['stack']
+                        }))
             elif line['operator'] == '==':
                 assert len(line['index']) == 1
-                input_comparisons.append(O(**{'x': line['index'][0], 'op': line['operator'], 'op_B':line['operand'][0], 'op_A': line['value']}))
+                input_comparisons.append(
+                        O(**{
+                            'x': line['index'][0], 'op': line['operator'], 'op_B':line['operand'][0], 'op_A': line['value'], 'stack': line['stack']
+                                }))
             elif line['operator'] == 'conversion':
                 continue
             elif line['operator'] == 'strcmp':
@@ -110,7 +124,9 @@ def get_comparisons():
                     op_B = Bchars[i]
                     if i >= len(line['value']): break
                     op_A = Achars[i]
-                    input_comparisons.append(O(**{'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A}))
+                    input_comparisons.append(O(**{
+                        'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A, 'stack': line['stack']
+                        }))
                     if op_A != op_B: break
 
             elif line['operator'] == 'strsearch':
@@ -125,7 +141,9 @@ def get_comparisons():
                     op_A, op_B = y, x
                     k = idxs[i_j]
                     #assert chain.sys_arg()[k] + config.eof_char == op_A
-                    input_comparisons.append(O(**{'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A}))
+                    input_comparisons.append(O(**{
+                        'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A, 'stack': line['stack']
+                        }))
 
             else:
                 assert False
@@ -134,4 +152,15 @@ def get_comparisons():
     #        continue
     #    assert chain.sys_arg()[i.x] == i.op_A
     return input_comparisons
+
+
+def get_functions():
+    functions = []
+    with open('build/metadata') as f:
+        lines = f.readlines()
+    for sline in lines:
+        line = json.loads(sline)
+        if not 'f' in line: continue
+        functions.append(line['f'])
+    return functions
 
