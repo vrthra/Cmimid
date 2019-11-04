@@ -1,4 +1,4 @@
-import os
+import os, string
 RandomSeed = int(os.getenv('R') or '0')
 
 MyPrefix = os.getenv('MY_PREFIX') or None
@@ -13,44 +13,14 @@ Return_Probability =  float(os.getenv('MY_RP') or '1.0')
 # The sampling distribution from which the characters are chosen.
 Distribution='U'
 
-Aggressive = True
-
-# We can choose to load the state at some iteration if we had dumped the
-# state in prior execution.
-Load = 0
-
-# Dump the state (a pickle)
-Dump = False
-
-# Where to pickle
-Pickled = '.pickle/ExecFile-%s.pickle'
-
-Track = True
-
 Debug=1
 
 TIMEOUT = 10
 
 eof_char = chr(126)
 
-Log_Comparisons = (os.getenv('LOG_COMPARISONS') or 'false') in ['true', 'True', '1']
-
-WeightedGeneration=False
-
-Comparison_Equality_Chain = 3
-
-Dumb_Search =  (os.getenv('DUMB_SEARCH') or 'false') in ['true', 'True', '1']
-
-
-Python_Specific = (os.getenv('PY_OPT') or 'false') in ['true', '1']
-
 No_CTRL = (os.getenv('NOCTRL') or 'false') in ['true', '1']
 
-Wide_Trigger = int(os.getenv('WIDE_TRIGGER') or '10')
-Deep_Trigger =  int(os.getenv('DEEP_TRIGGER') or '1000')
-
-StdErr_DevNull=(os.getenv('NO_LOG') or 'false') in {'true', '1'}
-if StdErr_DevNull:
-    f = open(os.devnull, 'w')
-    import sys
-    sys.stderr = f
+All_Characters = list(string.ascii_letters + string.digits + string.punctuation) \
+        if No_CTRL else list(string.printable)
+All_Characters = [i for i in All_Characters if i not in {"\n"}]

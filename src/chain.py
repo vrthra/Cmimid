@@ -13,10 +13,6 @@ brk = pudb.set_trace
 
 COMPARE_OPERATORS = {'==': lambda x, y: x == y}
 
-All_Characters = list(string.ascii_letters + string.digits + string.punctuation) \
-        if config.No_CTRL else list(string.printable)
-All_Characters = [i for i in All_Characters if i not in {"\n"}]
-
 def log(var, i=1):
     if config.Debug >= i: print(repr(var), file=sys.stderr, flush=True)
 
@@ -45,7 +41,7 @@ class Search(Prefix):
 
     def continue_valid(self):
         if  random.uniform(0,1) > config.Return_Probability:
-            return [self.create_prefix(self.my_arg + random.choice(All_Characters))]
+            return [self.create_prefix(self.my_arg + random.choice(config.All_Characters))]
         return []
 
     def parsing_state(self, h, limit_len):
@@ -87,7 +83,7 @@ class DeepSearch(Search):
             # chain starting from index at -1.
             assert cmp_stack[-1] is cmp_stack[v:][-1]
             diverge, *satisfy = cmp_stack[v:]
-            lst_solutions = All_Characters
+            lst_solutions = config.All_Characters
             for i,elt in reversed(satisfy):
                 lst_solutions = self.extract_solutions(elt, lst_solutions, False)
 
@@ -106,8 +102,8 @@ class DeepSearch(Search):
         somewhere and generate a character that conforms to everything until
         then.
         """
-        if not cmp_stack or config.Dumb_Search:
-            return [[l] for l in All_Characters if constraints(l)]
+        if not cmp_stack:
+            return [[l] for l in config.All_Characters if constraints(l)]
 
         stack_size = len(cmp_stack)
         lst_positions = list(range(stack_size-1,-1,-1))
@@ -146,7 +142,7 @@ class DeepSearch(Search):
 
             elif k == EState.Append:
                 assert new_prefix == arg_prefix
-                chars = All_Characters
+                chars = config.All_Characters
             else:
                 assert k == EState.Unknown
                 # Unknown what exactly happened. Strip the last and try again
@@ -186,7 +182,7 @@ class Chain:
 
     def gen_links(self):
         # replace interesting things
-        arg = config.MyPrefix if config.MyPrefix else random.choice(All_Characters)
+        arg = config.MyPrefix if config.MyPrefix else random.choice(config.All_Characters)
         solution_stack = [DeepSearch(arg)]
 
         chainutils.compile_src(self.executable)
