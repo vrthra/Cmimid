@@ -42,6 +42,26 @@ cd ../checksum-repair;
 ''' % executable, file=f)
     do(["bash", "./build/exec_file"], shell=False, input='')
 
+def strsearch(Y, x):
+    comparisons = []
+    N = len(Y)
+    n = len(x)
+    i = 0
+    while i+n <= N:
+        found=True
+        j = 0
+        while found and j < n:
+            comparisons.append((Y[i+j], x[j], i+j, j))
+            if (Y[i+j] == x[j]):
+                found = True
+            else:
+                found = False
+            j += 1
+        if found:
+            return comparisons
+        i +=1
+    return comparisons
+
 class EState(enum.Enum):
     # A char comparison made using a previous character
     Trim = enum.auto()
@@ -117,7 +137,7 @@ class DeepSearch(Search):
             lst_solutions = All_Characters
             for i,elt in reversed(satisfy):
                 lst_solutions = self.extract_solutions(elt, lst_solutions, False)
-                
+
             # now we need to diverge here
             i, elt = diverge
             lst_solutions = self.extract_solutions(elt, lst_solutions, True)
@@ -210,12 +230,16 @@ class Chain:
         self._my_arg = None
         self.seen = set()
         self.executable = executable
+        self.eof_char = chr(126)
 
     def add_sys_arg(self, v):
         self._my_arg = v
 
     def sys_arg(self):
         return self._my_arg
+
+    def sys_full_arg(self):
+        return self._my_arg + self.eof_char
 
     def prune(self, solutions):
         return [s for s in solutions if s.my_arg not in self.seen]
@@ -261,46 +285,30 @@ class Chain:
                         op_A = Achars[i]
                         input_comparisons.append(O(**{'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A}))
                         if op_A != op_B: break
-                    
+
                 elif line['operator'] == 'strsearch':
-                    # TODO: think more deeply about strsearch
                     # the index indicates which items in the input were touched.
                     # so for strcmp, length of index array corresponds to the length
                     # of operand
                     Bchars = line['operand'][0]
                     Achars = line['value']
                     idxs = line['index']
-                    assert len(idxs) <= len(Bchars)
-
-                    # now, for each element in the index array, there is a corresponding
-                    # element of operand
-                    for i,k in enumerate(idxs):
-                        op_B = Bchars[i]
-                        if i >= len(line['value']): break
-                        op_A = Achars[i]
+                    comparisons = strsearch(Achars, Bchars)
+                    for (y, x, i_j, j) in comparisons:
+                        op_A, op_B = y, x
+                        k = idxs[i_j]
+                        assert self.sys_full_arg()[k] == op_A
                         input_comparisons.append(O(**{'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A}))
-                        if op_A != op_B: break
-
-
-
-                    #for k in line['index']:
-                    #    if k >= len(line['value']):
-                    #        break
-                    #    op_A = line['value'][k]
-                    #    op_B = line['operand'][0][k]
-                    #    input_comparisons.append(O(**{'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A}))
-                    #    if op_A != op_B:
-                    #        break
 
                 else:
                     assert False
         for i in input_comparisons:
             if i.x >= len(self.sys_arg()):
                 continue
-            assert self.sys_arg()[i.x] == i.op_A 
+            assert self.sys_arg()[i.x] == i.op_A
         return input_comparisons
 
-    def execute(self, my_input, echar):
+    def execute(self, my_input):
         # first write the input in checksum-repair build
         with open('../checksum-repair/build/%s.input' % self.executable, 'w+') as f:
             print(my_input, end='', file=f)
@@ -321,7 +329,7 @@ exec ../checksum-repair/install/bin/trace-taint -me build/metadata -po build/pyg
 ''' % {'program':self.executable}, file=f)
 
         with open('../checksum-repair/build/%s.input' % self.executable, 'w+') as f:
-            print(my_input + echar, end='', file=f)
+            print(my_input + self.eof_char, end='', file=f)
         result2 = do(["bash", "./build/exec_file"], shell=False, input=my_input)
         raise Exception(result2)
 
@@ -340,7 +348,7 @@ exec ../checksum-repair/install/bin/trace-taint -me build/metadata -po build/pyg
             self.start_i = i
             try:
                 log(">> %s" % self.sys_arg(), 1)
-                v = self.execute(self.sys_arg(), chr(126))
+                v = self.execute(self.sys_arg())
                 solution_stack = my_prefix.continue_valid()
                 if not solution_stack:
                     return (self.sys_arg(), v)
