@@ -1,15 +1,15 @@
-import os.path
-import json
-import subprocess
 import string
 import enum
 import sys
 
 import config
+import chainutils
 
 import random
 random.seed(config.RandomSeed)
-TIMEOUT = 100
+
+import pudb
+brk = pudb.set_trace
 
 COMPARE_OPERATORS = {'==': lambda x, y: x == y}
 
@@ -17,58 +17,12 @@ All_Characters = list(string.ascii_letters + string.digits + string.punctuation)
         if config.No_CTRL else list(string.printable)
 All_Characters = [i for i in All_Characters if i not in {"\n"}]
 
-class Op:
-    EQ = 1
-    NE = 2
-    IN = 3
-    NOT_IN = 4
-
 def log(var, i=1):
     if config.Debug >= i: print(repr(var), file=sys.stderr, flush=True)
 
-import pudb
-brk = pudb.set_trace
-
-def compile_src(executable):
-    with open('build/exec_file', 'w+') as f:
-        print('''
-pfuzzer=../checksum-repair
-cp examples/*.h ./build
-cp -r build/* $pfuzzer/build
-{
-cd ../checksum-repair;
-./install/bin/trace-instr build/%s.c ./samples/excluded_functions 2>err >out
-}
-''' % executable, file=f)
-    do(["bash", "./build/exec_file"], shell=False, input='')
-
-def strsearch(Y, x):
-    comparisons = []
-    N = len(Y)
-    n = len(x)
-    i = 0
-    while i+n <= N:
-        found=True
-        j = 0
-        while found and j < n:
-            comparisons.append((Y[i+j], x[j], i+j, j))
-            if (Y[i+j] == x[j]):
-                found = True
-            else:
-                found = False
-            j += 1
-        if found:
-            return comparisons
-        i +=1
-    return comparisons
-
 class EState(enum.Enum):
-    # A char comparison made using a previous character
     Trim = enum.auto()
-    # End of string as found using tainting or a comparison with the
-    # empty string
     Append = enum.auto()
-
     Unknown = enum.auto()
 
 class Prefix:
@@ -82,7 +36,6 @@ class Prefix:
         raise NotImplemnted
 
     def create_prefix(self, myarg):
-        # should be overridden in child classes
         raise NotImplemnted
 
     def continue_valid(self):
@@ -93,11 +46,12 @@ class Search(Prefix):
     def continue_valid(self):
         if  random.uniform(0,1) > config.Return_Probability:
             return [self.create_prefix(self.my_arg + random.choice(All_Characters))]
+        return []
 
-    def parsing_state(self, h, arg_prefix):
+    def parsing_state(self, h, limit_len):
         # If the any goes beyond the current official input, then it
         # is reasonable to assume that an EOF check was made.
-        if h.x == len(arg_prefix):
+        if h.x == limit_len:
             return EState.Append
         # We could ideally assume that anything else is a trim, since we no longer
         # need to detect EOF.
@@ -106,10 +60,9 @@ class Search(Prefix):
     def comparisons_at(self, x, cmp_traces):
         return [(i,t) for i,t in enumerate(cmp_traces) if x == t.x]
 
-    def get_previous_fixes(self, h, sprefix, seen):
-        end = h.x
-        similar = [i for i in seen if sprefix[:end] in i and
-                   len(i) > len(sprefix[:end])]
+    def get_previous_fixes(self, end, sprefix, seen):
+        similar = [i for i in seen
+                       if sprefix[:end] in i and len(i) > len(sprefix[:end])]
         return [i[end] for i in similar]
 
 class DeepSearch(Search):
@@ -170,15 +123,14 @@ class DeepSearch(Search):
 
     def solve(self, traces, seen):
         arg_prefix = self.my_arg
-        # add the prefix to seen.
         # we are assuming a character by character comparison.
         # so get the comparison with the last element.
         while traces:
             h, *ltrace = traces
-            k = self.parsing_state(h, arg_prefix)
             end =  h.x
+            k = self.parsing_state(h, limit_len=len(arg_prefix))
             new_prefix = arg_prefix[:end]
-            fixes = self.get_previous_fixes(h, arg_prefix, seen)
+            fixes = self.get_previous_fixes(end, arg_prefix, seen)
 
             if k == EState.Trim:
                 # A character comparison of the *last* char.
@@ -190,18 +142,14 @@ class DeepSearch(Search):
                 # Now, try to fix the last failure
                 corr = self.get_corrections(cmp_stack, lambda i: i not in fixes)
                 if not corr: raise Exception('Exhausted attempts: %s' % fixes)
-                # check for line cov here.
                 chars = sorted(set(sum(corr, [])))
 
             elif k == EState.Append:
                 assert new_prefix == arg_prefix
-                #assert len(fixes) == 0
-                # An empty comparison at the EOF
                 chars = All_Characters
             else:
                 assert k == EState.Unknown
                 # Unknown what exactly happened. Strip the last and try again
-                # try again.
                 traces = ltrace
                 continue
 
@@ -210,27 +158,12 @@ class DeepSearch(Search):
 
         return []
 
-class O:
-    def __init__(self, **keys): self.__dict__.update(keys)
-    def __repr__(self): return str(self.__dict__)
-
-def do(command, env=None, shell=False, log=False,input=None, **args):
-    result = subprocess.Popen(command,
-        stdin = subprocess.PIPE,
-        stdout = subprocess.PIPE,
-        stderr = subprocess.PIPE,
-        shell=shell
-    )
-    stdout, stderr = result.communicate(timeout=TIMEOUT, input=input.encode('ascii'))
-    return O(returncode=result.returncode, stdout=stdout, stderr=stderr)
-
 class Chain:
 
     def __init__(self, executable):
         self._my_arg = None
         self.seen = set()
         self.executable = executable
-        self.eof_char = chr(126)
 
     def add_sys_arg(self, v):
         self._my_arg = v
@@ -238,114 +171,30 @@ class Chain:
     def sys_arg(self):
         return self._my_arg
 
-    def sys_full_arg(self):
-        return self._my_arg + self.eof_char
-
     def prune(self, solutions):
+        # never retry an argument.
         return [s for s in solutions if s.my_arg not in self.seen]
 
     def choose(self, solutions):
-        # never retry an argument.
         return [random.choice(self.prune(solutions))]
 
     def get_comparisons(self):
-        input_comparisons = []
-        with open('build/pygmalion.json') as pg:
-            lines = pg.readlines()
-        for sline in lines:
-            if sline.startswith('#'): continue
-            line = json.loads(sline)
-            if line['type'] == 'INPUT_COMPARISON':
-                if 'strip_input' in line['stack']: continue
-                if line['operator'] in {'tokenstore', 'tokencomp', 'eof'}:
-                    continue
-                if line['operator'] == 'switch':
-                    assert len(line['index']) == 1
-                    for k in line['operand']:
-                        input_comparisons.append(O(**{'x': line['index'][0], 'op': '==', 'op_B': k, 'op_A': line['value']}))
-                elif line['operator'] == '==':
-                    assert len(line['index']) == 1
-                    input_comparisons.append(O(**{'x': line['index'][0], 'op': line['operator'], 'op_B':line['operand'][0], 'op_A': line['value']}))
-                elif line['operator'] == 'conversion':
-                    continue
-                elif line['operator'] == 'strcmp':
-                    # the index indicates which items in the input were touched.
-                    # so for strcmp, length of index array corresponds to the length
-                    # of operand
-                    Bchars = line['operand'][0]
-                    Achars = line['value']
-                    idxs = line['index']
-                    assert len(idxs) <= len(Bchars)
-
-                    # now, for each element in the index array, there is a corresponding
-                    # element of operand
-                    for i,k in enumerate(idxs):
-                        op_B = Bchars[i]
-                        if i >= len(line['value']): break
-                        op_A = Achars[i]
-                        input_comparisons.append(O(**{'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A}))
-                        if op_A != op_B: break
-
-                elif line['operator'] == 'strsearch':
-                    # the index indicates which items in the input were touched.
-                    # so for strcmp, length of index array corresponds to the length
-                    # of operand
-                    Bchars = line['operand'][0]
-                    Achars = line['value']
-                    idxs = line['index']
-                    comparisons = strsearch(Achars, Bchars)
-                    for (y, x, i_j, j) in comparisons:
-                        op_A, op_B = y, x
-                        k = idxs[i_j]
-                        assert self.sys_full_arg()[k] == op_A
-                        input_comparisons.append(O(**{'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A}))
-
-                else:
-                    assert False
-        for i in input_comparisons:
-            if i.x >= len(self.sys_arg()):
-                continue
-            assert self.sys_arg()[i.x] == i.op_A
-        return input_comparisons
+        return chainutils.get_comparisons()
 
     def execute(self, my_input):
-        # first write the input in checksum-repair build
-        with open('../checksum-repair/build/%s.input' % self.executable, 'w+') as f:
-            print(my_input, end='', file=f)
-        with open('build/exec_file', 'w+') as f:
-            print('''
-exec ../checksum-repair/build/%(program)s.c.uninstrumented < ../checksum-repair/build/%(program)s.input
-''' % {'program':self.executable}, file=f)
-        result1 = do(["bash", "./build/exec_file"], shell=False, input=my_input)
-        if result1.returncode == 0:
-            return result1
+        return chainutils.execute(self.executable, my_input)
 
-        # try to identify if we have an EOF
-        with open('build/exec_file', 'w+') as f:
-            print('''
-../checksum-repair/build/%(program)s.c.instrumented < ../checksum-repair/build/%(program)s.input
-gzip -c output > build/output.gz
-exec ../checksum-repair/install/bin/trace-taint -me build/metadata -po build/pygmalion.json -t build/output.gz
-''' % {'program':self.executable}, file=f)
-
-        with open('../checksum-repair/build/%s.input' % self.executable, 'w+') as f:
-            print(my_input + self.eof_char, end='', file=f)
-        result2 = do(["bash", "./build/exec_file"], shell=False, input=my_input)
-        raise Exception(result2)
-
-    def links(self):
-        self.start_i = 0
+    def gen_links(self):
         # replace interesting things
         arg = config.MyPrefix if config.MyPrefix else random.choice(All_Characters)
         solution_stack = [DeepSearch(arg)]
 
-        compile_src(self.executable)
-        for i in range(self.start_i, config.MaxIter):
+        chainutils.compile_src(self.executable)
+        for _ in range(config.MaxIter):
             my_prefix, *solution_stack = solution_stack
             self.current_prefix = my_prefix
             self.add_sys_arg(my_prefix.my_arg)
 
-            self.start_i = i
             try:
                 log(">> %s" % self.sys_arg(), 1)
                 v = self.execute(self.sys_arg())
@@ -354,7 +203,6 @@ exec ../checksum-repair/install/bin/trace-taint -me build/metadata -po build/pyg
                     return (self.sys_arg(), v)
             except Exception as e:
                 self.seen.add(self.current_prefix.my_arg)
-                #log('Exception %s' % e)
                 self.traces = self.get_comparisons()
 
                 self.current_prefix = DeepSearch(self.current_prefix.my_arg)
@@ -371,6 +219,6 @@ exec ../checksum-repair/install/bin/trace-taint -me build/metadata -po build/pyg
 
 def main(program, *rest):
     chain = Chain(program)
-    chain.links()
+    chain.gen_links()
 
 main(*sys.argv[1:])
