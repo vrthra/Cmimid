@@ -12,11 +12,15 @@ def compile_src(executable):
 pfuzzer=../checksum-repair
 cp examples/*.h ./build
 cp -r build/* $pfuzzer/build
-{
+cp examples/%(program)s.c $pfuzzer/build
+(
 cd ../checksum-repair;
-./install/bin/trace-instr build/%s.c ./samples/excluded_functions 2>err >out
-}
-''' % executable, file=f)
+./install/bin/trace-instr build/%(program)s.c ./samples/excluded_functions 2>err >out
+)
+# generate metadata
+echo | $pfuzzer/build/%(program)s.c.instrumented
+cp $pfuzzer/build/metadata build/
+''' % {'program':executable}, file=f)
     do(["bash", "./build/exec_file"], shell=False, input='')
 
 def strsearch(Y, x):
@@ -68,7 +72,7 @@ exec ../checksum-repair/build/%(program)s.c.uninstrumented < ../checksum-repair/
 ''' % {'program':executable}, file=f)
     result1 = do(["bash", "./build/exec_file"], shell=False, input=my_input)
     if result1.returncode == 0:
-        return result1
+        return (True, result1)
 
     # try to identify if we have an EOF
     with open('build/exec_file', 'w+') as f:
@@ -81,7 +85,7 @@ exec ../checksum-repair/install/bin/trace-taint -me build/metadata -po build/pyg
     with open('../checksum-repair/build/%s.input' % executable, 'w+') as f:
         print(my_input + config.eof_char, end='', file=f)
     result2 = do(["bash", "./build/exec_file"], shell=False, input=my_input)
-    raise Exception(result2)
+    return (False, result2)
 
 
 def get_comparisons():

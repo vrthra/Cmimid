@@ -186,23 +186,25 @@ class Chain:
     def evaluate(self, arg):
         self.current_prefix = arg
 
-        try:
-            #print(">>", repr(self.current_prefix), "(%d)" % (self.learner.env.last_stack_len), end="\r")
-            print(">>", repr(self.current_prefix), "(%d %s %d)" % (self.learner.env.last_stack_len,
-                self.learner.env.e, self.learner.env.i))
-            v = self.execute(self.current_prefix)
-            print()
-            print(repr(self.current_prefix))
+        print(">", repr(self.current_prefix), "(%s: %d %s %d)" % (
+            self.learner.cur_state,
+            self.learner.env.last_stack_len,
+            self.learner.env.e, self.learner.env.i), end="\r")
+        done, v = self.execute(self.current_prefix)
+        if done:
+            print(">",repr(self.current_prefix))
             return None, [self.starting_fn], True, []
-        except Exception as e:
-            self.seen.add(self.current_prefix)
-            self.traces = self.get_comparisons()
-            sol_kind, new_solutions = self.solver.solve(self.current_prefix, list(reversed(self.traces)), self.seen)
-            # new_state is the function seen in last comparison
-            return sol_kind, self.traces[-1].stack, False, self.prune(new_solutions), 
 
+        self.seen.add(self.current_prefix)
+        self.traces = self.get_comparisons()
+        sol_kind, new_solutions = self.solver.solve(self.current_prefix, list(reversed(self.traces)), self.seen)
+        # new_state is the function seen in last comparison
 
-        return next_state, False
+        close_idx = len(self.current_prefix)
+        true_trace = [i for i in self.traces if i.x < close_idx]
+        if not true_trace:
+            brk()
+        return sol_kind, true_trace[-1].stack, False, self.prune(new_solutions)
 
 class Env:
     def __init__(self, chain):
@@ -213,6 +215,19 @@ class Env:
         self.last_stack_len = 0
         self.e = '_'
         self.i = 0
+
+        # TODO: how to deal with blacklist
+        # We need to create a different Q table with only blacklisted and associated characters which
+        # together is considered a state.
+        # We will use this table if we detect that a blacklisted state is entered, and update the table 
+        # with the reward.
+        # If necessary, we can trim our prefix one extra character to make sure that the blacklist table
+        # gets the opportunity to predict the next char.
+
+        # REQUIRED: The basic blocks per method so that we can produce a Q table with methodname + blockid
+        # as the state. Note that in a pinch, Cmimid instrumentation can provide a more coarse grained
+        # identifier (not as fine as the basic block but not as coarse as the function name alone)
+        self.blacklist = set()
 
     def reset(self):
         self.prefix = ''
@@ -232,7 +247,7 @@ class Env:
         # if solutions given is prefix + ... then we have an append
         if done:
             self.last_stack_len = len(stack)
-            return stack[-1], 100, True
+            return stack, stack[-1], 100, True
         else:
             self.kind = kind
             reward = -1
@@ -245,16 +260,20 @@ class Env:
                     if next_state == cur_state:
                         reward = -10
                     else:
-                        reward = -1
+                        reward = -10
                 elif len(stack) < self.last_stack_len:
-                    print('dec stack_len')
                     reward = 10
                 else:
                     reward = -10
             else:
                 assert False
             self.last_stack_len = len(stack)
-            return next_state, reward, False
+
+            if next_state != self.chain.starting_fn:
+                if kind == EState.Append and next_state not in stack:
+                    brk()
+
+            return stack, next_state, reward, False
 
 
 class Learner: pass
@@ -264,7 +283,10 @@ class QLearner(Learner):
         self.actions = config.All_Characters
         starting_state = '<start>'
         self.cur_state = starting_state
+        self.env = Env(Chain(program, self, should_compile=True))
         self.states = [starting_state] + chainutils.get_functions()
+        #self.action_reward = {}
+        self.action_chars = {}
 
         self.alpha = 0.5 # learning rate
         self.gamma = 0.90 # discount factor -- 0.8 - 0.99
@@ -277,7 +299,6 @@ class QLearner(Learner):
             self.Q = np.load(self.qarrf, allow_pickle=True)
         else:
             self.Q = np.zeros((len(self.states), len(self.actions)))
-        self.env = Env(Chain(program, self, should_compile=False))
 
     def update_epsilon(self):
         if self.epsilon > self.epsilon_min:
@@ -301,6 +322,14 @@ class QLearner(Learner):
     def randargmax(self, b,**kw):
         return np.argmax(np.random.random(b.shape) * (b==b.max()), **kw)
 
+    def printS(self, s):
+        with open('Qs.debug', 'w+') as f:
+            si = self.sidx(s)
+            print(si, s, file=f)
+            for ai,a in enumerate(self.actions):
+                print("%s:%0.4f" % (repr(a)[1:-1], self.Q[si, ai]), end=',', file=f)
+            print('',file=f)
+
     def printQ(self):
         with open('Q.debug', 'w+') as f:
             s = self.cur_state
@@ -316,12 +345,18 @@ class QLearner(Learner):
             self.env.e = 'r'
             return random.choice(config.All_Characters)
         chars = [c[-1] for c in self.env.solutions] if self.env.solutions else config.All_Characters
-        if random.uniform(0,1) < self.epsilon:
+        if self.cur_state in self.env.blacklist:
+            self.env.e = 'B(....)'
+            return random.choice(chars)
+        elif random.uniform(0,1) < self.epsilon:
             self.env.e = 'R(%s)' % self.epsilon
             return random.choice(chars)
         else:
             self.env.e = '^(%s)' % self.epsilon
             a_idxes = [self.aidx(i) for i in chars]
+            maxval = np.max(self.Q[self.sidx(self.cur_state), a_idxes])
+            if maxval == 0:
+                self.env.e = '.(%s)' % self.epsilon
             act = self.randargmax(self.Q[self.sidx(self.cur_state), a_idxes])
             return self.actions[a_idxes[act]]
 
@@ -338,7 +373,34 @@ class QLearner(Learner):
                 chainutils.check_debug()
                 self.printQ()
                 action = self.next_action()
-                next_state, reward, done = self.env.step(action, self.cur_state)
+                last_stack, next_state, reward, done = self.env.step(action, self.cur_state)
+
+                # We can only trust appends
+                if self.env.kind == EState.Append:
+                    prefix_checked_chars = [i.op_B for i in self.env.chain.traces if i.stack == last_stack] # TODO; shold we filter close_char
+
+                    str_prefix = ''.join(prefix_checked_chars)
+                    key = next_state #self.cur_state
+                    if key not in self.action_chars:
+                        self.action_chars[key] = str_prefix
+
+                    old_prefix = self.action_chars[key]
+                    if key != self.env.chain.starting_fn:
+                        if len(str_prefix) > len(old_prefix):
+                            # we need a way to handle loops.
+                            if not set(old_prefix).issubset(set(str_prefix)):
+                                self.env.blacklist.add(key)
+                                if not key in {'json_is_literal', 'has_char'}:
+                                    brk()
+                                    print()
+                            self.action_chars[key] = str_prefix
+                        else:
+                            if not set(str_prefix).issubset(set(old_prefix)):
+                                self.env.blacklist.add(key)
+                                if not key in {'json_is_literal', 'has_char'}:
+                                    brk()
+                                    print()
+                    #print("> ", key, repr(self.action_chars[key]))
 
                 self.update_Q(self.sidx(self.cur_state), self.aidx(action), self.sidx(next_state), reward)
                 self.cur_state = next_state
