@@ -1,4 +1,5 @@
 import string
+import json
 import enum
 import sys
 import os.path
@@ -153,19 +154,19 @@ class DeepSearch(Search):
 
 class Chain:
 
-    def __init__(self, executable, learner, should_compile=True):
+    def __init__(self, executable, learner):
         self.learner = learner
         self.executable = executable
         self.reset()
         self.solver = DeepSearch()
-        if should_compile:
+        if not os.path.exists('./build/metadata'):
             chainutils.compile_src(self.executable)
 
     def reset(self):
         self._my_arg = None
         self.seen = set()
         self.starting_fn = '<start>'
-        self.last_fn = self.starting_fn 
+        self.last_fn = self.starting_fn
         self.traces = []
         return self.last_fn
 
@@ -219,7 +220,7 @@ class Env:
         # TODO: how to deal with blacklist
         # We need to create a different Q table with only blacklisted and associated characters which
         # together is considered a state.
-        # We will use this table if we detect that a blacklisted state is entered, and update the table 
+        # We will use this table if we detect that a blacklisted state is entered, and update the table
         # with the reward.
         # If necessary, we can trim our prefix one extra character to make sure that the blacklist table
         # gets the opportunity to predict the next char.
@@ -283,7 +284,7 @@ class QLearner(Learner):
         self.actions = config.All_Characters
         starting_state = '<start>'
         self.cur_state = starting_state
-        self.env = Env(Chain(program, self, should_compile=True))
+        self.env = Env(Chain(program, self))
         self.states = [starting_state] + chainutils.get_functions()
         #self.action_reward = {}
         self.action_chars = {}
@@ -294,11 +295,12 @@ class QLearner(Learner):
         self.epsilon = self.epsilon_init
         self.epsilon_min = 0.001
         self.epsilon_decay = 0.999
-        self.qarrf = 'Q.arr'
+        self.qarrf = 'Q.json'
         if os.path.exists(self.qarrf):
-            self.Q = np.load(self.qarrf, allow_pickle=True)
+            with open(self.qarrf) as f:
+                self.Q = json.load(fp=f)
         else:
-            self.Q = np.zeros((len(self.states), len(self.actions)))
+            self.Q = {'_': {a:0 for a in self.actions}}
 
     def update_epsilon(self):
         if self.epsilon > self.epsilon_min:
@@ -314,31 +316,34 @@ class QLearner(Learner):
     def aidx(self, action):
         return next(i for i,a in enumerate(self.actions) if a == action)
 
-    def update_Q(self, sidx, aidx, new_sidx, reward):
-        self.Q[sidx, aidx] = ((1 - self.alpha) * self.Q[sidx, aidx]) + \
-                self.alpha * (reward + self.gamma * np.max(self.Q[new_sidx, :]))
+    def update_Q(self, state, action, new_state, reward):
+        if state not in self.Q: self.Q[state] = dict(self.Q['_'])
+        if new_state not in self.Q: self.Q[new_state] = dict(self.Q['_'])
+
+        self.Q[state][action] = ((1 - self.alpha) * self.Q[state][action]) + \
+                self.alpha * (reward + self.gamma * max(self.Q[new_state].values()))
         return True
 
-    def randargmax(self, b,**kw):
-        return np.argmax(np.random.random(b.shape) * (b==b.max()), **kw)
+    def randargmax(self, hm, actions):
+        items = [(k,v) for k,v in hm.items() if k in actions]
+        max_val = max([v for k,v in items])
+        return random.choice([k for k,v in items if v == max_val])
 
-    def printS(self, s):
+    def printS_(self, s, f):
+        print(s, file=f)
+        for a in self.actions:
+            print("%s:%0.4f" % (repr(a)[1:-1], self.Q[s][a]), end=',', file=f)
+        print('',file=f)
+
+    def printS(self, s=None):
+        if s is None:
+            s = self.cur_state
         with open('Qs.debug', 'w+') as f:
-            si = self.sidx(s)
-            print(si, s, file=f)
-            for ai,a in enumerate(self.actions):
-                print("%s:%0.4f" % (repr(a)[1:-1], self.Q[si, ai]), end=',', file=f)
-            print('',file=f)
+            self.printS_(s, f)
 
     def printQ(self):
         with open('Q.debug', 'w+') as f:
-            s = self.cur_state
-            si = self.sidx(s)
-            #for si,s in enumerate(self.states):
-            print(si, s, file=f)
-            for ai,a in enumerate(self.actions):
-                print("%s:%0.4f" % (repr(a)[1:-1], self.Q[si, ai]), end=',', file=f)
-            print('',file=f)
+            for s in self.states: self.printS_(s, f)
 
     def next_action(self):
         if not self.env.solutions:
@@ -353,12 +358,11 @@ class QLearner(Learner):
             return random.choice(chars)
         else:
             self.env.e = '^(%s)' % self.epsilon
-            a_idxes = [self.aidx(i) for i in chars]
-            maxval = np.max(self.Q[self.sidx(self.cur_state), a_idxes])
+            maxval = max(self.Q[self.cur_state].values())
             if maxval == 0:
                 self.env.e = '.(%s)' % self.epsilon
-            act = self.randargmax(self.Q[self.sidx(self.cur_state), a_idxes])
-            return self.actions[a_idxes[act]]
+            act = self.randargmax(self.Q[self.cur_state], chars)
+            return act
 
     def learn(self, episodes):
         # start over each time.
@@ -371,7 +375,7 @@ class QLearner(Learner):
             for i in range(config.MaxIter):
                 self.env.i = i
                 chainutils.check_debug()
-                self.printQ()
+                self.printS()
                 action = self.next_action()
                 last_stack, next_state, reward, done = self.env.step(action, self.cur_state)
 
@@ -402,12 +406,13 @@ class QLearner(Learner):
                                     print()
                     #print("> ", key, repr(self.action_chars[key]))
 
-                self.update_Q(self.sidx(self.cur_state), self.aidx(action), self.sidx(next_state), reward)
+                self.update_Q(self.cur_state, action, next_state, reward)
                 self.cur_state = next_state
                 if done:
                     break
                 self.update_epsilon()
-            self.Q.dump(self.qarrf)
+            with open('Q.json', 'w+') as f:
+                json.dump(self.Q, fp=f)
 
 def main(program, *rest):
     learner = QLearner(program)
