@@ -103,13 +103,13 @@ def get_comparisons():
                 assert len(line['index']) == 1
                 for k in line['operand']:
                     input_comparisons.append(O(**{
-                        'x': line['index'][0], 'op': '==', 'op_B': k, 'op_A': line['value'], 'stack': line['stack']
+                        'x': line['index'][0], 'op': '==', 'op_B': k, 'op_A': line['value'], 'stack': line['stack'], 'id': line['id']
                         }))
             elif line['operator'] == '==':
                 assert len(line['index']) == 1
                 input_comparisons.append(
                         O(**{
-                            'x': line['index'][0], 'op': line['operator'], 'op_B':line['operand'][0], 'op_A': line['value'], 'stack': line['stack']
+                            'x': line['index'][0], 'op': line['operator'], 'op_B':line['operand'][0], 'op_A': line['value'], 'stack': line['stack'], 'id': line['id']
                                 }))
             elif line['operator'] == 'conversion':
                 continue
@@ -129,7 +129,7 @@ def get_comparisons():
                     if i >= len(line['value']): break
                     op_A = Achars[i]
                     input_comparisons.append(O(**{
-                        'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A, 'stack': line['stack']
+                        'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A, 'stack': line['stack'], 'id': line['id']
                         }))
                     if op_A != op_B: break
 
@@ -146,7 +146,7 @@ def get_comparisons():
                     k = idxs[i_j]
                     #assert chain.sys_arg()[k] + config.eof_char == op_A
                     input_comparisons.append(O(**{
-                        'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A, 'stack': line['stack']
+                        'x': k, 'op': '==', 'op_B': op_B, 'op_A': op_A, 'stack': line['stack'], 'id': line['id']
                         }))
 
             else:

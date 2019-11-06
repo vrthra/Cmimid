@@ -194,7 +194,7 @@ class Chain:
         done, v = self.execute(self.current_prefix)
         if done:
             print(">",repr(self.current_prefix))
-            return None, [self.starting_fn], True, []
+            return None, [self.starting_fn], self.starting_fn, True, []
 
         self.seen.add(self.current_prefix)
         self.traces = self.get_comparisons()
@@ -205,7 +205,9 @@ class Chain:
         true_trace = [i for i in self.traces if i.x < close_idx]
         if not true_trace:
             brk()
-        return sol_kind, true_trace[-1].stack, False, self.prune(new_solutions)
+        state = "%s@%d" %(true_trace[-1].stack[-1],true_trace[-1].id)
+        #state = true_trace[-1].stack[-1]
+        return sol_kind, true_trace[-1].stack, state, False, self.prune(new_solutions)
 
 class Env:
     def __init__(self, chain):
@@ -242,7 +244,7 @@ class Env:
             self.prefix = self.prefix + action
         else:
             self.prefix = self.prefix[0:-1] + action
-        kind, stack, done, solutions = self.chain.evaluate(self.prefix)
+        kind, stack, state, done, solutions = self.chain.evaluate(self.prefix)
         self.solutions = solutions
         # what should the next state be?
         # if solutions given is prefix + ... then we have an append
@@ -256,7 +258,7 @@ class Env:
                 next_state = cur_state
                 reward = -10 # * len(stack)
             elif kind == EState.Append:
-                next_state = stack[-1]
+                next_state = state #stack[-1]
                 if len(stack)  == self.last_stack_len:
                     if next_state == cur_state:
                         reward = -10
@@ -270,9 +272,9 @@ class Env:
                 assert False
             self.last_stack_len = len(stack)
 
-            if next_state != self.chain.starting_fn:
-                if kind == EState.Append and next_state not in stack:
-                    brk()
+            #if next_state != self.chain.starting_fn:
+            #    if kind == EState.Append and next_state not in stack:
+            #        brk()
 
             return stack, next_state, reward, False
 
@@ -394,16 +396,16 @@ class QLearner(Learner):
                             # we need a way to handle loops.
                             if not set(old_prefix).issubset(set(str_prefix)):
                                 self.env.blacklist.add(key)
-                                if not key in {'json_is_literal', 'has_char'}:
-                                    brk()
-                                    print()
+                                #if not key in {'json_is_literal', 'has_char'}:
+                                #    brk()
+                                #    print()
                             self.action_chars[key] = str_prefix
                         else:
                             if not set(str_prefix).issubset(set(old_prefix)):
                                 self.env.blacklist.add(key)
-                                if not key in {'json_is_literal', 'has_char'}:
-                                    brk()
-                                    print()
+                                #if not key in {'json_is_literal', 'has_char'}:
+                                #    brk()
+                                #    print()
                     #print("> ", key, repr(self.action_chars[key]))
 
                 self.update_Q(self.cur_state, action, next_state, reward)
