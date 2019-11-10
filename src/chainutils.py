@@ -168,3 +168,23 @@ def get_functions():
         functions.append(line['f'])
     return functions
 
+
+QarrF = 'Q.json'
+def loadQ():
+    if os.path.exists(QarrF):
+        with open(QarrF) as f:
+            return json.load(fp=f)
+    else:
+        return {'_': {a:0 for a in config.All_Characters}}
+def dumpQ(Q):
+    with open(QarrF, 'w+') as f:
+        json.dump(Q, fp=f)
+
+def checksum(st):
+    return str(reduce(lambda x,y: x+y, map(ord, st)))
+
+def summary(v):
+    if len(v) > 5:
+        return checksum(v)
+    else:
+        return v

@@ -12,11 +12,14 @@ random.seed(config.RandomSeed)
 import numpy as np
 np.random.seed(config.RandomSeed)
 
+import events
 
 import pudb
-brk = pudb.set_trace
+brk = lambda : () #pudb.set_trace
 
 COMPARE_OPERATORS = {'==': lambda x, y: x == y}
+
+from functools import reduce
 
 class EState(enum.Enum):
     Trim = enum.auto()
@@ -177,7 +180,7 @@ class Chain:
     def choose(self, solutions):
         return [random.choice(self.prune(solutions))]
 
-    def get_comparisons(self):
+    def get_comparisons(self, prefix):
         return chainutils.get_comparisons()
 
     def execute(self, my_input):
@@ -190,14 +193,14 @@ class Chain:
         print(">", repr(self.current_prefix), "(%s: %d %s %d)" % (
             self.learner.cur_state,
             self.learner.env.last_stack_len,
-            self.learner.env.e, self.learner.env.i), end="\r")
+            self.learner.env.e, self.learner.env.i)) #, end="\r")
         done, v = self.execute(self.current_prefix)
         if done:
             print(">",repr(self.current_prefix))
             return None, [self.starting_fn], self.starting_fn, True, []
 
         self.seen.add(self.current_prefix)
-        self.traces = self.get_comparisons()
+        self.traces = self.get_comparisons(self.current_prefix)
         sol_kind, new_solutions = self.solver.solve(self.current_prefix, list(reversed(self.traces)), self.seen)
         # new_state is the function seen in last comparison
 
@@ -215,28 +218,15 @@ class Env:
         self.prefix = ''
         self.kind = EState.Append
         self.solutions = []
-        self.last_stack_len = 0
+        self.last_stack_len = -1
         self.e = '_'
         self.i = 0
-
-        # TODO: how to deal with blacklist
-        # We need to create a different Q table with only blacklisted and associated characters which
-        # together is considered a state.
-        # We will use this table if we detect that a blacklisted state is entered, and update the table
-        # with the reward.
-        # If necessary, we can trim our prefix one extra character to make sure that the blacklist table
-        # gets the opportunity to predict the next char.
-
-        # REQUIRED: The basic blocks per method so that we can produce a Q table with methodname + blockid
-        # as the state. Note that in a pinch, Cmimid instrumentation can provide a more coarse grained
-        # identifier (not as fine as the basic block but not as coarse as the function name alone)
-        self.blacklist = set()
 
     def reset(self):
         self.prefix = ''
         self.kind = EState.Append
         self.solutions = []
-        self.last_stack_len = 0
+        self.last_stack_len = -1
         return self.chain.reset()
 
     def step(self, action, cur_state):
@@ -249,7 +239,7 @@ class Env:
         # what should the next state be?
         # if solutions given is prefix + ... then we have an append
         if done:
-            self.last_stack_len = len(stack)
+            self.last_stack_len = -1 #len(stack)
             return stack, stack[-1], 100, True
         else:
             self.kind = kind
@@ -259,18 +249,24 @@ class Env:
                 reward = -10 # * len(stack)
             elif kind == EState.Append:
                 next_state = state #stack[-1]
+
+                # We maintain the stack. For example, true, false
+                # The problem is isctrl, isspace etc has little incentive to stop
                 if len(stack)  == self.last_stack_len:
                     if next_state == cur_state:
-                        reward = -10
+                        reward = 1
                     else:
                         reward = -10
+
+                # A reduction in stack length. We give it a reward
                 elif len(stack) < self.last_stack_len:
                     reward = 10
                 else:
+                    # An increase in stack length. We penalize it
                     reward = -10
+                self.last_stack_len = len(stack)
             else:
                 assert False
-            self.last_stack_len = len(stack)
 
             #if next_state != self.chain.starting_fn:
             #    if kind == EState.Append and next_state not in stack:
@@ -288,28 +284,20 @@ class QLearner(Learner):
         self.cur_state = starting_state
         self.env = Env(Chain(program, self))
         self.states = [starting_state] + chainutils.get_functions()
-        #self.action_reward = {}
-        self.action_chars = {}
+        self.action_prefixes = {}
 
         self.alpha = 0.5 # learning rate
         self.gamma = 0.90 # discount factor -- 0.8 - 0.99
         self.epsilon_init = 1.0 # explore/exploit factor
         self.epsilon = self.epsilon_init
         self.epsilon_min = 0.001
-        self.epsilon_decay = 0.999
-        self.qarrf = 'Q.json'
-        if os.path.exists(self.qarrf):
-            with open(self.qarrf) as f:
-                self.Q = json.load(fp=f)
-        else:
-            self.Q = {'_': {a:0 for a in self.actions}}
+        self.Q = chainutils.loadQ()
 
     def update_epsilon(self):
         if self.epsilon > self.epsilon_min:
             self.epsilon = (100.0 - len(self.env.prefix))/100.0
         else:
             self.epsilon = self.epsilon_min
-        #    self.epsilon *= self.epsilon_decay
 
 
     def sidx(self, state):
@@ -324,6 +312,7 @@ class QLearner(Learner):
 
         self.Q[state][action] = ((1 - self.alpha) * self.Q[state][action]) + \
                 self.alpha * (reward + self.gamma * max(self.Q[new_state].values()))
+        chainutils.dumpQ(self.Q)
         return True
 
     def randargmax(self, hm, actions):
@@ -331,31 +320,12 @@ class QLearner(Learner):
         max_val = max([v for k,v in items])
         return random.choice([k for k,v in items if v == max_val])
 
-    def printS_(self, s, f):
-        print(s, file=f)
-        for a in self.actions:
-            print("%s:%0.4f" % (repr(a)[1:-1], self.Q[s][a]), end=',', file=f)
-        print('',file=f)
-
-    def printS(self, s=None):
-        if s is None:
-            s = self.cur_state
-        with open('Qs.debug', 'w+') as f:
-            self.printS_(s, f)
-
-    def printQ(self):
-        with open('Q.debug', 'w+') as f:
-            for s in self.states: self.printS_(s, f)
-
     def next_action(self):
         if not self.env.solutions:
             self.env.e = 'r'
             return random.choice(config.All_Characters)
         chars = [c[-1] for c in self.env.solutions] if self.env.solutions else config.All_Characters
-        if self.cur_state in self.env.blacklist:
-            self.env.e = 'B(....)'
-            return random.choice(chars)
-        elif random.uniform(0,1) < self.epsilon:
+        if random.uniform(0,1) < self.epsilon:
             self.env.e = 'R(%s)' % self.epsilon
             return random.choice(chars)
         else:
@@ -366,55 +336,116 @@ class QLearner(Learner):
             act = self.randargmax(self.Q[self.cur_state], chars)
             return act
 
+    def manage_stack(self, program_stack, state=''):
+        if not self.managed_stack:
+            self.skip_stack = program_stack[0:-1]
+            self.managed_stack = list(self.skip_stack)
+            return
+
+        # first, process the managed_stack
+        managed_stack_prefix = [prog.split('@')[0] for prog in self.managed_stack]
+        if ' '.join(managed_stack_prefix) in ' '.join(program_stack):
+            if len(program_stack) > len(managed_stack_prefix):
+                # program added a few more stacks.
+                suffix = program_stack[len(managed_stack_prefix):-1]
+                self.managed_stack.extend(suffix)
+                if state:
+                    assert program_stack[-1] == state.split('@')[0]
+                self.managed_stack.append(state)
+            else:
+                assert len(program_stack) == len(managed_stack_prefix)
+        elif ' '.join(program_stack) in ' '.join(managed_stack_prefix):
+            assert len(program_stack) < len(managed_stack_prefix)
+            self.managed_stack = self.managed_stack[0:len(program_stack)]
+        return
+
+
     def learn(self, episodes):
         # start over each time.
+        # What is reset:
+        #   - the prefix
+        #   - list of seen arguments
+        #   - the last function
+        #   - traces
         self.cur_state = self.env.reset()
         done = False
 
         for _ in range(episodes):
+            # start with full exploration
             self.epsilon = self.epsilon_init
+
             self.cur_state = self.env.reset()
+            self.managed_stack = None
             for i in range(config.MaxIter):
                 self.env.i = i
                 chainutils.check_debug()
-                self.printS()
                 action = self.next_action()
-                last_stack, next_state, reward, done = self.env.step(action, self.cur_state)
+                program_stack, next_state, reward, done = self.env.step(action, self.cur_state)
 
                 # We can only trust appends
-                if self.env.kind == EState.Append:
-                    prefix_checked_chars = [i.op_B for i in self.env.chain.traces if i.stack == last_stack] # TODO; shold we filter close_char
+                # TODO: maintain our own stack, and verify that the given stack is using prefix strings.
 
-                    str_prefix = ''.join(prefix_checked_chars)
-                    key = next_state #self.cur_state
-                    if key not in self.action_chars:
-                        self.action_chars[key] = str_prefix
+                if next_state == self.env.chain.starting_fn:
+                    # We do not want ot learn anything about the starting state.
+                    self.manage_stack(program_stack)
+                else:
+                    if self.env.kind == EState.Trim:
+                        pass
+                        # No learning here.
+                    elif self.env.kind == EState.Append:
+                        self.manage_stack(program_stack, next_state)
 
-                    old_prefix = self.action_chars[key]
-                    if key != self.env.chain.starting_fn:
-                        if len(str_prefix) > len(old_prefix):
-                            # we need a way to handle loops.
-                            if not set(old_prefix).issubset(set(str_prefix)):
-                                self.env.blacklist.add(key)
-                                #if not key in {'json_is_literal', 'has_char'}:
-                                #    brk()
-                                #    print()
-                            self.action_chars[key] = str_prefix
-                        else:
-                            if not set(str_prefix).issubset(set(old_prefix)):
-                                self.env.blacklist.add(key)
-                                #if not key in {'json_is_literal', 'has_char'}:
-                                #    brk()
-                                #    print()
-                    #print("> ", key, repr(self.action_chars[key]))
+                        key = next_state
+                        # update only when it is append. We do not need help
+                        # in rejection.
+                        new_prefix_cmp = [(i.x, i.op_B) for i in self.env.chain.traces if i.stack == program_stack] # TODO; should we filter close_char
+                        idxes = [i for i,m in new_prefix_cmp]
+                        min_idx, max_idx = min(idxes), max(idxes)
+                        s_prefix = ''.join([m for i,m in new_prefix_cmp])
+                        str_prefix = ' '.join(["%d:%s" % (i - min_idx,m) for i,m in new_prefix_cmp])
 
-                self.update_Q(self.cur_state, action, next_state, reward)
-                self.cur_state = next_state
-                if done:
-                    break
+                        if key not in self.action_prefixes:
+                            self.action_prefixes[key] = {str_prefix: None } #{str_prefix}}
+
+                        old_prefixes = self.action_prefixes[key]
+                        fn = key.split('@')[0]
+                        found = 0
+
+                        for old_prefix in list(old_prefixes.keys()):
+                            if len(str_prefix) > len(old_prefix):
+                                if str_prefix.startswith(old_prefix):
+                                    found += 1
+                                    # remove the old prefix first, and put the more complete version
+                                    # in its place
+                                    #prev_set = self.action_prefixes[key][old_prefix]
+                                    del self.action_prefixes[key][old_prefix]
+                                    self.action_prefixes[key][str_prefix] = None #prev_set | {str_prefix}
+                                else:
+                                    # not found
+                                    pass
+                            else:
+                                if old_prefix.startswith(str_prefix):
+                                    found += 1
+                                else:
+                                    # not found
+                                    pass
+
+                        if found == 0:
+                            # time to blacklist.
+                            self.action_prefixes[key][str_prefix] = None
+
+                        if len(old_prefixes.keys()) > 1:
+                            v = repr(s_prefix)[1:-1]
+                            next_state = next_state + ':' + chainutils.summary(v)
+
+                        self.update_Q(self.cur_state, action, next_state, reward)
+                        self.cur_state = next_state
+                    else:
+                        assert False, 'Unknown state'
+                if done: break
+
+                # reduce the exploration during each step.
                 self.update_epsilon()
-            with open('Q.json', 'w+') as f:
-                json.dump(self.Q, fp=f)
 
 def main(program, *rest):
     learner = QLearner(program)
