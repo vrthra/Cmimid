@@ -42,9 +42,9 @@ class stack__:
 
     def __enter__(self, line):
         if self.name in {'while', 'for'}:
-            self.stack.append(0)
+            self.stack.append('loop_%d' % self.num)
         elif self.name in {'if', 'switch'}:
-            self.stack.append(-1)
+            self.stack.append('if_%d' % self.num)
         else:
             assert False
         return self
@@ -63,8 +63,11 @@ class scope__:
     def __repr__(self): return self.name
 
     def __enter__(self, line):
+        # we no longer keep track of the nth iteration id. We instead rely
+        # on the swap patterns.
         if self.name in {'while', 'for'}:
-            self.stack[-1] += 1
+            #self.stack[-1] += 1
+            pass
         elif self.name in {'if', 'switch'}:
             pass
         else:
