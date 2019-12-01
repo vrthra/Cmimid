@@ -32,9 +32,9 @@ def reconstruct_method_tree(method_map):
     return first_id, tree_map
 
 
-
+LAST_COMPARISON_HEURISTIC = True
 def last_comparisons(comparisons):
-    HEURISTIC = True
+    LAST_COMPARISON_HEURISTIC = True
     last_cmp_only = {}
     last_idx = {}
 
@@ -51,9 +51,10 @@ def last_comparisons(comparisons):
     # next, for each index, find the method that
     # accessed it last.
     for idx, char, mid in comparisons:
-        if HEURISTIC:
+        if LAST_COMPARISON_HEURISTIC:
             if idx in last_cmp_only:
-                if last_cmp_only[idx] > mid:
+                midC = last_cmp_only[idx]
+                if midC > mid:
                     # do not clobber children unless it was the last character
                     # for that child.
                     if last_idx[mid] > idx:
@@ -85,17 +86,19 @@ def indexes_to_children(indexes, my_str):
 
     return [to_node(n, my_str) for n in lst]
 
-def does_item_overlap(s, e, s_, e_):
+def does_item_overlap(r, r_):
+    (s, e), (s_, e_) = r, r_
     return (s_ >= s and s_ <= e) or (e_ >= s and e_ <= e) or (s_ <= s and e_ >= e)
 
-def is_second_item_included(s, e, s_, e_):
+def is_second_item_included(r, r_):
+    (s, e), (s_, e_) = r, r_
     return (s_ >= s and e_ <= e)
 
-def has_overlap(ranges, s_, e_):
-    return {(s, e) for (s, e) in ranges if does_item_overlap(s, e, s_, e_)}
+def has_overlap(ranges, r_):
+    return {r for r in ranges if does_item_overlap(r, r_)}
 
-def is_included(ranges, s_, e_):
-    return {(s, e) for (s, e) in ranges if is_second_item_included(s, e, s_, e_)}
+def is_included(ranges, r_):
+    return {r for r in ranges if is_second_item_included(r, r_)}
 
 def remove_overlap_from(original_node, orange):
     node, children, start, end = original_node
@@ -105,7 +108,7 @@ def remove_overlap_from(original_node, orange):
     start = -1
     end = -1
     for child in children:
-        if does_item_overlap(*child[2:4], *orange):
+        if does_item_overlap(child[2:4], orange):
             new_child = remove_overlap_from(child, orange)
             if new_child: # and new_child[1]:
                 if start == -1: start = new_child[2]
@@ -125,11 +128,12 @@ def no_overlap(arr):
     my_ranges = {}
     for a in arr:
         _, _, s, e = a
-        included = is_included(my_ranges, s, e)
+        r = (s, e)
+        included = is_included(my_ranges, r)
         if included:
             continue  # we will fill up the blanks later.
         else:
-            overlaps = has_overlap(my_ranges, s, e)
+            overlaps = has_overlap(my_ranges, r)
             if overlaps:
                 # unlike include which can happen only once in a set of
                 # non-overlapping ranges, overlaps can happen on multiple parts.
@@ -139,13 +143,13 @@ def no_overlap(arr):
                 # assert len(overlaps) == 1
                 #oitem = list(overlaps)[0]
                 for oitem in overlaps:
-                    v = remove_overlap_from(my_ranges[oitem], (s,e))
+                    v = remove_overlap_from(my_ranges[oitem], r)
                     del my_ranges[oitem]
                     if v:
                         my_ranges[v[2:4]] = v
-                    my_ranges[(s, e)] = a
+                    my_ranges[r] = a
             else:
-                my_ranges[(s, e)] = a
+                my_ranges[r] = a
     res = my_ranges.values()
     # assert no overlap, and order by starting index
     s = sorted(res, key=lambda x: x[2])
@@ -206,4 +210,6 @@ def main(tracefile):
         my_trace = json.load(f)
     mined_trees = miner(my_trace)
     json.dump(mined_trees, sys.stdout)
-main(sys.argv[1])
+
+if __name__ == '__main__':
+    main(sys.argv[1])
