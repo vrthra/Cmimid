@@ -46,7 +46,7 @@ def collect_pseudo_nodes(node, tree, executable, inputfile):
     for child in children:
         collect_pseudo_nodes(child, tree, executable, inputfile)
 
-def update_original_names(node_name):
+def update_original_pseudo_names(node_name):
     registered_xnodes = NODE_REGISTER[node_name]
     for xnode in registered_xnodes:
         # name it according to its pattern
@@ -75,7 +75,7 @@ def generalize_loop_trees(jtrees, log=False):
     # finally, update the original names.
     for k in NODE_REGISTER:
         if k == '<START>': continue
-        update_original_names(k)
+        update_original_pseudo_names(k)
     return my_trees
 
 def main(tracefile):
