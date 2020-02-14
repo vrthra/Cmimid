@@ -33,7 +33,7 @@ def update_method_name(k_m, my_id):
     return name, k_m
 
 def register_node(node, tree, executable, input_file):
-    # we want to save a copy of the tree so we can modify it later. 
+    # we want to save a copy of the tree so we can modify it later.
     node_name = node[0]
     template_name = '__CMIMID__NODE__'
     node[0] = template_name
@@ -47,13 +47,33 @@ def register_node(node, tree, executable, input_file):
     NODE_REGISTER[node_name].append(new_elt)
     return new_elt
 
+def collect_nodes_single(node, tree, executable, inputfile, seen):
+    node_name, children, si, ei = node
+    elt = None
+    if util.is_node_method(node):
+        elt = register_node(node, tree, executable, inputfile)
+        if node_name in seen:
+            elt[4]['seen'] = seen[node_name]
+        else:
+            seen[node_name] = elt
+    if len(children) == 1:
+        collect_nodes_single(children[0], tree, executable, inputfile, seen)
+    else:
+        # no longer the single inheritance line.
+        for child in children:
+            collect_nodes(child, tree, executable, inputfile)
+
+
 def collect_nodes(node, tree, executable, inputfile):
     node_name, children, si, ei = node
+    elt = None
     if util.is_node_method(node):
-        register_node(node, tree, executable, inputfile)
-
-    for child in children:
-        collect_nodes(child, tree, executable, inputfile)
+        elt = register_node(node, tree, executable, inputfile)
+    if len(children) == 1:
+        collect_nodes_single(children[0], tree, executable, inputfile, {node_name: elt})
+    else:
+        for child in children:
+            collect_nodes(child, tree, executable, inputfile)
 
 def get_compatibility_pattern(xnode, sampled_nodes):
     node0, tree0, executable0, inputfile0, _info = xnode
@@ -65,6 +85,36 @@ def get_compatibility_pattern(xnode, sampled_nodes):
         result = util.is_compatible(a0, aX, executable0)
         results.append(result)
     return ''.join(['1' if i else '0' for i in results])
+
+def identify_buckets(node_name):
+    all_elts = NODE_REGISTER[node_name]
+    # remove the duplicate nodes
+    elts = [e for e in all_elts if 'seen' not in e[4]]
+    seen_elts = [e for e in all_elts if 'seen' in e[4]]
+    first, *rest = elts
+    first[4]['pattern'] = 0
+    buckets = [first]
+    for enode in rest:
+        node0, tree0, executable0, inputfile0, _info0 = enode
+        a0 = node0, inputfile0, tree0
+        compatible = None
+        for bi, bnode in enumerate(buckets):
+            node1, tree1, executable1, inputfile1, _info1 = bnode
+            a1 = node1, inputfile1, tree1
+            result = util.is_compatible(a0, a1, executable0)
+            if result:
+                compatible = bi
+                enode[4]['pattern'] = bi
+                break
+        if compatible is None:
+            enode[4]['pattern'] = len(buckets)
+            buckets.append(enode)
+
+    for e in seen_elts:
+        e_seen = e[4]['seen']
+        e_seen_pattern = e_seen[4]['pattern']
+        e[4]['pattern'] = e_seen_pattern
+    return {i:i for i,b in enumerate(buckets)}
 
 def identify_compatibility_patterns(node_name):
     registered_xnodes = NODE_REGISTER[node_name]
@@ -80,7 +130,7 @@ def identify_compatibility_patterns(node_name):
         infoX['pattern'] = my_patterns[pattern]
     return my_patterns
 
-def update_original_names(node_name):
+def update_original_method_names(node_name):
     registered_xnodes = NODE_REGISTER[node_name]
     for xnode in registered_xnodes:
         # name it according to its pattern
@@ -108,12 +158,12 @@ def generalize_method_trees(jtrees, log=False):
         my_trees.append({'tree':tree, 'original': executable, 'arg': inputfile})
 
     for k in NODE_REGISTER:
-        identify_compatibility_patterns(k)
+        identify_compatibility_patterns(k) # XTODO: switch to identify_buckets
 
     # finally, update the original names.
     for k in NODE_REGISTER:
         if k == '<START>': continue
-        update_original_names(k)
+        update_original_method_names(k)
     return my_trees
 
 def main(tracefile):

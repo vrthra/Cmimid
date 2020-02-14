@@ -1,5 +1,6 @@
 import urllib.parse
 import copy
+import os
 import random
 import json
 import subprocess
@@ -26,6 +27,8 @@ def do(command, env=None, shell=False, log=False, **args):
     result = subprocess.Popen(command,
         stdout = subprocess.PIPE,
         stderr = subprocess.STDOUT,
+        shell = shell,
+        env=dict(os.environ, **({} if env is None else env))
     )
     stdout, stderr = result.communicate(timeout=PARSE_SUCCEEDED)
     if log:
@@ -33,14 +36,31 @@ def do(command, env=None, shell=False, log=False, **args):
             print(json.dumps({'cmd':command, 'env':env, 'exitcode':result.returncode}), env, file=f)
     return O(returncode=result.returncode, stdout=stdout, stderr=stderr)
 
+
+
+def tree_to_pstr(tree, op_='', _cl=''):
+    symbol, children, *_ = tree
+    if children:
+        return "%s%s%s" % (op_, ''.join(tree_to_pstr(c, op_, _cl) for c in children), _cl)
+    else:
+        # TODO: assert symbol is terminal
+        # TODO: check if we need to parenthesize this too. We probably
+        # need this if the terminal symbols are more than one char wide.
+        return "%s%s%s" % (op_, symbol, _cl)
+
 #def do(command, env=None, shell=False, log=False, **args):
 #    result = run(command, universal_newlines=True, shell=shell,
 #                  env=dict(os.environ, **({} if env is None else env)),**args)
 #    return result
 EXEC_MAP = {}
 
-def check(o, e, s, module, sa1, sa2):
+def check(o, x, e, ut, module, sa1, sa2):
+    s = tree_to_pstr(ut)
     if s in EXEC_MAP: return EXEC_MAP[s]
+    updated_ps = tree_to_pstr(ut, op_='{', _cl='}')
+    tn = "build/_test.csv"
+    with open(tn, 'w+') as f: print(s, file=f)
+    # XTODO: now we need to get the trace output; not just execute the module.
     result = do([module, s])
     with open('%s.log' % module, 'a+') as f:
         print('------------------', file=f)
@@ -96,7 +116,7 @@ def replace_nodes(a2, a1):
         node2.append(n)
     str2_new = tree_to_str(t2_new)
     assert str2_old != str2_new
-    return str2_new
+    return t2_new
 
 def is_compatible(a1, a2, module):
     t1 = is_a_replaceable_with_b(a1, a2, module)
@@ -108,9 +128,13 @@ def is_a_replaceable_with_b(a1, a2, module):
     n1, f1, t1 = a1
     n2, f2, t2 = a2
     if tree_to_str(n1) == tree_to_str(n2): return True
-    my_string = replace_nodes(a1, a2)
+    t_x = replace_nodes(a1, (('XXXX', []), None, a2))
+    x = tree_to_string(t_x)
+    updated_tree = replace_nodes(a1, a2)
+    updated_string = tree_to_string(updated_tree)
     o = tree_to_str(t1)
-    return check(o, n1[0], my_string, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
+    v = check(o, x, n1[0], updated_tree, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
+    return v
 
 def is_node_method(node):
     node_name = node[0]
