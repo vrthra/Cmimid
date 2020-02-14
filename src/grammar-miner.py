@@ -495,25 +495,74 @@ def remove_single_alts(grammar, start_symbol='<START>'):
     g =  replace_key_by_key(grammar, keys_to_replace)
     return g
 
+def len_grammar(g):
+    return sum([len(g[k]) for k in g])
+
+
+def shrink_rules_cf(g_):
+    g = dict(g_)
+    for k in g:
+        if len(g[k]) != len(set(g[k])):
+            v = list(sorted(list(set(g[k]))))
+            g[k] = v
+    return g
+
+def remove_redundant_tokens_f(g):
+    g_ = {}
+    for k in g:
+        rs_ = []
+        for r in g[k]:
+            assert isinstance(r, str)
+            if r == k:
+                continue
+            rs_.append(r)
+        g_[k] = rs_
+    return g_
+
+
+
+def remove_redundant_tokens_c(g):
+    g_ = {}
+    for k in g:
+        rs_ = []
+        for r in g[k]:
+            assert not isinstance(r, str)
+            r_ = []
+            for t in r:
+                if t == k:
+                    continue
+                r_.append(t)
+            rs_.append(r_)
+        g_[k] = rs_
+    return g_
+
 def main(tracefile):
     with open(tracefile) as f:
         generalized_trees  = json.load(f)
     g = convert_to_grammar(generalized_trees)
+
     with open('build/g1_.json', 'w+') as f: json.dump(g, f)
-    g = check_empty_rules(g)
+    g = check_empty_rules(g) # add optional rules
     with open('build/g2_.json', 'w+') as f: json.dump(g, f)
-    g = collapse_rules(g)
+    g = collapse_rules(g) # learn regex
     with open('build/g3_.json', 'w+') as f: json.dump(g, f)
-    g = convert_spaces(g)
+    g = convert_spaces(g) # fuzzable grammar
     with open('build/g4_.json', 'w+') as f: json.dump(g, f)
-    e = remove_single_entries(g)
-    with open('build/g5_.json', 'w+') as f: json.dump(e, f)
-    e = remove_duplicate_rule_keys(e)
-    with open('build/g6_.json', 'w+') as f: json.dump(e, f)
-    e = cleanup_tokens(e)
-    with open('build/g7_.json', 'w+') as f: json.dump(e, f)
-    e = remove_single_alts(e)
-    with open('build/g8_.json', 'w+') as f: json.dump(e, f)
+
+    l = len_grammar(g)
+    diff = 1
+    while diff > 0:
+        e = remove_single_entries(g)
+        e = remove_duplicate_rule_keys(e)
+        e = cleanup_tokens(e)
+        e = remove_single_alts(e)
+
+        e = shrink_rules_cf(e)
+        e = remove_redundant_tokens_f(e)
+        g = e
+        l_ = len_grammar(g)
+        diff = l - l_
+        l = l_
     e = show_grammar(e, canonical=False)
     with open('build/g.json', 'w+') as f: json.dump(e, f)
 
