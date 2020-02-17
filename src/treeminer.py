@@ -205,11 +205,25 @@ def miner(call_traces):
         my_trees.append(my_tree)
     return my_trees
 
+def tree_to_pstr(tree, op_='', _cl=''):
+    symbol, children, *_ = tree
+    if children:
+        return "%s%s%s" % (op_, ''.join(tree_to_pstr(c, op_, _cl) for c in children), _cl)
+    else:
+        # TODO: assert symbol is terminal
+        # TODO: check if we need to parenthesize this too. We probably
+        # need this if the terminal symbols are more than one char wide.
+        return "%s%s%s" % (op_, symbol, _cl)
+
+import os
 def main(tracefile):
     with open(tracefile) as f:
         my_trace = json.load(f)
     mined_trees = miner(my_trace)
-    json.dump(mined_trees, sys.stdout)
+    if os.environ.get('PARSE') is not None:
+        print(tree_to_pstr(mined_trees[0]['tree'], '{', '}'))
+    else:
+        json.dump(mined_trees, sys.stdout)
 
 if __name__ == '__main__':
     main(sys.argv[1])
