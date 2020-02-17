@@ -59,7 +59,7 @@ def check(o, x, e, ut, module, sa1, sa2):
     if s in EXEC_MAP: return EXEC_MAP[s]
     updated_ps = tree_to_pstr(ut, op_='{', _cl='}')
     tn = "build/_test.csv"
-    with open(tn, 'w+') as f: print(s, file=f)
+    with open(tn, 'w+') as f: print(s, file=f, end='')
     # XTODO: now we need to get the trace output; not just execute the module.
     result = do([module, s])
     with open('%s.log' % module, 'a+') as f:
@@ -75,6 +75,69 @@ def check(o, x, e, ut, module, sa1, sa2):
     v = (result.returncode == 0)
     EXEC_MAP[s] = v
     return v
+
+ACCURATE_BUT_COSTLY = False
+
+if ACCURATE_BUT_COSTLY:
+    def check(o, x, e, ut, module, sa1, sa2):
+        assert module.endswith('.x')
+        module = module[0:-2] + '.c'
+        s = tree_to_pstr(ut)
+        if s in EXEC_MAP: return EXEC_MAP[s]
+        updated_ps = tree_to_pstr(ut, op_='{', _cl='}')
+        tn = "build/_test.csv"
+        with open(tn, 'w+') as f: print(s, file=f, end='')
+
+        trace_out = do(["./bin/parsed_out.sh",tn, module] ).stdout.decode('UTF-8', 'ignore')
+        val = None
+        v = False
+        parsed_ps = None
+        try:
+            parsed_ps = trace_out.strip()
+            v = (parsed_ps == updated_ps)
+        except:
+            parsed_ps = 'ERROR'
+            v = False
+
+        with open('%s.log' % module, 'a+') as f:
+            print('------------------', file=f)
+            print(' '.join(["python", "build/%s" % module, s]), file=f)
+            print('Checking:',e, file=f)
+            print('original:', repr(o), file=f)
+            print('tmpl:', repr(x), file=f)
+            print('updated:', repr(s), file=f)
+            print('XXXX:', repr(sa1), file=f)
+            print('REPL:', repr(sa2), file=f)
+            print('ops:', repr(updated_ps), file=f)
+            print('pps:', repr(parsed_ps), file=f)
+            print(":=", v, file=f)
+        #     print(' '.join([module, repr(s)]), file=f)
+        #     print("\n", file=f)
+        # v = (result.returncode == 0)
+        EXEC_MAP[s] = v
+        return v
+else:
+    def check(o, x, e, ut, module, sa1, sa2):
+        s = tree_to_pstr(ut)
+        if s in EXEC_MAP: return EXEC_MAP[s]
+        updated_ps = tree_to_pstr(ut, op_='{', _cl='}')
+        tn = "build/_test.csv"
+        with open(tn, 'w+') as f: print(s, file=f, end='')
+        # XTODO: now we need to get the trace output; not just execute the module.
+        result = do([module, s])
+        with open('%s.log' % module, 'a+') as f:
+            print('------------------', file=f)
+            print('original:', repr(o), file=f)
+            print('updated:', repr(s), file=f)
+            print('Checking:',e, file=f)
+            print('1:', repr(sa1), file=f)
+            print('2:', repr(sa2), file=f)
+            print(' '.join([module, repr(s)]), file=f)
+            print(":=", result.returncode, file=f)
+            print("\n", file=f)
+        v = (result.returncode == 0)
+        EXEC_MAP[s] = v
+        return v
 
 def to_modifiable(derivation_tree):
     node, children, *rest = derivation_tree
