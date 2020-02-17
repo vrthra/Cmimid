@@ -10,4 +10,5 @@ gzip -c output > build/output.gz
 )
 
 cp ../checksum-repair/build/pygmalion.json $filename.json
-python src/events.py $filename.json
+python src/events.py $filename.json > $filename.trace
+PARSE=1 python src/treeminer.py $filename.trace
