@@ -39,10 +39,8 @@ def to_grammar(tree, grammar):
     if node not in grammar:
         grammar[node] = list()
     for c in children:
-        if c[1] == []:
-            tokens.append(c[0])
-        else:
-            tokens.append(c[0])
+        tokens.append(c[0])
+        if c[1] != []:
             to_grammar(c, grammar)
     grammar[node].append(tuple(tokens))
     return grammar
