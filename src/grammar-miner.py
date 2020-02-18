@@ -55,12 +55,15 @@ def merge_grammar(g1, g2):
 
 def convert_to_grammar(my_trees):
     grammar = {}
+    ret = []
     for my_tree in my_trees:
         tree = my_tree['tree']
-        src = my_tree['original']
+        src_file = my_tree['original']
+        arg_file = my_tree['arg']
+        ret.append((src_file, arg_file))
         g = to_grammar(tree, grammar)
         grammar = merge_grammar(grammar, g)
-    return grammar
+    return ret, grammar
 
 def to_fuzzable_grammar(grammar):
     def escape(t):
@@ -537,7 +540,10 @@ def remove_redundant_tokens_c(g):
 def main(tracefile):
     with open(tracefile) as f:
         generalized_trees  = json.load(f)
-    g = convert_to_grammar(generalized_trees)
+    ret, g = convert_to_grammar(generalized_trees)
+    cmds = {src for src,arg in ret}
+    assert len(cmds) == 1
+    cmd = list(cmds)[0]
 
     with open('build/g1_.json', 'w+') as f: json.dump(g, f)
     g = check_empty_rules(g) # add optional rules
@@ -562,7 +568,7 @@ def main(tracefile):
         diff = l - l_
         l = l_
     e = show_grammar(e, canonical=False)
-    with open('build/g.json', 'w+') as f: json.dump(e, f)
+    with open('build/g.json', 'w+') as f: json.dump({'[start]': '<START>', '[grammar]':e, '[command]':cmd}, fp=f)
 
 main(sys.argv[1])
 

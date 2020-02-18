@@ -87,10 +87,12 @@ errors = []
 def main(args):
     with open(args[0]) as f:
         s = json.load(f)
-        f = LimitFuzzer(s)
+    grammar = s['[grammar]']
+    f = LimitFuzzer(grammar)
+    key = args[2] if len(args)> 2 else s['[start]']
     for i in range(100):
         try:
-            v = f.fuzz(args[2] if len(args)> 2 else '<START>')
+            v = f.fuzz(key)
             print(repr(v))
             p = subprocess.Popen(args[1], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             data, err = p.communicate(input=v.encode())
