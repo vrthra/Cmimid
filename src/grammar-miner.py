@@ -313,7 +313,7 @@ def collapse_rules(grammar):
             r_grammar[k_] = new_grammar[k_]
     return r_grammar
 
-def convert_spaces(grammar):
+def convert_spaces_in_keys(grammar):
     keys = {key: key.replace(' ', '_') for key in grammar}
     new_grammar = {}
     for key in grammar:
@@ -324,7 +324,7 @@ def convert_spaces(grammar):
                 for k in keys:
                     t = t.replace(k, keys[k])
                 new_rule.append(t)
-            new_alt.append(''.join(new_rule))
+            new_alt.append(new_rule)
         new_grammar[keys[key]] = new_alt
     return new_grammar
 
@@ -537,6 +537,17 @@ def remove_redundant_tokens_c(g):
         g_[k] = rs_
     return g_
 
+
+def non_canonical(grammar):
+    new_grammar = {}
+    for k in grammar:
+        rules = grammar[k]
+        new_rules = []
+        for rule in rules:
+            new_rules.append(''.join(rule))
+        new_grammar[k] = new_rules
+    return new_grammar
+
 def main(tracefile):
     with open(tracefile) as f:
         generalized_trees  = json.load(f)
@@ -550,8 +561,10 @@ def main(tracefile):
     with open('build/g2_.json', 'w+') as f: json.dump(g, f)
     g = collapse_rules(g) # learn regex
     with open('build/g3_.json', 'w+') as f: json.dump(g, f)
-    g = convert_spaces(g) # fuzzable grammar
+    g = convert_spaces_in_keys(g) # fuzzable grammar
     with open('build/g4_.json', 'w+') as f: json.dump(g, f)
+    g = non_canonical(g)
+    with open('build/g5_.json', 'w+') as f: json.dump(g, f)
 
     l = len_grammar(g)
     diff = 1
