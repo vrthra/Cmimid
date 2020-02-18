@@ -35,13 +35,13 @@ def show_grammar(grammar, start_symbol='<START>', canonical=True):
 
 def to_grammar(tree, grammar):
     node, children, _, _ = tree
+    if not children: return grammar
     tokens = []
     if node not in grammar:
         grammar[node] = list()
     for c in children:
         tokens.append(c[0])
-        if c[1] != []:
-            to_grammar(c, grammar)
+        to_grammar(c, grammar)
     grammar[node].append(tuple(tokens))
     return grammar
 
