@@ -8,28 +8,24 @@ import subprocess
 import copy, random
 random.seed(0)
 
-import re
-RE_NONTERMINAL = re.compile(r'(<[^<> ]*>)')
+def is_nt(token):
+    return token.startswith('<') and token.endswith('>')
 
-def recurse_grammar(grammar, key, order, canonical):
-    rules = sorted(grammar[key])
-    old_len = len(order)
-    for rule in rules:
-        if not canonical:
-            res =  re.findall(RE_NONTERMINAL, rule)
-        else:
-            res = rule
-        for token in res:
-            if token.startswith('<') and token.endswith('>'):
-                if token not in order:
-                    order.append(token)
-    new = order[old_len:]
-    for ckey in new:
-        recurse_grammar(grammar, ckey, order, canonical)
+def grammar_gc(grammar, start_symbol):
+    def strip_key(grammar, key, order):
+        rules = sorted(grammar[key])
+        old_len = len(order)
+        for rule in rules:
+            for token in rule:
+                if is_nt(token):
+                    if token not in order:
+                        order.append(token)
+        new = order[old_len:]
+        for ckey in new:
+            strip_key(grammar, ckey, order)
 
-def show_grammar(grammar, start_symbol='<START>', canonical=True):
     order = [start_symbol]
-    recurse_grammar(grammar, start_symbol, order, canonical)
+    strip_key(grammar, start_symbol, order)
     assert len(order) == len(grammar.keys())
     return {k: sorted(grammar[k]) for k in order}
 
@@ -58,27 +54,13 @@ def convert_to_grammar(my_trees):
     ret = []
     for my_tree in my_trees:
         tree = my_tree['tree']
+        start = tree[0]
         src_file = my_tree['original']
         arg_file = my_tree['arg']
-        ret.append((src_file, arg_file))
+        ret.append((start, src_file, arg_file))
         g = to_grammar(tree, grammar)
         grammar = merge_grammar(grammar, g)
     return ret, grammar
-
-def to_fuzzable_grammar(grammar):
-    def escape(t):
-        if ((t[0]+t[-1]) == '<>'):
-            return t.replace(' ', '_')
-        else:
-            return t
-    new_g = {}
-    for k in grammar:
-        new_alt = []
-        for rule in grammar[k]:
-            new_alt.append(''.join([escape(t) for t in rule]))
-        new_g[k.replace(' ', '_')] = new_alt
-    return new_g
-
 
 def check_empty_rules(grammar):
     new_grammar = {}
@@ -347,20 +329,23 @@ def new_symbol(grammar, symbol_name="<symbol>"):
             return tentative_symbol_name
         count += 1
 
-def replacement_candidates(grammar):
+# Replace keys that have a single token definition with the token in the defition.
+# two options -- either a single nonterminal or a single terminal
+# we should replace the single nonterminal, as it does not contribute much to the
+# readability of the grammar but the single terminal is a different
+# question. So, here we only find the chains. The terminal should only be done if
+# there is a single reference to it. See remove_single_alts()
+def replacement_candidate_chains(grammar, ignores):
     to_replace = {}
     for k in grammar:
+        if k in ignores: continue
         if len(grammar[k]) != 1: continue
-        if k in {'<START>', '<main>'}: continue
         rule = grammar[k][0]
-        res =  re.findall(RE_NONTERMINAL, rule)
-        if len(res) == 1:
-            if len(res[0]) != len(rule): continue
-            to_replace[k] = first_in_chain(res[0], to_replace)
-        elif len(res) == 0:
-            to_replace[k] = first_in_chain(rule, to_replace)
+        if len(rule) != 1: continue
+        if is_nt(rule[0]):
+            to_replace[k] = rule[0]
         else:
-            continue # more than one.
+            pass
     return to_replace
 
 def replace_key_by_new_key(grammar, keys_to_replace):
@@ -368,31 +353,76 @@ def replace_key_by_new_key(grammar, keys_to_replace):
     for key in grammar:
         new_rules = []
         for rule in grammar[key]:
-            for k in keys_to_replace:
-                new_key = keys_to_replace[k]
-                rule = rule.replace(k, keys_to_replace[k])
-            new_rules.append(rule)
+            new_rule = [keys_to_replace.get(token, token) for token in rule]
+            new_rules.append(new_rule)
         new_grammar[keys_to_replace.get(key, key)] = new_rules
     assert len(grammar) == len(new_grammar)
+    return new_grammar
+
+
+def remove_references(keys_to_replace):
+    to_process = list(keys_to_replace.keys())
+    updated_dict = {}
+    references = {}
+    order = []
+    while to_process:
+        key, *to_process = to_process
+        rule = keys_to_replace[key]
+        new_rule = []
+        skip = False
+        for token in rule:
+            if token not in updated_dict:
+                if token in to_process:
+                    # so this token will get defined later. We simply postpone
+                    # the processing of this key until that key is defined.
+                    # TODO: check for cycles.
+                    to_process.append(key)
+                    references.setdefault(token, set()).add(key)
+                    skip = True
+                    break
+                else:
+                    new_rule.append(token)
+            else:
+                new_rule.extend(updated_dict[token])
+        if not skip:
+            order.append(key)
+            updated_dict[key] = new_rule
+    return updated_dict
+
+
+def replace_keys_by_rule(grammar, keys_to_replace):
+    # we now need to verify that none of the keys are part of the sequences.
+    keys_to_replace = remove_references(keys_to_replace)
+
+    new_grammar = {}
+    for key in grammar:
+        if key in keys_to_replace: continue
+
+        new_rules = []
+        for rule in grammar[key]:
+            new_rule = []
+            for token in rule:
+                if token in keys_to_replace:
+                    new_rule.extend(keys_to_replace[token])
+                else:
+                    new_rule.append(token)
+            new_rules.append(new_rule)
+        new_grammar[key] = new_rules
     return new_grammar
 
 def replace_key_by_key(grammar, keys_to_replace):
     new_grammar = {}
     for key in grammar:
-        if key in keys_to_replace:
-            continue
+        if key in keys_to_replace: continue
         new_rules = []
         for rule in grammar[key]:
-            for k in keys_to_replace:
-                new_key = keys_to_replace[k]
-                rule = rule.replace(k, keys_to_replace[k])
-            new_rules.append(rule)
+            new_rule = [first_in_chain(token, keys_to_replace) for token in rule]
+            new_rules.append(new_rule)
         new_grammar[key] = new_rules
     return new_grammar
 
-
-def remove_single_entries(grammar):
-    keys_to_replace = replacement_candidates(grammar)
+def remove_single_entry_chains(grammar, start_symbol):
+    keys_to_replace = replacement_candidate_chains(grammar, {start_symbol, '<main>'})
     return replace_key_by_key(grammar, keys_to_replace)
 
 def collect_duplicate_rule_keys(grammar):
@@ -405,6 +435,7 @@ def collect_duplicate_rule_keys(grammar):
             collect[salt][1].add(k)
     return collect
 
+# Remove keys that have similar rules
 def remove_duplicate_rule_keys(grammar):
     g = grammar
     while True:
@@ -433,155 +464,129 @@ def collect_replacement_keys(grammar):
             continue
     return to_replace
 
-def cleanup_tokens(grammar):
+def cleanup_token_names(grammar):
     keys_to_replace = collect_replacement_keys(grammar)
     g = replace_key_by_new_key(grammar, keys_to_replace)
     return g
 
-def replaceAngular(grammar):
-    new_g = {}
-    replaced = False
-    for k in grammar:
-        new_rules = []
-        for rule in grammar[k]:
-            new_rule = rule.replace('<>', '<openA><closeA>').replace('</>', '<openA>/<closeA>')
-            if rule != new_rule:
-                replaced = True
-            new_rules.append(new_rule)
-        new_g[k] = new_rules
-    if replaced:
-        new_g['<openA>'] = ['<']
-        new_g['<closeA>'] = ['<']
-    return new_g
-
 import math
 
-def len_to_start(item, parents, seen=None):
+def len_to_start(item, parents, start_symbol, seen=None):
     if seen is None: seen = set()
-    if item in seen:
-        return math.inf
+    if item in seen: return math.inf
     seen.add(item)
-    if item == '<START>':
-        return 0
-    else:
-        return 1 + min(len_to_start(p, parents, seen) for p in parents[item])
+    if item == start_symbol: return 0
+    else: return 1 + min(len_to_start(p, parents, start_symbol, seen) for p in parents[item])
 
-def order_by_length_to_start(items, parents):
-    return sorted(items, key=lambda i: len_to_start(i, parents))
+def order_by_length_to_start(items, parent_map, start_symbol):
+    return sorted(items, key=lambda i: len_to_start(i, parent_map, start_symbol))
 
-def id_parents(grammar, key, seen=None, parents=None):
-    if parents is None:
-        parents = {}
-        seen = set()
-    if key in seen: return
+def get_parents_of_tokens(grammar, key, seen=None, parents=None):
+    if parents is None: parents, seen = {}, set()
+    if key in seen: return parents
     seen.add(key)
-    for rule in grammar[key]:
-        res = re.findall(RE_NONTERMINAL, rule)
+    for res in grammar[key]:
         for token in res:
-            if token.startswith('<') and token.endswith('>'):
-                if token not in parents: parents[token] = list()
-                parents[token].append(key)
+            if not is_nt(token): continue
+            parents.setdefault(token, []).append(key)
     for ckey in {i for i in  grammar if i not in seen}:
-        id_parents(grammar, ckey, seen, parents)
+        get_parents_of_tokens(grammar, ckey, seen, parents)
     return parents
 
-def remove_single_alts(grammar, start_symbol='<START>'):
+# Remove keys that have a single alternative, and are referred to from only a single rule.
+def remove_single_alts(grammar, start_symbol):
     single_alts = {p for p in grammar if len(grammar[p]) == 1 and p != start_symbol}
 
-    child_parent_map = id_parents(grammar, start_symbol)
+    child_parent_map = get_parents_of_tokens(grammar, start_symbol)
+    assert len(child_parent_map) < len(grammar)
 
     single_refs = {p:child_parent_map[p] for p in single_alts if len(child_parent_map[p]) <= 1}
 
-    keys_to_replace = {p:grammar[p][0] for p in order_by_length_to_start(single_refs, child_parent_map)}
-    g =  replace_key_by_key(grammar, keys_to_replace)
+    ordered = order_by_length_to_start(single_refs, child_parent_map, start_symbol)
+
+    for p in ordered:
+        assert len(grammar[p]) == 1
+
+    keys_to_replace = {p:grammar[p][0] for p in ordered}
+
+    g =  replace_keys_by_rule(grammar, keys_to_replace)
     return g
 
-def len_grammar(g):
-    return sum([len(g[k]) for k in g])
+def len_rule(r): return len(r)
+def len_definition(d): return sum([len_rule(r) for r in d])
+def len_grammar(g): return sum([len_definition(g[k]) for k in g])
 
-
-def shrink_rules_cf(g_):
-    g = dict(g_)
-    for k in g:
-        if len(g[k]) != len(set(g[k])):
-            v = list(sorted(list(set(g[k]))))
-            g[k] = v
-    return g
-
-def remove_redundant_tokens_f(g):
+def remove_duplicate_rules_in_a_key(g):
     g_ = {}
     for k in g:
-        rs_ = []
-        for r in g[k]:
-            assert isinstance(r, str)
-            if r == k:
-                continue
-            rs_.append(r)
-        g_[k] = rs_
+        s = {str(r):r for r in g[k]}
+        g_[k] = list(sorted(list(s.values())))
     return g_
 
 
-
-def remove_redundant_tokens_c(g):
+def remove_self_definitions(g):
     g_ = {}
     for k in g:
         rs_ = []
         for r in g[k]:
             assert not isinstance(r, str)
-            r_ = []
-            for t in r:
-                if t == k:
-                    continue
-                r_.append(t)
-            rs_.append(r_)
+            if len(r) == 1 and r[0] == k: continue
+            rs_.append(r)
         g_[k] = rs_
     return g_
-
-
-def non_canonical(grammar):
-    new_grammar = {}
-    for k in grammar:
-        rules = grammar[k]
-        new_rules = []
-        for rule in rules:
-            new_rules.append(''.join(rule))
-        new_grammar[k] = new_rules
-    return new_grammar
 
 def main(tracefile):
     with open(tracefile) as f:
         generalized_trees  = json.load(f)
     ret, g = convert_to_grammar(generalized_trees)
-    cmds = {src for src,arg in ret}
+    cmds = {src for starts,src,arg in ret}
+    starts = {starts for starts,src,arg in ret}
     assert len(cmds) == 1
     cmd = list(cmds)[0]
-
+    assert len(starts) == 1
+    start_symbol = list(starts)[0]
+    g = grammar_gc(g, start_symbol) # garbage collect
     with open('build/g1_.json', 'w+') as f: json.dump(g, f)
+
     g = check_empty_rules(g) # add optional rules
+    g = grammar_gc(g, start_symbol) # garbage collect
     with open('build/g2_.json', 'w+') as f: json.dump(g, f)
+
     g = collapse_rules(g) # learn regex
+    g = grammar_gc(g, start_symbol) # garbage collect
     with open('build/g3_.json', 'w+') as f: json.dump(g, f)
+
     g = convert_spaces_in_keys(g) # fuzzable grammar
+    g = grammar_gc(g, start_symbol) # garbage collect
     with open('build/g4_.json', 'w+') as f: json.dump(g, f)
-    g = non_canonical(g)
-    with open('build/g5_.json', 'w+') as f: json.dump(g, f)
 
     l = len_grammar(g)
     diff = 1
     while diff > 0:
-        e = remove_single_entries(g)
-        e = remove_duplicate_rule_keys(e)
-        e = cleanup_tokens(e)
-        e = remove_single_alts(e)
+        e = remove_single_entry_chains(g, start_symbol)
+        e = grammar_gc(e, start_symbol) # garbage collect
 
-        e = shrink_rules_cf(e)
-        e = remove_redundant_tokens_f(e)
+        e = remove_duplicate_rule_keys(e)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = cleanup_token_names(e)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = remove_single_alts(e, start_symbol)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = remove_duplicate_rules_in_a_key(e)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = remove_self_definitions(e)
+
         g = e
         l_ = len_grammar(g)
         diff = l - l_
         l = l_
-    e = show_grammar(e, canonical=False)
-    with open('build/g.json', 'w+') as f: json.dump({'[start]': '<START>', '[grammar]':e, '[command]':cmd}, fp=f)
+    g = grammar_gc(g, start_symbol)
+    with open('build/g.json', 'w+') as f: json.dump({'[start]': start_symbol, '[grammar]':g, '[command]':cmd}, fp=f)
 
-main(sys.argv[1])
+if __name__ == '__main__':
+    main(sys.argv[1])
 

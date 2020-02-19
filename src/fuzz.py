@@ -33,7 +33,7 @@ class Fuzzer:
 
 class Fuzzer:
     def __init__(self, grammar):
-        self.grammar = P.canonical(grammar)
+        self.grammar = grammar
 
     def fuzz(self, key='<start>', max_num=None, max_depth=None):
         raise NotImplemented()
@@ -71,7 +71,7 @@ class LimitFuzzer(Fuzzer):
     def __init__(self, grammar):
         super().__init__(grammar)
         self.key_cost = {}
-        self.cost = self.compute_cost(P.canonical(grammar))
+        self.cost = self.compute_cost(grammar)
 
     def compute_cost(self, grammar):
         cost = {}
