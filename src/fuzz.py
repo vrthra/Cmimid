@@ -86,8 +86,8 @@ class LimitFuzzer(Fuzzer):
 
 
 import subprocess
-errors = []
 def main(args):
+    errors = []
     with open(args[0]) as f:
         s = json.load(f)
     grammar = s['[grammar]']
@@ -101,9 +101,10 @@ def main(args):
             data, err = p.communicate(input=v.encode())
             #print(p.returncode)
             if p.returncode != 0:
-                errors.append((v))
+                errors.append(v)
         except RecursionError:
             pass
+    return errors
 
 def process_token(i):
     if i and i[0] == '<' and ' ' in  i:
@@ -114,9 +115,9 @@ def process_token(i):
         return repr(i)
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    errors = main(sys.argv[1:])
     print()
-    for e,p in errors:
+    for e in errors:
         print(repr(e))
         print()
 
