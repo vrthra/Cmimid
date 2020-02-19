@@ -23,14 +23,25 @@ def init_log(prefix, var, module):
     with open('%s.log' % module, 'a+') as f:
         print(prefix, ':==============',var, file=f)
 
-def do(command, env=None, shell=False, log=False, **args):
-    result = subprocess.Popen(command,
-        stdout = subprocess.PIPE,
-        stderr = subprocess.STDOUT,
-        shell = shell,
-        env=dict(os.environ, **({} if env is None else env))
-    )
-    stdout, stderr = result.communicate(timeout=PARSE_SUCCEEDED)
+def do(command, env=None, shell=False, log=False, inputv=None, **args):
+    if inputv:
+        result = subprocess.Popen(command,
+            stdin = subprocess.PIPE,
+            stdout = subprocess.PIPE,
+            stderr = subprocess.STDOUT,
+            shell = shell,
+            env=dict(os.environ, **({} if env is None else env))
+        )
+        result.stdin.write(inputv)
+        stdout, stderr = result.communicate(timeout=PARSE_SUCCEEDED)
+    else:
+        result = subprocess.Popen(command,
+            stdout = subprocess.PIPE,
+            stderr = subprocess.STDOUT,
+            shell = shell,
+            env=dict(os.environ, **({} if env is None else env))
+        )
+        stdout, stderr = result.communicate(timeout=PARSE_SUCCEEDED)
     if log:
         with open('build/do.log', 'a+') as f:
             print(json.dumps({'cmd':command, 'env':env, 'exitcode':result.returncode}), env, file=f)
@@ -54,36 +65,10 @@ def tree_to_pstr(tree, op_='', _cl=''):
 #    return result
 EXEC_MAP = {}
 
-def check(o, x, e, ut, module, sa1, sa2):
-    s = tree_to_pstr(ut)
-    if s in EXEC_MAP: return EXEC_MAP[s]
-    updated_ps = tree_to_pstr(ut, op_='{', _cl='}')
-    tn = "build/_test.csv"
-    with open(tn, 'w+') as f: print(s, file=f, end='')
-    # XTODO: now we need to get the trace output; not just execute the module.
-    result = do([module, s])
-    with open('%s.log' % module, 'a+') as f:
-        print('------------------', file=f)
-        print('original:', repr(o), file=f)
-        print('updated:', repr(s), file=f)
-        print('Checking:',e, file=f)
-        print('1:', repr(sa1), file=f)
-        print('2:', repr(sa2), file=f)
-        print(' '.join([module, repr(s)]), file=f)
-        print(":=", result.returncode, file=f)
-        print("\n", file=f)
-    v = (result.returncode == 0)
-    EXEC_MAP[s] = v
-    return v
-
 def check_lowcost(o, x, e, ut, module, sa1, sa2):
     s = tree_to_pstr(ut)
     if s in EXEC_MAP: return EXEC_MAP[s]
-    updated_ps = tree_to_pstr(ut, op_='{', _cl='}')
-    tn = "build/_test.csv"
-    with open(tn, 'w+') as f: print(s, file=f, end='')
-    # XTODO: now we need to get the trace output; not just execute the module.
-    result = do([module, s])
+    result = do([module], inputv=s.encode())
     with open('%s.log' % module, 'a+') as f:
         print('------------------', file=f)
         print('original:', repr(o), file=f)
