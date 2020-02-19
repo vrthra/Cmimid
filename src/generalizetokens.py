@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import sys
+import grammartools
 sys.setrecursionlimit(3000)
 import random
 import string
@@ -277,9 +278,11 @@ def main(args):
     for k, q, r in list_of_things_to_generalize:
         g_ = generalize_single_token(g_, start, k, q, r, command)
 
+    g = grammartools.remove_duplicate_rules_in_a_key(g_)
+
     # finally, we want to generalize the length.
     #g = generalize_size(g_)
-    print(json.dumps({'[start]': start, '[grammar]':g_, '[command]': command}))
+    print(json.dumps({'[start]': start, '[grammar]':g, '[command]': command}))
 
 if __name__ == '__main__':
     main(sys.argv[1:])

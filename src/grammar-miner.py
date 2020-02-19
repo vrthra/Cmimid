@@ -1,4 +1,5 @@
 import sys
+import grammartools
 import util
 import pudb
 bp = pudb.set_trace
@@ -512,18 +513,6 @@ def remove_single_alts(grammar, start_symbol):
     g =  replace_keys_by_rule(grammar, keys_to_replace)
     return g
 
-def len_rule(r): return len(r)
-def len_definition(d): return sum([len_rule(r) for r in d])
-def len_grammar(g): return sum([len_definition(g[k]) for k in g])
-
-def remove_duplicate_rules_in_a_key(g):
-    g_ = {}
-    for k in g:
-        s = {str(r):r for r in g[k]}
-        g_[k] = list(sorted(list(s.values())))
-    return g_
-
-
 def remove_self_definitions(g):
     g_ = {}
     for k in g:
@@ -560,7 +549,7 @@ def main(tracefile):
     g = grammar_gc(g, start_symbol) # garbage collect
     with open('build/g4_.json', 'w+') as f: json.dump(g, f)
 
-    l = len_grammar(g)
+    l = grammartools.len_grammar(g)
     diff = 1
     while diff > 0:
         e = remove_single_entry_chains(g, start_symbol)
@@ -575,13 +564,13 @@ def main(tracefile):
         e = remove_single_alts(e, start_symbol)
         e = grammar_gc(e, start_symbol) # garbage collect
 
-        e = remove_duplicate_rules_in_a_key(e)
+        e = grammartools.remove_duplicate_rules_in_a_key(e)
         e = grammar_gc(e, start_symbol) # garbage collect
 
         e = remove_self_definitions(e)
 
         g = e
-        l_ = len_grammar(g)
+        l_ = grammartools.len_grammar(g)
         diff = l - l_
         l = l_
     g = grammar_gc(g, start_symbol)
