@@ -3,6 +3,7 @@ import random
 import json
 import re
 import fuzzingbook.Parser as P
+from fuzzingbook.GrammarFuzzer import tree_to_string
 RE_NONTERMINAL = re.compile(r'(<[^<> ]*>)')
 
 class Fuzzer:
@@ -54,19 +55,19 @@ class LimitFuzzer(Fuzzer):
                     for token in tokens if token in grammar), default=0) + 1
 
     def gen_key(self, key, depth, max_depth):
-        if key not in self.grammar: return key
+        if key not in self.grammar: return (key, [])
         if depth > max_depth:
             clst = sorted([(self.cost[key][str(rule)], rule) for rule in self.grammar[key]])
             rules = [r for c,r in clst if c == clst[0][0]]
         else:
             rules = self.grammar[key]
-        return self.gen_rule(random.choice(rules), depth+1, max_depth)
+        return (key, self.gen_rule(random.choice(rules), depth+1, max_depth))
 
     def gen_rule(self, rule, depth, max_depth):
-        return ''.join(self.gen_key(token, depth, max_depth) for token in rule)
+        return [self.gen_key(token, depth, max_depth) for token in rule]
 
     def fuzz(self, key='<start>', max_depth=10):
-        return self.gen_key(key=key, depth=0, max_depth=max_depth)
+        return tree_to_string(self.gen_key(key=key, depth=0, max_depth=max_depth))
 
     def __init__(self, grammar):
         super().__init__(grammar)
@@ -102,8 +103,6 @@ def main(args):
         except RecursionError:
             pass
 
-main(sys.argv[1:])
-print()
 def process_token(i):
     if i and i[0] == '<' and ' ' in  i:
         return i.split(' ')[0] + '>'
@@ -111,8 +110,12 @@ def process_token(i):
         return i
     else:
         return repr(i)
-for e,p in errors:
-    print(repr(e))
-    print()
 
-print(len(errors))
+if __name__ == '__main__':
+    main(sys.argv[1:])
+    print()
+    for e,p in errors:
+        print(repr(e))
+        print()
+
+    print(len(errors))
