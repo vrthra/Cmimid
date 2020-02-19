@@ -80,6 +80,8 @@ class LimitFuzzer(Fuzzer):
             cost[k] = {}
             for rule in grammar[k]:
                 cost[k][str(rule)] = self.expansion_cost(grammar, rule, set())
+            if len(grammar[k]):
+                assert len([v for v in cost[k] if v != float('inf')]) > 0
         return cost
 
 
