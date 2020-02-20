@@ -5,12 +5,16 @@ import random
 import json
 import subprocess
 from fuzzingbook.GrammarFuzzer import tree_to_string
+import hashlib
 PARSE_SUCCEEDED = 10
 MAX_SAMPLES = 100
 MAX_PROC_SAMPLES = 100
 
 Epsilon = '-'
 NoEpsilon = '='
+
+def hashit(s, n=3):
+    return hashlib.md5(s.encode()).hexdigest()[0:n]
 
 def tree_to_str(tree):
     return tree_to_string(tree)

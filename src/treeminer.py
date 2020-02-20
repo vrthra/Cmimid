@@ -4,7 +4,7 @@ import json
 import itertools as it
 
 from operator import itemgetter
-from fuzzingbook.GrammarFuzzer import tree_to_string
+import util
 
 def reconstruct_method_tree(method_map):
     first_id = None
@@ -183,6 +183,22 @@ def to_tree(node, my_str):
     m = (method_name, my_children, start_idx, end_idx)
     return m
 
+def wrap_terminals(node):
+    # the idea is to wrap any children that are directly terminal nodes
+    # with a nonterminal with the name prefix.
+    method_name, my_children, start_idx, end_idx = node
+    mprefix, *rest = method_name[1:-1].split(':')
+    prefix = "%s_%s" % (mprefix, util.hashit("token" + ''.join(rest)))
+    my_c = []
+    for i,c in enumerate(my_children):
+       cmethod_name, cmy_children, cstart_idx, cend_idx = c
+       if (cmethod_name[0], cmethod_name[-1]) != ('<', '>'):
+           my_c.append(("<%s>" % (prefix + str(i)), [(cmethod_name, cmy_children, cstart_idx, cend_idx)], cstart_idx, cend_idx))
+       else:
+           my_c.append(wrap_terminals(c))
+    return (method_name, my_c, start_idx, end_idx)
+
+
 import os.path, copy, random
 random.seed(0)
 
@@ -199,9 +215,10 @@ def miner(call_traces):
 
         #print("INPUT:", my_str, file=sys.stderr)
         tree = to_tree(method_tree[first], my_str)
+        tree_ = wrap_terminals(tree)
         #print("RECONSTRUCTED INPUT:", tree_to_string(tree), file=sys.stderr)
-        my_tree = {'tree': tree, 'original': call_trace['original'], 'arg': call_trace['arg']}
-        assert tree_to_string(tree) == my_str
+        my_tree = {'tree': tree_, 'original': call_trace['original'], 'arg': call_trace['arg']}
+        assert util.tree_to_str(tree) == my_str
         my_trees.append(my_tree)
     return my_trees
 
@@ -223,7 +240,7 @@ def main(tracefile):
     if os.environ.get('PARSE') is not None:
         print(tree_to_pstr(mined_trees[0]['tree'], '{', '}'))
     else:
-        json.dump(mined_trees, sys.stdout)
+        print(json.dumps(mined_trees, indent=4))
 
 if __name__ == '__main__':
     main(sys.argv[1])

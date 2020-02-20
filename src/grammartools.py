@@ -1,3 +1,173 @@
+import math
+
+def is_nt(token):
+    return token.startswith('<') and token.endswith('>')
+
+def len_rule(r): return len(r)
+def len_definition(d): return sum([len_rule(r) for r in d])
+def len_grammar(g): return sum([len_definition(g[k]) for k in g])
+
+def grammar_gc(grammar, start_symbol):
+    def strip_key(grammar, key, order):
+        rules = sorted(grammar[key])
+        old_len = len(order)
+        for rule in rules:
+            for token in rule:
+                if is_nt(token):
+                    if token not in order:
+                        order.append(token)
+        new = order[old_len:]
+        for ckey in new:
+            strip_key(grammar, ckey, order)
+
+    order = [start_symbol]
+    strip_key(grammar, start_symbol, order)
+    assert len(order) == len(grammar.keys())
+    return {k: sorted(grammar[k]) for k in order}
+
+def first_in_chain(token, chain):
+    while True:
+        if token in chain:
+            token = chain[token]
+        else:
+            break
+    return token
+
+def new_symbol(grammar, symbol_name="<symbol>"):
+    if symbol_name not in grammar:
+        return symbol_name
+
+    count = 1
+    while True:
+        tentative_symbol_name = symbol_name[:-1] + "-" + repr(count) + ">"
+        if tentative_symbol_name not in grammar:
+            return tentative_symbol_name
+        count += 1
+
+# Replace keys that have a single token definition with the token in the defition.
+# two options -- either a single nonterminal or a single terminal
+# we should replace the single nonterminal, as it does not contribute much to the
+# readability of the grammar but the single terminal is a different
+# question. So, here we only find the chains. The terminal should only be done if
+# there is a single reference to it. See remove_single_alts()
+def replacement_candidate_chains(grammar, ignores):
+    to_replace = {}
+    for k in grammar:
+        if k in ignores: continue
+        if len(grammar[k]) != 1: continue
+        rule = grammar[k][0]
+        if len(rule) != 1: continue
+        if is_nt(rule[0]):
+            to_replace[k] = rule[0]
+        else:
+            pass
+    return to_replace
+
+def replace_key_by_new_key(grammar, keys_to_replace):
+    new_grammar = {}
+    for key in grammar:
+        new_rules = []
+        for rule in grammar[key]:
+            new_rule = [keys_to_replace.get(token, token) for token in rule]
+            new_rules.append(new_rule)
+        new_grammar[keys_to_replace.get(key, key)] = new_rules
+    assert len(grammar) == len(new_grammar)
+    return new_grammar
+
+def remove_references(keys_to_replace):
+    to_process = list(keys_to_replace.keys())
+    updated_dict = {}
+    references = {}
+    order = []
+    while to_process:
+        key, *to_process = to_process
+        rule = keys_to_replace[key]
+        new_rule = []
+        skip = False
+        for token in rule:
+            if token not in updated_dict:
+                if token in to_process:
+                    # so this token will get defined later. We simply postpone
+                    # the processing of this key until that key is defined.
+                    # TODO: check for cycles.
+                    to_process.append(key)
+                    references.setdefault(token, set()).add(key)
+                    skip = True
+                    break
+                else:
+                    new_rule.append(token)
+            else:
+                new_rule.extend(updated_dict[token])
+        if not skip:
+            order.append(key)
+            updated_dict[key] = new_rule
+    return updated_dict
+
+def replace_keys_by_rule(grammar, keys_to_replace):
+    # we now need to verify that none of the keys are part of the sequences.
+    keys_to_replace = remove_references(keys_to_replace)
+
+    new_grammar = {}
+    for key in grammar:
+        if key in keys_to_replace: continue
+
+        new_rules = []
+        for rule in grammar[key]:
+            new_rule = []
+            for token in rule:
+                if token in keys_to_replace:
+                    new_rule.extend(keys_to_replace[token])
+                else:
+                    new_rule.append(token)
+            new_rules.append(new_rule)
+        new_grammar[key] = new_rules
+    return new_grammar
+
+def replace_key_by_key(grammar, keys_to_replace):
+    new_grammar = {}
+    for key in grammar:
+        if key in keys_to_replace: continue
+        new_rules = []
+        for rule in grammar[key]:
+            new_rule = [first_in_chain(token, keys_to_replace) for token in rule]
+            new_rules.append(new_rule)
+        new_grammar[key] = new_rules
+    return new_grammar
+
+def remove_single_entry_chains(grammar, start_symbol):
+    keys_to_replace = replacement_candidate_chains(grammar, {start_symbol, '<main>'})
+    return replace_key_by_key(grammar, keys_to_replace)
+
+def collect_duplicate_rule_keys(grammar):
+    collect = {}
+    for k in grammar:
+        salt = str(sorted(grammar[k]))
+        if salt not in collect:
+            collect[salt] = (k, set())
+        else:
+            collect[salt][1].add(k)
+    return collect
+
+
+def collect_replacement_keys(grammar):
+    g = copy.deepcopy(grammar)
+    to_replace = {}
+    for k in grammar:
+        if ':' in k:
+            first, rest = k.split(':')
+            sym = new_symbol(g, symbol_name=first + '>')
+            assert sym not in g
+            g[sym] = None
+            to_replace[k] = sym
+        else:
+            continue
+    return to_replace
+
+def cleanup_token_names(grammar):
+    keys_to_replace = collect_replacement_keys(grammar)
+    g = replace_key_by_new_key(grammar, keys_to_replace)
+    return g
+
 def remove_duplicate_rules_in_a_key(g):
     g_ = {}
     for k in g:
@@ -5,7 +175,100 @@ def remove_duplicate_rules_in_a_key(g):
         g_[k] = list(sorted(list(s.values())))
     return g_
 
-def len_rule(r): return len(r)
-def len_definition(d): return sum([len_rule(r) for r in d])
-def len_grammar(g): return sum([len_definition(g[k]) for k in g])
+
+# Remove keys that have similar rules
+def remove_duplicate_rule_keys(grammar):
+    g = grammar
+    while True:
+        collect = collect_duplicate_rule_keys(g)
+        keys_to_replace = {}
+        for salt in collect:
+            k, st = collect[salt]
+            for s in st:
+                keys_to_replace[s] = k
+        if not keys_to_replace:
+            break
+        g = replace_key_by_key(g, keys_to_replace)
+    return g
+
+# Remove keys that have a single alternative, and are referred to from only a single rule.
+def remove_single_alts(grammar, start_symbol):
+    single_alts = {p for p in grammar if len(grammar[p]) == 1 and p != start_symbol}
+
+    child_parent_map = get_parents_of_tokens(grammar, start_symbol)
+    assert len(child_parent_map) < len(grammar)
+
+    single_refs = {p:child_parent_map[p] for p in single_alts if len(child_parent_map[p]) <= 1}
+
+    ordered = order_by_length_to_start(single_refs, child_parent_map, start_symbol)
+
+    for p in ordered:
+        assert len(grammar[p]) == 1
+
+    keys_to_replace = {p:grammar[p][0] for p in ordered}
+
+    g =  replace_keys_by_rule(grammar, keys_to_replace)
+    return g
+
+def remove_self_definitions(g):
+    g_ = {}
+    for k in g:
+        rs_ = []
+        for r in g[k]:
+            assert not isinstance(r, str)
+            if len(r) == 1 and r[0] == k: continue
+            rs_.append(r)
+        g_[k] = rs_
+    return g_
+
+
+def get_parents_of_tokens(grammar, key, seen=None, parents=None):
+    if parents is None: parents, seen = {}, set()
+    if key in seen: return parents
+    seen.add(key)
+    for res in grammar[key]:
+        for token in res:
+            if not is_nt(token): continue
+            parents.setdefault(token, []).append(key)
+    for ckey in {i for i in  grammar if i not in seen}:
+        get_parents_of_tokens(grammar, ckey, seen, parents)
+    return parents
+
+def len_to_start(item, parents, start_symbol, seen=None):
+    if seen is None: seen = set()
+    if item in seen: return math.inf
+    seen.add(item)
+    if item == start_symbol: return 0
+    else: return 1 + min(len_to_start(p, parents, start_symbol, seen) for p in parents[item])
+
+def order_by_length_to_start(items, parent_map, start_symbol):
+    return sorted(items, key=lambda i: len_to_start(i, parent_map, start_symbol))
+
+def compact_grammar(g, start_symbol):
+    l = len_grammar(g)
+    diff = 1
+    while diff > 0:
+        e = remove_single_entry_chains(g, start_symbol)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = remove_duplicate_rule_keys(e)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = cleanup_token_names(e)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = remove_single_alts(e, start_symbol)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = remove_duplicate_rules_in_a_key(e)
+        e = grammar_gc(e, start_symbol) # garbage collect
+
+        e = remove_self_definitions(e)
+
+        g = e
+        l_ = len_grammar(g)
+        diff = l - l_
+        l = l_
+    g = grammar_gc(g, start_symbol)
+    return g
 
