@@ -87,7 +87,8 @@ build/%.grammar: build/%.events
 	$(PYTHON) ./src/grammar-miner.py build/loop_trees.json > build/mined_g.json
 	$(PYTHON) ./src/grammar-compact.py build/mined_g.json > build/compact_g.json
 	$(PYTHON) ./src/generalizetokens.py build/compact_g.json > build/general_tokens.json
-	$(PYTHON) ./src/generalizetokensize.py build/general_tokens.json > build/g.json
+	$(PYTHON) ./src/generalizetokensize.py build/general_tokens.json > build/general_tokensize.json
+	$(PYTHON) ./src/grammar-compact.py build/general_tokensize.json > build/g.json
 	cp build/g.json $@
 
 view:
