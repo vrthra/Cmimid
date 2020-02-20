@@ -81,19 +81,26 @@ build/%.events: build/%.json.done
 
 
 build/%.grammar: build/%.events
-	$(PYTHON) ./src/treeminer.py $< > build/t1.json
-	$(PYTHON) ./src/generalizemethod.py build/t1.json > build/t2.json
-	$(PYTHON) ./src/generalizeloop.py build/t2.json > build/t3.json
-	$(PYTHON) ./src/grammar-miner.py build/t3.json
-	cp build/g.json $@
+	$(PYTHON) ./src/treeminer.py $< > build/trees.json
+	$(PYTHON) ./src/generalizemethod.py build/trees.json > build/method_trees.json
+	$(PYTHON) ./src/generalizeloop.py build/method_trees.json > build/loop_trees.json
+	$(PYTHON) ./src/grammar-miner.py build/loop_trees.json > build/mined_g.json
+	#$(PYTHON) ./src/generalizetokens.py build/mined_g.json > build/general_tokens.json
+	#$(PYTHON) ./src/generalizetokensize.py build/general_tokens.json > build/g.json
+	#cp build/g.json $@
+	cp build/mined_g.json $@
 
 
 view:
 	CFLAGS=$(CFLAGS) ${PYTHON} ./bin/pyclasvi.py -l $(LIBCLANG_PATH)
 
 clean:
+	rm -rf build/*.json build/*.grammar
+
+clobber:
 	rm -rf build/*
 	cd $(pfuzzer) && $(MAKE) clean
+
 
 dump:
 	clang -Xclang -ast-dump -fsyntax-only $(src) -I examples
