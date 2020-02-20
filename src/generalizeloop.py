@@ -83,6 +83,6 @@ def main(tracefile):
         mined_trees = json.load(f)
     util.init_log('generalize_loop', '', mined_trees[0]['original'])
     gmethod_trees = generalize_loop_trees(mined_trees)
-    json.dump(gmethod_trees, sys.stdout)
+    print(json.dumps(gmethod_trees, indent=4))
 
 main(sys.argv[1])

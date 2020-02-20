@@ -170,7 +170,7 @@ def main(tracefile):
     with open(tracefile) as f:
         mined_trees = json.load(f)
     gmethod_trees = generalize_method_trees(mined_trees)
-    json.dump(gmethod_trees, sys.stdout)
+    print(json.dumps(gmethod_trees, indent=4))
 
 if __name__ == '__main__':
     main(sys.argv[1])
