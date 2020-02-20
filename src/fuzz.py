@@ -32,6 +32,18 @@ class Fuzzer:
         return ''.join(fuzzed)
 
 
+import string
+ASCII_MAP = {
+        '[__WHITESPACE__]': string.whitespace,
+        '[__DIGIT__]': string.digits,
+        '[__ASCII_LOWER__]': string.ascii_lowercase,
+        '[__ASCII_UPPER__]': string.ascii_uppercase,
+        '[__ASCII_PUNCT__]': string.punctuation,
+        '[__ASCII_LETTER__]': string.ascii_letters,
+        '[__ASCII_ALPHANUM__]': string.ascii_letters + string.digits,
+        '[__ASCII_PRINTABLE__]': string.printable
+        }
+
 class Fuzzer:
     def __init__(self, grammar):
         self.grammar = grammar
@@ -55,6 +67,8 @@ class LimitFuzzer(Fuzzer):
                     for token in tokens if token in grammar), default=0) + 1
 
     def gen_key(self, key, depth, max_depth):
+        if key in ASCII_MAP:
+            return (random.choice(ASCII_MAP[key]), [])
         if key not in self.grammar: return (key, [])
         if depth > max_depth:
             clst = sorted([(self.cost[key][str(rule)], rule) for rule in self.grammar[key]])
@@ -91,13 +105,16 @@ def main(args):
     with open(args[0]) as f:
         s = json.load(f)
     grammar = s['[grammar]']
+    command = s['[command]']
+    if len(args) > 1:
+        command = args[1]
     f = LimitFuzzer(grammar)
     key = args[2] if len(args)> 2 else s['[start]']
     for i in range(100):
         try:
             v = f.fuzz(key)
             print(repr(v))
-            p = subprocess.Popen(args[1], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             data, err = p.communicate(input=v.encode())
             #print(p.returncode)
             if p.returncode != 0:
