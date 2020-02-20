@@ -1,4 +1,5 @@
 import math
+import copy
 
 def is_nt(token):
     return token.startswith('<') and token.endswith('>')
