@@ -105,7 +105,7 @@ def main(args):
     with open(args[0]) as f:
         s = json.load(f)
     grammar = s['[grammar]']
-    command = s['[command]']
+    command = s.get('[command]')
     if len(args) > 1:
         command = args[1]
     f = LimitFuzzer(grammar)

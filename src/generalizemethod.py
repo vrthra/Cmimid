@@ -146,10 +146,11 @@ def update_original_method_names(node_name):
 # be 11 -> 1)
 def generalize_method_trees(jtrees, log=False):
     my_trees = []
-    for j in jtrees:
+    for i,j in enumerate(jtrees):
         tree = util.to_modifiable(j['tree']) # The tree ds.
         executable = j['original']
         inputfile = j['arg']
+        print("progress: %s %d/%d" % (inputfile, i, len(jtrees)) ,file=sys.stderr, flush=True)
         # we skip START
         node_name, children, *rest = tree
         assert node_name == '<START>'
@@ -157,11 +158,13 @@ def generalize_method_trees(jtrees, log=False):
             collect_nodes(tree, tree, executable, inputfile)
         my_trees.append({'tree':tree, 'original': executable, 'arg': inputfile})
 
-    for k in NODE_REGISTER:
+    for i,k in enumerate(NODE_REGISTER):
+        print("compat: %s %d/%d" % (k, i, len(NODE_REGISTER)),file=sys.stderr, flush=True)
         identify_compatibility_patterns(k) # XTODO: switch to identify_buckets
 
     # finally, update the original names.
-    for k in NODE_REGISTER:
+    for i,k in enumerate(NODE_REGISTER):
+        print("update: %s %d/%d" % (k, i, len(NODE_REGISTER)),file=sys.stderr, flush=True)
         if k == '<START>': continue
         update_original_method_names(k)
     return my_trees

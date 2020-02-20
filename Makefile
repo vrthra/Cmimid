@@ -57,7 +57,9 @@ build/%.json.done: build/%.x
 	cp examples/*.h build
 	cp -r build/* $(pfuzzer)/build
 	mkdir -p build/$*
-	for i in examples/$*.input.*; \
+	$(PYTHON) src/generateinputs.py examples/$*.grammar $* ./build/$*.out ./build/
+	# for i in examples/$*.input.*;
+	for i in build/$*.input.*; \
 	do\
 	  echo $$i; \
 	  cp $$i $(pfuzzer)/build/$*.input; \
