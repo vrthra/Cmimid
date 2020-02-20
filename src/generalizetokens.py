@@ -98,7 +98,7 @@ def key_reachable_from_rule(key, rule, reachable_keys):
     return False
 
 
-def find_path_rule(g_, rule, gk, reachable_keys):
+def find_path_rule(g_, rule, gk, reachable_keys, fuzzer):
     assert key_reachable_from_rule(gk, rule, reachable_keys)
     ret = []
     choices = []
@@ -121,10 +121,10 @@ def find_path_rule(g_, rule, gk, reachable_keys):
     if token == gk:
         return ret
     else:
-        ret[choice] = find_path_key(g_, token, gk, reachable_keys)
+        ret[choice] = find_path_key(g_, token, gk, reachable_keys, fuzzer)
     return ret
 
-def find_path_key(g_, key, gk, reachable_keys):
+def find_path_key(g_, key, gk, reachable_keys, fuzzer):
     assert gk in reachable_keys[key]
     #which rule can we choose?
     choices = []
@@ -133,7 +133,7 @@ def find_path_key(g_, key, gk, reachable_keys):
             choices.append(i)
     # pick one
     rule_i = random.choice(choices)
-    return (key, find_path_rule(g_, g_[key][rule_i], gk, reachable_keys))
+    return (key, find_path_rule(g_, g_[key][rule_i], gk, reachable_keys, fuzzer))
 
 
 def remove_recursion(d):
@@ -151,6 +151,7 @@ def flush_tree(stree, fuzzer, gk):
     if key == gk:
         return (gk, [])
     if children is None:
+        #assert fuzzer.key_cost[key] != float('inf')
         return fuzzer.gen_key(key, depth=0, max_depth=1)
     else:
         return (key, [flush_tree(c, fuzzer, gk) for c in children])
@@ -240,14 +241,15 @@ GK = '<__GENERALIZE__>'
 def generalize_single_token(grammar, start, k, q, r, command):
     # first we replace the token with a temporary key
     gk = GK
+    fuzzer = F.LimitFuzzer(grammar)
     g_ = copy.deepcopy(grammar)
     char = g_[k][q][r]
     g_[k][q][r] = gk
     g_[gk] = [[char]]
     reachable_keys = remove_recursion(reachable_dict(g_))
     # now, we need a path to reach this.
-    skel_tree = find_path_key(g_, start, gk, reachable_keys)
-    tree = flush_tree(skel_tree, F.LimitFuzzer(grammar), gk)
+    skel_tree = find_path_key(g_, start, gk, reachable_keys, fuzzer)
+    tree = flush_tree(skel_tree, fuzzer, gk)
     gen_token = find_max_generalized(tree, char, gk, command)
     del g_[gk]
     g_[k][q][r] = gen_token
@@ -269,7 +271,7 @@ def main(args):
     # next, we want to get the list of all such instances
 
     list_of_things_to_generalize = get_list_of_single_chars(generalized_grammar)
-    print(len(list_of_things_to_generalize), file=sys.stderr)
+    #print(len(list_of_things_to_generalize), file=sys.stderr)
 
     # next, we want to generalie each in turn
     # finally, we want to generalize the length.
@@ -282,7 +284,7 @@ def main(args):
 
     # finally, we want to generalize the length.
     #g = generalize_size(g_)
-    print(json.dumps({'[start]': start, '[grammar]':g, '[command]': command}))
+    print(json.dumps({'[start]': start, '[grammar]':g, '[command]': command}, indent=4))
 
 if __name__ == '__main__':
     main(sys.argv[1:])
