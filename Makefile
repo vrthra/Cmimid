@@ -85,11 +85,10 @@ build/%.grammar: build/%.events
 	$(PYTHON) ./src/generalizemethod.py build/trees.json > build/method_trees.json
 	$(PYTHON) ./src/generalizeloop.py build/method_trees.json > build/loop_trees.json
 	$(PYTHON) ./src/grammar-miner.py build/loop_trees.json > build/mined_g.json
-	#$(PYTHON) ./src/generalizetokens.py build/mined_g.json > build/general_tokens.json
-	#$(PYTHON) ./src/generalizetokensize.py build/general_tokens.json > build/g.json
-	#cp build/g.json $@
-	cp build/mined_g.json $@
-
+	$(PYTHON) ./src/grammar-compact.py build/mined_g.json > build/compact_g.json
+	$(PYTHON) ./src/generalizetokens.py build/compact_g.json > build/general_tokens.json
+	$(PYTHON) ./src/generalizetokensize.py build/general_tokens.json > build/g.json
+	cp build/g.json $@
 
 view:
 	CFLAGS=$(CFLAGS) ${PYTHON} ./bin/pyclasvi.py -l $(LIBCLANG_PATH)
