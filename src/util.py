@@ -27,7 +27,7 @@ def init_log(prefix, var, module):
     with open('%s.log' % module, 'a+') as f:
         print(prefix, ':==============',var, file=f)
 
-def do(command, env=None, shell=False, log=True, inputv=None, **args):
+def do(command, env=None, shell=False, log=False, inputv=None, **args):
     if inputv:
         result = subprocess.Popen(command,
             stdin = subprocess.PIPE,
