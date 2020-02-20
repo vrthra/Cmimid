@@ -3,13 +3,13 @@
  "<START>": [["<program>"]],
  "<program>": [["<statement>"]],
  "<statement>": [
-    ["if", "<paren_expr>", "<statement>"],
-    ["if", "<paren_expr>", "<statement>", "else", "<statement>"],
-    ["while", "<paren_expr>", "<statement>"],
-    ["do", "<statement>", "while", "<paren_expr>", ";"],
-    ["{", "<statements>", "}"],
+    ["if ", "<paren_expr>", "<statement>"],
+    ["if ", "<paren_expr>", "<statement>", "else ", "<statement>"],
+    ["while ", "<paren_expr>", "<statement>"],
+    ["do ", "<statement>", "while ", "<paren_expr>", ";"],
+    ["{ ", "<statements>", "}"],
     [ "<expr>", ";"],
-    [";"]],
+    ["; "]],
  "<statements>": [["<statement>"], ["<statement>", "<statements>"]],
  "<paren_expr>": [["(", "<expr>", ")"]],
  "<expr>": [
@@ -27,10 +27,10 @@
    ["<int>"],
    ["<paren_expr>"]],
  "<id>": [
-   ["a"],
-   ["b"],
-   ["c"],
-   ["d"]
+   [" a "],
+   [" b "],
+   [" c "],
+   [" d "]
   ],
  "<int>": [
    ["<digit>"],
