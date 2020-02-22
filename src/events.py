@@ -197,7 +197,12 @@ def track_comparison(e, inputstring, gen_events):
     indexes = [int(i) for i in e['index']]
     for i in indexes:
         # we need only the accessed indexes
-        gen_events.append(('', ('comparison', i, inputstring)))
+        if i < len(inputstring):
+            # some of the accesses may go up to the last empty byte
+            gen_events.append(('', ('comparison', i, inputstring)))
+        else:
+            ...
+            #assert i == len(inputstring)
 
 def show_nested(gen_events):
     indent = 0
@@ -303,9 +308,10 @@ if __name__ == '__main__':
         lst = glob.glob("%s/*.json" % event_dir)
     for arg in lst:
         ifile = arg.replace('.json', '')
-        with open(ifile) as f:
-            inputstr = f.read()
+        with open(ifile, mode='r+b') as f:
+            inputstr = f.read().decode()
         max_len = len(inputstr)
+        assert max_len == os.path.getsize(ifile)
         events = read_json(arg)
         ret = process_events(events, inputstr)
         returns.append(ret)

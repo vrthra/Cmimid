@@ -2,7 +2,8 @@
 import sys
 import sys
 import grammartools
-sys.setrecursionlimit(3000)
+# ulimit -s 100000
+sys.setrecursionlimit(19000)
 import random
 import string
 import util
@@ -31,110 +32,13 @@ def generalize_tokens(grammar):
 
 def get_list_of_single_chars(grammar):
     lst = []
-    for p,k in enumerate(grammar):
-        for q,rule in enumerate(grammar[k]):
+    for p,key in enumerate(grammar):
+        for q,rule in enumerate(grammar[key]):
             for r,token in enumerate(rule):
                 if is_nt(token): continue
                 if len(token) == 1:
-                    lst.append((k, q, r))
+                    lst.append((key, q, r, token))
     return lst
-
-def reachable_dict(grammar):
-    reachable = {}
-    for key in grammar:
-        keys = find_reachable_keys(grammar, key, reachable)
-        reachable[key] = keys
-    return reachable
-
-def find_reachable_keys(grammar, key, reachable_keys=None, found_so_far=None):
-    if reachable_keys is None: reachable_keys = {}
-    if found_so_far is None: found_so_far = set()
-
-    for rule in grammar[key]:
-        for token in rule:
-            if not is_nt(token): continue
-            if token in found_so_far: continue
-            found_so_far.add(token)
-            if token in reachable_keys:
-                for k in reachable_keys[token]:
-                    found_so_far.add(k)
-            else:
-                keys = find_reachable_keys(grammar, token, reachable_keys, found_so_far)
-                # reachable_keys[token] = keys <- found_so_far contains results from earlier
-    return found_so_far
-
-def get_reachable_positions(rule, fkey, reachable):
-    positions = []
-    for i, token in enumerate(rule):
-        if not is_nt(token): continue
-        if fkey == token or fkey in reachable[token]:
-            positions.append(i)
-    return positions
-
-#def generate_focus_grammar(g_, focus):
-#    val = g_[focus]
-#    reachable_keys = reachable_dict(g_)
-#    my_grammar = {}
-#    for k in g_:
-#        rs = []
-#        for r in g_[k]:
-#            positions = get_reachable_positions(r, focus, reachable_keys)
-#            if positions:
-#                rs.append(r)
-#        if rs:
-#            my_grammar[k] = rs
-#        else:
-#            my_grammar[k] = g_[k]
-#
-#    my_grammar[focus] = val
-#    return my_grammar
-
-def key_reachable_from_rule(key, rule, reachable_keys):
-    for token in rule:
-        if not is_nt(token): continue
-        if token == key: return True
-        if key in reachable_keys[token]:
-            return True
-    return False
-
-
-def find_path_rule(g_, rule, gk, reachable_keys, fuzzer):
-    assert key_reachable_from_rule(gk, rule, reachable_keys)
-    ret = []
-    choices = []
-    for i,token in enumerate(rule):
-        if not is_nt(token):
-            ret.append((token, []))
-        elif gk in reachable_keys[token]:
-            choices.append(i)
-            #tree = find_path_key(g_, token, gk, reachable_keys)
-            ret.append((token, None))
-        elif gk == token:
-            choices.append(i)
-            ret.append((token, None))
-        else:
-            ret.append((token, None))
-
-    choice = random.choice(choices)
-    token, val = ret[choice]
-    assert val is None
-    if token == gk:
-        return ret
-    else:
-        ret[choice] = find_path_key(g_, token, gk, reachable_keys, fuzzer)
-    return ret
-
-def find_path_key(g_, key, gk, reachable_keys, fuzzer):
-    assert gk in reachable_keys[key]
-    #which rule can we choose?
-    choices = []
-    for i, rule in enumerate(g_[key]):
-        if key_reachable_from_rule(gk, rule, reachable_keys):
-            choices.append(i)
-    # pick one
-    rule_i = random.choice(choices)
-    return (key, find_path_rule(g_, g_[key][rule_i], gk, reachable_keys, fuzzer))
-
 
 def remove_recursion(d):
     new_d = {}
@@ -145,16 +49,6 @@ def remove_recursion(d):
                 new_rs.append(t)
         new_d[k] = new_rs
     return new_d
-
-def flush_tree(stree, fuzzer, gk):
-    key, children = stree
-    if key == gk:
-        return (gk, [])
-    if children is None:
-        #assert fuzzer.key_cost[key] != float('inf')
-        return fuzzer.gen_key(key, depth=0, max_depth=1)
-    else:
-        return (key, [flush_tree(c, fuzzer, gk) for c in children])
 
 def replaceable_with_kind(stree, orig, parent, gk, command):
     my_node = None
@@ -175,14 +69,22 @@ def replaceable_with_kind(stree, orig, parent, gk, command):
     sval = util.tree_to_str(tree0)
     assert my_node is not None
     a1 = my_node, '', tree0
-    for pval in ASCII_MAP[parent]:
-        aX = ((gk, [[pval, []]]), '', tree0)
+    if parent == orig:
+        aX = ((gk, [[orig, []]]), '', tree0)
         val = util.is_a_replaceable_with_b(a1, aX, command)
         if val:
-            continue
+            return True
         else:
             return False
-    return True
+    else:
+        for pval in ASCII_MAP[parent]:
+            aX = ((gk, [[pval, []]]), '', tree0)
+            val = util.is_a_replaceable_with_b(a1, aX, command)
+            if val:
+                continue
+            else:
+                return False
+        return True
 
 
 # string.ascii_letters The concatenation of the ascii_lowercase and ascii_uppercase constants described below. This value is not locale-dependent.
@@ -241,19 +143,30 @@ GK = '<__GENERALIZE__>'
 def generalize_single_token(grammar, start, k, q, r, command):
     # first we replace the token with a temporary key
     gk = GK
-    fuzzer = F.LimitFuzzer(grammar)
     g_ = copy.deepcopy(grammar)
     char = g_[k][q][r]
     g_[k][q][r] = gk
     g_[gk] = [[char]]
-    reachable_keys = remove_recursion(reachable_dict(g_))
+    #reachable_keys = grammartools.reachable_dict(g_)
     # now, we need a path to reach this.
-    skel_tree = find_path_key(g_, start, gk, reachable_keys, fuzzer)
-    tree = flush_tree(skel_tree, fuzzer, gk)
+    fg = grammartools.get_focused_grammar(g_, (gk, []))
+    fuzzer = F.LimitFuzzer(fg)
+    #skel_tree = find_path_key(g_, start, gk, reachable_keys, fuzzer)
+    tree = None
+    while tree is None:
+        #tree = flush_tree(skel_tree, fuzzer, gk, char)
+        tree = fuzzer.gen_key(grammartools.focused_key(start), depth=0, max_depth=1)
+        val = util.check(char, char, '<__CHECK__>', tree, command, char, char)
+        if not val:
+            tree = None
+        # now we need to make sure that this works.
+
     gen_token = find_max_generalized(tree, char, gk, command)
     del g_[gk]
     g_[k][q][r] = gen_token
-    return g_
+    # preserve the order
+    grammar[k][q][r] = gen_token
+    return grammar
 
 def main(args):
     gfname = args[0]
@@ -262,7 +175,6 @@ def main(args):
     grammar = gf['[grammar]']
     start = gf['[start]']
     command = gf['[command]']
-
 
     # now, what we want to do is first regularize the grammar by splitting each
     # multi-character tokens into single characters.
@@ -275,9 +187,10 @@ def main(args):
 
     # next, we want to generalie each in turn
     # finally, we want to generalize the length.
-    reachable_keys = reachable_dict(grammar)
+    #reachable_keys = reachable_dict(grammar)
     g_ = generalized_grammar
-    for k, q, r in list_of_things_to_generalize:
+    for k, q, r, t in list_of_things_to_generalize:
+        assert g_[k][q][r] == t
         g_ = generalize_single_token(g_, start, k, q, r, command)
 
     g = grammartools.remove_duplicate_rules_in_a_key(g_)

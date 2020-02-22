@@ -1,4 +1,5 @@
 import sys
+import util
 import os
 import random
 import json
@@ -16,22 +17,31 @@ def main(args):
     key = args[1]
     command = args[2]
     directory = args[3]
+    count = int(args[4])
     os.makedirs(directory, exist_ok=True)
-    f = F.LimitFuzzer(grammar)
-    for i in range(10):
+    fuzzer = F.LimitFuzzer(grammar)
+    i = 0
+    seen = set()
+    while True:
         try:
-            v = f.fuzz(start)
+            v = fuzzer.fuzz(start)
+            if not v.strip(): continue
+            if v in seen: continue
+            seen.add(v)
             print(repr(v))
-            p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            data, err = p.communicate(input=v.encode())
-            #print(p.returncode)
-            if p.returncode != 0:
-                errors.append(v)
+            fn = '%s/%s.input.x' % (directory, key)
+            with open(fn, 'w+') as f:
+                print(v, end='', file=f)
+            o = util.do([command, fn])
+            if o.returncode != 0:
+                continue
             else:
+                i += 1
                 with open('%s/%s.input.%d' % (directory, key, i), 'w+') as fn:
                     print(v, end='', file=fn)
         except RecursionError:
             pass
+        if i >= count: break
     return errors
 
 def process_token(i):

@@ -163,14 +163,23 @@ def hilight_leaf(x):
     else:
         return Colors.CRED + repr(x[0].encode('utf-8')) + Colors.ENDC
 
+def tree_to_str(node):
+    name, children, *rest = node
+    if not children:
+        return name
+    return ''.join(tree_to_str(c) for c in children)
+
 if __name__ == '__main__':
     import sys
     import json
     jsonfn = sys.argv[1]
     with open(jsonfn) as f:
         jsont = json.load(f)
+    if isinstance(jsont, dict):
+        jsont = [jsont]
     trees = range(len(jsont))
     if len(sys.argv) > 2:
         trees = [int(v) for v in sys.argv[2:]]
     for tree in trees:
+        print(jsont[tree]['arg'], repr(tree_to_str(jsont[tree]['tree'])))
         print_tree(jsont[tree]['tree'], format_node=hilight_leaf, get_children=lambda x: x[1])

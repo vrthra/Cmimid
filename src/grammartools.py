@@ -1,5 +1,6 @@
 import math
 import copy
+import util
 
 def is_nt(token):
     return token.startswith('<') and token.endswith('>')
@@ -245,11 +246,11 @@ def len_to_start(item, parents, start_symbol, seen=None):
 def order_by_length_to_start(items, parent_map, start_symbol):
     return sorted(items, key=lambda i: len_to_start(i, parent_map, start_symbol))
 
-def compact_grammar(g, start_symbol):
-    l = len_grammar(g)
+def compact_grammar(e, start_symbol):
+    l = len_grammar(e)
     diff = 1
     while diff > 0:
-        e = remove_single_entry_chains(g, start_symbol)
+        e = remove_single_entry_chains(e, start_symbol)
         e = grammar_gc(e, start_symbol) # garbage collect
 
         e = remove_duplicate_rule_keys(e)
@@ -265,11 +266,92 @@ def compact_grammar(g, start_symbol):
         e = grammar_gc(e, start_symbol) # garbage collect
 
         e = remove_self_definitions(e)
+        e = grammar_gc(e, start_symbol) # garbage collect
 
-        g = e
-        l_ = len_grammar(g)
+        l_ = len_grammar(e)
         diff = l - l_
         l = l_
-    g = grammar_gc(g, start_symbol)
-    return g
+    e = grammar_gc(e, start_symbol)
+    return e
+
+
+
+# ----------------------------
+def find_reachable_keys(grammar, key, reachable_keys=None, found_so_far=None):
+    if reachable_keys is None: reachable_keys = {}
+    if found_so_far is None: found_so_far = set()
+
+    for rule in grammar[key]:
+        for token in rule:
+            if not is_nt(token): continue
+            if token in found_so_far: continue
+            found_so_far.add(token)
+            if token in reachable_keys:
+                for k in reachable_keys[token]:
+                    found_so_far.add(k)
+            else:
+                keys = find_reachable_keys(grammar, token, reachable_keys, found_so_far)
+                # reachable_keys[token] = keys <- found_so_far contains results from earlier
+    return found_so_far
+
+import pudb
+b = pudb.set_trace
+
+def reachable_dict(grammar):
+    reachable = {}
+    for key in grammar:
+        keys = find_reachable_keys(grammar, key, reachable)
+        reachable[key] = keys
+    return reachable
+
+def get_insertable_positions(rule, fkey, reachable):
+    positions = []
+    for i, token in enumerate(rule):
+        if not is_nt(token): continue
+        if fkey in reachable[token]:
+            positions.append(i)
+        elif fkey == token:
+            positions.append(i)
+    return positions
+
+def focused_key(key):
+    return "<+%s>" % key[1:-1]
+
+def find_focused_rules(grammar, key, fsym, reachable):
+    added_keys = set()
+    rules = grammar[key]
+    my_rules = []
+    for rule in grammar[key]:
+        positions = get_insertable_positions(rule, fsym, reachable)
+        if not positions: # make it len(positions) >= n if necessary
+            # skip this rule because we can not embed the fault here.
+            continue
+        else:
+            # some positions exist, so we can rely on this rule to
+            # produce one.
+            for pos in positions:
+                new_rule = copy.deepcopy(rule)
+                fk = focused_key(new_rule[pos])
+                new_rule[pos] = fk
+                added_keys.add(fk)
+                my_rules.append(new_rule)
+    return my_rules, added_keys
+
+def get_focused_grammar(grammar, focus_node):
+    #new_grammar = copy.deepcopy(grammar)
+    reachable = reachable_dict(grammar)
+    new_grammar = {}
+    # the new grammar contains the faulty keys and their definitions.
+    fsym = focus_node[0]
+    added_keys = set()
+    for key in grammar:
+        rules, ak = find_focused_rules(grammar, key, fsym, reachable)
+        added_keys |= ak
+        if rules:
+            new_grammar.setdefault(focused_key(key), []).extend(rules)
+    new_grammar.update(dict(grammar))
+    new_grammar[focused_key(fsym)] = [[fsym]]
+    for k in added_keys:
+        assert k in new_grammar
+    return new_grammar
 

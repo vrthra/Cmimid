@@ -61,6 +61,7 @@ def tree_to_pstr(tree, op_='', _cl=''):
         # TODO: assert symbol is terminal
         # TODO: check if we need to parenthesize this too. We probably
         # need this if the terminal symbols are more than one char wide.
+        #return "%s%s" % (op_, _cl)
         return "%s%s%s" % (op_, symbol, _cl)
 
 #def do(command, env=None, shell=False, log=False, **args):
@@ -72,7 +73,9 @@ EXEC_MAP = {}
 def check_lowcost(o, x, e, ut, module, sa1, sa2):
     s = tree_to_pstr(ut)
     if s in EXEC_MAP: return EXEC_MAP[s]
-    result = do([module], inputv=s.encode())
+    tn = "%s_test.csv" % module
+    with open(tn, 'w+') as f: print(s, file=f, end='')
+    result = do([module, tn])
     with open('%s.log' % module, 'a+') as f:
         print('------------------', file=f)
         print('original:', repr(o), file=f)
@@ -93,7 +96,7 @@ def check_accurate(o, x, e, ut, module, sa1, sa2):
     s = tree_to_pstr(ut)
     if s in EXEC_MAP: return EXEC_MAP[s]
     updated_ps = tree_to_pstr(ut, op_='{', _cl='}')
-    tn = "build/_test.csv"
+    tn = "%s_test.csv" % module
     with open(tn, 'w+') as f: print(s, file=f, end='')
 
     trace_out = do(["./bin/parsed_out.sh",tn, module] ).stdout.decode('UTF-8', 'ignore')
@@ -162,7 +165,8 @@ def replace_nodes(a2, a1):
     tmpl_name = '___cmimid___'
     old_name = node2[0]
     node2[0] = tmpl_name
-    t2_new = copy.deepcopy(t2)
+    v = json.dumps(t2)
+    t2_new = json.loads(v)
     node2[0] = old_name
 
     # now find the reference to tmpl_name in t2_new

@@ -240,6 +240,9 @@ def main(tracefile):
     if os.environ.get('PARSE') is not None:
         print(tree_to_pstr(mined_trees[0]['tree'], '{', '}'))
     else:
+        for tree in mined_trees:
+            with open(tree['arg'] + '.tree', 'w+') as f:
+                print(json.dumps(tree, indent=4), file=f)
         print(json.dumps(mined_trees, indent=4))
 
 if __name__ == '__main__':
