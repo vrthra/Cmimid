@@ -382,6 +382,7 @@ unsigned int sleep(unsigned int seconds);
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #ifdef __APPLE__
 #include <machine/endian.h>

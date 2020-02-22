@@ -3,6 +3,8 @@
 /* Copyright (C) 2001 by Marc Feeley, All Rights Reserved. */
 
 #include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -308,25 +310,39 @@ int parse_expr(char* my_string)
   return 0;*/
 }
 
-void strip_input(char* my_string) {
+/*int strip_input(char* my_string) {
     int read = strlen(my_string);
     if (my_string[read-1] ==  '\n'){
         my_string[read-1] = '\0';
     }
-}
+    return read;
+}*/
 
 int main(int argc, char *argv[]) {
     char my_string[10240];
     int ret;
     if (argc == 1) {
-        char *v = fgets(my_string, 10240, stdin);
-        if (!v) {
+        int chars = read(fileno(stdin), my_string, 10240);
+        if (!chars) {
           exit(1);
         }
-        strip_input(my_string);
+        my_string[chars] = 0;
+        /*chars = strip_input(my_string);
+        if (!chars) {
+          exit(2);
+        }*/
     } else {
-        strcpy(my_string, argv[1]);
-        strip_input(my_string);
+        int fd = open(argv[1], O_RDONLY);
+        int chars = read(fd, my_string, 10240);
+        if (!chars) {
+          exit(3);
+        }
+        my_string[chars] = 0;
+        /*chars = strip_input(my_string);
+        if (!chars) {
+          exit(4);
+        }*/
+        close(fd);
     }
     printf("val: <%s>\n", my_string);
     ret = parse_expr(my_string);

@@ -16,6 +16,8 @@ TYPE_KEY = 6;*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 static int json_parse_value(const char **cursor, json_value *parent);
 
@@ -226,20 +228,21 @@ static int json_parse_value(const char **cursor, json_value *parent) {
 }
 
 int json_parse(const char *input, json_value *result) {
-  char** cursor = &input;
+  const char** cursor = &input;
   int val = json_parse_value(cursor, result);
+  while (isspace_(**cursor)) ++(*cursor);
   if (strlen(*cursor) != 0){
     return 0;
   }
   return val;
 }
 
-void strip_input(char* my_string) {
+/*void strip_input(char* my_string) {
     int read = strlen(my_string);
     if (my_string[read-1] ==  '\n'){
         my_string[read-1] = '\0';
     }
-}
+}*/
 
 int main(int argc, char *argv[]) {
   char my_string[10240];
@@ -247,14 +250,28 @@ int main(int argc, char *argv[]) {
   result.type = 0;/*TYPE_NULL*/
   int ret = -1;
   if (argc == 1) {
-    char *v = fgets(my_string, 10240, stdin);
-    if (!v) {
+    int chars = read(fileno(stdin), my_string, 10240);
+    if (!chars) {
       exit(1);
     }
-    strip_input(my_string);
+    my_string[chars] = 0;
+    /*char *v = fgets(my_string, 10240, stdin);
+    if (!v) {
+      exit(1);
+    }*/
+    /*strip_input(my_string);*/
   } else {
-    strcpy(my_string, argv[1]);
-    strip_input(my_string);
+    int fd = open(argv[1], O_RDONLY);
+    int chars = read(fd, my_string, 10240);
+    if (!chars) {
+      exit(3);
+    }
+    my_string[chars] = 0;
+    /*chars = strip_input(my_string);
+    if (!chars) {
+      exit(4);
+    }*/
+    close(fd);
   }
   printf("val: <%s>\n", my_string);
   ret = json_parse(my_string, &result);
