@@ -69,6 +69,9 @@ class LimitFuzzer(Fuzzer):
     def gen_key(self, key, depth, max_depth):
         if key in ASCII_MAP:
             return (random.choice(ASCII_MAP[key]), [])
+        if key[-1] == '+' and key[0:-1] in ASCII_MAP:
+            m = random.randrange(10) + 1
+            return (''.join([random.choice(ASCII_MAP[key[0:-1]]) for i in range(m)]), [])
         if key not in self.grammar: return (key, [])
         if depth > max_depth:
             clst = sorted([(self.cost[key][str(rule)], rule) for rule in self.grammar[key]])
@@ -106,11 +109,13 @@ def main(args):
         s = json.load(f)
     grammar = s['[grammar]']
     command = s.get('[command]')
-    if len(args) > 1:
-        command = args[1]
+    #if len(args) > 1:
+    command = args[1]
     f = LimitFuzzer(grammar)
-    key = args[2] if len(args)> 2 else s['[start]']
-    for i in range(100):
+    #key = args[2] if len(args)> 2 else s['[start]']
+    key = s['[start]']
+    count = int(args[2])
+    for i in range(count):
         try:
             v = f.fuzz(key)
             print(repr(v))
@@ -121,6 +126,9 @@ def main(args):
                 errors.append(v)
         except RecursionError:
             pass
+
+    with open("%s.fuzz" % command, 'w+') as f:
+        print("%d/%d" % (count - len(errors), count), file=f)
     return errors
 
 def process_token(i):

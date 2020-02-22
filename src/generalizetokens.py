@@ -3,7 +3,7 @@ import sys
 import sys
 import grammartools
 # ulimit -s 100000
-sys.setrecursionlimit(19000)
+sys.setrecursionlimit(99000)
 import random
 import string
 import util
@@ -139,12 +139,60 @@ def find_max_generalized(tree, kind, gk, command):
     else:
         return kind
 
+def do_n(tree, kind, gk, command, n):
+    ret = []
+    for i in range(n):
+        pval = random.choice(ASCII_MAP[kind])
+        ret.append([pval, []])
+    return (gk, ret)
+
+def find_max_widened(tree, kind, gk, command):
+    my_node = None
+    def fill_tree(node):
+        nonlocal my_node
+        name, children = node
+        if name == gk:
+            my_node = [name, [[kind, []]]]
+            return my_node
+        elif not children:
+            if name in ASCII_MAP:
+                return (random.choice(ASCII_MAP[name]), [])
+            return (name, [])
+        else:
+            return (name, [fill_tree(c) for c in children])
+    tree0 = fill_tree(tree)
+    sval = util.tree_to_str(tree0)
+    assert my_node is not None
+    a1 = my_node, '', tree0
+
+    # this is a single character. Now, try 2, 4 etc.
+    pvals = do_n(tree, kind, gk, command, 2)
+    aX = (pvals, '', tree0)
+    val = util.is_a_replaceable_with_b(a1, aX, command)
+    if not val: return kind
+    pvals = do_n(tree, kind, gk, command, 4)
+    aX = (pvals, '', tree0)
+    val = util.is_a_replaceable_with_b(a1, aX, command)
+    if not val: return kind
+    return kind + '+'
+
 GK = '<__GENERALIZE__>'
+MAX_CHECKS = 1000
 def generalize_single_token(grammar, start, k, q, r, command):
     # first we replace the token with a temporary key
     gk = GK
+    # was there a previous widened char? and if ther wase,
+    # do we belong to it?
+    char = grammar[k][q][r]
+    if r > 0 and grammar[k][q][r-1][-1] == '+':
+        # remove the +
+        last_char = grammar[k][q][r-1][0:-1]
+        if last_char in ASCII_MAP and char in ASCII_MAP[last_char]:
+            #we are part of the last.
+            grammar[k][q][r] = last_char + '+'
+            return grammar
+
     g_ = copy.deepcopy(grammar)
-    char = g_[k][q][r]
     g_[k][q][r] = gk
     g_[gk] = [[char]]
     #reachable_keys = grammartools.reachable_dict(g_)
@@ -153,20 +201,51 @@ def generalize_single_token(grammar, start, k, q, r, command):
     fuzzer = F.LimitFuzzer(fg)
     #skel_tree = find_path_key(g_, start, gk, reachable_keys, fuzzer)
     tree = None
+    check = 0
     while tree is None:
         #tree = flush_tree(skel_tree, fuzzer, gk, char)
         tree = fuzzer.gen_key(grammartools.focused_key(start), depth=0, max_depth=1)
-        val = util.check(char, char, '<__CHECK__>', tree, command, char, char)
+        val = util.check(char, char, '<__CHECK__(%d/%d)>' % (check, MAX_CHECKS), tree, command, char, char)
+        check += 1
         if not val:
             tree = None
+        if check > MAX_CHECKS:
+            print("Exhausted limit for key:%s, rule:%d, token:%d, char:%s" % (k, q, r, char), file=sys.stderr)
+            raise "Exhausted limit for key:%s, rule:%d, token:%d, char:%s" % (k, q, r, char)
         # now we need to make sure that this works.
 
     gen_token = find_max_generalized(tree, char, gk, command)
+    if gen_token != char:
+        # try widening
+        gen_token = find_max_widened(tree, gen_token, gk, command)
     del g_[gk]
     g_[k][q][r] = gen_token
     # preserve the order
     grammar[k][q][r] = gen_token
     return grammar
+
+def remove_duplicate_repetitions(g):
+    new_g = {}
+    for k in g:
+        new_rules = []
+        for rule in g[k]:
+            #srule = ''.join(rule)
+            new_rule = []
+            last = -1
+            for i,t in enumerate(rule):
+                if last >= 0 and len(t) > 0 and t[-1] == '+' and t == rule[last]:
+                    continue
+                else:
+                    last = i
+                new_rule.append(t)
+            #snrule = ''.join(new_rule)
+            #if srule != snrule:
+            #    print("change:",file=sys.stderr)
+            #    print("  ", srule, file=sys.stderr)
+            #    print("  ", snrule, file=sys.stderr)
+            new_rules.append(new_rule)
+        new_g[k] = new_rules
+    return new_g
 
 def main(args):
     gfname = args[0]
@@ -193,7 +272,8 @@ def main(args):
         assert g_[k][q][r] == t
         g_ = generalize_single_token(g_, start, k, q, r, command)
 
-    g = grammartools.remove_duplicate_rules_in_a_key(g_)
+    g = remove_duplicate_repetitions(g_)
+    g = grammartools.remove_duplicate_rules_in_a_key(g)
 
     # finally, we want to generalize the length.
     #g = generalize_size(g_)

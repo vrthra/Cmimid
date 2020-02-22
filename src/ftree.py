@@ -161,7 +161,8 @@ def hilight_leaf(x):
     if x[1]:
         return repr(x[0].encode())
     else:
-        return Colors.CRED + repr(x[0].encode('utf-8')) + Colors.ENDC
+        #return Colors.CRED + repr(x[0].encode('utf-8')) + Colors.ENDC
+        return repr(x[0].encode('utf-8'))
 
 def tree_to_str(node):
     name, children, *rest = node

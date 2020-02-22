@@ -27,7 +27,8 @@ def init_log(prefix, var, module):
     with open('%s.log' % module, 'a+') as f:
         print(prefix, ':==============',var, file=f)
 
-def do(command, env=None, shell=False, log=False, inputv=None, **args):
+def do(command, env=None, shell=False, log=False, inputv=None, timeout=PARSE_SUCCEEDED, **args):
+    result = None
     if inputv:
         result = subprocess.Popen(command,
             stdin = subprocess.PIPE,
@@ -37,7 +38,7 @@ def do(command, env=None, shell=False, log=False, inputv=None, **args):
             env=dict(os.environ, **({} if env is None else env))
         )
         result.stdin.write(inputv)
-        stdout, stderr = result.communicate(timeout=PARSE_SUCCEEDED)
+        stdout, stderr = result.communicate(timeout=timeout)
     else:
         result = subprocess.Popen(command,
             stdout = subprocess.PIPE,
@@ -45,10 +46,13 @@ def do(command, env=None, shell=False, log=False, inputv=None, **args):
             shell = shell,
             env=dict(os.environ, **({} if env is None else env))
         )
-        stdout, stderr = result.communicate(timeout=PARSE_SUCCEEDED)
+        stdout, stderr = result.communicate(timeout=timeout)
     if log:
         with open('build/do.log', 'a+') as f:
             print(json.dumps({'cmd':command, 'env':env, 'exitcode':result.returncode}), env, flush=True, file=f)
+    if stdout is None: stdout = b''
+    if stderr is None: stderr = b''
+    result.kill()
     return O(returncode=result.returncode, stdout=stdout, stderr=stderr)
 
 

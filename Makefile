@@ -93,14 +93,24 @@ build/%.tree: build/%.events
 
 build/%.mgrammar: build/%.tree
 	$(PYTHON) ./src/grammar-miner.py build/$*.tree > build/$*-mined_g.json
-	#$(PYTHON) ./src/grammar-compact.py build/$*-mined_g.json > build/$*-compact_g.json
 	$(PYTHON) ./src/generalizetokens.py build/$*-mined_g.json > build/$*-general_tokens.json
-	$(PYTHON) ./src/generalizetokensize.py build/$*-general_tokens.json > build/$*-general_tokensize.json
-	cp build/$*-general_tokensize.json $@
+	#$(PYTHON) ./src/generalizetokensize.py build/$*-general_tokens.json > build/$*-general_tokensize.json
+	cp build/$*-general_tokens.json $@
 
 build/%.grammar: build/%.mgrammar
 	$(PYTHON) ./src/grammar-compact.py build/$*.mgrammar > build/$*-compact.json
 	cp build/$*-compact.json $@
+
+
+build/%.pgrammar: build/%.grammar
+	$(PYTHON) ./src/parsinggrammar.py build/$*.grammar > build/$*-parsing.json
+	cp build/$*-parsing.json $@
+
+UNBUF=script -q -e -c
+PARSECOUNT=1000
+build/%.precision: build/%.pgrammar
+	$(UNBUF) "$(PYTHON) src/check_precision.py examples/$*.grammar build/$*.pgrammar ./build/$*.x ./build/$* $(PARSECOUNT) $*" /dev/null | tee $@.log
+	mv build/$*/$*.precision_ $@
 
 build/%.showtree: build/%.tree
 	$(PYTHON) ./src/ftree.py build/$*.tree | less -r
@@ -122,6 +132,8 @@ clobber:
 dump:
 	clang -Xclang -ast-dump -fsyntax-only $(src) -I examples
 
+FUZZCOUNT=1000
 build/%.fuzz: build/%.grammar build/%.out
-	$(PYTHON) ./src/fuzz.py $^
+	$(PYTHON) ./src/fuzz.py  $^ $(FUZZCOUNT)
+	mv build/$*.out.fuzz $@
 
