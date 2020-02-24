@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-import sys
+import pudb
 import grammartools
 # ulimit -s 100000
 sys.setrecursionlimit(99000)
@@ -12,6 +12,7 @@ import json
 import re
 import fuzz as F
 import subprocess
+b = pudb.set_trace
 def is_nt(token):
     return token.startswith('<') and token.endswith('>')
 
@@ -178,7 +179,7 @@ def find_max_widened(tree, kind, gk, command):
 
 GK = '<__GENERALIZE__>'
 MAX_CHECKS = 1000
-def generalize_single_token(grammar, start, k, q, r, command):
+def generalize_single_token(grammar, start, k, q, r, command, blacklist):
     # first we replace the token with a temporary key
     gk = GK
     # was there a previous widened char? and if ther wase,
@@ -204,14 +205,17 @@ def generalize_single_token(grammar, start, k, q, r, command):
     check = 0
     while tree is None:
         #tree = flush_tree(skel_tree, fuzzer, gk, char)
-        tree = fuzzer.gen_key(grammartools.focused_key(start), depth=0, max_depth=1)
+        #tree = fuzzer.gen_key(grammartools.focused_key(start), depth=0, max_depth=1)
+        tree = fuzzer.iter_gen_key(grammartools.focused_key(start), max_depth=1)
         val = util.check(char, char, '<__CHECK__(%d/%d)>' % (check, MAX_CHECKS), tree, command, char, char)
         check += 1
         if not val:
             tree = None
         if check > MAX_CHECKS:
             print("Exhausted limit for key:%s, rule:%d, token:%d, char:%s" % (k, q, r, char), file=sys.stderr)
-            raise "Exhausted limit for key:%s, rule:%d, token:%d, char:%s" % (k, q, r, char)
+            blacklist.append((k, q, r, char))
+            #raise "Exhausted limit for key:%s, rule:%d, token:%d, char:%s" % (k, q, r, char)
+            return grammar
         # now we need to make sure that this works.
 
     gen_token = find_max_generalized(tree, char, gk, command)
@@ -268,16 +272,21 @@ def main(args):
     # finally, we want to generalize the length.
     #reachable_keys = reachable_dict(grammar)
     g_ = generalized_grammar
+    blacklist = []
     for k, q, r, t in list_of_things_to_generalize:
         assert g_[k][q][r] == t
-        g_ = generalize_single_token(g_, start, k, q, r, command)
+        bl = []
+        g_ = generalize_single_token(g_, start, k, q, r, command, bl)
+        if bl:
+            print("Blacllisted:", bl, file=sys.stderr)
+            blacklist.extend(bl)
 
     g = remove_duplicate_repetitions(g_)
     g = grammartools.remove_duplicate_rules_in_a_key(g)
 
     # finally, we want to generalize the length.
     #g = generalize_size(g_)
-    print(json.dumps({'[start]': start, '[grammar]':g, '[command]': command}, indent=4))
+    print(json.dumps({'[start]': start, '[grammar]':g, '[command]': command, '[blacklist]': blacklist}, indent=4))
 
 if __name__ == '__main__':
     main(sys.argv[1:])

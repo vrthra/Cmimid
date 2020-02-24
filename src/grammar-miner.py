@@ -1,5 +1,6 @@
 import sys
-import grammartools
+import fuzz as F
+import grammartools as G
 import util
 import pudb
 bp = pudb.set_trace
@@ -93,6 +94,26 @@ def convert_spaces_in_keys(grammar):
         new_grammar[keys[key]] = new_alt
     return new_grammar
 
+MAX_CHECKS = 1000
+def check_grammar(g, start, command):
+    for k in g:
+        check_key(g, k, start, command)
+
+def check_key(g, gk, start, command):
+    fg = G.get_focused_grammar(g, (gk, []))
+    fuzzer = F.LimitFuzzer(fg)
+    tree = None
+    check = 0
+    while tree is None:
+        tree = fuzzer.iter_gen_key(G.focused_key(start), max_depth=0)
+        val = util.check('', '', '<__MINE_CHECK__(%d/%d)>' % (check, MAX_CHECKS), tree, command, '', '')
+        check += 1
+        if not val:
+            tree = None
+        if check > MAX_CHECKS:
+            print("Exhausted limit for key:%s" % gk, file=sys.stderr)
+            return
+
 def main(tracefile):
     with open(tracefile) as f:
         generalized_trees  = json.load(f)
@@ -103,19 +124,23 @@ def main(tracefile):
     cmd = list(cmds)[0]
     assert len(starts) == 1
     start_symbol = list(starts)[0]
-    g = grammartools.grammar_gc(g, start_symbol) # garbage collect
+    g = G.grammar_gc(g, start_symbol) # garbage collect
+    check_grammar(g, start_symbol, cmd)
     with open('build/g1_.json', 'w+') as f: json.dump(g, f)
 
     g = check_empty_rules(g) # add optional rules
-    g = grammartools.grammar_gc(g, start_symbol) # garbage collect
+    g = G.grammar_gc(g, start_symbol) # garbage collect
+    check_grammar(g, start_symbol, cmd)
     with open('build/g2_.json', 'w+') as f: json.dump(g, f)
 
     g = collapse_rules(g) # learn regex
-    g = grammartools.grammar_gc(g, start_symbol) # garbage collect
+    g = G.grammar_gc(g, start_symbol) # garbage collect
+    check_grammar(g, start_symbol, cmd)
     with open('build/g3_.json', 'w+') as f: json.dump(g, f)
 
     g = convert_spaces_in_keys(g) # fuzzable grammar
-    g = grammartools.grammar_gc(g, start_symbol) # garbage collect
+    g = G.grammar_gc(g, start_symbol) # garbage collect
+    check_grammar(g, start_symbol, cmd)
     with open('build/g4_.json', 'w+') as f: json.dump(g, f)
     print(json.dumps({'[start]': start_symbol, '[grammar]':g, '[command]':cmd}, indent=4))
 

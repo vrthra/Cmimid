@@ -330,7 +330,7 @@ def find_focused_rules(grammar, key, fsym, reachable):
             # some positions exist, so we can rely on this rule to
             # produce one.
             for pos in positions:
-                new_rule = copy.deepcopy(rule)
+                new_rule = list(rule)
                 fk = focused_key(new_rule[pos])
                 new_rule[pos] = fk
                 added_keys.add(fk)

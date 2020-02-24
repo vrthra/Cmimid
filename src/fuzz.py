@@ -2,36 +2,10 @@ import sys
 import random
 import json
 import re
+import util
+import grammartools as G
 import fuzzingbook.Parser as P
-from fuzzingbook.GrammarFuzzer import tree_to_string
-RE_NONTERMINAL = re.compile(r'(<[^<> ]*>)')
-
-class Fuzzer:
-    def __init__(self, grammar):
-        self.grammar = grammar
-
-    def print(self):
-        for k in self.grammar:
-            print(k)
-            for rule in self.grammar[k]:
-                print("\t", rule)
-
-    def fuzz_key(self, key='<START>', path=[]):
-        path.append(key)
-        #print(":", key)
-        if key not in self.grammar: return key
-        choice = random.choice(self.grammar[key])
-        if isinstance(choice, list):
-            return self.fuzz_rule(choice, path)
-        else:
-            return self.fuzz_rule(list(re.split(RE_NONTERMINAL, choice)), path)
-
-    def fuzz_rule(self, rule, path):
-        #print("\t",rule)
-        fuzzed = [self.fuzz_key(token, path) for token in rule]
-        return ''.join(fuzzed)
-
-
+#from fuzzingbook.GrammarFuzzer import tree_to_string
 import string
 ASCII_MAP = {
         '[__WHITESPACE__]': string.whitespace,
@@ -51,6 +25,8 @@ class Fuzzer:
     def fuzz(self, key='<start>', max_num=None, max_depth=None):
         raise NotImplemented()
 
+FUZZRANGE = 10
+
 class LimitFuzzer(Fuzzer):
     def symbol_cost(self, grammar, symbol, seen):
         if symbol in self.key_cost: return self.key_cost[symbol]
@@ -66,14 +42,55 @@ class LimitFuzzer(Fuzzer):
         return max((self.symbol_cost(grammar, token, seen)
                     for token in tokens if token in grammar), default=0) + 1
 
+    def nonterminals(self, rule):
+        return [t for t in rule if G.is_nt(t)]
+
+    def iter_gen_key(self, key, max_depth):
+        def get_def(t):
+            if t in ASCII_MAP:
+                return [random.choice(ASCII_MAP[t]), []]
+            elif t and t[-1] == '+' and t[0:-1] in ASCII_MAP:
+                num = random.randrange(FUZZRANGE) + 1
+                val = [random.choice(ASCII_MAP[t[0:-1]]) for i in range(num)]
+                return [''.join(val), []]
+            elif G.is_nt(t):
+                return [t, None]
+            else:
+                return [t, []]
+
+        cheap_grammar = {}
+        for k in self.cost:
+            # should we minimize it here? We simply avoid infinities
+            rules = self.grammar[k]
+            min_cost = min([self.cost[k][str(r)] for r in rules])
+            #grammar[k] = [r for r in grammar[k] if self.cost[k][str(r)] == float('inf')]
+            cheap_grammar[k] = [r for r in self.grammar[k] if self.cost[k][str(r)] == min_cost]
+
+        root = [key, None]
+        queue = [(0, root)]
+        while queue:
+            # get one item to expand from the queue
+            (depth, item), *queue = queue
+            key = item[0]
+            if item[1] is not None: continue
+            grammar = self.grammar if depth < max_depth else cheap_grammar
+            chosen_rule = random.choice(grammar[key])
+            expansion = [get_def(t) for t in chosen_rule]
+            item[1] = expansion
+            for t in expansion: queue.append((depth+1, t))
+            #print("Fuzz: %s" % key, len(queue), file=sys.stderr)
+        #print(file=sys.stderr)
+        return root
+
     def gen_key(self, key, depth, max_depth):
         if key in ASCII_MAP:
             return (random.choice(ASCII_MAP[key]), [])
-        if key[-1] == '+' and key[0:-1] in ASCII_MAP:
-            m = random.randrange(10) + 1
+        if key and key[-1] == '+' and key[0:-1] in ASCII_MAP:
+            m = random.randrange(FUZZRANGE) + 1
             return (''.join([random.choice(ASCII_MAP[key[0:-1]]) for i in range(m)]), [])
         if key not in self.grammar: return (key, [])
         if depth > max_depth:
+            #return self.gen_key_cheap_iter(key)
             clst = sorted([(self.cost[key][str(rule)], rule) for rule in self.grammar[key]])
             rules = [r for c,r in clst if c == clst[0][0]]
         else:
@@ -84,7 +101,7 @@ class LimitFuzzer(Fuzzer):
         return [self.gen_key(token, depth, max_depth) for token in rule]
 
     def fuzz(self, key='<start>', max_depth=10):
-        return tree_to_string(self.gen_key(key=key, depth=0, max_depth=max_depth))
+        return util.tree_to_str(self.iter_gen_key(key=key, max_depth=max_depth))
 
     def __init__(self, grammar):
         super().__init__(grammar)
@@ -118,17 +135,18 @@ def main(args):
     for i in range(count):
         try:
             v = f.fuzz(key)
-            print(repr(v))
+            #print(repr(v))
             p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             data, err = p.communicate(input=v.encode())
             #print(p.returncode)
             if p.returncode != 0:
+                print("Not accepted: (%d/%d)" % (len(errors), i), repr(v))
                 errors.append(v)
         except RecursionError:
             pass
 
     with open("%s.fuzz" % command, 'w+') as f:
-        print("%d/%d" % (count - len(errors), count), file=f)
+        print("%s %d/%d" % (command, count - len(errors), count), file=f)
     return errors
 
 def process_token(i):

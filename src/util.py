@@ -4,7 +4,8 @@ import os
 import random
 import json
 import subprocess
-from fuzzingbook.GrammarFuzzer import tree_to_string
+import grammartools as G
+#from fuzzingbook.GrammarFuzzer import tree_to_string
 import hashlib
 PARSE_SUCCEEDED = 10
 MAX_SAMPLES = 100
@@ -16,8 +17,9 @@ NoEpsilon = '='
 def hashit(s, n=3):
     return hashlib.md5(s.encode()).hexdigest()[0:n]
 
-def tree_to_str(tree):
-    return tree_to_string(tree)
+def tree_to_str_r(tree):
+    assert False
+    #return tree_to_string(tree)
 
 class O:
     def __init__(self, **keys): self.__dict__.update(keys)
@@ -55,12 +57,36 @@ def do(command, env=None, shell=False, log=False, inputv=None, timeout=PARSE_SUC
     result.kill()
     return O(returncode=result.returncode, stdout=stdout, stderr=stderr)
 
-
+def tree_to_str(tree):
+    expanded = []
+    to_expand = [tree]
+    while to_expand:
+        (key, children, *rest), *to_expand = to_expand
+        if G.is_nt(key):
+            #assert children # not necessary
+            to_expand = children + to_expand
+        else:
+            assert not children
+            expanded.append(key)
+    return ''.join(expanded)
 
 def tree_to_pstr(tree, op_='', _cl=''):
+    expanded = []
+    to_expand = [tree]
+    while to_expand:
+        (key, children), *to_expand = to_expand
+        if G.is_nt(key):
+            expanded.append(op_)
+            to_expand = children + [(_cl, [])] + to_expand
+        else:
+            assert not children
+            expanded.append(key)
+    return ''.join(expanded)
+
+def tree_to_pstr_r(tree, op_='', _cl=''):
     symbol, children, *_ = tree
     if children:
-        return "%s%s%s" % (op_, ''.join(tree_to_pstr(c, op_, _cl) for c in children), _cl)
+        return "%s%s%s" % (op_, ''.join(tree_to_pstr_r(c, op_, _cl) for c in children), _cl)
     else:
         # TODO: assert symbol is terminal
         # TODO: check if we need to parenthesize this too. We probably
@@ -68,14 +94,10 @@ def tree_to_pstr(tree, op_='', _cl=''):
         #return "%s%s" % (op_, _cl)
         return "%s%s%s" % (op_, symbol, _cl)
 
-#def do(command, env=None, shell=False, log=False, **args):
-#    result = run(command, universal_newlines=True, shell=shell,
-#                  env=dict(os.environ, **({} if env is None else env)),**args)
-#    return result
 EXEC_MAP = {}
 
 def check_lowcost(o, x, e, ut, module, sa1, sa2):
-    s = tree_to_pstr(ut)
+    s = tree_to_str(ut)
     if s in EXEC_MAP: return EXEC_MAP[s]
     tn = "%s_test.csv" % module
     with open(tn, 'w+') as f: print(s, file=f, end='')
@@ -97,7 +119,7 @@ def check_lowcost(o, x, e, ut, module, sa1, sa2):
 def check_accurate(o, x, e, ut, module, sa1, sa2):
     assert module.endswith('.x')
     module = module[0:-2] + '.c'
-    s = tree_to_pstr(ut)
+    s = tree_to_str(ut)
     if s in EXEC_MAP: return EXEC_MAP[s]
     updated_ps = tree_to_pstr(ut, op_='{', _cl='}')
     tn = "%s_test.csv" % module
@@ -193,9 +215,9 @@ def is_a_replaceable_with_b(a1, a2, module):
     n2, f2, t2 = a2
     if tree_to_str(n1) == tree_to_str(n2): return True
     t_x = replace_nodes(a1, (('XXXX', []), None, a2))
-    x = tree_to_string(t_x)
+    x = tree_to_str(t_x)
     updated_tree = replace_nodes(a1, a2)
-    updated_string = tree_to_string(updated_tree)
+    updated_string = tree_to_str(updated_tree)
     o = tree_to_str(t1)
     v = check(o, x, n1[0], updated_tree, module, tree_to_str(a1[0]), tree_to_str(a2[0]))
     return v
